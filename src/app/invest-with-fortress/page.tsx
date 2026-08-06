@@ -72,24 +72,6 @@ const featureList = [
   "Giám Sát Hiệu Quả Đầu Tư",
 ];
 
-const investorTypes = [
-  "Nhà Đầu Tư Cá Nhân",
-  "Cá Nhân Có Tài Sản Lớn (HNWI)",
-  "Family Offices",
-  "Doanh Nghiệp Đầu Tư",
-  "Định Chế Tài Chính",
-  "Quỹ Đầu Tư Định Chế",
-];
-
-const capitalTypes = [
-  "Đầu Tư Trực Tiếp",
-  "Phân Bổ Vốn Đa Dạng",
-  "Đồng Đầu Tư (Co-Investment)",
-  "Đầu Tư Theo Dự Án",
-  "Đầu Tư Ngành Cụ Thể",
-  "Góp Vốn Tăng Trưởng Dài Hạn",
-];
-
 export default function InvestWithFortressPage() {
   return (
     <main className="min-h-screen bg-white">

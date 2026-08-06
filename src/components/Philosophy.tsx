@@ -77,7 +77,7 @@ export default function Philosophy() {
             </StaggerItem>
             <StaggerItem>
               <p className="text-fortress-silver/50 text-sm leading-relaxed text-center max-w-[600px] mx-auto mt-8 md:mt-12 italic">
-                "Nếu không thể tạo thêm giá trị thực tiễn vượt trên nguồn vốn, đó không phải là cơ hội dành cho Fortress."
+                &quot;Nếu không thể tạo thêm giá trị thực tiễn vượt trên nguồn vốn, đó không phải là cơ hội dành cho Fortress.&quot;
               </p>
             </StaggerItem>
           </Stagger>

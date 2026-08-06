@@ -4,14 +4,19 @@ import en from "@/locales/en.json";
 export type Locale = "vi" | "en";
 export type LocaleKeys = typeof vi;
 
-const dictionaries: Record<Locale, any> = { vi, en };
+type DictType = Record<string, unknown>;
+
+const dictionaries: Record<Locale, DictType> = {
+  vi: vi as unknown as DictType,
+  en: en as unknown as DictType,
+};
 
 export function t(keyPath: string, locale: Locale = "vi", fallback?: string): string {
   const keys = keyPath.split(".");
-  let current: any = dictionaries[locale] || vi;
+  let current: unknown = dictionaries[locale] || vi;
   for (const k of keys) {
-    if (current && typeof current === "object" && k in current) {
-      current = current[k];
+    if (current && typeof current === "object" && k in (current as Record<string, unknown>)) {
+      current = (current as Record<string, unknown>)[k];
     } else {
       return fallback || keyPath;
     }
