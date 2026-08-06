@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   compress: true,
   poweredByHeader: false,
   reactStrictMode: true,
-  serverExternalPackages: ["cloudinary", "mongoose", "bcryptjs", "nodemailer"],
+  serverExternalPackages: ["cloudinary", "mongoose", "bcryptjs", "nodemailer", "pg"],
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [
