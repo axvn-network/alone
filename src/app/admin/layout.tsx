@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import AdminProviders from "./AdminProviders";
 
 export const metadata: Metadata = {
-  title: "Admin Dashboard",
+  title: "Bảng Điều Khiển Quản Trị",
   robots: {
     index: false,
     follow: false,

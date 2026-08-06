@@ -73,17 +73,17 @@ export default function AdminLoginPage() {
             className="h-16 w-auto object-contain brightness-110 drop-shadow-sm mb-16"
           />
           <h1 className="text-4xl lg:text-5xl font-bold text-fortress-ivory leading-[1.1] tracking-tight max-w-xl">
-            Secure Portal for <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-fortress-champagne to-fortress-gold">Authorized Management</span>
+            Cổng Thông Tin Bảo Mật <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-fortress-champagne to-fortress-gold">Dành Cho Ban Quản Trị</span>
           </h1>
           <p className="text-fortress-silver/80 mt-6 text-lg max-w-md leading-relaxed font-light">
-            Access internal systems, manage enquiries, and oversee investment operations through our secure administrative interface.
+            Truy cập hệ thống nội bộ, quản lý các yêu cầu và theo dõi hoạt động đầu tư thông qua giao diện quản trị bảo mật.
           </p>
         </div>
         
         <div className="relative z-10 flex items-center gap-3 text-fortress-silver/50 text-sm font-medium tracking-wide">
           <Shield className="w-5 h-5 text-fortress-gold/70" />
-          <span>Secured with Enterprise-Grade Encryption</span>
+          <span>Được bảo mật bằng mã hóa cấp doanh nghiệp</span>
         </div>
       </div>
 
@@ -102,8 +102,8 @@ export default function AdminLoginPage() {
           </div>
 
           <div className="mb-8">
-            <h2 className="text-2xl font-bold text-fortress-ivory tracking-tight">Sign In</h2>
-            <p className="text-fortress-silver/60 text-sm mt-1.5 font-medium">Please enter your credentials to continue</p>
+            <h2 className="text-2xl font-bold text-fortress-ivory tracking-tight">Đăng Nhập</h2>
+            <p className="text-fortress-silver/60 text-sm mt-1.5 font-medium">Vui lòng nhập thông tin đăng nhập để tiếp tục</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -120,7 +120,7 @@ export default function AdminLoginPage() {
                   htmlFor="username"
                   className="block text-xs font-bold text-fortress-silver/80 uppercase tracking-widest mb-2"
                 >
-                  Username
+                  Tên Đăng Nhập
                 </label>
                 <div className="relative">
                   <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-fortress-silver/30" />
@@ -141,7 +141,7 @@ export default function AdminLoginPage() {
                   htmlFor="password"
                   className="block text-xs font-bold text-fortress-silver/80 uppercase tracking-widest mb-2"
                 >
-                  Password
+                  Mật Khẩu
                 </label>
                 <div className="relative">
                   <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-fortress-silver/30" />
@@ -196,10 +196,10 @@ export default function AdminLoginPage() {
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
                     />
                   </svg>
-                  Authenticating...
+                  Đang xác thực...
                 </>
               ) : (
-                "Sign In"
+                "Đăng Nhập"
               )}
             </button>
           </form>
@@ -209,8 +209,8 @@ export default function AdminLoginPage() {
               &copy; {new Date().getFullYear()} Fortress Investment Holdings.
             </p>
             <div className="flex gap-4 mt-2">
-              <span className="text-fortress-silver/30 text-[10px] uppercase tracking-wider">Privacy Policy</span>
-              <span className="text-fortress-silver/30 text-[10px] uppercase tracking-wider">Terms of Service</span>
+              <span className="text-fortress-silver/30 text-[10px] uppercase tracking-wider">Chính sách bảo mật</span>
+              <span className="text-fortress-silver/30 text-[10px] uppercase tracking-wider">Điều khoản dịch vụ</span>
             </div>
           </div>
         </div>

@@ -36,10 +36,10 @@ interface SiteSettingsData {
 const socialPlatforms = ["LinkedIn", "Instagram", "Facebook", "X (Twitter)", "YouTube", "TikTok", "Threads"];
 
 const sections = [
-  { key: "company", icon: Building2, label: "Company Information" },
+  { key: "company", icon: Building2, label: "Thông tin công ty" },
   { key: "whatsapp", icon: MessageCircle, label: "WhatsApp" },
-  { key: "social", icon: Share2, label: "Social Media Links" },
-  { key: "footer", icon: FileText, label: "Footer Content" },
+  { key: "social", icon: Share2, label: "Liên kết Mạng Xã Hội" },
+  { key: "footer", icon: FileText, label: "Nội dung Footer" },
   { key: "media", icon: ImageIcon, label: "Logo & Favicon" },
 ];
 
@@ -89,11 +89,11 @@ export default function SettingsPage() {
       formData.append("file", file);
       const res = await fetch("/api/admin/upload", { method: "POST", body: formData });
       const result = await res.json();
-      if (!res.ok) throw new Error(result.error || "Upload failed");
+      if (!res.ok) throw new Error(result.error || "Tải lên thất bại");
       if (result.url) update("logo", result.url);
-      toast.success("Logo uploaded");
+      toast.success("Tải logo lên thành công");
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Upload failed");
+      toast.error(err instanceof Error ? err.message : "Tải lên thất bại");
     }
   }
 
@@ -105,11 +105,11 @@ export default function SettingsPage() {
       formData.append("file", file);
       const res = await fetch("/api/admin/upload", { method: "POST", body: formData });
       const result = await res.json();
-      if (!res.ok) throw new Error(result.error || "Upload failed");
+      if (!res.ok) throw new Error(result.error || "Tải lên thất bại");
       if (result.url) update("favicon", result.url);
-      toast.success("Favicon uploaded");
+      toast.success("Tải favicon lên thành công");
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Upload failed");
+      toast.error(err instanceof Error ? err.message : "Tải lên thất bại");
     }
   }
 
@@ -122,10 +122,10 @@ export default function SettingsPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      if (!res.ok) throw new Error("Failed to save");
-      toast.success("Settings saved");
+      if (!res.ok) throw new Error("Lưu thất bại");
+      toast.success("Đã lưu cài đặt");
     } catch {
-      toast.error("Failed to save settings");
+      toast.error("Lưu cài đặt thất bại");
     } finally {
       setSaving(false);
     }
@@ -168,15 +168,15 @@ export default function SettingsPage() {
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-fortress-gold/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-fortress-navy/50 rounded-full blur-[150px] pointer-events-none" />
         
-        <AdminNavbar title="Settings" />
+        <AdminNavbar title="Cài Đặt" />
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 relative z-10">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <p className="text-gray-400 text-sm">General website configuration</p>
+              <p className="text-gray-400 text-sm">Cấu hình chung của website</p>
             </div>
             <div className="flex items-center gap-2">
               <button onClick={handleSave} disabled={saving} className="flex items-center gap-2 px-5 py-2.5 bg-fortress-gold text-fortress-navy text-sm font-bold hover:bg-fortress-champagne transition-colors disabled:opacity-50 rounded-lg">
-                <Save className="w-4 h-4" /> {saving ? "Saving..." : "Save Changes"}
+                <Save className="w-4 h-4" /> {saving ? "Đang lưu..." : "Lưu Thay Đổi"}
               </button>
             </div>
           </div>
@@ -212,27 +212,27 @@ export default function SettingsPage() {
                 <div className="bg-fortress-navy border-t-2 border-t-fortress-gold/30 p-5 rounded-lg">
                   <div className="flex items-center gap-3 mb-5">
                     <Building2 className="w-5 h-5 text-fortress-gold" />
-                    <h2 className="text-sm font-bold text-fortress-ivory tracking-wide">Company Information</h2>
+                    <h2 className="text-sm font-bold text-fortress-ivory tracking-wide">Thông tin công ty</h2>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="sm:col-span-2">
-                      <label className="block text-fortress-silver text-xs font-medium mb-1.5 tracking-wide">Company Name</label>
+                      <label className="block text-fortress-silver text-xs font-medium mb-1.5 tracking-wide">Tên Công Ty</label>
                       <input type="text" value={data.companyName} onChange={(e) => update("companyName", e.target.value)} className="w-full bg-fortress-deep border border-white/10 text-fortress-ivory text-sm px-4 py-3 focus:outline-none focus:border-fortress-gold/50 rounded-lg" />
                     </div>
                     <div>
-                      <label className="block text-fortress-silver text-xs font-medium mb-1.5 tracking-wide">Phone Number</label>
+                      <label className="block text-fortress-silver text-xs font-medium mb-1.5 tracking-wide">Số Điện Thoại</label>
                       <input type="text" value={data.phone} onChange={(e) => update("phone", e.target.value)} className="w-full bg-fortress-deep border border-white/10 text-fortress-ivory text-sm px-4 py-3 focus:outline-none focus:border-fortress-gold/50 rounded-lg" />
                     </div>
                     <div>
-                      <label className="block text-fortress-silver text-xs font-medium mb-1.5 tracking-wide">Email Address</label>
+                      <label className="block text-fortress-silver text-xs font-medium mb-1.5 tracking-wide">Địa Chỉ Email</label>
                       <input type="email" value={data.email} onChange={(e) => update("email", e.target.value)} className="w-full bg-fortress-deep border border-white/10 text-fortress-ivory text-sm px-4 py-3 focus:outline-none focus:border-fortress-gold/50 rounded-lg" />
                     </div>
                     <div className="col-span-2">
-                      <label className="block text-fortress-silver text-xs font-medium mb-1.5 tracking-wide">Office Address</label>
+                      <label className="block text-fortress-silver text-xs font-medium mb-1.5 tracking-wide">Địa Chỉ Văn Phòng</label>
                       <input type="text" value={data.address} onChange={(e) => update("address", e.target.value)} className="w-full bg-fortress-deep border border-white/10 text-fortress-ivory text-sm px-4 py-3 focus:outline-none focus:border-fortress-gold/50 rounded-lg" />
                     </div>
                     <div className="col-span-2">
-                      <label className="block text-fortress-silver text-xs font-medium mb-1.5 tracking-wide">Google Maps Embed URL</label>
+                      <label className="block text-fortress-silver text-xs font-medium mb-1.5 tracking-wide">Đường Dẫn Nhúng Google Maps</label>
                       <input type="text" value={data.googleMap} onChange={(e) => update("googleMap", e.target.value)} className="w-full bg-fortress-deep border border-white/10 text-fortress-ivory text-sm px-4 py-3 focus:outline-none focus:border-fortress-gold/50 rounded-lg" />
                     </div>
                   </div>
@@ -246,8 +246,8 @@ export default function SettingsPage() {
                     <h2 className="text-sm font-bold text-fortress-ivory tracking-wide">WhatsApp</h2>
                   </div>
                   <div>
-                    <label className="block text-fortress-silver text-xs font-medium mb-1.5 tracking-wide">WhatsApp Number</label>
-                    <p className="text-fortress-silver/40 text-[10px] mb-2">Digits only, e.g. 971500000000</p>
+                    <label className="block text-fortress-silver text-xs font-medium mb-1.5 tracking-wide">Số WhatsApp</label>
+                    <p className="text-fortress-silver/40 text-[10px] mb-2">Chỉ nhập số, VD: 84987654321</p>
                     <input type="text" value={data.whatsapp} onChange={(e) => update("whatsapp", e.target.value)} className="w-full bg-fortress-deep border border-white/10 text-fortress-ivory text-sm px-4 py-3 focus:outline-none focus:border-fortress-gold/50 rounded-lg" />
                   </div>
                 </div>
@@ -257,20 +257,20 @@ export default function SettingsPage() {
                 <div className="bg-fortress-navy border-t-2 border-t-fortress-gold/30 p-5 rounded-lg">
                   <div className="flex items-center gap-3 mb-5">
                     <Share2 className="w-5 h-5 text-fortress-gold" />
-                    <h2 className="text-sm font-bold text-fortress-ivory tracking-wide">Social Media Links</h2>
+                    <h2 className="text-sm font-bold text-fortress-ivory tracking-wide">Liên kết Mạng Xã Hội</h2>
                   </div>
                   <div className="space-y-2.5">
                     {data.socialLinks.map((link, i) => (
                       <div key={i} className="flex items-center gap-2">
                         <select value={link.platform} onChange={(e) => updateSocial(i, "platform", e.target.value)} className="w-40 bg-fortress-deep border border-white/10 text-fortress-ivory text-sm px-3 py-3 focus:outline-none focus:border-fortress-gold/50 rounded-lg">
-                          <option value="">Select...</option>
+                          <option value="">Chọn...</option>
                           {socialPlatforms.map((p) => <option key={p} value={p}>{p}</option>)}
                         </select>
                         <input type="text" value={link.url} onChange={(e) => updateSocial(i, "url", e.target.value)} placeholder="https://..." className="flex-1 bg-fortress-deep border border-white/10 text-fortress-ivory text-sm px-3 py-3 focus:outline-none focus:border-fortress-gold/50 rounded-lg" />
                         <button onClick={() => removeSocial(i)} className="p-2 text-fortress-silver/30 hover:text-red-400 transition-colors shrink-0 rounded-md"><Trash2 className="w-4 h-4" /></button>
                       </div>
                     ))}
-                    <button onClick={addSocial} className="flex items-center gap-1.5 text-xs text-fortress-gold hover:text-fortress-champagne transition-colors mt-3 rounded-md"><Plus className="w-3.5 h-3.5" /> Add Social Link</button>
+                    <button onClick={addSocial} className="flex items-center gap-1.5 text-xs text-fortress-gold hover:text-fortress-champagne transition-colors mt-3 rounded-md"><Plus className="w-3.5 h-3.5" /> Thêm Liên Kết</button>
                   </div>
                 </div>
               )}
@@ -279,10 +279,10 @@ export default function SettingsPage() {
                 <div className="bg-fortress-navy border-t-2 border-t-fortress-gold/30 p-5 rounded-lg">
                   <div className="flex items-center gap-3 mb-5">
                     <FileText className="w-5 h-5 text-fortress-gold" />
-                    <h2 className="text-sm font-bold text-fortress-ivory tracking-wide">Footer Content</h2>
+                    <h2 className="text-sm font-bold text-fortress-ivory tracking-wide">Nội dung Footer</h2>
                   </div>
                   <div>
-                    <label className="block text-fortress-silver text-xs font-medium mb-1.5 tracking-wide">Footer Description</label>
+                    <label className="block text-fortress-silver text-xs font-medium mb-1.5 tracking-wide">Mô tả Footer</label>
                     <textarea value={data.footer} onChange={(e) => update("footer", e.target.value)} rows={4} className="w-full bg-fortress-deep border border-white/10 text-fortress-ivory text-sm px-4 py-3 focus:outline-none focus:border-fortress-gold/50 resize-none rounded-lg" />
                   </div>
                 </div>
@@ -301,7 +301,7 @@ export default function SettingsPage() {
                       {data.logo && <div className="mb-2 p-4 bg-fortress-deep border border-white/5 flex items-center justify-center rounded-lg"><img src={data.logo} alt="" className="h-12 w-auto object-contain" /></div>}
                       <label className="flex items-center justify-center gap-2 px-4 py-3.5 bg-fortress-deep border border-dashed border-white/10 text-fortress-silver text-xs hover:border-fortress-gold/40 cursor-pointer transition-colors rounded-lg">
                         <input type="file" accept="image/*" onChange={handleLogoUpload} className="hidden" />
-                        {data.logo ? "Change Logo" : "Upload Logo"}
+                        {data.logo ? "Đổi Logo" : "Tải Logo Lên"}
                       </label>
                     </div>
                     <div>
@@ -310,7 +310,7 @@ export default function SettingsPage() {
                       {data.favicon && <div className="mb-2 p-4 bg-fortress-deep border border-white/5 flex items-center justify-center rounded-lg"><img src={data.favicon} alt="" className="h-10 w-auto object-contain" /></div>}
                       <label className="flex items-center justify-center gap-2 px-4 py-3.5 bg-fortress-deep border border-dashed border-white/10 text-fortress-silver text-xs hover:border-fortress-gold/40 cursor-pointer transition-colors rounded-lg">
                         <input type="file" accept="image/*" onChange={handleFaviconUpload} className="hidden" />
-                        {data.favicon ? "Change Favicon" : "Upload Favicon"}
+                        {data.favicon ? "Đổi Favicon" : "Tải Favicon Lên"}
                       </label>
                     </div>
                   </div>

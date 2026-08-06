@@ -37,12 +37,12 @@ interface ArticleItem {
 function timeAgo(dateStr: string) {
   const diff = Date.now() - new Date(dateStr).getTime();
   const mins = Math.floor(diff / 60000);
-  if (mins < 1) return "just now";
-  if (mins < 60) return `${mins}m ago`;
+  if (mins < 1) return "vừa xong";
+  if (mins < 60) return `${mins} phút trước`;
   const hrs = Math.floor(mins / 60);
-  if (hrs < 24) return `${hrs}h ago`;
+  if (hrs < 24) return `${hrs} giờ trước`;
   const days = Math.floor(hrs / 24);
-  return `${days}d ago`;
+  return `${days} ngày trước`;
 }
 
 const CAT_COLORS: Record<string, string> = {
@@ -92,11 +92,11 @@ function DeleteModal({
           <AlertTriangle className="w-6 h-6 text-red-400" />
         </div>
 
-        <h2 className="text-lg font-bold text-fortress-ivory mb-1">Delete Article?</h2>
+        <h2 className="text-lg font-bold text-fortress-ivory mb-1">Xóa Bài Viết?</h2>
         <p className="text-fortress-silver/50 text-sm mb-4 leading-relaxed">
-          This will permanently delete{" "}
+          Hành động này sẽ xóa vĩnh viễn{" "}
           <span className="text-fortress-ivory font-semibold">&ldquo;{article.title}&rdquo;</span>.
-          This action cannot be undone.
+          Không thể hoàn tác hành động này.
         </p>
 
         {/* Article preview in modal */}
@@ -122,7 +122,7 @@ function DeleteModal({
             disabled={loading}
             className="flex-1 py-2.5 border border-white/10 text-fortress-silver/70 text-sm font-semibold hover:border-white/20 hover:text-fortress-ivory transition-all rounded-xl"
           >
-            Cancel
+            Hủy
           </button>
           <button
             onClick={onConfirm}
@@ -134,7 +134,7 @@ function DeleteModal({
             ) : (
               <Trash2 className="w-4 h-4" />
             )}
-            {loading ? "Deleting…" : "Delete Article"}
+            {loading ? "Đang xóa…" : "Xóa Bài Viết"}
           </button>
         </div>
       </div>
@@ -166,11 +166,11 @@ export default function BlogList() {
     setDeleteLoading(true);
     try {
       const res = await fetch(`/api/admin/articles/${deleteTarget.slug}`, { method: "DELETE" });
-      if (!res.ok) throw new Error("Delete failed");
-      toast.success("Article deleted");
+      if (!res.ok) throw new Error("Xóa thất bại");
+      toast.success("Đã xóa bài viết");
       load();
     } catch {
-      toast.error("Failed to delete article");
+      toast.error("Xóa bài viết thất bại");
     } finally {
       setDeleteLoading(false);
       setDeleteTarget(null);
@@ -189,10 +189,10 @@ export default function BlogList() {
   const drafts = articles.filter((a) => a.status === "draft").length;
 
   const stats = [
-    { label: "Total Articles", value: articles.length, icon: <FileText className="w-4 h-4" />, color: "text-fortress-gold", bg: "bg-fortress-gold/10" },
-    { label: "Published", value: published, icon: <CheckCircle2 className="w-4 h-4" />, color: "text-emerald-400", bg: "bg-emerald-500/10" },
-    { label: "Drafts", value: drafts, icon: <Circle className="w-4 h-4" />, color: "text-amber-400", bg: "bg-amber-500/10" },
-    { label: "Categories", value: new Set(articles.map((a) => a.category)).size, icon: <Tag className="w-4 h-4" />, color: "text-blue-400", bg: "bg-blue-500/10" },
+    { label: "Tổng số bài", value: articles.length, icon: <FileText className="w-4 h-4" />, color: "text-fortress-gold", bg: "bg-fortress-gold/10" },
+    { label: "Đã xuất bản", value: published, icon: <CheckCircle2 className="w-4 h-4" />, color: "text-emerald-400", bg: "bg-emerald-500/10" },
+    { label: "Bản nháp", value: drafts, icon: <Circle className="w-4 h-4" />, color: "text-amber-400", bg: "bg-amber-500/10" },
+    { label: "Danh mục", value: new Set(articles.map((a) => a.category)).size, icon: <Tag className="w-4 h-4" />, color: "text-blue-400", bg: "bg-blue-500/10" },
   ];
 
   return (
@@ -203,15 +203,15 @@ export default function BlogList() {
         <div className="absolute top-0 left-1/3 w-[500px] h-[500px] bg-fortress-gold/4 rounded-full blur-[140px] pointer-events-none" />
         <div className="absolute bottom-1/3 right-0 w-[400px] h-[400px] bg-blue-600/4 rounded-full blur-[120px] pointer-events-none" />
 
-        <AdminNavbar title="Blog Posts" />
+        <AdminNavbar title="Bài Viết & Tin Tức" />
 
         <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 relative z-10 space-y-6">
 
           {/* Header */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
             <div>
-              <h1 className="text-lg sm:text-xl font-bold text-fortress-ivory tracking-tight">Content Management</h1>
-              <p className="text-fortress-silver/50 text-xs sm:text-sm mt-0.5">Manage and publish your insights & articles</p>
+              <h1 className="text-lg sm:text-xl font-bold text-fortress-ivory tracking-tight">Quản lý bài viết</h1>
+              <p className="text-fortress-silver/50 text-xs sm:text-sm mt-0.5">Quản lý và xuất bản các bài viết, tin tức của bạn</p>
             </div>
             <div className="flex items-center gap-2 sm:gap-3">
               <button
@@ -225,7 +225,7 @@ export default function BlogList() {
                 href="/admin/blog/new"
                 className="flex items-center gap-2 px-4 sm:px-5 py-2.5 bg-fortress-gold text-fortress-navy text-sm font-bold hover:bg-fortress-champagne transition-all rounded-lg shadow-lg shadow-fortress-gold/10"
               >
-                <Plus className="w-4 h-4" /> New Article
+                <Plus className="w-4 h-4" /> Bài Viết Mới
               </Link>
             </div>
           </div>
@@ -253,7 +253,7 @@ export default function BlogList() {
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-fortress-silver/40" />
                 <input
                   type="text"
-                  placeholder="Search articles..."
+                  placeholder="Tìm kiếm bài viết..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   className="w-full pl-9 pr-4 py-2 bg-white/5 border border-white/10 text-fortress-ivory text-sm rounded-lg placeholder:text-fortress-silver/30 focus:outline-none focus:border-fortress-gold/40 transition-colors"
@@ -270,7 +270,7 @@ export default function BlogList() {
                         : "text-fortress-silver/50 hover:text-fortress-ivory"
                     }`}
                   >
-                    {f === "all" ? `All (${articles.length})` : f === "published" ? `Published (${published})` : `Drafts (${drafts})`}
+                    {f === "all" ? `Tất cả (${articles.length})` : f === "published" ? `Đã xuất bản (${published})` : `Bản nháp (${drafts})`}
                   </button>
                 ))}
               </div>
@@ -298,14 +298,14 @@ export default function BlogList() {
                   <Newspaper className="w-7 h-7 text-fortress-silver/20" />
                 </div>
                 <p className="text-fortress-ivory/60 font-medium mb-1">
-                  {search || filterStatus !== "all" ? "No articles match your search" : "No articles yet"}
+                  {search || filterStatus !== "all" ? "Không tìm thấy bài viết nào phù hợp" : "Chưa có bài viết nào"}
                 </p>
                 <p className="text-fortress-silver/30 text-sm mb-5">
-                  {search || filterStatus !== "all" ? "Try a different search term or filter." : "Create your first insight article."}
+                  {search || filterStatus !== "all" ? "Hãy thử một từ khóa tìm kiếm hoặc bộ lọc khác." : "Tạo bài viết đầu tiên của bạn."}
                 </p>
                 {!search && filterStatus === "all" && (
                   <Link href="/admin/blog/new" className="px-4 py-2 bg-fortress-gold text-fortress-navy text-sm font-bold hover:bg-fortress-champagne transition-all rounded-lg">
-                    Create First Article
+                    Tạo Bài Viết Đầu Tiên
                   </Link>
                 )}
               </div>
@@ -326,7 +326,7 @@ export default function BlogList() {
                       <div className="absolute top-3 left-3 flex items-center gap-2">
                         <span className={`text-[10px] font-semibold px-2 py-0.5 border rounded-full backdrop-blur-sm ${CAT_COLORS[a.category] || "bg-white/5 text-fortress-silver border-white/10"}`}>{a.category}</span>
                         <span className={`text-[10px] font-semibold px-2 py-0.5 border rounded-full backdrop-blur-sm ${a.status === "published" ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/30" : "bg-amber-500/20 text-amber-300 border-amber-500/30"}`}>
-                          {a.status === "published" ? "Published" : "Draft"}
+                          {a.status === "published" ? "Đã xuất bản" : "Bản nháp"}
                         </span>
                       </div>
                     </Link>
@@ -362,12 +362,12 @@ export default function BlogList() {
             {filtered.length > 0 && (
               <div className="px-5 py-3 border-t border-white/5 flex items-center justify-between">
                 <p className="text-xs text-fortress-silver/30">
-                  Showing <span className="text-fortress-ivory font-medium">{filtered.length}</span> of{" "}
-                  <span className="text-fortress-ivory font-medium">{articles.length}</span> articles
+                  Đang hiển thị <span className="text-fortress-ivory font-medium">{filtered.length}</span> /{" "}
+                  <span className="text-fortress-ivory font-medium">{articles.length}</span> bài viết
                 </p>
                 <div className="flex items-center gap-2 text-xs text-fortress-silver/30">
                   <Eye className="w-3 h-3" />
-                  {articles.length > 0 ? `Last updated ${timeAgo(articles[0]?.updatedAt)}` : "—"}
+                  {articles.length > 0 ? `Cập nhật lần cuối ${timeAgo(articles[0]?.updatedAt)}` : "—"}
                 </div>
               </div>
             )}

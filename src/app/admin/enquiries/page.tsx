@@ -34,11 +34,11 @@ interface EnquiryItem {
 function timeAgo(dateStr: string) {
   const diff = Date.now() - new Date(dateStr).getTime();
   const mins = Math.floor(diff / 60000);
-  if (mins < 60) return `${mins}m ago`;
+  if (mins < 60) return `${mins} phút trước`;
   const hrs = Math.floor(mins / 60);
-  if (hrs < 24) return `${hrs}h ago`;
+  if (hrs < 24) return `${hrs} giờ trước`;
   const days = Math.floor(hrs / 24);
-  return `${days}d ago`;
+  return `${days} ngày trước`;
 }
 
 export default function EnquiriesPage() {
@@ -58,23 +58,23 @@ export default function EnquiriesPage() {
     try {
       const res = await fetch(`/api/admin/enquiries/${id}`, { method: "PATCH" });
       if (!res.ok) throw new Error("Failed");
-      toast.success("Marked as read");
+      toast.success("Đã đánh dấu là đã đọc");
       load();
     } catch {
-      toast.error("Failed to update enquiry");
+      toast.error("Cập nhật thất bại");
     }
   }
 
   async function handleDelete(id: string) {
-    if (!confirm("Delete this enquiry?")) return;
+    if (!confirm("Xóa yêu cầu này?")) return;
     try {
       const res = await fetch(`/api/admin/enquiries/${id}`, { method: "DELETE" });
       if (!res.ok) throw new Error("Failed");
-      toast.success("Enquiry deleted");
+      toast.success("Đã xóa yêu cầu");
       setSelected(null);
       load();
     } catch {
-      toast.error("Failed to delete enquiry");
+      toast.error("Xóa thất bại");
     }
   }
 
@@ -85,17 +85,17 @@ export default function EnquiriesPage() {
     <div className="min-h-screen bg-[#03080e] flex selection:bg-fortress-gold/20 selection:text-fortress-champagne font-sans">
       <AdminSidebar active="Enquiries" />
       <main className="flex-1 overflow-y-auto overflow-x-hidden min-h-screen relative">
-        <AdminNavbar title="Enquiries" />
+        <AdminNavbar title="Yêu Cầu Hợp Tác" />
         <div className="flex flex-col md:flex-row flex-1 min-h-[calc(100vh-64px)] relative z-10">
         <div className={`w-full md:w-[420px] border-b md:border-b-0 md:border-r border-fortress-gold/10 flex flex-col bg-[#07111D]/80 backdrop-blur-xl ${selected ? "hidden md:flex" : ""}`}>
           <div className="p-4 border-b border-fortress-charcoal">
             <div className="flex items-center justify-between mb-3">
-              {unread > 0 && <span className="text-[10px] bg-fortress-gold/15 text-fortress-gold font-bold px-2 py-0.5 rounded-full tracking-wide">{unread} unread</span>}
+              {unread > 0 && <span className="text-[10px] bg-fortress-gold/15 text-fortress-gold font-bold px-2 py-0.5 rounded-full tracking-wide">{unread} chưa đọc</span>}
             </div>
             <div className="flex gap-1 p-1 bg-fortress-deep rounded-lg">
               {(["all", "contact", "submission"] as const).map((f) => (
                 <button key={f} onClick={() => setFilter(f)} className={`flex-1 px-3 py-1.5 text-xs font-medium transition-colors tracking-wide rounded-md ${filter === f ? "bg-fortress-navy text-fortress-ivory shadow-sm" : "text-fortress-silver hover:text-fortress-ivory hover:bg-fortress-charcoal"}`}>
-                  {f === "all" ? "All" : f === "contact" ? "Contacts" : "Submissions"}
+                  {f === "all" ? "Tất cả" : f === "contact" ? "Liên hệ" : "Đề xuất"}
                 </button>
               ))}
             </div>
@@ -118,7 +118,7 @@ export default function EnquiriesPage() {
                 </div>
               </button>
             ))}
-            {filtered.length === 0 && <p className="text-center text-fortress-silver text-xs py-10">No enquiries found</p>}
+            {filtered.length === 0 && <p className="text-center text-fortress-silver text-xs py-10">Không tìm thấy yêu cầu nào</p>}
           </div>
         </div>
 
@@ -127,7 +127,7 @@ export default function EnquiriesPage() {
             <div className="max-w-2xl mx-auto space-y-6 w-full">
               <button onClick={() => setSelected(null)} className="md:hidden flex items-center gap-1.5 text-fortress-silver hover:text-fortress-navy text-xs transition-colors mb-3 rounded-md">
                 <svg className="w-3.5 h-3.5 rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="9 18 15 12 9 6" /></svg>
-                Back to list
+                Quay lại danh sách
               </button>
 
               <div className="flex items-start justify-between">
@@ -143,11 +143,11 @@ export default function EnquiriesPage() {
                 </div>
                 <div className="flex items-center gap-1 bg-fortress-deep border border-fortress-charcoal rounded-lg p-1">
                   {!selected.read && (
-                    <button onClick={() => handleMarkRead(selected.id)} className="p-2 text-fortress-silver hover:text-fortress-champagne transition-colors rounded-md hover:bg-fortress-charcoal" title="Mark as read">
+                    <button onClick={() => handleMarkRead(selected.id)} className="p-2 text-fortress-silver hover:text-fortress-champagne transition-colors rounded-md hover:bg-fortress-charcoal" title="Đánh dấu đã đọc">
                       <CheckCheck className="w-4 h-4" />
                     </button>
                   )}
-                  <button onClick={() => handleDelete(selected.id)} className="p-2 text-fortress-silver hover:text-fortress-champagne transition-colors rounded-md hover:bg-fortress-charcoal" title="Delete">
+                  <button onClick={() => handleDelete(selected.id)} className="p-2 text-fortress-silver hover:text-fortress-champagne transition-colors rounded-md hover:bg-fortress-charcoal" title="Xóa">
                     <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
@@ -185,7 +185,7 @@ export default function EnquiriesPage() {
                   </div>
                   <div>
                     <span className="block text-sm font-medium text-fortress-ivory">{selected.details.fileName}</span>
-                    <span className="block text-xs text-fortress-silver/60 mt-0.5">Uploaded document</span>
+                    <span className="block text-xs text-fortress-silver/60 mt-0.5">Tài liệu đính kèm</span>
                   </div>
                 </div>
               )}
@@ -195,8 +195,8 @@ export default function EnquiriesPage() {
               <div className="w-16 h-16 bg-fortress-deep border border-fortress-charcoal rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <Mail className="w-8 h-8 text-fortress-gold/40" />
               </div>
-              <h3 className="text-fortress-navy font-medium mb-1">No enquiry selected</h3>
-              <p className="text-fortress-silver text-sm">Select an enquiry from the list to view its details</p>
+              <h3 className="text-fortress-navy font-medium mb-1">Chưa chọn yêu cầu nào</h3>
+              <p className="text-fortress-silver text-sm">Chọn một yêu cầu từ danh sách để xem chi tiết</p>
             </div>
           )}
         </div>

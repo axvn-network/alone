@@ -33,26 +33,26 @@ interface Stats {
 }
 
 const statCards = [
-  { key: "blogPosts" as const, label: "Blog Posts", icon: Newspaper },
-  { key: "totalContacts" as const, label: "Contact Enquiries", icon: MessageCircle },
-  { key: "totalSubmissions" as const, label: "Investment Submissions", icon: TrendingUp },
+  { key: "blogPosts" as const, label: "Bài Viết", icon: Newspaper },
+  { key: "totalContacts" as const, label: "Yêu Cầu Liên Hệ", icon: MessageCircle },
+  { key: "totalSubmissions" as const, label: "Đề Xuất Đầu Tư", icon: TrendingUp },
 ];
 
 const quickActions = [
-  { label: "Create Blog Post", icon: PlusCircle, href: "/admin/blog/new" },
-  { label: "Edit Homepage", icon: Edit3, href: "/admin/content/home" },
-  { label: "View Enquiries", icon: MessageCircle, href: "/admin/enquiries" },
-  { label: "Manage Content", icon: FileText, href: "/admin/content" },
+  { label: "Tạo Bài Viết", icon: PlusCircle, href: "/admin/blog/new" },
+  { label: "Sửa Trang Chủ", icon: Edit3, href: "/admin/content/home" },
+  { label: "Xem Yêu Cầu", icon: MessageCircle, href: "/admin/enquiries" },
+  { label: "Quản Lý Nội Dung", icon: FileText, href: "/admin/content" },
 ];
 
 function timeAgo(dateStr: string) {
   const diff = Date.now() - new Date(dateStr).getTime();
   const mins = Math.floor(diff / 60000);
-  if (mins < 60) return `${mins}m ago`;
+  if (mins < 60) return `${mins} phút trước`;
   const hrs = Math.floor(mins / 60);
-  if (hrs < 24) return `${hrs}h ago`;
+  if (hrs < 24) return `${hrs} giờ trước`;
   const days = Math.floor(hrs / 24);
-  return `${days}d ago`;
+  return `${days} ngày trước`;
 }
 
 export default function AdminDashboard() {
@@ -82,13 +82,13 @@ export default function AdminDashboard() {
         <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-fortress-navy/50 rounded-full blur-[150px] pointer-events-none" />
         
         <div className="relative z-10">
-          <AdminNavbar title="Dashboard Overview" />
+          <AdminNavbar title="Tổng quan hệ thống" />
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
             {/* Header section */}
             <div className="mb-10">
-              <h2 className="text-2xl font-bold text-fortress-ivory tracking-tight mb-2">Welcome back, Admin</h2>
-              <p className="text-sm text-fortress-silver/70 font-light">Here&apos;s what&apos;s happening with your platform today.</p>
+              <h2 className="text-2xl font-bold text-fortress-ivory tracking-tight mb-2">Chào mừng trở lại, Quản trị viên</h2>
+              <p className="text-sm text-fortress-silver/70 font-light">Dưới đây là tình hình hoạt động của nền tảng hôm nay.</p>
             </div>
 
             {/* Stats Grid */}
@@ -110,7 +110,7 @@ export default function AdminDashboard() {
                       <p className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-fortress-ivory to-fortress-silver tracking-tight">
                         {stats[card.key]}
                       </p>
-                      <p className="text-xs text-fortress-silver/50 mt-2 font-medium">Total registered</p>
+                      <p className="text-xs text-fortress-silver/50 mt-2 font-medium">Tổng số hệ thống</p>
                     </div>
                   </div>
                 </div>
@@ -126,8 +126,8 @@ export default function AdminDashboard() {
                       <Activity className="w-4 h-4 text-fortress-gold" />
                     </div>
                     <div>
-                      <h2 className="text-base font-semibold text-fortress-ivory">Recent Activity</h2>
-                      <p className="text-xs text-fortress-silver/60">Latest platform updates</p>
+                      <h2 className="text-base font-semibold text-fortress-ivory">Hoạt động gần đây</h2>
+                      <p className="text-xs text-fortress-silver/60">Cập nhật mới nhất từ nền tảng</p>
                     </div>
                   </div>
                 </div>
@@ -136,7 +136,7 @@ export default function AdminDashboard() {
                   {stats.activities.length === 0 ? (
                     <div className="h-full flex flex-col items-center justify-center py-12 opacity-50">
                       <Activity className="w-8 h-8 text-fortress-silver/30 mb-3" />
-                      <p className="text-fortress-silver text-sm">No recent activity</p>
+                      <p className="text-fortress-silver text-sm">Không có hoạt động gần đây</p>
                     </div>
                   ) : (
                     <div className="space-y-1">
@@ -172,8 +172,8 @@ export default function AdminDashboard() {
                     <BarChart3 className="w-4 h-4 text-fortress-gold" />
                   </div>
                   <div>
-                    <h2 className="text-base font-semibold text-fortress-ivory">Quick Actions</h2>
-                    <p className="text-xs text-fortress-silver/60">Common tasks</p>
+                    <h2 className="text-base font-semibold text-fortress-ivory">Thao tác nhanh</h2>
+                    <p className="text-xs text-fortress-silver/60">Các tác vụ phổ biến</p>
                   </div>
                 </div>
                 

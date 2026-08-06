@@ -15,11 +15,11 @@ interface PageItem {
 function timeAgo(dateStr: string) {
   const diff = Date.now() - new Date(dateStr).getTime();
   const mins = Math.floor(diff / 60000);
-  if (mins < 60) return `${mins}m ago`;
+  if (mins < 60) return `${mins} phút trước`;
   const hrs = Math.floor(mins / 60);
-  if (hrs < 24) return `${hrs}h ago`;
+  if (hrs < 24) return `${hrs} giờ trước`;
   const days = Math.floor(hrs / 24);
-  return `${days}d ago`;
+  return `${days} ngày trước`;
 }
 
 export default function ContentList() {
@@ -39,10 +39,10 @@ export default function ContentList() {
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-fortress-gold/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-fortress-navy/50 rounded-full blur-[150px] pointer-events-none" />
         
-        <AdminNavbar title="Content Management" />
+        <AdminNavbar title="Quản Lý Nội Dung" />
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 relative z-10">
           <div className="mb-6">
-            <p className="text-fortress-silver text-sm">Manage all static website pages</p>
+            <p className="text-fortress-silver text-sm">Quản lý tất cả các trang tĩnh của website</p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -58,11 +58,11 @@ export default function ContentList() {
                 <div className="flex-1">
                   <p className="text-sm font-medium text-fortress-ivory group-hover:text-fortress-gold transition-colors">{page.title}</p>
                   <p className="text-[11px] text-fortress-silver/40 mt-1">
-                    Updated {timeAgo(page.updatedAt)}
+                    Cập nhật {timeAgo(page.updatedAt)}
                   </p>
                 </div>
                 <div className="flex items-center gap-1 mt-3 pt-3 border-t border-fortress-charcoal">
-                  <span className="text-xs text-fortress-silver/30 group-hover:text-fortress-gold/60 transition-colors">Edit</span>
+                  <span className="text-xs text-fortress-silver/30 group-hover:text-fortress-gold/60 transition-colors">Chỉnh sửa</span>
                   <ChevronRight className="w-3.5 h-3.5 text-fortress-silver/20 group-hover:text-fortress-gold/50 transition-colors" />
                 </div>
               </Link>
