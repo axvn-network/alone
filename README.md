@@ -1,5 +1,7 @@
 # 🏰 Fortress Investment Holdings System (Hệ Thống Quản Lý & Đầu Tư Fortress)
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/7af0e4e0-6000-4c25-9cb1-ddf9d5d17cf5/deploy-status)](https://app.netlify.com/projects/fortress88/deploys)
+
 | Môi trường / Nhánh (Branch) | Badge Trạng Thái Deploy |
 | :--- | :--- |
 | **Production (`main`)** | [![Netlify Status](https://api.netlify.com/api/v1/badges/7af0e4e0-6000-4c25-9cb1-ddf9d5d17cf5/deploy-status?branch=main)](https://app.netlify.com/projects/fortress88/deploys) |
