@@ -1,2 +1,2 @@
-# Netlify Redirects for Next.js App Router
-/*   /.netlify/functions/next   200
+# Netlify Redirects File
+# Note: @netlify/plugin-nextjs v5 handles all Next.js App Router dynamic & static routes automatically.
