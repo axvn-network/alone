@@ -99,7 +99,7 @@ export default function AboutPage() {
               <p className="text-fortress-gold text-sm font-medium tracking-[4px] uppercase mb-3">Sứ Mệnh</p>
               <h3 className="text-lg md:text-2xl font-bold text-fortress-ivory mb-3 md:mb-4">Đầu Tư Với Sức Mạnh. Phục Vụ Với Niềm Tin. Tạo Giá Trị Bền Vững.</h3>
               <p className="text-fortress-silver text-sm md:text-base leading-relaxed">
-                Sứ mệnh của chúng tôi là xác định các cơ hội tiềm năng cao, triển khai vốn có trách nhiệm và hỗ trợ tăng trưởng bền vững thông qua sự tham gia chiến lược, quản trị mạnh mẽ và quan hệ đối tác dài hạn. Chúng tôi đặt khách hàng vào trung tâm mọi quyết định, tập trung vào sự minh bạch, niềm tin và kết quả địa chỉ giá trị.
+                Sứ mệnh của chúng tôi là xác định các cơ hội tiềm năng cao, triển khai vốn có trách nhiệm và hỗ trợ tăng trưởng bền vững thông qua sự tham gia chiến lược, quản trị mạnh mẽ và quan hệ đối tác dài hạn. Chúng tôi đặt khách hàng vào trung tâm mọi quyết định, tập trung vào sự minh bạch, niềm tin và kết quả đích thực.
               </p>
             </StaggerItem>
           </Stagger>
@@ -170,7 +170,7 @@ export default function AboutPage() {
             <p className="text-fortress-gold text-sm font-medium tracking-[2px] md:tracking-[4px] uppercase mb-4">Triết Lý Đầu Tư</p>
             <h2 className="text-xl md:text-4xl font-bold text-fortress-ivory mb-3 md:mb-4">Vốn Kỷ Luật. Tăng Trưởng Chiến Lược.</h2>
             <p className="text-fortress-ivory/80 text-sm md:text-lg leading-relaxed max-w-2xl mx-auto">
-              Giá trị bền vững bắt đầu từ nền tảng cơ bản vững chắc. Tất cả mọi thứ khác chỉ là nhữ́ng làn sóng huyền ảo.
+              Giá trị bền vững bắt đầu từ nền tảng cơ bản vững chắc. Tất cả những thứ khác chỉ là những ảo ảnh nhất thời.
             </p>
           </Reveal>
           <Stagger className="grid sm:grid-cols-2 gap-3 md:gap-4 max-w-4xl mx-auto">

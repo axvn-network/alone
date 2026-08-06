@@ -48,13 +48,18 @@ export async function PUT(request: Request) {
   if (authError) return authError;
   try {
     await connectDB();
-    const { slug, title, content } = await request.json();
-    if (!slug || title === undefined || content === undefined) {
-      return NextResponse.json({ error: "Missing fields" }, { status: 400 });
+    const { slug, title, content, data } = await request.json();
+    if (!slug) {
+      return NextResponse.json({ error: "Missing slug" }, { status: 400 });
     }
+    const updateObj: Record<string, unknown> = { updatedAt: new Date() };
+    if (title !== undefined) updateObj.title = title;
+    if (content !== undefined) updateObj.content = content;
+    if (data !== undefined) updateObj.data = data;
+
     await Page.findOneAndUpdate(
       { slug },
-      { $set: { title, content, updatedAt: new Date() } },
+      { $set: updateObj },
       { upsert: true }
     );
     return NextResponse.json({ success: true });

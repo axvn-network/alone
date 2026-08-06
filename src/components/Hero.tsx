@@ -39,7 +39,20 @@ const heroButtonVariants = {
   },
 };
 
+import { usePageContent } from "@/hooks/usePageContent";
+
+const defaultHeroData = {
+  heroSubtitle: "Fortress Investment Holdings",
+  heroTitleLine1: "Vững Chắc Nền Tảng.",
+  heroTitleLine2: "Đột Phá Tầm Nhìn.",
+  heroDescription: "Tập đoàn đầu tư đa ngành hàng đầu tập trung tìm kiếm, thâu tóm và phát triển các cơ hội đầu tư tiềm năng cao trong các lĩnh vực bất động sản, đầu tư tư nhân (Private Equity), công nghệ AI, năng lượng, hàng hóa và dịch vụ khách sạn nghỉ dưỡng.",
+  heroBtn1Text: "Khám Phá Lĩnh Vực Đầu Tư",
+  heroBtn2Text: "Hợp Tác Đầu Tư Cùng Chúng Tôi",
+};
+
 export default function Hero() {
+  const { content } = usePageContent("home", defaultHeroData);
+
   return (
     <motion.section
       variants={heroContainerVariants}
@@ -81,16 +94,16 @@ export default function Hero() {
           variants={heroItemVariants}
           className="block text-fortress-gold text-[10px] sm:text-xs md:text-sm tracking-[4px] md:tracking-[6px] uppercase font-semibold mb-4 md:mb-6"
         >
-          Fortress Investment Holdings
+          {content.heroSubtitle}
         </motion.span>
 
         <motion.h1
           variants={heroItemVariants}
           className="text-white text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-light leading-[1.2] uppercase tracking-tight mb-4 md:mb-8 w-full sm:max-w-lg md:max-w-4xl"
         >
-          Vững Chắc Nền Tảng.<br />
+          {content.heroTitleLine1}<br />
           <span className="font-semibold bg-gradient-to-r from-fortress-gold to-fortress-champagne bg-clip-text text-transparent">
-            Đột Phá Tầm Nhìn.
+            {content.heroTitleLine2}
           </span>
         </motion.h1>
 
@@ -98,7 +111,7 @@ export default function Hero() {
           variants={heroItemVariants}
           className="text-fortress-silver/90 text-sm sm:text-base md:text-lg lg:text-xl w-full sm:max-w-xl md:max-w-3xl leading-relaxed mb-6 md:mb-10 font-light px-1 sm:px-0"
         >
-          Tập đoàn đầu tư đa ngành hàng đầu tập trung tìm kiếm, thâu tóm và phát triển các cơ hội đầu tư tiềm năng cao trong các lĩnh vực bất động sản, đầu tư tư nhân (Private Equity), công nghệ AI, năng lượng, hàng hóa và dịch vụ khách sạn nghỉ dưỡng.
+          {content.heroDescription}
         </motion.p>
 
         <motion.div variants={heroButtonVariants} className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
@@ -112,7 +125,7 @@ export default function Hero() {
               href="/investment-focus"
               className="block w-full sm:w-auto px-6 sm:px-8 py-3.5 md:py-4 bg-gradient-to-r from-fortress-gold to-fortress-champagne text-fortress-navy font-bold text-xs sm:text-sm tracking-widest uppercase hover:opacity-90 transition-opacity rounded-sm shadow-lg text-center"
             >
-              Khám Phá Lĩnh Vực Đầu Tư
+              {content.heroBtn1Text}
             </Link>
           </motion.div>
           <motion.div
@@ -125,7 +138,7 @@ export default function Hero() {
               href="/invest-with-fortress"
               className="block w-full sm:w-auto px-6 sm:px-8 py-3.5 md:py-4 border border-fortress-silver/40 text-white font-bold text-xs sm:text-sm tracking-widest uppercase hover:bg-white/10 hover:border-white transition-all rounded-sm backdrop-blur-sm text-center"
             >
-              Hợp Tác Đầu Tư Cùng Chúng Tôi
+              {content.heroBtn2Text}
             </Link>
           </motion.div>
         </motion.div>

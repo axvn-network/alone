@@ -9,15 +9,15 @@ import { ArrowLeft, Save, Eye } from "lucide-react";
 import RichTextEditor from "@/components/RichTextEditor";
 
 const pageLabels: Record<string, string> = {
-  home: "Home",
-  about: "About Us",
-  "investment-focus": "Investment Focus",
-  "our-approach": "Our Approach",
-  "partner-with-us": "Partner With Us",
-  contact: "Contact Us",
-  "privacy-policy": "Privacy Policy",
-  "terms-of-use": "Terms of Use",
-  "investment-disclaimer": "Investment Disclaimer",
+  home: "Trang chủ",
+  about: "Giới thiệu",
+  "investment-focus": "Lĩnh vực đầu tư",
+  "our-approach": "Phương pháp tiếp cận",
+  "partner-with-us": "Hợp tác đầu tư",
+  contact: "Liên hệ",
+  "privacy-policy": "Chính sách bảo mật",
+  "terms-of-use": "Điều khoản sử dụng",
+  "investment-disclaimer": "Miễn trừ trách nhiệm",
 };
 
 export default function PageEditor({ params }: { params: Promise<{ slug: string }> }) {
@@ -44,9 +44,9 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
         body: JSON.stringify({ slug, title, content }),
       });
       if (!res.ok) throw new Error("Failed to save");
-      toast.success("Page saved");
+      toast.success("Đã lưu trang thành công");
     } catch {
-      toast.error("Failed to save page");
+      toast.error("Lưu trang thất bại");
     } finally {
       setSaving(false);
     }
@@ -65,24 +65,24 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
           <div className="flex items-center justify-between mb-6">
             <div>
               <Link href="/admin/content" className="flex items-center gap-1.5 text-fortress-silver/50 hover:text-fortress-gold text-xs transition-colors mb-2">
-                <ArrowLeft className="w-3.5 h-3.5" /> Back to Content
+                <ArrowLeft className="w-3.5 h-3.5" /> Quay lại danh sách
               </Link>
             </div>
             <div className="flex items-center gap-2">
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="flex items-center gap-2 px-5 py-2.5 bg-fortress-gold text-fortress-navy text-sm font-bold hover:bg-fortress-champagne transition-colors disabled:opacity-50 rounded-lg"
+                className="flex items-center gap-2 px-5 py-2.5 bg-fortress-gold text-fortress-navy text-sm font-bold hover:bg-fortress-champagne transition-colors disabled:opacity-50 rounded-lg cursor-pointer"
               >
                 <Save className="w-4 h-4" />
-                {saving ? "Saving..." : "Save Changes"}
+                {saving ? "Đang lưu..." : "Lưu thay đổi"}
               </button>
             </div>
           </div>
 
           <div className="space-y-5">
             <div className="bg-fortress-navy border-t-2 border-t-fortress-gold/30 p-5 rounded-lg">
-              <label className="block text-fortress-silver text-xs font-medium mb-2 tracking-wide">Page Title</label>
+              <label className="block text-fortress-silver text-xs font-medium mb-2 tracking-wide">Tiêu đề trang</label>
               <input
                 type="text"
                 value={title}
@@ -92,14 +92,14 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
             </div>
 
             <div className="bg-fortress-navy border-t-2 border-t-fortress-gold/30 p-5 rounded-lg">
-              <label className="block text-fortress-silver text-xs font-medium mb-2 tracking-wide">Content</label>
+              <label className="block text-fortress-silver text-xs font-medium mb-2 tracking-wide">Nội dung chi tiết</label>
               <RichTextEditor value={content} onChange={setContent} />
             </div>
 
             <div className="bg-fortress-navy border-t-2 border-t-fortress-gold/30 p-5 rounded-lg">
               <div className="flex items-center gap-2 mb-3">
                 <Eye className="w-4 h-4 text-fortress-gold" />
-                <label className="text-fortress-silver text-xs font-medium tracking-wide">Preview</label>
+                <label className="text-fortress-silver text-xs font-medium tracking-wide">Xem trước</label>
               </div>
               <div className="border border-white/5 p-5 bg-fortress-deep rounded-lg">
                 <div className="prose max-w-none text-fortress-ivory text-sm" dangerouslySetInnerHTML={{ __html: content }} />

@@ -35,7 +35,7 @@ export default function InvestmentSectors() {
       whileInView="visible"
       viewport={{ once: true, margin: "-80px" }}
       variants={sectionReveal}
-      className="relative py-16 md:py-28 overflow-hidden bg-fortress-navy rounded-2xl mx-4 my-8"
+      className="relative py-16 md:py-28 overflow-hidden bg-fortress-navy rounded-2xl mx-2 sm:mx-4 my-8 md:my-12"
     >
       <div className="relative max-w-[1400px] mx-auto px-6 lg:px-12">
         <Stagger>

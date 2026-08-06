@@ -20,6 +20,8 @@ export interface IPageSEO {
 export interface IPage extends Document {
   slug: string;
   title: string;
+  content: string;
+  data: Record<string, unknown>;
   hero: Record<string, unknown>;
   sections: IPageSection[];
   seo: IPageSEO;
@@ -48,6 +50,8 @@ const PageSchema = new Schema<IPage>(
   {
     slug: { type: String, required: true, unique: true, trim: true },
     title: { type: String, required: true, trim: true },
+    content: { type: String, default: "" },
+    data: { type: Schema.Types.Mixed, default: {} },
     hero: { type: Schema.Types.Mixed, default: {} },
     sections: [PageSectionSchema],
     seo: { type: PageSEOSchema, default: () => ({}) },

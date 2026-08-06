@@ -11,7 +11,20 @@ const sectionReveal = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const } },
 };
 
+import { usePageContent } from "@/hooks/usePageContent";
+
+const defaultCTAData = {
+  ctaTag: "06 - Hợp Tác Đầu Tư",
+  ctaTitle: "Cùng Nhau Kiến Tạo Giá Trị Bền Vững",
+  ctaParagraph1: "Chúng tôi luôn chào đón các cơ hội hợp tác từ các chủ doanh nghiệp, nhà khởi nghiệp, nhà đầu tư, nhà phát triển dự án và đối tác chiến lược.",
+  ctaParagraph2: "Dù bạn đang tìm kiếm nguồn vốn đầu tư, đề xuất cơ hội M&A thâu tóm doanh nghiệp, hay mong muốn hợp tác liên doanh dài hạn – đội ngũ chuyên gia của chúng tôi sẵn sàng thẩm định với sự bảo mật và chuyên nghiệp tuyệt đối.",
+  ctaBtn1Text: "GỬI ĐỀ XUẤT ĐẦU TƯ",
+  ctaBtn2Text: "LIÊN HỆ ĐỘI NGŨ CHUYÊN GIA",
+};
+
 export default function PartnershipCTA() {
+  const { content } = usePageContent("home", defaultCTAData);
+
   return (
     <motion.section
       initial="hidden"
@@ -30,22 +43,22 @@ export default function PartnershipCTA() {
           <Stagger>
             <StaggerItem>
               <span className="block text-fortress-gold text-xs tracking-[6px] uppercase mb-6 font-semibold">
-                06 - Hợp Tác Đầu Tư
+                {content.ctaTag}
               </span>
             </StaggerItem>
             <StaggerItem>
               <h2 className="text-2xl md:text-5xl font-light text-fortress-ivory mb-6 uppercase tracking-tight leading-tight">
-                Cùng Nhau Kiến Tạo Giá Trị Bền Vững
+                {content.ctaTitle}
               </h2>
             </StaggerItem>
             <StaggerItem>
               <p className="text-fortress-silver/90 text-lg leading-relaxed mb-4 max-w-[700px] mx-auto">
-                Chúng tôi luôn chào đón các cơ hội hợp tác từ các chủ doanh nghiệp, nhà khởi nghiệp, nhà đầu tư, nhà phát triển dự án và đối tác chiến lược.
+                {content.ctaParagraph1}
               </p>
             </StaggerItem>
             <StaggerItem>
               <p className="text-fortress-silver/70 text-sm leading-relaxed mb-8 md:mb-12 max-w-[600px] mx-auto">
-                Dù bạn đang tìm kiếm nguồn vốn đầu tư, đề xuất cơ hội M&A thâu tóm doanh nghiệp, hay mong muốn hợp tác liên doanh dài hạn – đội ngũ chuyên gia của chúng tôi sẵn sàng thẩm định với sự bảo mật và chuyên nghiệp tuyệt đối.
+                {content.ctaParagraph2}
               </p>
             </StaggerItem>
             <StaggerItem>
@@ -59,7 +72,7 @@ export default function PartnershipCTA() {
                     href="/invest-with-fortress"
                     className="block px-8 py-3.5 bg-gradient-to-r from-fortress-gold to-fortress-champagne text-fortress-navy font-bold text-sm tracking-widest shadow-lg rounded-sm hover:opacity-90 transition-opacity"
                   >
-                    GỬI ĐỀ XUẤT ĐẦU TƯ
+                    {content.ctaBtn1Text}
                   </Link>
                 </motion.div>
                 <motion.div
@@ -71,7 +84,7 @@ export default function PartnershipCTA() {
                     href="/contact"
                     className="block px-8 py-3.5 border border-fortress-gold text-fortress-gold text-sm tracking-widest font-semibold hover:bg-fortress-gold/10 transition-all duration-300 rounded-sm"
                   >
-                    LIÊN HỆ ĐỘI NGŨ CHUYÊN GIA
+                    {content.ctaBtn2Text}
                   </Link>
                 </motion.div>
               </div>

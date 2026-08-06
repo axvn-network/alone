@@ -10,9 +10,19 @@ const sectionReveal = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const } },
 };
 
+import { usePageContent } from "@/hooks/usePageContent";
+
+const defaultNewsData = {
+  newsTitle: "Đăng Ký Nhận Bản Tin Chuyên Sâu",
+  newsDescription: "Cập nhật góc nhìn thị trường, phân tích xu hướng đầu tư và tin tức mới nhất từ Fortress – gửi tới bạn khi có giá trị thực sự.",
+  newsBtnText: "ĐĂNG KÝ",
+  newsDisclaimer: "Bằng cách đăng ký, bạn đồng ý nhận các thông tin từ Fortress Investment Holdings. Bạn có thể hủy đăng ký bất kỳ lúc nào.",
+};
+
 export default function Newsletter() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const { content } = usePageContent("home", defaultNewsData);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,12 +46,12 @@ export default function Newsletter() {
           <Stagger>
             <StaggerItem>
               <h2 className="text-2xl md:text-3xl font-bold text-fortress-ivory mb-4">
-                Đăng Ký Nhận Bản Tin Chuyên Sâu
+                {content.newsTitle}
               </h2>
             </StaggerItem>
             <StaggerItem>
               <p className="text-fortress-silver/60 leading-relaxed mb-8">
-                Cập nhật góc nhìn thị trường, phân tích xu hướng đầu tư và tin tức mới nhất từ Fortress – gửi tới bạn khi có giá trị thực sự.
+                {content.newsDescription}
               </p>
             </StaggerItem>
             <StaggerItem>
@@ -72,19 +82,19 @@ export default function Newsletter() {
                   />
                   <motion.button
                     type="submit"
-                    className="w-full sm:w-auto px-8 py-3.5 bg-fortress-gold text-fortress-navy font-bold text-sm tracking-widest"
+                    className="w-full sm:w-auto px-8 py-3.5 bg-fortress-gold text-fortress-navy font-bold text-sm tracking-widest cursor-pointer"
                     whileHover={{ backgroundColor: "#E6C879", scale: 1.02 }}
                     whileTap={{ scale: 0.97 }}
                     transition={{ type: "spring", stiffness: 400, damping: 20 }}
                   >
-                    ĐĂNG KÝ
+                    {content.newsBtnText}
                   </motion.button>
                 </form>
               )}
             </StaggerItem>
             <StaggerItem>
               <p className="text-fortress-silver/30 text-xs mt-4">
-                Bằng cách đăng ký, bạn đồng ý nhận các thông tin từ Fortress Investment Holdings. Bạn có thể hủy đăng ký bất kỳ lúc nào.
+                {content.newsDisclaimer}
               </p>
             </StaggerItem>
           </Stagger>
