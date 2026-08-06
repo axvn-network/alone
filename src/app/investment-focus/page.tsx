@@ -60,7 +60,7 @@ const sectors = [
       { heading: "Đầu Tư Cổ Phần Chiến Lược Thiểu Số", desc: "Cổ phần quan trọng được hỗ trợ bởi sự tham gia chiến lược chủ động." },
       { heading: "Mua Lại Do Ban Quản Lý Dẫn Dắt (MBO)", desc: "Hỗ trợ các đội ngũ lãnh đạo tài năng thâu tóm và phát triển doanh nghiệp họ đang quản lý." },
       { heading: "Thâu Tóm Đồng Đầu Tư", desc: "Hợp tác với các nhà đồng đầu tư cho các cơ hội quy mô lớn hoặc chuyên biệt." },
-      { heading: "Giao Dịch Chuyển Giao Thế Hệ", desc: "Giải pháp có cấu trúc cho các chủ doanh nghiệp lên kế hoạch thoái vốn có trách nhiệm và trật tự." },
+      { heading: "Giao Dịch Chuyển Giao Thế Hệ", desc: "Giải pháp có cấu trúc cho các chủ doanh nghiệp lên kế hoạch thoái vốn an toàn và bài bản." },
       { heading: "Hợp Tác Cấp Vốn Tăng Trưởng", desc: "Đầu tư kết hợp với hỗ trợ chiến lược cho mở rộng và phát triển." },
     ],
     closing:

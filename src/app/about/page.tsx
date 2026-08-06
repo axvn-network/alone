@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 
 const values = [
   { icon: Shield, title: "Liêm Chính", description: "Chúng tôi kinh doanh trung thực, có trách nhiệm và minh bạch trong mọi giao dịch, không có ngoại lệ." },
-  { icon: Hexagon, title: "Vững Mạnh", description: "Chúng tôi ra quyết định với kỷ luật, sự tự tin và cân nhắc cẩn thận. Niềm tin một cần thiết; sự biết khi nào nên bước đi cũng vậy." },
+  { icon: Hexagon, title: "Kiên Định", description: "Chúng tôi đưa ra quyết định dựa trên tính kỷ luật, sự tự tin và cân nhắc cẩn trọng. Có niềm tin là điều cần thiết; nhưng biết khi nào nên dừng lại cũng quan trọng không kém." },
   { icon: Eye, title: "Tầm Nhìn", description: "Chúng tôi nhìn xa hơn lợi nhuận trước mắt để xác định giá trị dài hạn và tiềm năng tương lai mà người khác có thể bỏ qua." },
   { icon: Users, title: "Quan Hệ Đối Tác", description: "Chúng tôi xây dựng mối quan hệ dựa trên niềm tin, sự tôn trọng, sự liên kết và mục tiêu chung. Thành công của đối tác chính là thành công của chúng tôi." },
   { icon: Award, title: "Xuất Sắc", description: "Chúng tôi giữ tiêu chuẩn cao trong mọi khoản đầu tư, quan hệ đối tác và tương tác kinh doanh." },
@@ -37,7 +37,7 @@ const philosophyPoints = [
   "Lợi thế cạnh tranh bền vững – lý do doanh nghiệp chiến thắng và duy trì vị thế",
   "Thông tin tài chính minh bạch – con số sạch sẽ, trình bày trung thực",
   "Cơ hội tăng trưởng thực tế – tham vọng neo chặt trong bằng chứng cụ thể",
-  "Sự liên kết giữa các bên liên quan – tất cả cùng chèo lái về một hướng",
+  "Sự liên kết giữa các bên liên quan – tất cả cùng hướng đến một mục tiêu chung",
 ];
 
 export default function AboutPage() {
