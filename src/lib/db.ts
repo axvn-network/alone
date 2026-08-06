@@ -1,8 +1,10 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import Admin from "@/models/Admin";
+import { getSupabase, getSupabaseAdmin } from "./supabase";
+import { queryPostgres } from "./postgres";
 
-const getMongoUri = () => process.env.MONGODB_URI!;
+const getMongoUri = () => process.env.MONGODB_URI;
 
 interface MongooseCache {
   conn: typeof mongoose | null;
@@ -23,27 +25,38 @@ if (!globalWithMongoose.mongoose) {
 async function seedAdmin() {
   if (cached.seeded) return;
 
-  const count = await Admin.countDocuments();
-  if (count > 0) {
+  try {
+    const count = await Admin.countDocuments();
+    if (count > 0) {
+      cached.seeded = true;
+      return;
+    }
+
+    const email = process.env.ADMIN_EMAIL || "admin@fortressih.com";
+    const password = process.env.ADMIN_PASSWORD || "admin123";
+    const name = process.env.ADMIN_NAME || "Admin";
+
+    const hashedPassword = await bcrypt.hash(password, 12);
+    await Admin.create({ name, email, password: hashedPassword, role: "superadmin" });
+
+    console.log(`[Seed] Admin user created: ${email}`);
     cached.seeded = true;
-    return;
+  } catch (e) {
+    console.warn("[Seed] Admin seed warning:", e);
   }
-
-  const email = process.env.ADMIN_EMAIL || "admin@fortressih.com";
-  const password = process.env.ADMIN_PASSWORD || "admin123";
-  const name = process.env.ADMIN_NAME || "Admin";
-
-  const hashedPassword = await bcrypt.hash(password, 12);
-  await Admin.create({ name, email, password: hashedPassword, role: "superadmin" });
-
-  console.log(`[Seed] Admin user created: ${email}`);
-  cached.seeded = true;
 }
 
-export async function connectDB(): Promise<typeof mongoose> {
+export async function connectDB(): Promise<typeof mongoose | null> {
+  // If Supabase environment is set, Supabase is active
+  if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    console.log("[DB] Using Supabase Database");
+    return null;
+  }
+
   const uri = getMongoUri();
   if (!uri) {
-    throw new Error("Please define the MONGODB_URI environment variable");
+    console.warn("[DB] MONGODB_URI not defined. Operating with Supabase / Mock DB.");
+    return null;
   }
 
   if (cached.conn) {
@@ -61,8 +74,10 @@ export async function connectDB(): Promise<typeof mongoose> {
     await seedAdmin();
   } catch (e) {
     cached.promise = null;
-    throw e;
+    console.warn("[DB] MongoDB connection failed, falling back to Supabase/Postgres:", e);
   }
 
   return cached.conn;
 }
+
+export { getSupabase, getSupabaseAdmin, queryPostgres };
