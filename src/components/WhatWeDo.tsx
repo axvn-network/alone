@@ -21,7 +21,21 @@ const sectionReveal = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const } },
 };
 
+import { usePageContent } from "@/hooks/usePageContent";
+
+const defaultWhatWeDoData = {
+  whatTag: "02 - Năng Lực Cốt Lõi",
+  whatTitle: "Quản Lý Đầu Tư Chiến Lược",
+  whatSubtitle: "Kỷ Luật Phân Bổ Vốn. Kiến Tạo Giá Trị Bền Vững.",
+  whatDesc1: "Chúng tôi xác định và quản lý các cơ hội đầu tư được lựa chọn kỹ lưỡng trên nhiều lĩnh vực, chú trọng kiểm soát rủi ro, tối ưu hóa dòng tiền và tăng trưởng vốn dài hạn.",
+  whatDesc2: "Phương pháp tiếp cận được thiết kế dành cho các nhà đầu tư tìm kiếm sự tham gia chuyên nghiệp vào các doanh nghiệp, dự án và tài sản cao cấp tại UAE và toàn cầu.",
+  whatCards: cards,
+};
+
 export default function WhatWeDo() {
+  const { content } = usePageContent("home", defaultWhatWeDoData);
+  const cardList = content.whatCards && Array.isArray(content.whatCards) ? content.whatCards : cards;
+
   return (
     <motion.section
       initial="hidden"
@@ -36,21 +50,21 @@ export default function WhatWeDo() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-16 mb-12 md:mb-20">
               <div>
                 <span className="block text-fortress-gold text-xs tracking-[6px] uppercase mb-4 font-semibold">
-                  02 - Năng Lực Cốt Lõi
+                  {content.whatTag}
                 </span>
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-light text-fortress-ivory leading-tight uppercase tracking-tight">
-                  Quản Lý Đầu Tư Chiến Lược
+                  {content.whatTitle}
                 </h2>
                 <p className="text-fortress-gold text-sm sm:text-base md:text-lg font-medium mt-3">
-                  Kỷ Luật Phân Bổ Vốn. Kiến Tạo Giá Trị Bền Vững.
+                  {content.whatSubtitle}
                 </p>
               </div>
               <div className="space-y-4 lg:self-end">
                 <p className="text-fortress-silver/80 text-sm sm:text-base md:text-lg leading-relaxed">
-                  Chúng tôi xác định và quản lý các cơ hội đầu tư được lựa chọn kỹ lưỡng trên nhiều lĩnh vực, chú trọng kiểm soát rủi ro, tối ưu hóa dòng tiền và tăng trưởng vốn dài hạn.
+                  {content.whatDesc1}
                 </p>
                 <p className="text-fortress-silver/80 text-sm sm:text-base md:text-lg leading-relaxed">
-                  Phương pháp tiếp cận được thiết kế dành cho các nhà đầu tư tìm kiếm sự tham gia chuyên nghiệp vào các doanh nghiệp, dự án và tài sản cao cấp tại UAE và toàn cầu.
+                  {content.whatDesc2}
                 </p>
               </div>
             </div>
@@ -58,7 +72,7 @@ export default function WhatWeDo() {
 
           <StaggerItem>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-              {cards.map((item, i) => (
+              {cardList.map((item, i) => (
                 <motion.div
                   key={i}
                   variants={cardVariants}

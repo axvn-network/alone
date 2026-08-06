@@ -28,7 +28,20 @@ const sectionReveal = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const } },
 };
 
+import { usePageContent } from "@/hooks/usePageContent";
+
+const defaultSectorsData = {
+  sectorsTag: "03 - Lĩnh Vực Đầu Tư",
+  sectorsTitle: "Tầm Nhìn Đầu Tư Đa Ngành",
+  sectorsDesc: "Fortress Investment Holdings tập trung vào các lĩnh vực mà nguồn vốn, kinh nghiệm và sự tham gia chiến lược của chúng tôi có thể mang lại những giá trị đo lường được.",
+  sectorsList: sectors,
+  sectorsBtnText: "XEM TẤT CẢ LĨNH VỰC ĐẦU TƯ",
+};
+
 export default function InvestmentSectors() {
+  const { content } = usePageContent("home", defaultSectorsData);
+  const list = content.sectorsList && Array.isArray(content.sectorsList) ? content.sectorsList : sectors;
+
   return (
     <motion.section
       initial="hidden"
@@ -43,21 +56,21 @@ export default function InvestmentSectors() {
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 md:mb-16 gap-6">
               <div>
                 <span className="block text-fortress-gold text-xs tracking-[6px] uppercase mb-4 font-semibold">
-                  03 - Lĩnh Vực Đầu Tư
+                  {content.sectorsTag}
                 </span>
                 <h2 className="text-2xl md:text-5xl font-light text-fortress-ivory leading-tight uppercase tracking-tight">
-                  Tầm Nhìn Đầu Tư Đa Ngành
+                  {content.sectorsTitle}
                 </h2>
               </div>
               <p className="text-fortress-silver/80 text-base md:text-lg leading-relaxed max-w-[500px]">
-                Fortress Investment Holdings tập trung vào các lĩnh vực mà nguồn vốn, kinh nghiệm và sự tham gia chiến lược của chúng tôi có thể mang lại giá trị đo lường được.
+                {content.sectorsDesc}
               </p>
             </div>
           </StaggerItem>
 
           <StaggerItem>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {sectors.map((sector, index) => (
+              {list.map((sector, index) => (
                 <motion.div
                   key={sector.title}
                   variants={cardHoverVariants}
@@ -113,7 +126,7 @@ export default function InvestmentSectors() {
                   href="/investment-focus"
                   className="inline-flex items-center justify-center w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-3.5 border border-fortress-gold text-fortress-gold hover:bg-fortress-gold hover:text-fortress-navy text-xs sm:text-sm tracking-widest font-semibold transition-colors duration-300 rounded-sm"
                 >
-                  XEM TẤT CẢ LĨNH VỰC ĐẦU TƯ
+                  {content.sectorsBtnText}
                 </Link>
               </motion.div>
             </div>

@@ -18,7 +18,18 @@ const sectionReveal = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const } },
 };
 
+import { usePageContent } from "@/hooks/usePageContent";
+
+const defaultWhyData = {
+  whyTag: "04 - Tại Sao Chọn Fortress",
+  whyTitle: "Nền Tảng Vững Chắc Cho Sự Tăng Trưởng",
+  whyBenefits: benefits,
+};
+
 export default function WhyChooseUs() {
+  const { content } = usePageContent("home", defaultWhyData);
+  const benefitList = content.whyBenefits && Array.isArray(content.whyBenefits) ? content.whyBenefits : benefits;
+
   return (
     <motion.section
       initial="hidden"
@@ -32,17 +43,17 @@ export default function WhyChooseUs() {
         <Stagger>
           <StaggerItem>
             <span className="block text-fortress-gold/50 text-xs tracking-[6px] uppercase mb-6 font-medium">
-              04 - Tại Sao Chọn Fortress
+              {content.whyTag}
             </span>
           </StaggerItem>
           <StaggerItem>
             <h2 className="text-2xl md:text-4xl font-bold text-fortress-ivory mb-8 md:mb-12 leading-tight">
-              Nền Tảng Vững Chắc Cho Sự Tăng Trưởng
+              {content.whyTitle}
             </h2>
           </StaggerItem>
           <StaggerItem>
             <div className="grid md:grid-cols-2 gap-x-16 gap-y-10">
-              {benefits.map((item) => (
+              {benefitList.map((item) => (
                 <motion.div
                   key={item.title}
                   className="group cursor-default"

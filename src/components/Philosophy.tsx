@@ -25,7 +25,20 @@ const sectionReveal = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const } },
 };
 
+import { usePageContent } from "@/hooks/usePageContent";
+
+const defaultPhilData = {
+  philTag: "05 - Phương Pháp Tiếp Cận",
+  philTitle: "Trụ Cột Kiến Tạo Giá Trị",
+  philDesc: "Chúng tôi kiến tạo giá trị dài hạn thông qua chiến lược kỷ luật, mối quan hệ đối tác tin cậy và quyết định mang tầm vóc định chế.",
+  philQuote: "\"Nếu không thể tạo thêm giá trị thực tiễn vượt trên nguồn vốn, đó không phải là cơ hội dành cho Fortress.\"",
+  philCommitments: commitments,
+};
+
 export default function Philosophy() {
+  const { content } = usePageContent("home", defaultPhilData);
+  const commitmentList = content.philCommitments && Array.isArray(content.philCommitments) ? content.philCommitments : commitments;
+
   return (
     <motion.section
       initial="hidden"
@@ -39,22 +52,22 @@ export default function Philosophy() {
           <Stagger>
             <StaggerItem>
               <span className="block text-center text-fortress-gold text-xs tracking-[6px] uppercase mb-6 font-semibold">
-                05 - Phương Pháp Tiếp Cận
+                {content.philTag}
               </span>
             </StaggerItem>
             <StaggerItem>
               <h2 className="text-2xl md:text-5xl font-light text-fortress-ivory text-center mb-6 md:mb-8 uppercase tracking-tight leading-tight">
-                Trụ Cột Kiến Tạo Giá Trị
+                {content.philTitle}
               </h2>
             </StaggerItem>
             <StaggerItem>
               <p className="text-fortress-silver/80 text-lg leading-relaxed text-center max-w-[700px] mx-auto mb-10 md:mb-16">
-                Chúng tôi kiến tạo giá trị dài hạn thông qua chiến lược kỷ luật, mối quan hệ đối tác tin cậy và quyết định mang tầm vóc định chế.
+                {content.philDesc}
               </p>
             </StaggerItem>
             <StaggerItem>
               <div className="grid md:grid-cols-3 gap-8">
-                {commitments.map((item) => (
+                {commitmentList.map((item) => (
                   <motion.div
                     key={item.title}
                     variants={cardVariants}
@@ -77,7 +90,7 @@ export default function Philosophy() {
             </StaggerItem>
             <StaggerItem>
               <p className="text-fortress-silver/50 text-sm leading-relaxed text-center max-w-[600px] mx-auto mt-8 md:mt-12 italic">
-                &quot;Nếu không thể tạo thêm giá trị thực tiễn vượt trên nguồn vốn, đó không phải là cơ hội dành cho Fortress.&quot;
+                {content.philQuote}
               </p>
             </StaggerItem>
           </Stagger>

@@ -119,11 +119,11 @@ export default function AboutPage() {
                 <Image src="/Azzam-El-Khatib.jpeg" alt="Azzam El-Khatib" fill className="object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" sizes="(max-width: 768px) 100vw, 50vw" />
               </div>
               <h3 className="text-lg md:text-xl font-bold text-fortress-ivory mb-1 transition-colors duration-500 group-hover:text-fortress-gold">Azzam El-Khatib</h3>
-              <p className="text-fortress-gold text-sm font-medium mb-4 md:mb-6">Founder and Chief Executive Officer</p>
+              <p className="text-fortress-gold text-sm font-medium mb-4 md:mb-6">Nhà Sáng Lập & Tổng Giám Đốc Điều Hành (CEO)</p>
               <div className="space-y-3 md:space-y-4 text-fortress-silver text-sm md:text-base leading-relaxed">
-                <p>Azzam El-Khatib leads Fortress Investment Holdings with a strong commitment to disciplined growth, client service, and responsible investment management.</p>
-                <p>With an extensive network across the UAE, GCC and international markets, Azzam plays a central role in building strategic relationships, identifying investment opportunities, and driving the company&rsquo;s long-term vision.</p>
-                <p>His leadership is defined by discipline, accountability, and a client-first approach. He is committed to protecting clients&rsquo; interests, creating sustainable value, and delivering strong, well-considered returns on every investment.</p>
+                <p>Azzam El-Khatib lãnh đạo Fortress Investment Holdings với cam kết sâu sắc về tăng trưởng kỷ luật, dịch vụ khách hàng và quản lý đầu tư có trách nhiệm.</p>
+                <p>Với mạng lưới rộng khắp tại UAE, GCC và các thị trường quốc tế, Azzam đóng vai trò trung tâm trong việc xây dựng mối quan hệ chiến lược, xác định các cơ hội đầu tư và định hình tầm nhìn dài hạn của tập đoàn.</p>
+                <p>Phong cách lãnh đạo của ông được định hình bởi tính kỷ luật, trách nhiệm và triết lý xem khách hàng là trung tâm. Ông cam kết bảo vệ lợi ích của đối tác, kiến tạo giá trị bền vững và mang lại hiệu quả đầu tư tối ưu.</p>
               </div>
             </StaggerItem>
             <StaggerItem className="group bg-gradient-to-br from-fortress-navy to-fortress-charcoal border border-fortress-gold/10 p-6 md:p-10 rounded-2xl transition-all duration-500 hover:border-fortress-gold/40 hover:shadow-2xl hover:shadow-fortress-gold/10 hover:-translate-y-1">
@@ -131,11 +131,11 @@ export default function AboutPage() {
                 <Image src="/Serhii-Pohrebniak.jpeg" alt="Serhii Pohrebniak" fill className="object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" sizes="(max-width: 768px) 100vw, 50vw" />
               </div>
               <h3 className="text-lg md:text-xl font-bold text-fortress-ivory mb-1 transition-colors duration-500 group-hover:text-fortress-gold">Serhii Pohrebniak</h3>
-              <p className="text-fortress-gold text-sm font-medium mb-4 md:mb-6">Business Strategist</p>
+              <p className="text-fortress-gold text-sm font-medium mb-4 md:mb-6">Giám Đốc Chiến Lược Doanh Nghiệp</p>
               <div className="space-y-3 md:space-y-4 text-fortress-silver text-sm md:text-base leading-relaxed">
-                <p>Serhii Pohrebniak is a key member of Fortress Investment Holdings and one of the strategic minds behind the company&rsquo;s vision and direction. With a military background, he brings discipline, resilience, structure, and a strong sense of responsibility to every aspect of the business.</p>
-                <p>His diverse life and business experiences allow him to approach challenges with clarity, practical thinking, and a long-term perspective. Serhii plays an important role in shaping business strategies, identifying opportunities, and supporting the company&rsquo;s growth.</p>
-                <p>He strongly believes that meaningful goals are achieved through consistency, discipline, and focused action. This philosophy forms the foundation of his approach to both business and life.</p>
+                <p>Serhii Pohrebniak là thành viên chủ chốt của Fortress Investment Holdings và là một trong những bộ óc chiến lược đằng sau tầm nhìn và định hướng của tập đoàn. Với kinh nghiệm trong môi trường quân ngũ, ông mang đến tính kỷ luật, sự kiên cường, cấu trúc chặt chẽ và tinh thần trách nhiệm cao trong mọi hoạt động kinh doanh.</p>
+                <p>Những trải nghiệm phong phú trong cuộc sống và thương trường giúp ông tiếp cận các thách thức với sự rõ ràng, tư duy thực tế và góc nhìn dài hạn. Serhii đóng vai trò quan trọng trong việc xây dựng chiến lược kinh doanh, tìm kiếm cơ hội và thúc đẩy sự phát triển của công ty.</p>
+                <p>Ông tin tưởng mạnh mẽ rằng các mục tiêu ý nghĩa chỉ đạt được thông qua sự kiên trì, kỷ luật và hành động tập trung. Triết lý này chính là nền tảng cho phương châm làm việc và cuộc sống của ông.</p>
               </div>
             </StaggerItem>
           </Stagger>
