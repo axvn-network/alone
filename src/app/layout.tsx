@@ -61,7 +61,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi" className="dark">
+    <html lang="vi" className="dark" suppressHydrationWarning>
       <head>
         {/* Google Analytics */}
         <Script
@@ -77,7 +77,9 @@ export default function RootLayout({
           `}
         </Script>
         {/* Meta Pixel */}
-        <script
+        <Script
+          id="fb-pixel"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               !function(f,b,e,v,n,t,s)
@@ -96,6 +98,7 @@ export default function RootLayout({
       </head>
       <body
         className="antialiased bg-fortress-navy text-fortress-silver cursor-none"
+        suppressHydrationWarning
       >
         <AnimationProvider>
           <CustomCursor />

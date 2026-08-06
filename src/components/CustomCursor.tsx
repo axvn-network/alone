@@ -8,6 +8,7 @@ export default function CustomCursor() {
   const dotPosition = useRef({ x: 0, y: 0 });
   const borderDotPosition = useRef({ x: 0, y: 0 });
 
+  const [isMounted, setIsMounted] = useState(false);
   const [renderPos, setRenderPos] = useState({ dot: { x: 0, y: 0 }, border: { x: 0, y: 0 } });
   const [isHovering, setIsHovering] = useState(false);
 
@@ -15,6 +16,8 @@ export default function CustomCursor() {
   const BORDER_DOT_SMOOTHNESS = 0.1;
 
   useEffect(() => {
+    setIsMounted(true);
+
     const handleMouseMove = (e: MouseEvent) => {
       mousePosition.current = { x: e.clientX, y: e.clientY };
     };
@@ -63,7 +66,7 @@ export default function CustomCursor() {
     };
   }, []);
 
-  if (typeof window === "undefined") return null;
+  if (!isMounted) return null;
 
   return (
     <div className="pointer-events-none fixed inset-0 z-50" style={{ mixBlendMode: "difference" }}>
