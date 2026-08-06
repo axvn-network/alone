@@ -67,7 +67,7 @@ cp .env.example .env
 
 Cập nhật các thông số Supabase và Payment Keys:
 ```env
-NEXT_PUBLIC_APP_URL=https://fortress88.netlify.app
+NEXT_PUBLIC_APP_URL=https://taxi379.online
 NEXT_PUBLIC_SUPABASE_URL=https://qawgducimlnketpfitjb.supabase.co
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your_supabase_publishable_key
 SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
