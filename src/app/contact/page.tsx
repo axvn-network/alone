@@ -80,7 +80,7 @@ export default async function ContactPage() {
       </section>
 
       {/* Contact Info Cards */}
-      <section className="bg-fortress-navy my-8 md:my-12 mx-2 mx-2 sm:mx-4 rounded-2xl py-12 md:py-20">
+      <section className="bg-fortress-navy my-8 md:my-12 mx-2 sm:mx-4 rounded-2xl py-12 md:py-20">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
           <h2 className="text-center text-fortress-ivory text-2xl md:text-3xl font-bold mb-12">
             Thông Tin Kết Nối Trực Tiếp

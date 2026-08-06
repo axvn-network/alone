@@ -228,7 +228,7 @@ export default function InvestmentFocusPage() {
       </section>
 
       {/* Introduction */}
-      <section className="py-12 md:py-20 bg-fortress-navy my-8 md:my-12 mx-2 mx-2 sm:mx-4 rounded-2xl">
+      <section className="py-12 md:py-20 bg-fortress-navy my-8 md:my-12 mx-2 sm:mx-4 rounded-2xl">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
           <div className="max-w-3xl">
             <p className="text-fortress-gold text-sm font-medium tracking-[2px] md:tracking-[4px] uppercase mb-4">
@@ -255,7 +255,7 @@ export default function InvestmentFocusPage() {
         <section
           key={sector.title}
           id={sector.id}
-          className={`py-12 md:py-28 my-8 md:my-12 mx-2 mx-2 sm:mx-4 rounded-2xl ${index % 2 === 1 ? "bg-fortress-deep" : "bg-white"}`}
+          className={`py-12 md:py-28 my-8 md:my-12 mx-2 sm:mx-4 rounded-2xl ${index % 2 === 1 ? "bg-fortress-deep" : "bg-white"}`}
         >
           <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
             {/* Header */}
@@ -382,7 +382,7 @@ export default function InvestmentFocusPage() {
       ))}
 
       {/* CTA */}
-      <section className="py-12 md:py-28 bg-fortress-navy my-8 md:my-12 mx-2 mx-2 sm:mx-4 rounded-2xl">
+      <section className="py-12 md:py-28 bg-fortress-navy my-8 md:my-12 mx-2 sm:mx-4 rounded-2xl">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12 text-center">
           <p className="text-fortress-gold text-sm font-medium tracking-[2px] md:tracking-[4px] uppercase mb-4">
             Hợp Tác Đầu Tư
