@@ -1,11 +1,11 @@
 import Link from "next/link";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+
+
 
 export default function NotFound() {
   return (
     <main className="min-h-screen bg-white">
-      <Navbar />
+      
       <section className="pt-32 pb-20">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12 text-center">
           <p className="text-fortress-gold text-sm font-medium tracking-[2px] md:tracking-[4px] uppercase mb-4">404</p>
@@ -26,7 +26,7 @@ export default function NotFound() {
           </div>
         </div>
       </section>
-      <Footer />
+      
     </main>
   );
 }

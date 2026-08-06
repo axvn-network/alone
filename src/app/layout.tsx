@@ -4,6 +4,8 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import CustomCursor from "@/components/CustomCursor";
 import AnimationProvider from "@/components/AnimationProvider";
+import GlobalNavbar from "@/components/GlobalNavbar";
+import GlobalFooter from "@/components/GlobalFooter";
 import "./globals.css";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -110,7 +112,9 @@ export default function RootLayout({
       >
         <AnimationProvider>
           <CustomCursor />
+          <GlobalNavbar />
           {children}
+          <GlobalFooter />
           <WhatsAppButton />
         </AnimationProvider>
       </body>

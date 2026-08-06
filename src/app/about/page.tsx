@@ -1,6 +1,6 @@
 import Image from "next/image";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+
+
 import { Shield, Eye, Target, Award, Users, Scale, Lock, Hexagon, Heart } from "lucide-react";
 import Reveal from "@/components/animations/Reveal";
 import Stagger from "@/components/animations/Stagger";
@@ -43,7 +43,7 @@ const philosophyPoints = [
 export default function AboutPage() {
   return (
     <main className="min-h-screen bg-white">
-      <Navbar />
+      
 
       {/* Banner */}
       <section className="relative pt-24 md:pt-32 pb-12 md:pb-20 overflow-hidden bg-white text-center">
@@ -183,7 +183,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <Footer />
+      
     </main>
   );
 }

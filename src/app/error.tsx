@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+
+
 
 export default function Error({
   reset,
@@ -12,7 +12,7 @@ export default function Error({
 }) {
   return (
     <main className="min-h-screen bg-white">
-      <Navbar />
+      
       <section className="pt-32 pb-20">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12 text-center">
           <p className="text-fortress-gold text-sm font-medium tracking-[2px] md:tracking-[4px] uppercase mb-4">500</p>
@@ -41,7 +41,7 @@ export default function Error({
           </div>
         </div>
       </section>
-      <Footer />
+      
     </main>
   );
 }

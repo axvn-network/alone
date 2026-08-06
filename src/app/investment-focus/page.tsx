@@ -1,5 +1,5 @@
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+
+
 import Image from "next/image";
 import {
   Building2,
@@ -205,7 +205,7 @@ const sectors = [
 export default function InvestmentFocusPage() {
   return (
     <main className="min-h-screen bg-white">
-      <Navbar />
+      
 
       {/* Banner */}
       <section className="relative pt-24 md:pt-32 pb-12 md:pb-24 overflow-hidden bg-white">
@@ -403,7 +403,7 @@ export default function InvestmentFocusPage() {
         </div>
       </section>
 
-      <Footer />
+      
     </main>
   );
 }

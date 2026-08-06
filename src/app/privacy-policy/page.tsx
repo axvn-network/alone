@@ -1,5 +1,5 @@
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+
+
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function PrivacyPolicyPage() {
   return (
     <main className="min-h-screen bg-white">
-      <Navbar />
+      
 
       <section className="bg-white pt-24 md:pt-32 pb-12 md:pb-20 text-center">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
@@ -94,7 +94,7 @@ export default function PrivacyPolicyPage() {
         </div>
       </section>
 
-      <Footer />
+      
     </main>
   );
 }

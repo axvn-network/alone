@@ -1,4 +1,4 @@
-import Navbar from "@/components/Navbar";
+
 import Hero from "@/components/Hero";
 import Introduction from "@/components/Introduction";
 import WhatWeDo from "@/components/WhatWeDo";
@@ -7,7 +7,7 @@ import WhyChooseUs from "@/components/WhyChooseUs";
 import Philosophy from "@/components/Philosophy";
 import PartnershipCTA from "@/components/PartnershipCTA";
 import Newsletter from "@/components/Newsletter";
-import Footer from "@/components/Footer";
+
 import PageTransition from "@/components/animations/PageTransition";
 import { FloatingBlobs } from "@/components/animations/AnimatedBackground";
 import type { Metadata } from "next";
@@ -28,7 +28,7 @@ export default function Home() {
     <PageTransition>
       <main className="min-h-screen bg-white relative">
         <FloatingBlobs />
-        <Navbar />
+        
         <Hero />
         <Introduction />
         <WhatWeDo />
@@ -37,7 +37,7 @@ export default function Home() {
         <Philosophy />
         <PartnershipCTA />
         <Newsletter />
-        <Footer />
+        
       </main>
     </PageTransition>
   );

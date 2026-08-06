@@ -1,5 +1,5 @@
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+
+
 import ContactForm from "@/components/ContactForm";
 import { Phone, Mail, MapPin, Clock, MessageCircle } from "lucide-react";
 import type { Metadata } from "next";
@@ -62,7 +62,7 @@ export default async function ContactPage() {
   ];
   return (
     <main className="min-h-screen bg-white">
-      <Navbar />
+      
 
       {/* Banner */}
       <section className="bg-white pt-24 md:pt-32 pb-12 md:pb-20 text-center">
@@ -154,7 +154,7 @@ export default async function ContactPage() {
         </div>
       </section>
 
-      <Footer />
+      
     </main>
   );
 }

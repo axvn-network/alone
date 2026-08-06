@@ -1,5 +1,5 @@
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+
+
 import InvestorForm from "@/components/InvestorForm";
 import { CheckCircle } from "lucide-react";
 import type { Metadata } from "next";
@@ -75,7 +75,7 @@ const featureList = [
 export default function InvestWithFortressPage() {
   return (
     <main className="min-h-screen bg-white">
-      <Navbar />
+      
 
       {/* Hero */}
       <section className="relative pt-24 md:pt-32 pb-12 md:pb-20 overflow-hidden bg-white text-center">
@@ -246,7 +246,7 @@ export default function InvestWithFortressPage() {
         </div>
       </section>
 
-      <Footer />
+      
     </main>
   );
 }

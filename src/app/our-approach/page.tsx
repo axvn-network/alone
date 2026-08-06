@@ -1,7 +1,7 @@
 "use client";
 
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+
+
 import Link from "next/link";
 import { motion } from "framer-motion";
 import PageTransition from "@/components/animations/PageTransition";
@@ -119,7 +119,7 @@ export default function OurApproachPage() {
   return (
     <PageTransition>
       <main className="min-h-screen bg-white text-fortress-ivory relative">
-        <Navbar />
+        
 
         {/* ── 1. Hero Section ──────────────────────────────────────────────── */}
         <section className="relative pt-24 pb-14 md:pt-36 md:pb-28 overflow-hidden bg-fortress-navy border-b border-fortress-gold/10">
@@ -371,7 +371,7 @@ export default function OurApproachPage() {
           </div>
         </section>
 
-        <Footer />
+        
       </main>
     </PageTransition>
   );

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import InsightsClient from "./InsightsClient";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+
+
 
 export const metadata: Metadata = {
   title: "Góc Nhìn & Báo Cáo Chuyên Sâu | Fortress Investment Holdings",
@@ -18,9 +18,9 @@ export const metadata: Metadata = {
 export default function InsightsPage() {
   return (
     <main className="min-h-screen bg-[#F8F9FB]">
-      <Navbar />
+      
       <InsightsClient />
-      <Footer />
+      
     </main>
   );
 }

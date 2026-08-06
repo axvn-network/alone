@@ -21,7 +21,7 @@ export default function Stagger({
     <motion.div
       initial="hidden"
       whileInView="visible"
-      viewport={{ once, margin: "-10% 0px -10% 0px" }}
+      viewport={{ once, margin: "0px 0px -50px 0px" }}
       variants={{
         hidden: {},
         visible: {

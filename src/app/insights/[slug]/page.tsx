@@ -1,5 +1,5 @@
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+
+
 import { ArrowLeft, Calendar, Clock, Tag, BookOpen } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -103,7 +103,7 @@ export default async function ArticlePage({ params }: Props) {
 
   return (
     <main className="min-h-screen bg-white">
-      <Navbar />
+      
 
       <div className="relative h-[420px] md:h-[520px] w-full overflow-hidden mt-16">
         <Image
@@ -214,7 +214,7 @@ export default async function ArticlePage({ params }: Props) {
         </section>
       )}
 
-      <Footer />
+      
     </main>
   );
 }
