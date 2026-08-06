@@ -6,8 +6,8 @@ let supabaseAdminClient: SupabaseClient | null = null;
 export function getSupabase(): SupabaseClient {
   if (supabaseClient) return supabaseClient;
 
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://your-supabase-project.supabase.co";
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "your-anon-key";
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://fortress88.supabase.co";
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
 
   supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
   return supabaseClient;
@@ -16,8 +16,8 @@ export function getSupabase(): SupabaseClient {
 export function getSupabaseAdmin(): SupabaseClient {
   if (supabaseAdminClient) return supabaseAdminClient;
 
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://your-supabase-project.supabase.co";
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "your-service-key";
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://fortress88.supabase.co";
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
 
   supabaseAdminClient = createClient(supabaseUrl, serviceRoleKey, {
     auth: {
