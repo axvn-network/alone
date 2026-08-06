@@ -1,10 +1,14 @@
 import vi from "@/locales/vi.json";
+import en from "@/locales/en.json";
 
+export type Locale = "vi" | "en";
 export type LocaleKeys = typeof vi;
 
-export function t(keyPath: string, fallback?: string): string {
+const dictionaries: Record<Locale, any> = { vi, en };
+
+export function t(keyPath: string, locale: Locale = "vi", fallback?: string): string {
   const keys = keyPath.split(".");
-  let current: any = vi;
+  let current: any = dictionaries[locale] || vi;
   for (const k of keys) {
     if (current && typeof current === "object" && k in current) {
       current = current[k];
@@ -15,4 +19,5 @@ export function t(keyPath: string, fallback?: string): string {
   return typeof current === "string" ? current : fallback || keyPath;
 }
 
-export default vi;
+export { vi, en };
+export default dictionaries;

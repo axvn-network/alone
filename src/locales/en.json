@@ -1,0 +1,43 @@
+{
+  "common": {
+    "user": "User",
+    "balance": "Balance",
+    "recharge": "Recharge / Top-up",
+    "withdraw": "Withdrawal",
+    "order": "Order",
+    "status": "Status",
+    "amount": "Amount",
+    "date": "Date Created",
+    "actions": "Actions",
+    "search": "Search...",
+    "filter": "Filter",
+    "all": "All",
+    "submit": "Submit Request",
+    "cancel": "Cancel",
+    "save": "Save Changes",
+    "loading": "Loading...",
+    "success": "Success",
+    "error": "An error occurred"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About Us",
+    "investmentFocus": "Investment Focus",
+    "approach": "Our Approach",
+    "investWithUs": "Invest With Us",
+    "insights": "Insights",
+    "contact": "Contact"
+  },
+  "roles": {
+    "superadmin": "Super Admin",
+    "admin": "Administrator",
+    "agent": "Agent / Partner",
+    "support": "Support Agent"
+  },
+  "payment": {
+    "momo": "MoMo Wallet",
+    "bank": "Bank Transfer (VietQR)",
+    "usdt": "USDT Crypto (BEP20)",
+    "telco": "Telco Cards"
+  }
+}

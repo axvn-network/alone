@@ -6,6 +6,7 @@ import { User, Target, Handshake, Newspaper, TrendingUp, Menu, X } from "lucide-
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { navVariants } from "@/lib/animation";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const navItems = [
   { label: "Giới thiệu", href: "/about", icon: User },
@@ -154,6 +155,7 @@ export default function Navbar() {
                 <div className={`flex gap-4 pl-4 shrink-0 items-center border-l ${
                   scrolled ? "border-fortress-gold/20" : "border-white/10"
                 }`}>
+                  <LanguageSwitcher />
                   <motion.div
                     whileHover={{ scale: 1.03, y: -1 }}
                     whileTap={{ scale: 0.97 }}
