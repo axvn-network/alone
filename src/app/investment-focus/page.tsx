@@ -17,13 +17,13 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Investment Focus",
+  title: "Lĩnh Vực Đầu Tư",
   description:
-    "Explore Fortress Investment Holdings' investment sectors: real estate, digital assets, business acquisitions, private equity, hospitality, AI & technology, trading, luxury assets, and strategic partnerships.",
+    "Khám phá các lĩnh vực đầu tư chiến lược của Fortress Investment Holdings: Bất động sản, thâu tóm M&A, Private Equity, Công nghệ AI, Khách sạn & Nghỉ dưỡng, Năng lượng và Liên minh chiến lược.",
   openGraph: {
-    title: "Investment Focus | Fortress Investment Holdings",
+    title: "Lĩnh Vực Đầu Tư | Fortress Investment Holdings",
     description:
-      "Explore our diversified investment sectors across the UAE and beyond.",
+      "Khám phá các lĩnh vực đầu tư chiến lược của Fortress Investment Holdings.",
   },
 };
 

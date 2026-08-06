@@ -8,13 +8,13 @@ import StaggerItem from "@/components/animations/StaggerItem";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About Us",
+  title: "Giới Thiệu Về Chúng Tôi",
   description:
-    "Fortress Investment Holdings is a Dubai-based diversified investment holding company. Learn about our vision, mission, values, and leadership.",
+    "Tìm hiểu về tầm nhìn, sứ mệnh, giá trị cốt lõi và đội ngũ lãnh đạo chuyên nghiệp của Tập đoàn Fortress Investment Holdings.",
   openGraph: {
-    title: "About Us | Fortress Investment Holdings",
+    title: "Giới Thiệu Về Chúng Tôi | Fortress Investment Holdings",
     description:
-      "Learn about our vision, mission, values, and leadership.",
+      "Tìm hiểu về tầm nhìn, sứ mệnh, giá trị cốt lõi và đội ngũ lãnh đạo của Fortress Investment Holdings.",
   },
 };
 

@@ -36,7 +36,7 @@ export default function WhatWeDo() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-16 mb-12 md:mb-20">
               <div>
                 <span className="block text-fortress-gold text-xs tracking-[6px] uppercase mb-4 font-semibold">
-                  02  Năng Lực Cốt Lõi
+                  02 - Năng Lực Cốt Lõi
                 </span>
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-light text-fortress-ivory leading-tight uppercase tracking-tight">
                   Quản Lý Đầu Tư Chiến Lược

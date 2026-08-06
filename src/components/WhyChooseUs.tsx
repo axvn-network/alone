@@ -5,7 +5,7 @@ import Stagger from "@/components/animations/Stagger";
 import StaggerItem from "@/components/animations/StaggerItem";
 
 const benefits = [
-  { title: "Quyết Định Ra Đầu Tư Kỷ Luật", desc: "Mọi cơ hội đều được phân tích thương mại, tài chính, vận hành và quản trị rủi ro chuyên sâu. Sự thận trọng chính là lý do các đối tác đặt trọn niềm tin vào chúng tôi." },
+  { title: "Quy Trình Đầu Tư Kỷ Luật", desc: "Mọi cơ hội đều được phân tích thương mại, tài chính, vận hành và quản trị rủi ro chuyên sâu. Sự thận trọng chính là lý do các đối tác đặt trọn niềm tin vào chúng tôi." },
   { title: "Tầm Nhìn Dài Hạn Bền Vững", desc: "Chúng tôi không chạy theo lợi nhuận ngắn hạn mà ưu tiên tối đa giá trị tăng trưởng bền vững qua các chu kỳ kinh tế." },
   { title: "Chuyên Môn Đa Ngành Đa Lĩnh Vực", desc: "Cách tiếp cận đa ngành giúp chúng tôi hiểu rõ đặc thù, dòng tiền và cơ hội của từng ngành công nghiệp để tối ưu danh mục đầu tư." },
   { title: "Đồng Hành Chiến Lược Sâu Rộng", desc: "Không chỉ dừng lại ở nguồn vốn, chúng tôi đóng góp định hướng chiến lược, phát triển kinh doanh, quản trị và mạng lưới đối tác toàn cầu." },

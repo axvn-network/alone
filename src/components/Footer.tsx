@@ -60,7 +60,7 @@ const pillars = [
     ),
   },
   {
-    title: "TẠO TÁC ĐỘT PHÁ",
+    title: "TÁC ĐỘNG ĐỘT PHÁ",
     sub: "Mang lại giá trị bền vững dài lâu",
     icon: (
       <svg viewBox="0 0 32 32" className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="1.5">
