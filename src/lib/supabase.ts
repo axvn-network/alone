@@ -5,9 +5,20 @@ import { cookies } from "next/headers";
 let supabaseClient: SupabaseClient | null = null;
 let supabaseAdminClient: SupabaseClient | null = null;
 
-export const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://qawgducimlnketpfitjb.supabase.co";
-export const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "sb_publishable_jkFjVSnGYPO6EV84NHQzuA_LfJ9KPjw";
-export const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
+export const SUPABASE_URL =
+  process.env.NEXT_PUBLIC_SUPABASE_URL ||
+  process.env.NEXT_PUBLIC_SUPABASE_DATABASE_URL ||
+  process.env.SUPABASE_DATABASE_URL ||
+  "https://qawgducimlnketpfitjb.supabase.co";
+
+export const SUPABASE_ANON_KEY =
+  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+  process.env.SUPABASE_ANON_KEY ||
+  "sb_publishable_jkFjVSnGYPO6EV84NHQzuA_LfJ9KPjw";
+
+export const SUPABASE_SERVICE_ROLE_KEY =
+  process.env.SUPABASE_SERVICE_ROLE_KEY || "";
 
 export function getSupabase(): SupabaseClient {
   if (supabaseClient) return supabaseClient;
