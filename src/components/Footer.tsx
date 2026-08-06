@@ -148,7 +148,14 @@ const sectionReveal = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const } },
 };
 
+const defaultFooterData = {
+  footerDesc: "Tập đoàn đầu tư đa ngành có trụ sở tại Dubai, UAE – tập trung xác định, thâu tóm và phát triển các cơ hội tiềm năng cao trong bất động sản, private equity, công nghệ, tài sản số, năng lượng, hàng hóa và dịch vụ nghỉ dưỡng.",
+  footerDocBtn: "Tải Tài Liệu Giới Thiệu",
+};
+
 export default function Footer() {
+  const { content } = usePageContent("home", defaultFooterData);
+
   return (
     <motion.footer
       initial="hidden"
@@ -187,7 +194,7 @@ export default function Footer() {
                   />
                 </Link>
                 <p className="text-[#8fa0b8] text-sm leading-relaxed max-w-[230px]">
-                  Tập đoàn đầu tư đa ngành có trụ sở tại Dubai, UAE – tập trung xác định, thâu tóm và phát triển các cơ hội tiềm năng cao trong bất động sản, private equity, công nghệ, tài sản số, năng lượng, hàng hóa và dịch vụ nghỉ dưỡng.
+                  {content.footerDesc}
                 </p>
                 <motion.a
                   href="#"
@@ -201,7 +208,7 @@ export default function Footer() {
                     <line x1="9" y1="13" x2="15" y2="13" />
                     <line x1="9" y1="17" x2="12" y2="17" />
                   </svg>
-                  Tải Tài Liệu Giới Thiệu
+                  {content.footerDocBtn}
                 </motion.a>
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
