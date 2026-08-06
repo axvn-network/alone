@@ -23,7 +23,7 @@ export default function WhatsAppButton() {
       href={`https://wa.me/${phone}?text=${message}`}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 group"
+      className="fixed bottom-[88px] right-4 md:bottom-6 md:right-6 z-50 group"
       aria-label="Chat on WhatsApp"
     >
       <div className="relative">
