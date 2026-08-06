@@ -1,0 +1,43 @@
+{
+  "common": {
+    "user": "Người dùng",
+    "balance": "Số dư",
+    "recharge": "Nạp tiền",
+    "withdraw": "Rút tiền",
+    "order": "Đơn hàng",
+    "status": "Trạng thái",
+    "amount": "Số tiền",
+    "date": "Ngày tạo",
+    "actions": "Thao tác",
+    "search": "Tìm kiếm...",
+    "filter": "Bộ lọc",
+    "all": "Tất cả",
+    "submit": "Gửi yêu cầu",
+    "cancel": "Hủy bỏ",
+    "save": "Lưu thay đổi",
+    "loading": "Đang tải...",
+    "success": "Thành công",
+    "error": "Có lỗi xảy ra"
+  },
+  "nav": {
+    "home": "Trang chủ",
+    "about": "Giới thiệu",
+    "investmentFocus": "Lĩnh vực đầu tư",
+    "approach": "Phương pháp tiếp cận",
+    "investWithUs": "Hợp tác đầu tư",
+    "insights": "Góc nhìn chuyên sâu",
+    "contact": "Liên hệ"
+  },
+  "roles": {
+    "superadmin": "Quản trị viên tối cao",
+    "admin": "Quản trị viên",
+    "agent": "Đại lý / Đối tác",
+    "support": "Hỗ trợ viên"
+  },
+  "payment": {
+    "momo": "Ví MoMo",
+    "bank": "Chuyển khoản Ngân hàng (VietQR)",
+    "usdt": "Tiền điện tử USDT (BEP20)",
+    "telco": "Thẻ cào điện thoại"
+  }
+}
