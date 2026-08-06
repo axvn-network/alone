@@ -7,7 +7,7 @@ declare module "pg" {
       idleTimeoutMillis?: number;
       connectionTimeoutMillis?: number;
     });
-    query(text: string, params?: any[]): Promise<{ rows: any[]; rowCount: number }>;
+    query(text: string, params?: unknown[]): Promise<{ rows: Record<string, unknown>[]; rowCount: number }>;
     end(): Promise<void>;
   }
 }
