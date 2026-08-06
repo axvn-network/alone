@@ -28,7 +28,7 @@ export default function WhatWeDo() {
       whileInView="visible"
       viewport={{ once: true, margin: "-80px" }}
       variants={sectionReveal}
-      className="relative py-16 md:py-28 overflow-hidden bg-fortress-navy border-t border-fortress-gold/10 mx-2 sm:mx-4 rounded-2xl"
+      className="relative py-16 md:py-28 overflow-hidden bg-fortress-navy border-t border-fortress-gold/10 mx-2 sm:mx-4 my-8 md:my-12 rounded-2xl"
     >
       <div className="relative max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12">
         <Stagger>

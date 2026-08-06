@@ -22,7 +22,7 @@ export default function Introduction() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      className="relative py-16 md:py-28 overflow-hidden bg-fortress-navy border-t border-fortress-gold/10 rounded-2xl mx-4 my-8"
+      className="relative py-16 md:py-28 overflow-hidden bg-fortress-navy border-t border-fortress-gold/10 mx-2 sm:mx-4 my-8 md:my-12 rounded-2xl"
     >
       <div className="relative max-w-[1400px] mx-auto px-6 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
@@ -42,7 +42,7 @@ export default function Introduction() {
             </StaggerItem>
             <StaggerItem>
               <p className="text-fortress-silver/90 text-base md:text-lg leading-relaxed mb-4">
-                Một doanh nghiệp vĩ đại hiếm khi được xây dựng chỉ bằng nguồn vốn đơn thuần. Chúng được kiến tạo bởi những con người biết kết hợp nguồn lực với sự nhạy bén, kiên nhẫn và cam kết dài lâu.
+                Một doanh nghiệp vĩ đại hiếm khi được xây dựng chỉ bằng nguồn vốn đơn thuần. Nó được kiến tạo bởi những con người biết kết hợp nguồn lực với sự nhạy bén, kiên nhẫn và cam kết dài lâu.
               </p>
             </StaggerItem>
             <StaggerItem>

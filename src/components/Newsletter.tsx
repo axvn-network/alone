@@ -26,7 +26,7 @@ export default function Newsletter() {
       whileInView="visible"
       viewport={{ once: true, margin: "-80px" }}
       variants={sectionReveal}
-      className="relative py-16 md:py-24 overflow-hidden rounded-2xl mx-4 my-8"
+      className="relative py-16 md:py-24 overflow-hidden rounded-2xl mx-2 sm:mx-4 my-8 md:my-12"
     >
       <div className="absolute inset-0 bg-fortress-deep" />
       <div className="section-divider max-w-[1280px] mx-auto" />
