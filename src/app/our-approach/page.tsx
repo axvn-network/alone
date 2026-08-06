@@ -28,91 +28,91 @@ import {
   CheckCheck,
 } from "lucide-react";
 
-// ─── Data Definitions ─────────────────────────────────────────────────────────
+// ─── Dữ Liệu ─────────────────────────────────────────────────────────────────
 
 const processSteps = [
   {
     step: "01",
     icon: Search,
-    title: "Identify Opportunities",
-    subtitle: "Finding Businesses and Assets With Potential",
+    title: "Nhận Diện Cơ Hội",
+    subtitle: "Tìm Kiếm Doanh Nghiệp Và Tài Sản Có Tiềm Năng",
     description:
-      "Great opportunities rarely announce themselves. We find them through our professional networks, direct submissions, market research, trusted advisors, business owners, developers, investors, and strategic partners. We focus on opportunities that address genuine market demand and demonstrate a clear reason for long-term relevance, not momentum, not hype, not fear of missing out.",
+      "Những cơ hội xuất sắc hiếm khi tự tìm đến. Chúng tôi tìm kiếm chúng thông qua mạng lưới chuyên nghiệp, đề xuất trực tiếp, nghiên cứu thị trường, cố vấn uy tín, chủ doanh nghiệp, nhà phát triển, nhà đầu tư và đối tác chiến lược. Chúng tôi tập trung vào các cơ hội đáp ứng nhu cầu thị trường thực sự và có lý do tồn tại dài hạn rõ ràng – không phải xu hướng, không phải đầu cơ, không phải tâm lý sợ bỏ lỡ.",
   },
   {
     step: "02",
     icon: ClipboardCheck,
-    title: "Evaluate Risk and Potential",
-    subtitle: "Looking Beyond the Presentation",
+    title: "Đánh Giá Rủi Ro Và Tiềm Năng",
+    subtitle: "Nhìn Xa Hơn Bản Trình Bày",
     description:
-      "Every business looks good in a pitch deck. Our job is to understand what it looks like on a difficult Tuesday in a difficult quarter.",
+      "Mọi doanh nghiệp đều trông hấp dẫn trong bản thuyết trình. Công việc của chúng tôi là hiểu nó trông như thế nào vào một ngày Thứ Ba khó khăn trong một quý đầy thách thức.",
     checklist: [
-      { label: "Business model", desc: "how the company actually makes money" },
-      { label: "Market demand", desc: "evidence of genuine, durable customer need" },
-      { label: "Competitive position", desc: "why this business wins" },
-      { label: "Leadership and management", desc: "the people who will deliver the plan" },
-      { label: "Historical financial performance", desc: "what the numbers actually show" },
-      { label: "Revenue quality and cash flow", desc: "the difference between growth and health" },
-      { label: "Legal structure", desc: "clean foundations" },
-      { label: "Operational requirements", desc: "what it takes to run and scale" },
-      { label: "Valuation", desc: "a price that leaves room for everyone to succeed" },
+      { label: "Mô hình kinh doanh", desc: "cách công ty thực sự kiếm tiền" },
+      { label: "Nhu cầu thị trường", desc: "bằng chứng về nhu cầu khách hàng thực sự và bền vững" },
+      { label: "Vị thế cạnh tranh", desc: "lý do doanh nghiệp này chiến thắng" },
+      { label: "Lãnh đạo và ban quản lý", desc: "những người sẽ thực hiện kế hoạch" },
+      { label: "Hiệu suất tài chính lịch sử", desc: "những gì con số thực sự cho thấy" },
+      { label: "Chất lượng doanh thu và dòng tiền", desc: "sự khác biệt giữa tăng trưởng và sức khỏe" },
+      { label: "Cấu trúc pháp lý", desc: "nền tảng pháp lý sạch sẽ" },
+      { label: "Yêu cầu vận hành", desc: "những gì cần thiết để vận hành và mở rộng" },
+      { label: "Định giá", desc: "mức giá để tất cả các bên cùng thành công" },
     ],
   },
   {
     step: "03",
     icon: TrendingUp,
-    title: "Invest Strategically",
-    subtitle: "Structuring Every Investment With Purpose",
+    title: "Đầu Tư Chiến Lược",
+    subtitle: "Cấu Trúc Mọi Khoản Đầu Tư Với Mục Đích Rõ Ràng",
     description:
-      "Once an opportunity meets our criteria, we design an investment structure that fits the needs of the business and the interests of all stakeholders. The goal in every case: a clear, responsible structure with appropriate governance, accountability, and alignment. Ambiguity is where partnerships fail, so we remove it at the start.",
+      "Khi cơ hội đáp ứng các tiêu chí của chúng tôi, chúng tôi thiết kế cấu trúc đầu tư phù hợp với nhu cầu doanh nghiệp và lợi ích của tất cả các bên. Mục tiêu trong mọi trường hợp: cấu trúc rõ ràng, có trách nhiệm với quản trị phù hợp, trách nhiệm giải trình và sự liên kết. Sự mơ hồ là nguyên nhân thất bại của các mối quan hệ – nên chúng tôi loại bỏ nó ngay từ đầu.",
     structures: [
-      { label: "Full acquisition", desc: "complete ownership transition" },
-      { label: "Majority or minority investment", desc: "flexible equity positions" },
-      { label: "Growth capital", desc: "funding tied to a clear expansion plan" },
-      { label: "Joint venture or co-investment", desc: "shared ownership with aligned partners" },
-      { label: "Asset acquisition", desc: "purchasing specific assets rather than entities" },
-      { label: "Structured financing", desc: "tailored solutions for complex situations" },
+      { label: "Thâu tóm toàn bộ", desc: "chuyển giao quyền sở hữu hoàn toàn" },
+      { label: "Đầu tư cổ phần kiểm soát hoặc thiểu số", desc: "vị thế vốn linh hoạt" },
+      { label: "Vốn tăng trưởng", desc: "tài trợ gắn với kế hoạch mở rộng rõ ràng" },
+      { label: "Liên doanh hoặc đồng đầu tư", desc: "sở hữu chung với đối tác liên kết" },
+      { label: "Mua lại tài sản", desc: "mua tài sản cụ thể thay vì toàn bộ pháp nhân" },
+      { label: "Tài chính có cấu trúc", desc: "giải pháp tùy chỉnh cho các tình huống phức tạp" },
     ],
   },
   {
     step: "04",
     icon: BarChart3,
-    title: "Manage and Grow Value",
-    subtitle: "Contributing Beyond Capital",
+    title: "Quản Lý Và Phát Triển Giá Trị",
+    subtitle: "Đóng Góp Vượt Trên Nguồn Vốn",
     description:
-      "Signing the agreement is where our work begins, not where it ends. Fortress actively supports development through strategic planning, financial oversight, management support, business development, brand development, technology implementation, operational improvement, governance, and partnership development.",
+      "Ký kết thỏa thuận là nơi công việc của chúng tôi bắt đầu – không phải kết thúc. Fortress tích cực hỗ trợ phát triển thông qua lập kế hoạch chiến lược, giám sát tài chính, hỗ trợ quản lý, phát triển kinh doanh, xây dựng thương hiệu, triển khai công nghệ, cải thiện vận hành, quản trị và phát triển quan hệ đối tác.",
     supportAreas: [
-      { label: "Strategic planning", desc: "clear direction and measurable objectives" },
-      { label: "Financial oversight", desc: "disciplined reporting and performance management" },
-      { label: "Management support", desc: "strengthening the team" },
-      { label: "Business development", desc: "opening doors, expanding markets" },
-      { label: "Brand development", desc: "building recognition and trust" },
-      { label: "Technology", desc: "modernising operations" },
-      { label: "Operational improvement", desc: "practical efficiency gains" },
-      { label: "Governance", desc: "accountability that protects value" },
-      { label: "Partnership development", desc: "connections that create opportunity" },
+      { label: "Lập kế hoạch chiến lược", desc: "định hướng rõ ràng và mục tiêu đo lường được" },
+      { label: "Giám sát tài chính", desc: "báo cáo kỷ luật và quản lý hiệu suất" },
+      { label: "Hỗ trợ quản lý", desc: "củng cố đội ngũ" },
+      { label: "Phát triển kinh doanh", desc: "mở cửa, mở rộng thị trường" },
+      { label: "Xây dựng thương hiệu", desc: "tạo dựng nhận diện và niềm tin" },
+      { label: "Công nghệ", desc: "hiện đại hóa vận hành" },
+      { label: "Cải thiện vận hành", desc: "tăng hiệu quả thực tiễn" },
+      { label: "Quản trị", desc: "trách nhiệm bảo vệ giá trị" },
+      { label: "Phát triển quan hệ đối tác", desc: "kết nối tạo ra cơ hội" },
     ],
   },
   {
     step: "05",
     icon: Handshake,
-    title: "Manage for Long-Term Value",
-    subtitle: "Disciplined Oversight. Sustainable Performance.",
+    title: "Quản Lý Vì Giá Trị Dài Hạn",
+    subtitle: "Giám Sát Kỷ Luật. Hiệu Suất Bền Vững.",
     description:
-      "Long-term value is created through disciplined management, consistent monitoring, and informed decision-making. We maintain clear investment objectives, transparent reporting, and structured oversight throughout the investment lifecycle.\n\nOur team continuously reviews performance, manages risk, and responds to changing market conditions while remaining focused on sustainable income and long-term capital growth. Every investment is managed with accountability, clarity, and alignment with the agreed strategy.",
+      "Giá trị dài hạn được tạo ra thông qua quản lý kỷ luật, giám sát nhất quán và ra quyết định dựa trên thông tin. Chúng tôi duy trì mục tiêu đầu tư rõ ràng, báo cáo minh bạch và giám sát có cấu trúc trong suốt vòng đời đầu tư.\n\nĐội ngũ của chúng tôi liên tục xem xét hiệu suất, quản lý rủi ro và phản ứng với các điều kiện thị trường thay đổi trong khi luôn tập trung vào thu nhập bền vững và tăng trưởng vốn dài hạn. Mọi khoản đầu tư được quản lý với trách nhiệm giải trình, sự rõ ràng và sự liên kết với chiến lược đã thống nhất.",
   },
 ];
 
 const evaluationPrinciples = [
-  { number: "01", title: "Strong and ethical leadership", desc: "character precedes capability", icon: Star },
-  { number: "02", title: "Genuine customer demand", desc: "real revenue from real customers", icon: Users },
-  { number: "03", title: "Clear financial information", desc: "transparency as a starting condition", icon: BarChart2 },
-  { number: "04", title: "Realistic valuation", desc: "pricing that reflects evidence, not enthusiasm", icon: Target },
-  { number: "05", title: "Scalable operations", desc: "growth without structural strain", icon: TrendingUp },
-  { number: "06", title: "Competitive differentiation", desc: "a defensible reason to win", icon: Zap },
-  { number: "07", title: "Responsible governance", desc: "structures that protect all stakeholders", icon: Shield },
-  { number: "08", title: "Manageable risk", desc: "downside we can understand and absorb", icon: Activity },
-  { number: "09", title: "Sustainable growth potential", desc: "value that compounds over time", icon: Leaf },
+  { number: "01", title: "Lãnh đạo mạnh mẽ và có đạo đức", desc: "tính cách đến trước năng lực", icon: Star },
+  { number: "02", title: "Nhu cầu khách hàng thực sự", desc: "doanh thu thực từ khách hàng thực", icon: Users },
+  { number: "03", title: "Thông tin tài chính minh bạch", desc: "sự rõ ràng là điều kiện xuất phát", icon: BarChart2 },
+  { number: "04", title: "Định giá thực tế", desc: "mức giá phản ánh bằng chứng, không phải nhiệt tình", icon: Target },
+  { number: "05", title: "Vận hành có thể mở rộng", desc: "tăng trưởng không gãy vỡ cấu trúc", icon: TrendingUp },
+  { number: "06", title: "Khác biệt hóa cạnh tranh", desc: "lý do để chiến thắng và duy trì vị thế", icon: Zap },
+  { number: "07", title: "Quản trị có trách nhiệm", desc: "cấu trúc bảo vệ tất cả các bên liên quan", icon: Shield },
+  { number: "08", title: "Rủi ro có thể quản lý", desc: "mức rủi ro chúng tôi có thể hiểu và hấp thụ", icon: Activity },
+  { number: "09", title: "Tiềm năng tăng trưởng bền vững", desc: "giá trị tích lũy theo thời gian", icon: Leaf },
 ];
 
 export default function OurApproachPage() {
@@ -133,23 +133,23 @@ export default function OurApproachPage() {
             <div className="max-w-3xl mx-auto text-center">
               <Reveal>
                 <span className="inline-block text-fortress-gold text-xs sm:text-sm font-semibold tracking-[4px] sm:tracking-[6px] uppercase mb-4 px-4 py-1.5 rounded-full border border-fortress-gold/20 bg-fortress-gold/10">
-                  Our Approach
+                  Phương Pháp Tiếp Cận
                 </span>
               </Reveal>
 
               <Reveal delay={0.1}>
                 <h1 className="text-4xl sm:text-5xl md:text-6xl font-light tracking-tight text-white uppercase mb-5 sm:mb-6 leading-[1.15]">
-                  Disciplined{" "}
+                  Kỷ Luật.{" "}
                   <span className="font-bold bg-gradient-to-r from-fortress-gold to-fortress-champagne bg-clip-text text-transparent">
-                    Strategic
+                    Chiến Lược.
                   </span>{" "}
-                  Long-Term
+                  Dài Hạn.
                 </h1>
               </Reveal>
 
               <Reveal delay={0.2}>
                 <p className="text-fortress-silver/90 text-sm sm:text-lg md:text-xl leading-relaxed mb-8 md:mb-10 font-light mx-auto">
-                  Our investment process is designed to identify quality opportunities, manage risk, and build sustainable value through careful evaluation and active strategic involvement.
+                  Quy trình đầu tư của chúng tôi được thiết kế để xác định các cơ hội chất lượng, quản lý rủi ro và xây dựng giá trị bền vững thông qua đánh giá kỹ lưỡng và sự tham gia chiến lược chủ động.
                 </p>
               </Reveal>
 
@@ -159,14 +159,14 @@ export default function OurApproachPage() {
                     href="#process"
                     className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 bg-gradient-to-r from-fortress-gold to-fortress-champagne text-fortress-navy font-bold text-xs tracking-widest uppercase hover:opacity-90 transition-all rounded-sm shadow-xl shadow-fortress-gold/15 group"
                   >
-                    Explore Our Process
+                    Khám Phá Quy Trình Của Chúng Tôi
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </Link>
                   <Link
                     href="#principles"
                     className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 border border-fortress-gold/30 text-fortress-ivory font-bold text-xs tracking-widest uppercase hover:bg-white/10 hover:border-white transition-all rounded-sm"
                   >
-                    Evaluation Principles
+                    Nguyên Tắc Đánh Giá
                   </Link>
                 </div>
               </Reveal>
@@ -184,16 +184,16 @@ export default function OurApproachPage() {
             {/* Section Header */}
             <Reveal className="text-center max-w-3xl mx-auto mb-10 md:mb-20">
               <span className="text-fortress-gold text-[10px] sm:text-sm font-semibold tracking-[3px] sm:tracking-[6px] uppercase block mb-3">
-                How We Invest
+                Cách Chúng Tôi Đầu Tư
               </span>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-light text-white uppercase tracking-tight mb-3 sm:mb-4">
-                Our <span className="font-semibold text-fortress-gold">Investment Process</span>
+                Quy Trình <span className="font-semibold text-fortress-gold">Đầu Tư</span>
               </h2>
               <p className="text-fortress-gold font-semibold text-base sm:text-xl mb-3 sm:mb-4">
-                Every opportunity is different. Our standards never are.
+                Mỗi cơ hội là duy nhất. Tiêu chuẩn của chúng tôi thì không.
               </p>
               <p className="text-fortress-silver/80 text-sm sm:text-lg leading-relaxed font-light">
-                Our decisions follow a consistent framework built on research, discipline, transparency, and long-term alignment. We assess the quality of the opportunity, the capability of the people behind it, the market environment, the financial requirements, the risks involved, and the realistic potential for sustainable value creation.
+                Các quyết định của chúng tôi tuân theo một khung nhất quán được xây dựng trên nghiên cứu, kỷ luật, minh bạch và sự liên kết dài hạn. Chúng tôi đánh giá chất lượng cơ hội, năng lực của những người đứng sau, môi trường thị trường, yêu cầu tài chính, rủi ro liên quan và tiềm năng thực tế để tạo ra giá trị bền vững.
               </p>
             </Reveal>
 
@@ -212,7 +212,7 @@ export default function OurApproachPage() {
                           </div>
                           <div className="min-w-0">
                             <span className="text-fortress-gold text-[10px] font-mono font-bold tracking-widest uppercase block">
-                              Step {stepItem.step}
+                              Bước {stepItem.step}
                             </span>
                             <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-fortress-ivory leading-tight">
                               {stepItem.title}
@@ -234,7 +234,7 @@ export default function OurApproachPage() {
                         ))}
                       </div>
 
-                      {/* Step 02 checklist */}
+                      {/* Bước 02 – danh sách kiểm tra */}
                       {stepItem.checklist && (
                         <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-fortress-gold/10">
                           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3">
@@ -258,7 +258,7 @@ export default function OurApproachPage() {
                         </div>
                       )}
 
-                      {/* Step 03 structures */}
+                      {/* Bước 03 – cấu trúc đầu tư */}
                       {stepItem.structures && (
                         <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-fortress-gold/10">
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4">
@@ -282,11 +282,11 @@ export default function OurApproachPage() {
                         </div>
                       )}
 
-                      {/* Step 04 support areas */}
+                      {/* Bước 04 – lĩnh vực hỗ trợ */}
                       {stepItem.supportAreas && (
                         <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-fortress-gold/10">
                           <span className="text-fortress-ivory text-xs sm:text-sm font-bold uppercase tracking-wider block mb-3 sm:mb-4">
-                            Active Support Areas
+                            Lĩnh Vực Hỗ Trợ Chủ Động
                           </span>
                           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3">
                             {stepItem.supportAreas.map((area, idx) => (
@@ -326,13 +326,13 @@ export default function OurApproachPage() {
 
             <Reveal className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
               <span className="text-fortress-gold text-[10px] sm:text-sm font-semibold tracking-[3px] sm:tracking-[6px] uppercase block mb-3">
-                What We Look For
+                Chúng Tôi Tìm Gì
               </span>
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-light uppercase tracking-tight text-white mb-3 sm:mb-4">
-                Evaluation <span className="font-semibold text-fortress-gold">Principles</span>
+                Nguyên Tắc <span className="font-semibold text-fortress-gold">Đánh Giá</span>
               </h2>
               <p className="text-fortress-silver/80 text-sm sm:text-lg leading-relaxed font-light">
-                Nine non-negotiable standards applied to every opportunity we assess.
+                Chín tiêu chuẩn không thể thỏa hiệp được áp dụng cho mọi cơ hội chúng tôi đánh giá.
               </p>
             </Reveal>
 

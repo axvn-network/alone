@@ -87,7 +87,7 @@ export default function InvestmentSectors() {
                     transition={{ type: "spring", stiffness: 350, damping: 25 }}
                   >
                     <span className="text-fortress-gold text-[10px] tracking-[4px] uppercase font-semibold block mb-2">
-                      Sector {String(index + 1).padStart(2, "0")}
+                      Lĩnh vực {String(index + 1).padStart(2, "0")}
                     </span>
                     <h3 className="text-xl md:text-2xl font-semibold text-fortress-ivory mb-3">
                       {sector.title}

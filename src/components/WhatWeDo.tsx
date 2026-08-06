@@ -68,7 +68,7 @@ export default function WhatWeDo() {
                 >
                   <div className="flex-1 flex flex-col">
                     <span className="text-fortress-gold/45 text-[10px] tracking-[4px] uppercase font-semibold block mb-2">
-                      Strategic Focus {String(i + 1).padStart(2, "0")}
+                      Trọng Tâm {String(i + 1).padStart(2, "0")}
                     </span>
                     <h3 className="text-lg sm:text-xl font-semibold text-fortress-ivory mb-3">
                       {item.title}

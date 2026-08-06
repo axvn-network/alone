@@ -187,7 +187,7 @@ export default function Footer() {
                   />
                 </Link>
                 <p className="text-[#8fa0b8] text-sm leading-relaxed max-w-[230px]">
-                  A Dubai-based diversified investment holding company focused on identifying, acquiring, and growing high-potential opportunities across real estate, private equity, technology, digital assets, energy, commodities, and hospitality.
+                  Tập đoàn đầu tư đa ngành có trụ sở tại Dubai, UAE – tập trung xác định, thâu tóm và phát triển các cơ hội tiềm năng cao trong bất động sản, private equity, công nghệ, tài sản số, năng lượng, hàng hóa và dịch vụ nghỉ dưỡng.
                 </p>
                 <motion.a
                   href="#"
@@ -201,7 +201,7 @@ export default function Footer() {
                     <line x1="9" y1="13" x2="15" y2="13" />
                     <line x1="9" y1="17" x2="12" y2="17" />
                   </svg>
-                  Download Brochure
+                  Tải Tài Liệu Giới Thiệu
                 </motion.a>
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
@@ -259,7 +259,7 @@ export default function Footer() {
                   <p className="text-[#8fa0b8]/50 text-[11px] leading-snug">
                     &copy; {new Date().getFullYear()} Fortress Investment Holdings.
                     <br />
-                    All Rights Reserved.
+                    Bản quyền thuộc về Fortress IH.
                   </p>
                 </div>
 
@@ -294,7 +294,7 @@ export default function Footer() {
 
                 <div className="flex flex-col gap-2.5 shrink-0">
                   <p className="text-white text-[11px] font-bold tracking-[3px] uppercase">
-                    FOLLOW US
+                    THEO DÕI CHÚNG TÔI
                   </p>
                   <div className="flex items-center gap-2">
                     {socialLinks.map((s) => (
