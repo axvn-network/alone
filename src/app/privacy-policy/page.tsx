@@ -19,7 +19,7 @@ export default function PrivacyPolicyPage() {
             Pháp Lý
           </p>
           <h1 className="text-3xl md:text-5xl font-bold text-fortress-navy mb-4">
-            Chính Sách Bảo Mật
+            Chính Sách Bảo Mật Quyền Riêng Tư
           </h1>
           <p className="text-fortress-charcoal/70 text-sm">
             Cập nhật lần cuối: 2026
@@ -32,72 +32,61 @@ export default function PrivacyPolicyPage() {
           <div className="space-y-10 text-fortress-charcoal/70 leading-relaxed text-sm sm:text-base">
 
             <p>
-            <div>
-              <h2 className="text-xl font-bold text-fortress-navy mb-4">Document Uploads</h2>
-              <p>
-                Documents uploaded through the website may contain confidential, financial, corporate, or personal information. Please only upload information you are authorised to provide.
-              </p>
-              <p className="mt-4">
-                Submitting documents does not create a formal confidential, advisory, investment, partnership, or contractual relationship unless separately agreed in writing. If your information requires a formal non-disclosure agreement, contact our team before submitting.
-              </p>
-            </div>
+              Fortress Investment Holdings luôn tôn trọng quyền riêng tư của mọi người dùng truy cập website, liên hệ với chúng tôi hoặc gửi thông tin qua các biểu mẫu trực tuyến.
+            </p>
+            <p>
+              Chính sách bảo mật này giải thích cách thức chúng tôi thu thập, sử dụng, lưu trữ và bảo vệ dữ liệu cá nhân của bạn.
+            </p>
 
             <div>
-              <h2 className="text-xl font-bold text-fortress-navy mb-4">Cookies and Tracking Technologies</h2>
-              <p>
-                Our website may use cookies and similar technologies to improve functionality, understand usage, measure performance, and support marketing relevance through tools including Google Analytics and Meta Pixel.
-              </p>
-              <p className="mt-4">
-                You may manage cookies through your browser settings or the website&apos;s cookie consent tool.
-              </p>
-            </div>
-
-            <div>
-              <h2 className="text-xl font-bold text-fortress-navy mb-4">Sharing of Information</h2>
-              <p>We do not sell personal information. Information may be shared with:</p>
-              <ul className="list-disc pl-5 mt-3 space-y-2">
-                <li>Employees and authorised representatives</li>
-                <li>Professional advisors</li>
-                <li>Technology, hosting, website, and analytics providers</li>
-                <li>Legal or regulatory authorities where required</li>
-                <li>Service providers supporting our operations</li>
+              <h2 className="text-xl font-bold text-fortress-navy mb-4">Thông Tin Chúng Tôi Thu Thập</h2>
+              <ul className="list-disc pl-5 space-y-2">
+                <li>Họ và tên, tên công ty và chức danh</li>
+                <li>Địa chỉ Email, số điện thoại và quốc gia</li>
+                <li>Thông tin chi tiết về đề xuất kinh doanh, đầu tư hoặc hợp tác</li>
+                <li>Các tài liệu được tải lên qua trang web</li>
+                <li>Thông tin sử dụng trang web, thiết bị và trình duyệt, bao gồm địa chỉ IP</li>
               </ul>
-              <p className="mt-4">All third parties are expected to handle information responsibly and only for legitimate purposes.</p>
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-fortress-navy mb-4">Data Security</h2>
-              <p>
-                We take reasonable administrative, technical, and organisational measures to protect information against unauthorised access, loss, misuse, alteration, or disclosure. However, no internet transmission or electronic storage system can be guaranteed to be completely secure.
-              </p>
-            </div>
-
-            <div>
-              <h2 className="text-xl font-bold text-fortress-navy mb-4">Data Retention</h2>
-              <p>
-                We retain personal information for as long as reasonably necessary to respond to enquiries, evaluate opportunities, maintain business records, meet legal obligations, resolve disputes, and protect legitimate business interests.
-              </p>
-            </div>
-
-            <div>
-              <h2 className="text-xl font-bold text-fortress-navy mb-4">Your Rights</h2>
-              <p>Depending on applicable law, you may have the right to:</p>
-              <ul className="list-disc pl-5 mt-3 space-y-2">
-                <li>Request access to or correction of your personal information</li>
-                <li>Request deletion of information</li>
-                <li>Withdraw marketing consent</li>
-                <li>Object to or request restriction of certain processing</li>
+              <h2 className="text-xl font-bold text-fortress-navy mb-4">Cách Thức Sử Dụng Thông Tin</h2>
+              <ul className="list-disc pl-5 space-y-2">
+                <li>Phản hồi các câu hỏi và giao tiếp trực tiếp với người dùng</li>
+                <li>Đánh giá các cơ hội đầu tư và đề xuất thâu tóm doanh nghiệp</li>
+                <li>Thẩm định các yêu cầu hợp tác liên doanh</li>
+                <li>Cung cấp thông tin theo yêu cầu của đối tác</li>
               </ul>
-              <p className="mt-4">Requests may be submitted using the contact information below.</p>
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-fortress-navy mb-4">Contact</h2>
-              <p>For privacy-related questions:</p>
-              <div className="mt-3 space-y-1">
+              <h2 className="text-xl font-bold text-fortress-navy mb-4">Bảo Mật Tài Liệu Tải Lên</h2>
+              <p>
+                Tài liệu tải lên qua website được cam kết bảo mật theo tiêu chuẩn nội bộ. Vui lòng chỉ cung cấp các thông tin bạn được quyền chia sẻ.
+              </p>
+            </div>
+
+            <div>
+              <h2 className="text-xl font-bold text-fortress-navy mb-4">Cookie & Công Nghệ Theo Dõi</h2>
+              <p>
+                Website có thể sử dụng cookie để nâng cao trải nghiệm người dùng, phân tích lưu lượng truy cập và hỗ trợ tối ưu hóa nội dung thông qua Google Analytics và Meta Pixel.
+              </p>
+            </div>
+
+            <div>
+              <h2 className="text-xl font-bold text-fortress-navy mb-4">Bảo Mật Dữ Liệu</h2>
+              <p>
+                Chúng tôi áp dụng các biện pháp quản lý, kỹ thuật và tổ chức phù hợp để bảo vệ thông tin khỏi các truy cập trái phép, rò rỉ hoặc mất mát.
+              </p>
+            </div>
+
+            <div>
+              <h2 className="text-xl font-bold text-fortress-navy mb-4">Liên Hệ</h2>
+              <p>Mọi thắc mắc liên quan đến quyền riêng tư, vui lòng liên hệ:</p>
+              <div className="mt-3 space-y-1 font-medium">
                 <p>Fortress Investment Holdings</p>
-                <p>Email: [INSERT PRIVACY EMAIL]</p>
-                <p>Address: [INSERT OFFICE ADDRESS]</p>
+                <p>Email: info@fortressih.com</p>
+                <p>Địa chỉ: Dubai, Các Quốc Gia Ả Rập Thống Nhất</p>
               </div>
             </div>
 
