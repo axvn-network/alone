@@ -177,7 +177,7 @@ export default function OurApproachPage() {
         {/* ── 2. Investment Process Section ──────────────────────────────── */}
         <section
           id="process"
-          className="py-12 md:py-28 bg-fortress-navy mx-2 sm:mx-4 rounded-2xl border border-fortress-gold/20 my-4 sm:my-8"
+          className="py-12 md:py-28 bg-fortress-navy mx-2 mx-2 mx-2 sm:mx-4 rounded-2xl border border-fortress-gold/20 my-4 sm:my-8"
         >
           <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-12">
 
@@ -320,7 +320,7 @@ export default function OurApproachPage() {
         {/* ── 3. Evaluation Principles Section ───────────────────────────── */}
         <section
           id="principles"
-          className="py-12 md:py-28 bg-fortress-navy text-fortress-ivory mx-2 sm:mx-4 rounded-2xl border border-fortress-gold/20 my-4 sm:my-8"
+          className="py-12 md:py-28 bg-fortress-navy text-fortress-ivory mx-2 mx-2 mx-2 sm:mx-4 rounded-2xl border border-fortress-gold/20 my-4 sm:my-8"
         >
           <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-12">
 

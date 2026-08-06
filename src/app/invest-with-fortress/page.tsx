@@ -110,7 +110,7 @@ export default function InvestWithFortressPage() {
       </section>
 
       {/* For Investors */}
-      <section className="py-12 md:py-20 bg-fortress-navy my-8 md:my-12 sm:mx-4 rounded-2xl" id="invest">
+      <section className="py-12 md:py-20 bg-fortress-navy my-8 md:my-12 mx-2 mx-2 sm:mx-4 rounded-2xl" id="invest">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-fortress-gold text-sm font-medium tracking-[2px] md:tracking-[4px] uppercase mb-4">Dành Cho Nhà Đầu Tư</p>
@@ -130,7 +130,7 @@ export default function InvestWithFortressPage() {
       </section>
 
       {/* Diversified Investment Access */}
-      <section className="py-12 md:py-20 my-8 md:my-12 sm:mx-4 rounded-2xl bg-white" id="sectors">
+      <section className="py-12 md:py-20 my-8 md:my-12 mx-2 mx-2 sm:mx-4 rounded-2xl bg-white" id="sectors">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-fortress-gold text-sm font-medium tracking-[2px] md:tracking-[4px] uppercase mb-4">Đa Dạng Hóa Danh Mục Đầu Tư</p>
@@ -150,7 +150,7 @@ export default function InvestWithFortressPage() {
       </section>
 
       {/* The Fortress Investment Model */}
-      <section className="py-12 md:py-20 bg-fortress-deep my-8 md:my-12 sm:mx-4 rounded-2xl" id="model">
+      <section className="py-12 md:py-20 bg-fortress-deep my-8 md:my-12 mx-2 mx-2 sm:mx-4 rounded-2xl" id="model">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-fortress-gold text-sm font-medium tracking-[2px] md:tracking-[4px] uppercase mb-4">Mô Hình Đầu Tư Fortress</p>
@@ -174,7 +174,7 @@ export default function InvestWithFortressPage() {
       </section>
 
       {/* Active Investment Management */}
-      <section className="py-12 md:py-20 my-8 md:my-12 sm:mx-4 rounded-2xl bg-white">
+      <section className="py-12 md:py-20 my-8 md:my-12 mx-2 mx-2 sm:mx-4 rounded-2xl bg-white">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-5 gap-8 md:gap-16 items-center">
             <div className="lg:col-span-2">
@@ -200,7 +200,7 @@ export default function InvestWithFortressPage() {
       </section>
 
       {/* Form Section */}
-      <section className="py-12 md:py-20 bg-white my-8 md:my-12 sm:mx-4 rounded-2xl" id="enquiry">
+      <section className="py-12 md:py-20 bg-white my-8 md:my-12 mx-2 mx-2 sm:mx-4 rounded-2xl" id="enquiry">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-5 gap-8 md:gap-16">
             <div className="lg:col-span-2">
@@ -234,7 +234,7 @@ export default function InvestWithFortressPage() {
       </section>
 
       {/* Confidentiality Note */}
-      <section className="py-12 md:py-20 bg-fortress-navy my-8 md:my-12 sm:mx-4 rounded-2xl">
+      <section className="py-12 md:py-20 bg-fortress-navy my-8 md:my-12 mx-2 mx-2 sm:mx-4 rounded-2xl">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-fortress-gold text-sm font-medium tracking-[2px] md:tracking-[4px] uppercase mb-4">Cam Kết Bảo Mật</p>

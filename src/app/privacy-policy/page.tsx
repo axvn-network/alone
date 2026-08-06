@@ -27,7 +27,7 @@ export default function PrivacyPolicyPage() {
         </div>
       </section>
 
-      <section className="bg-white my-8 md:my-12 sm:mx-4 rounded-2xl py-12 md:py-20 px-6 lg:px-20">
+      <section className="bg-white my-8 md:my-12 mx-2 mx-2 sm:mx-4 rounded-2xl py-12 md:py-20 px-6 lg:px-20">
         <div className="max-w-[860px] mx-auto">
           <div className="space-y-10 text-fortress-charcoal/70 leading-relaxed text-sm sm:text-base">
 

@@ -64,7 +64,7 @@ export default function AboutPage() {
       </section>
 
       {/* Company Introduction */}
-      <section className="py-12 md:py-20 bg-fortress-navy my-8 md:my-12 sm:mx-4 rounded-2xl">
+      <section className="py-12 md:py-20 bg-fortress-navy my-8 md:my-12 mx-2 mx-2 sm:mx-4 rounded-2xl">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
           <Reveal className="max-w-3xl mx-auto text-center">
             <p className="text-fortress-gold text-sm font-medium tracking-[2px] md:tracking-[4px] uppercase mb-4">Về Fortress Investment Holdings</p>
@@ -79,7 +79,7 @@ export default function AboutPage() {
       </section>
 
       {/* Vision & Mission */}
-      <section className="py-12 md:py-20 my-8 md:my-12 sm:mx-4 rounded-2xl bg-white">
+      <section className="py-12 md:py-20 my-8 md:my-12 mx-2 mx-2 sm:mx-4 rounded-2xl bg-white">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
           <Stagger className="grid md:grid-cols-2 gap-6 md:gap-12">
             <StaggerItem className="bg-fortress-navy border border-fortress-gold/10 p-6 md:p-10 rounded-2xl">
@@ -107,7 +107,7 @@ export default function AboutPage() {
       </section>
 
       {/* Leadership */}
-      <section className="py-12 md:py-20 bg-fortress-deep my-8 md:my-12 sm:mx-4 rounded-2xl">
+      <section className="py-12 md:py-20 bg-fortress-deep my-8 md:my-12 mx-2 mx-2 sm:mx-4 rounded-2xl">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
           <Reveal className="text-center mb-8 md:mb-12">
             <p className="text-fortress-gold text-sm font-medium tracking-[2px] md:tracking-[4px] uppercase mb-4">Ban Lãnh Đạo</p>
@@ -143,7 +143,7 @@ export default function AboutPage() {
       </section>
 
       {/* Values */}
-      <section className="py-12 md:py-20 my-8 md:my-12 sm:mx-4 rounded-2xl bg-white">
+      <section className="py-12 md:py-20 my-8 md:my-12 mx-2 mx-2 sm:mx-4 rounded-2xl bg-white">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
           <Reveal className="text-center mb-10 md:mb-16">
             <p className="text-fortress-gold text-sm font-medium tracking-[2px] md:tracking-[4px] uppercase mb-4">Giá Trị Cốt Lõi</p>
@@ -164,7 +164,7 @@ export default function AboutPage() {
       </section>
 
       {/* Investment Philosophy */}
-      <section className="py-12 md:py-20 bg-fortress-navy my-8 md:my-12 sm:mx-4 rounded-2xl">
+      <section className="py-12 md:py-20 bg-fortress-navy my-8 md:my-12 mx-2 mx-2 sm:mx-4 rounded-2xl">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
           <Reveal className="text-center mb-8 md:mb-12">
             <p className="text-fortress-gold text-sm font-medium tracking-[2px] md:tracking-[4px] uppercase mb-4">Triết Lý Đầu Tư</p>
