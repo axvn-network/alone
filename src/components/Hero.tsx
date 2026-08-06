@@ -86,7 +86,7 @@ export default function Hero() {
 
         <motion.h1
           variants={heroItemVariants}
-          className="text-white text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-light leading-[1.1] uppercase tracking-tight mb-5 md:mb-8 max-w-xs sm:max-w-lg md:max-w-4xl"
+          className="text-white text-2xl sm:text-4xl md:text-6xl lg:text-7xl font-light leading-[1.15] uppercase tracking-tight mb-4 md:mb-8 max-w-xs sm:max-w-lg md:max-w-4xl"
         >
           Vững Chắc Nền Tảng.<br />
           <span className="font-semibold bg-gradient-to-r from-fortress-gold to-fortress-champagne bg-clip-text text-transparent">
@@ -96,7 +96,7 @@ export default function Hero() {
 
         <motion.p
           variants={heroItemVariants}
-          className="text-fortress-silver/90 text-sm sm:text-base md:text-lg lg:text-xl max-w-sm sm:max-w-xl md:max-w-3xl leading-relaxed mb-8 md:mb-10 font-light"
+          className="text-fortress-silver/90 text-xs sm:text-base md:text-lg lg:text-xl max-w-xs sm:max-w-xl md:max-w-3xl leading-relaxed mb-6 md:mb-10 font-light"
         >
           Tập đoàn đầu tư đa ngành hàng đầu tập trung tìm kiếm, thâu tóm và phát triển các cơ hội đầu tư tiềm năng cao trong các lĩnh vực bất động sản, đầu tư tư nhân (Private Equity), công nghệ AI, năng lượng, hàng hóa và dịch vụ khách sạn nghỉ dưỡng.
         </motion.p>

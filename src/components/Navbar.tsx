@@ -218,7 +218,7 @@ export default function Navbar() {
                   >
                     <Link
                       href={item.href}
-                      className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors group"
+                      className="flex items-center gap-3.5 p-3.5 rounded-xl hover:bg-white/5 transition-colors group active:scale-[0.99]"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       <motion.div
@@ -227,26 +227,31 @@ export default function Navbar() {
                       >
                         <item.icon className="w-5 h-5 text-fortress-gold/80 group-hover:text-fortress-gold transition-colors" />
                       </motion.div>
-                      <span className="font-medium text-white/80 group-hover:text-white transition-colors">{item.label}</span>
+                      <span className="font-medium text-base text-white/90 group-hover:text-white transition-colors">{item.label}</span>
                     </Link>
                   </motion.div>
                 ))}
-                <motion.div
-                  custom={navItems.length}
-                  variants={mobileItemVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="hidden"
-                  className="mt-2"
-                >
-                  <Link
-                    href="/contact"
-                    className="flex items-center justify-center gap-2 p-3 bg-fortress-gold text-fortress-navy font-bold rounded-lg hover:bg-fortress-champagne transition-colors"
-                    onClick={() => setIsMobileMenuOpen(false)}
+                <div className="pt-3 border-t border-white/10 mt-2 flex flex-col gap-3">
+                  <div className="flex items-center justify-between px-2">
+                    <span className="text-xs text-gray-400 font-medium uppercase tracking-wider">Ngôn ngữ / Language</span>
+                    <LanguageSwitcher />
+                  </div>
+                  <motion.div
+                    custom={navItems.length}
+                    variants={mobileItemVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="hidden"
                   >
-                    Liên hệ ngay
-                  </Link>
-                </motion.div>
+                    <Link
+                      href="/contact"
+                      className="flex items-center justify-center gap-2 py-3.5 px-4 bg-fortress-gold text-fortress-navy font-bold rounded-xl hover:bg-fortress-champagne transition-colors w-full shadow-lg text-center"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      Liên hệ ngay
+                    </Link>
+                  </motion.div>
+                </div>
               </nav>
             </motion.div>
           </motion.div>
