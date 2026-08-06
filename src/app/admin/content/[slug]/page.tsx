@@ -24,6 +24,8 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
   const { slug } = use(params);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [pageDataStr, setPageDataStr] = useState("{}");
+  const [jsonError, setJsonError] = useState("");
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
@@ -32,16 +34,29 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
       .then((data) => {
         setTitle(data.title || "");
         setContent(data.content || "");
+        setPageDataStr(JSON.stringify(data.data || {}, null, 2));
       });
   }, [slug]);
 
   async function handleSave() {
+    let parsedData = {};
+    try {
+      if (pageDataStr.trim()) {
+        parsedData = JSON.parse(pageDataStr);
+      }
+      setJsonError("");
+    } catch {
+      setJsonError("Cú pháp JSON cấu hình không hợp lệ. Vui lòng kiểm tra lại.");
+      toast.error("Lỗi định dạng JSON");
+      return;
+    }
+
     setSaving(true);
     try {
       const res = await fetch("/api/admin/content", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ slug, title, content }),
+        body: JSON.stringify({ slug, title, content, data: parsedData }),
       });
       if (!res.ok) throw new Error("Failed to save");
       toast.success("Đã lưu trang thành công");
@@ -72,7 +87,7 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="flex items-center gap-2 px-5 py-2.5 bg-fortress-gold text-fortress-navy text-sm font-bold hover:bg-fortress-champagne transition-colors disabled:opacity-50 rounded-lg cursor-pointer"
+                className="flex items-center gap-2 px-5 py-2.5 bg-fortress-gold text-fortress-navy text-sm font-bold hover:bg-fortress-champagne transition-colors disabled:opacity-50 rounded-lg cursor-pointer shadow-lg"
               >
                 <Save className="w-4 h-4" />
                 {saving ? "Đang lưu..." : "Lưu thay đổi"}
@@ -80,7 +95,7 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
             </div>
           </div>
 
-          <div className="space-y-5">
+          <div className="space-y-6">
             <div className="bg-fortress-navy border-t-2 border-t-fortress-gold/30 p-5 rounded-lg">
               <label className="block text-fortress-silver text-xs font-medium mb-2 tracking-wide">Tiêu đề trang</label>
               <input
@@ -92,14 +107,29 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
             </div>
 
             <div className="bg-fortress-navy border-t-2 border-t-fortress-gold/30 p-5 rounded-lg">
-              <label className="block text-fortress-silver text-xs font-medium mb-2 tracking-wide">Nội dung chi tiết</label>
+              <div className="flex items-center justify-between mb-2">
+                <label className="block text-fortress-silver text-xs font-medium tracking-wide">Biến nội dung cấu trúc (Trường dữ liệu tĩnh)</label>
+                <span className="text-[11px] text-fortress-silver/40">Thay đổi trực tiếp các câu chữ hiển thị trên website</span>
+              </div>
+              <textarea
+                rows={10}
+                value={pageDataStr}
+                onChange={(e) => setPageDataStr(e.target.value)}
+                className="w-full bg-fortress-deep border border-white/10 text-fortress-champagne font-mono text-xs p-4 focus:outline-none focus:border-fortress-gold/50 transition-colors rounded-lg leading-relaxed"
+                placeholder="{}"
+              />
+              {jsonError && <p className="text-red-400 text-xs mt-2">{jsonError}</p>}
+            </div>
+
+            <div className="bg-fortress-navy border-t-2 border-t-fortress-gold/30 p-5 rounded-lg">
+              <label className="block text-fortress-silver text-xs font-medium mb-2 tracking-wide">Nội dung chi tiết (Rich Text)</label>
               <RichTextEditor value={content} onChange={setContent} />
             </div>
 
             <div className="bg-fortress-navy border-t-2 border-t-fortress-gold/30 p-5 rounded-lg">
               <div className="flex items-center gap-2 mb-3">
                 <Eye className="w-4 h-4 text-fortress-gold" />
-                <label className="text-fortress-silver text-xs font-medium tracking-wide">Xem trước</label>
+                <label className="text-fortress-silver text-xs font-medium tracking-wide">Xem trước nội dung chi tiết</label>
               </div>
               <div className="border border-white/5 p-5 bg-fortress-deep rounded-lg">
                 <div className="prose max-w-none text-fortress-ivory text-sm" dangerouslySetInnerHTML={{ __html: content }} />
