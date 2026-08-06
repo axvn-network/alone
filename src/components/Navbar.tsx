@@ -7,6 +7,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { navVariants } from "@/lib/animation";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { usePathname } from "next/navigation";
 
 const navItems = [
   { label: "Giới thiệu", href: "/about", icon: User },
@@ -54,6 +55,7 @@ const mobileItemVariants = {
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -183,14 +185,15 @@ export default function Navbar() {
         <nav className="flex justify-around items-center h-[72px] px-2">
           {navItems.map((item) => {
             const Icon = item.icon;
+            const isActive = pathname === item.href || (pathname.startsWith(item.href) && item.href !== "/");
             return (
               <Link
                 key={item.label}
                 href={item.href}
-                className="flex flex-col items-center justify-center w-full h-full gap-1.5 group active:scale-95 transition-transform"
+                className="flex flex-col items-center justify-center w-full h-full gap-1.5 active:scale-95 transition-transform"
               >
-                <Icon className="w-6 h-6 text-fortress-silver/80 group-hover:text-fortress-gold transition-colors" />
-                <span className="text-[10px] font-medium text-white/70 group-hover:text-white transition-colors text-center leading-tight px-1">
+                <Icon className={`w-6 h-6 transition-colors ${isActive ? 'text-fortress-gold' : 'text-fortress-silver/60'}`} />
+                <span className={`text-[10px] font-medium transition-colors text-center leading-tight px-1 ${isActive ? 'text-white' : 'text-white/50'}`}>
                   {item.label}
                 </span>
               </Link>
