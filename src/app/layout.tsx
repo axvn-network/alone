@@ -105,7 +105,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className="antialiased bg-fortress-navy text-fortress-silver cursor-none"
+        className="antialiased bg-fortress-navy text-fortress-silver cursor-none pb-[72px] md:pb-0"
         suppressHydrationWarning
       >
         <AnimationProvider>

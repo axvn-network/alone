@@ -2,9 +2,9 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { User, Target, Handshake, Newspaper, TrendingUp, Menu, X } from "lucide-react";
+import { User, Target, Handshake, Newspaper, TrendingUp, Mail } from "lucide-react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { navVariants } from "@/lib/animation";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 
@@ -53,7 +53,6 @@ const mobileItemVariants = {
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -61,15 +60,6 @@ export default function Navbar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => { document.body.style.overflow = ""; };
-  }, [isMobileMenuOpen]);
 
   const bgClass = "bg-[#07111D]/95 backdrop-blur-md border-b border-white/5";
 
@@ -113,17 +103,9 @@ export default function Navbar() {
                 ))}
               </nav>
 
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className={`md:hidden p-1 transition-colors ${
-                  scrolled ? "text-gray-600 hover:text-fortress-gold" : "text-white/80 hover:text-[#C9A24A]"
-                }`}
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                aria-label="Toggle menu"
-              >
-                {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-              </motion.button>
+              <div className="md:hidden flex items-center">
+                <LanguageSwitcher />
+              </div>
 
               <div className="flex justify-center shrink-0 mx-2 md:mx-4">
                 <Link href="/" className="flex items-center group">
@@ -170,6 +152,12 @@ export default function Navbar() {
                   </motion.div>
                 </div>
               </nav>
+
+              <div className="md:hidden flex items-center">
+                <Link href="/contact" className="text-fortress-gold p-2 bg-white/5 rounded-full hover:bg-white/10 transition-colors shadow-sm active:scale-95">
+                  <Mail className="w-5 h-5" />
+                </Link>
+              </div>
             </div>
           </div>
 
@@ -190,73 +178,26 @@ export default function Navbar() {
         </div>
       </motion.header>
 
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="fixed inset-x-0 top-24 z-40 md:hidden"
-          >
-            <motion.div
-              initial={{ opacity: 0, y: -10, scale: 0.97 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -10, scale: 0.97 }}
-              transition={{ duration: 0.25, ease: "easeOut" }}
-              className="bg-[#07111D]/98 backdrop-blur-xl border-b border-white/10 p-4 shadow-2xl"
-            >
-              <nav className="flex flex-col gap-1">
-                {navItems.map((item, i) => (
-                  <motion.div
-                    key={item.label}
-                    custom={i}
-                    variants={mobileItemVariants}
-                    initial="hidden"
-                    animate="visible"
-                    exit="hidden"
-                  >
-                    <Link
-                      href={item.href}
-                      className="flex items-center gap-3.5 p-3.5 rounded-xl hover:bg-white/5 transition-colors group active:scale-[0.99]"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      <motion.div
-                        whileHover={{ scale: 1.15, rotate: 5 }}
-                        transition={{ type: "spring", stiffness: 400, damping: 12 }}
-                      >
-                        <item.icon className="w-5 h-5 text-fortress-gold/80 group-hover:text-fortress-gold transition-colors" />
-                      </motion.div>
-                      <span className="font-medium text-base text-white/90 group-hover:text-white transition-colors">{item.label}</span>
-                    </Link>
-                  </motion.div>
-                ))}
-                <div className="pt-3 border-t border-white/10 mt-2 flex flex-col gap-3">
-                  <div className="flex items-center justify-between px-2">
-                    <span className="text-xs text-gray-400 font-medium uppercase tracking-wider">Ngôn ngữ / Language</span>
-                    <LanguageSwitcher />
-                  </div>
-                  <motion.div
-                    custom={navItems.length}
-                    variants={mobileItemVariants}
-                    initial="hidden"
-                    animate="visible"
-                    exit="hidden"
-                  >
-                    <Link
-                      href="/contact"
-                      className="flex items-center justify-center gap-2 py-3.5 px-4 bg-fortress-gold text-fortress-navy font-bold rounded-xl hover:bg-fortress-champagne transition-colors w-full shadow-lg text-center"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      Liên hệ ngay
-                    </Link>
-                  </motion.div>
-                </div>
-              </nav>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Mobile Bottom Navigation */}
+      <div className="fixed bottom-0 inset-x-0 z-50 md:hidden bg-[#07111D]/98 backdrop-blur-xl border-t border-white/10 pb-safe">
+        <nav className="flex justify-around items-center h-[72px] px-2">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                className="flex flex-col items-center justify-center w-full h-full gap-1.5 group active:scale-95 transition-transform"
+              >
+                <Icon className="w-6 h-6 text-fortress-silver/80 group-hover:text-fortress-gold transition-colors" />
+                <span className="text-[10px] font-medium text-white/70 group-hover:text-white transition-colors text-center leading-tight px-1">
+                  {item.label}
+                </span>
+              </Link>
+            );
+          })}
+        </nav>
+      </div>
     </>
   );
 }
