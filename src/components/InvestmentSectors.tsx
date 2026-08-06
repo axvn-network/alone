@@ -7,15 +7,15 @@ import Stagger from "@/components/animations/Stagger";
 import StaggerItem from "@/components/animations/StaggerItem";
 
 const sectors = [
-  { title: "Bất Động Sản", desc: "Đầu tư bất động sản nhà ở, thương mại, nghỉ dưỡng và tài sản tạo dòng tiền tại Dubai, UAE và quốc tế.", image: "/1.png", className: "md:col-span-2 h-[280px] md:h-[380px]" },
-  { title: "Thâu Tóm Doanh Nghiệp (M&A)", desc: "Doanh nghiệp lâu năm có vận hành ổn định, nhu cầu thị trường cao và cơ hội mở rộng quy mô rõ ràng.", image: "/3.png", className: "md:col-span-1 h-[280px] md:h-[380px]" },
-  { title: "Đầu Tư Tư Nhân (Private Equity)", desc: "Đầu tư chiến lược vào các công ty tư nhân có ban lãnh đạo năng lực và mô hình kinh doanh mở rộng.", image: "/4.png", className: "md:col-span-1 h-[280px] md:h-[380px]" },
-  { title: "Công Nghệ AI & Đột Phá", desc: "Doanh nghiệp công nghệ, nền tảng số và các giải pháp đổi mới sáng tạo giải quyết bài toán thị trường.", image: "/6.png", className: "md:col-span-2 h-[280px] md:h-[380px]" },
-  { title: "Khách Sạn & Nghỉ Dưỡng", desc: "Khách sạn, căn hộ dịch vụ, du lịch, ẩm thực F&B và dịch vụ phong cách sống cao cấp.", image: "/5.png", className: "md:col-span-2 h-[280px] md:h-[380px]" },
-  { title: "Tài Sản Số & Blockchain", desc: "Hạ tầng blockchain, nền tảng tài sản số, mã hóa tài sản (tokenization) và công nghệ tài chính Fintech.", image: "/2.png", className: "md:col-span-1 h-[280px] md:h-[380px]" },
-  { title: "Năng Lượng & Hàng Hóa", desc: "Đầu tư vào sản phẩm năng lượng, hàng hóa vật chất và mạng lưới cung ứng phân phối toàn cầu.", image: "/7.png", className: "md:col-span-1 h-[280px] md:h-[380px]" },
-  { title: "Tài Sản Sang Trọng & Bất Động Sản Hạng Sang", desc: "Bất động sản siêu sang, du thuyền, phi cơ, xe cao cấp và sản phẩm dịch vụ xa xỉ.", image: "/8.png", className: "md:col-span-2 h-[280px] md:h-[380px]" },
-  { title: "Quản Lý Đầu Tư Chiến Lược", desc: "Liên doanh, đồng đầu tư và liên minh chiến lược với các đối tác định chế tài chính uy tín.", image: "/9.png", className: "md:col-span-3 h-[280px] md:h-[380px]" },
+  { title: "Bất Động Sản", desc: "Đầu tư bất động sản nhà ở, thương mại, nghỉ dưỡng và tài sản tạo dòng tiền tại Dubai, UAE và quốc tế.", image: "/1.png", className: "md:col-span-2 h-[220px] sm:h-[280px] md:h-[380px]" },
+  { title: "Thâu Tóm Doanh Nghiệp (M&A)", desc: "Doanh nghiệp lâu năm có vận hành ổn định, nhu cầu thị trường cao và cơ hội mở rộng quy mô rõ ràng.", image: "/3.png", className: "md:col-span-1 h-[220px] sm:h-[280px] md:h-[380px]" },
+  { title: "Đầu Tư Tư Nhân (Private Equity)", desc: "Đầu tư chiến lược vào các công ty tư nhân có ban lãnh đạo năng lực và mô hình kinh doanh mở rộng.", image: "/4.png", className: "md:col-span-1 h-[220px] sm:h-[280px] md:h-[380px]" },
+  { title: "Công Nghệ AI & Đột Phá", desc: "Doanh nghiệp công nghệ, nền tảng số và các giải pháp đổi mới sáng tạo giải quyết bài toán thị trường.", image: "/6.png", className: "md:col-span-2 h-[220px] sm:h-[280px] md:h-[380px]" },
+  { title: "Khách Sạn & Nghỉ Dưỡng", desc: "Khách sạn, căn hộ dịch vụ, du lịch, ẩm thực F&B và dịch vụ phong cách sống cao cấp.", image: "/5.png", className: "md:col-span-2 h-[220px] sm:h-[280px] md:h-[380px]" },
+  { title: "Tài Sản Số & Blockchain", desc: "Hạ tầng blockchain, nền tảng tài sản số, mã hóa tài sản (tokenization) và công nghệ tài chính Fintech.", image: "/2.png", className: "md:col-span-1 h-[220px] sm:h-[280px] md:h-[380px]" },
+  { title: "Năng Lượng & Hàng Hóa", desc: "Đầu tư vào sản phẩm năng lượng, hàng hóa vật chất và mạng lưới cung ứng phân phối toàn cầu.", image: "/7.png", className: "md:col-span-1 h-[220px] sm:h-[280px] md:h-[380px]" },
+  { title: "Tài Sản Sang Trọng & Bất Động Sản Hạng Sang", desc: "Bất động sản siêu sang, du thuyền, phi cơ, xe cao cấp và sản phẩm dịch vụ xa xỉ.", image: "/8.png", className: "md:col-span-2 h-[220px] sm:h-[280px] md:h-[380px]" },
+  { title: "Quản Lý Đầu Tư Chiến Lược", desc: "Liên doanh, đồng đầu tư và liên minh chiến lược với các đối tác định chế tài chính uy tín.", image: "/9.png", className: "md:col-span-3 h-[220px] sm:h-[280px] md:h-[380px]" },
 ];
 
 const cardHoverVariants = {
