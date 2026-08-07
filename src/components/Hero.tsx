@@ -71,9 +71,9 @@ export default function Hero() {
       style={{
         /* Fluid min-height: 85vh mobile → 100vh desktop */
         minHeight: "clamp(85vh, 92vw, 100vh)",
-        /* Fluid vertical padding: 80px top → 112px; 48px bottom → 64px */
-        paddingTop: "clamp(5rem, 8vw + 1rem, 7rem)",
-        paddingBottom: "clamp(3rem, 4vw + 0.5rem, 4rem)",
+        /* Padding-top: navbar h-24 = 6rem; thêm 1.5rem buffer = 7.5rem mobile → 8rem desktop */
+        paddingTop: "clamp(7.5rem, 8vw + 2rem, 9rem)",
+        paddingBottom: "clamp(3.5rem, 4vw + 0.5rem, 5rem)",
         /* Fluid horizontal padding */
         paddingLeft: "var(--section-px)",
         paddingRight: "var(--section-px)",
@@ -109,31 +109,42 @@ export default function Hero() {
         animate="visible"
         className="relative z-10 w-full max-w-[1280px] mx-auto flex flex-col items-center text-center md:items-start md:text-left"
       >
-        <motion.span
-          variants={heroItemVariants}
-          className="block text-fortress-gold uppercase font-semibold mb-4 md:mb-6"
-          style={{
-            fontSize: "clamp(0.625rem, 0.5vw + 0.45rem, 0.875rem)",
-            letterSpacing: "clamp(0.2em, 0.4vw + 0.1em, 0.45em)",
-          }}
-        >
-          {heroSubtitle}
-        </motion.span>
+        {/* Eyebrow tag */}
+        <motion.div variants={heroItemVariants} className="flex items-center gap-3 mb-5 md:mb-7">
+          <div className="w-6 h-px bg-fortress-gold/70" />
+          <span
+            className="section-tag"
+            style={{ letterSpacing: "var(--tracking-tag)" }}
+          >
+            {heroSubtitle}
+          </span>
+        </motion.div>
 
         <motion.h1
           variants={heroItemVariants}
-          className="text-white font-light leading-[1.18] uppercase tracking-tight mb-4 md:mb-8 w-full md:max-w-4xl"
-          style={{ fontSize: "var(--text-display)" }}
+          className="text-white font-light leading-[1.22] uppercase mb-5 md:mb-9 w-full md:max-w-[900px]"
+          style={{
+            fontSize: "var(--text-display)",
+            letterSpacing: "var(--tracking-display)",
+          }}
         >
           {heroTitleLine1}<br />
-          <span className="font-semibold bg-gradient-to-r from-fortress-gold to-fortress-champagne bg-clip-text text-transparent">
+          <span className="font-bold bg-gradient-to-r from-fortress-gold via-fortress-champagne to-fortress-gold bg-clip-text text-transparent bg-[length:200%_100%]"
+            style={{ backgroundPosition: "0% 50%" }}
+          >
             {heroTitleLine2}
           </span>
         </motion.h1>
 
+        {/* Thin gold rule under heading */}
+        <motion.div
+          variants={{ hidden: { scaleX: 0 }, visible: { scaleX: 1, transition: { duration: 0.7, ease: [0.22,1,0.36,1], delay: 0.9 } } }}
+          className="w-16 h-px bg-gradient-to-r from-fortress-gold to-transparent mb-5 md:mb-8 origin-left"
+        />
+
         <motion.p
           variants={heroItemVariants}
-          className="text-fortress-silver/90 w-full md:max-w-3xl leading-relaxed mb-6 md:mb-10 font-light"
+          className="text-fortress-silver/85 w-full md:max-w-2xl leading-[1.75] mb-8 md:mb-11 font-light"
           style={{ fontSize: "var(--text-lead)" }}
         >
           {heroDescription}
@@ -142,26 +153,28 @@ export default function Hero() {
         <motion.div variants={heroButtonVariants} className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
           <motion.div
             className="w-full sm:w-auto"
-            whileHover={{ scale: 1.03, y: -2 }}
+            whileHover={{ scale: 1.02, y: -2 }}
             whileTap={{ scale: 0.97 }}
-            transition={{ type: "spring", stiffness: 400, damping: 20 }}
+            transition={{ type: "spring", stiffness: 380, damping: 22 }}
           >
             <Link
               href="/investment-focus"
-              className="block w-full sm:w-auto px-6 sm:px-8 py-3.5 md:py-4 bg-gradient-to-r from-fortress-gold to-fortress-champagne text-fortress-navy font-bold text-xs sm:text-sm tracking-widest uppercase hover:opacity-90 transition-opacity rounded-sm shadow-lg text-center"
+              className="block w-full sm:w-auto px-7 sm:px-9 py-4 md:py-4.5 bg-gradient-to-r from-fortress-gold to-fortress-champagne text-fortress-navy font-bold text-xs uppercase hover:opacity-90 transition-opacity shadow-lg shadow-fortress-gold/20 text-center"
+              style={{ letterSpacing: "var(--tracking-btn)" }}
             >
               {heroBtn1Text}
             </Link>
           </motion.div>
           <motion.div
             className="w-full sm:w-auto"
-            whileHover={{ scale: 1.03, y: -2 }}
+            whileHover={{ scale: 1.02, y: -2 }}
             whileTap={{ scale: 0.97 }}
-            transition={{ type: "spring", stiffness: 400, damping: 20 }}
+            transition={{ type: "spring", stiffness: 380, damping: 22 }}
           >
             <Link
               href="/invest-with-fortress"
-              className="block w-full sm:w-auto px-6 sm:px-8 py-3.5 md:py-4 border border-fortress-silver/40 text-white font-bold text-xs sm:text-sm tracking-widest uppercase hover:bg-white/10 hover:border-white transition-all rounded-sm backdrop-blur-sm text-center"
+              className="block w-full sm:w-auto px-7 sm:px-9 py-4 md:py-4.5 border border-fortress-silver/35 text-fortress-ivory font-semibold text-xs uppercase hover:bg-white/8 hover:border-fortress-silver/70 transition-all backdrop-blur-sm text-center"
+              style={{ letterSpacing: "var(--tracking-btn)" }}
             >
               {heroBtn2Text}
             </Link>

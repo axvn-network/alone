@@ -1,0 +1,104 @@
+import { connectDB } from "@/lib/db";
+import DocumentModel, { DocumentCategory, IDocument } from "@/models/Document";
+
+export interface DocumentQuery {
+  category?: DocumentCategory;
+  year?: number;
+  status?: "published" | "draft";
+  search?: string;
+  limit?: number;
+  page?: number;
+}
+
+export interface CreateDocumentDto {
+  title: string;
+  titleEn?: string;
+  category: DocumentCategory;
+  fileUrl: string;
+  fileType?: "pdf" | "doc" | "xlsx" | "other";
+  publishedDate: string | Date;
+  year: number;
+  quarter?: 1 | 2 | 3 | 4;
+  reportType?: string;
+  isFeatured?: boolean;
+  status?: "published" | "draft";
+}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface UpdateDocumentDto extends Partial<CreateDocumentDto> {}
+
+function toPlain(doc: IDocument) {
+  const obj = doc.toObject ? doc.toObject() : doc;
+  return {
+    ...obj,
+    _id: String(obj._id),
+    publishedDate: obj.publishedDate ? new Date(obj.publishedDate).toISOString() : null,
+    createdAt: obj.createdAt ? new Date(obj.createdAt).toISOString() : null,
+    updatedAt: obj.updatedAt ? new Date(obj.updatedAt).toISOString() : null,
+  };
+}
+
+export const documentService = {
+  async list(query: DocumentQuery = {}) {
+    await connectDB();
+    const filter: Record<string, unknown> = {};
+    if (query.status) filter.status = query.status;
+    if (query.category) filter.category = query.category;
+    if (query.year) filter.year = query.year;
+    if (query.search) {
+      filter.$or = [
+        { title: { $regex: query.search, $options: "i" } },
+        { titleEn: { $regex: query.search, $options: "i" } },
+      ];
+    }
+
+    const page = Math.max(1, query.page || 1);
+    const limit = Math.min(100, Math.max(1, query.limit || 50));
+    const skip = (page - 1) * limit;
+
+    const [docs, total] = await Promise.all([
+      DocumentModel.find(filter).sort({ publishedDate: -1, year: -1 }).skip(skip).limit(limit).lean(),
+      DocumentModel.countDocuments(filter),
+    ]);
+
+    return { documents: docs.map((d) => ({ ...d, _id: String(d._id) })), total, page, limit };
+  },
+
+  async getById(id: string) {
+    await connectDB();
+    const doc = await DocumentModel.findById(id);
+    if (!doc) throw new Error("Document not found");
+    return toPlain(doc);
+  },
+
+  async create(data: CreateDocumentDto) {
+    await connectDB();
+    const doc = await DocumentModel.create({
+      ...data,
+      publishedDate: new Date(data.publishedDate),
+    });
+    return toPlain(doc);
+  },
+
+  async update(id: string, data: UpdateDocumentDto) {
+    await connectDB();
+    const update: Record<string, unknown> = { ...data };
+    if (data.publishedDate) update.publishedDate = new Date(data.publishedDate);
+    const doc = await DocumentModel.findByIdAndUpdate(id, update, { new: true });
+    if (!doc) throw new Error("Document not found");
+    return toPlain(doc);
+  },
+
+  async delete(id: string) {
+    await connectDB();
+    const doc = await DocumentModel.findByIdAndDelete(id);
+    if (!doc) throw new Error("Document not found");
+    return true;
+  },
+
+  async getYears(): Promise<number[]> {
+    await connectDB();
+    const years = await DocumentModel.distinct("year", { status: "published" });
+    return (years as number[]).sort((a, b) => b - a);
+  },
+};

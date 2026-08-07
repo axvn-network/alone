@@ -15,3 +15,21 @@ export type { IUpload } from "./Upload";
 
 export { default as Settings } from "./Settings";
 export type { ISettings, ISocialLink } from "./Settings";
+
+export { default as DocumentModel } from "./Document";
+export type { IDocument, DocumentCategory } from "./Document";
+
+export { default as InvestmentPlan } from "./InvestmentPlan";
+export type { IInvestmentPlan, PlanTier, PlanStatus } from "./InvestmentPlan";
+
+export { default as Shareholder } from "./Shareholder";
+export type { IShareholder, ShareholderRole, ShareholderStatus } from "./Shareholder";
+
+export { default as ShareholderTask } from "./ShareholderTask";
+export type { IShareholderTask, TaskStatus, TaskPriority, TaskCategory } from "./ShareholderTask";
+
+export { default as ShareholderMessage } from "./ShareholderMessage";
+export type { IShareholderMessage, MessageChannel } from "./ShareholderMessage";
+
+export { default as ShareholderMeeting } from "./ShareholderMeeting";
+export type { IShareholderMeeting, MeetingStatus, MeetingType } from "./ShareholderMeeting";

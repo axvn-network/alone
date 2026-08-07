@@ -1,6 +1,8 @@
 import { connectDB } from "@/lib/db";
 import Blog from "@/models/Blog";
 import Enquiry from "@/models/Enquiry";
+import Shareholder from "@/models/Shareholder";
+import InvestmentPlan from "@/models/InvestmentPlan";
 
 export interface ActivityItem {
   id: string;
@@ -23,6 +25,10 @@ export interface DashboardStatsResult {
   totalSubmissions: number;
   /** Unread enquiries count — used for nav badge */
   newEnquiries: number;
+  /** Total active shareholders */
+  totalShareholders: number;
+  /** Total active investment plans */
+  totalPlans: number;
   /** 10 most recent enquiries as activity feed items */
   activities: ActivityItem[];
 }
@@ -43,12 +49,16 @@ export async function getDashboardStats(): Promise<DashboardStatsResult> {
     totalContacts,
     totalSubmissions,
     newEnquiries,
+    totalShareholders,
+    totalPlans,
     recentEnquiries,
   ] = await Promise.all([
     Blog.countDocuments({ status: "published" }),
     Enquiry.countDocuments({ type: "Contact" }),
     Enquiry.countDocuments({ type: { $in: SUBMISSION_TYPES } }),
     Enquiry.countDocuments({ status: "new" }),
+    Shareholder.countDocuments({ status: "active" }),
+    InvestmentPlan.countDocuments({ status: "active" }),
     Enquiry.find({}, { _id: 1, name: 1, type: 1, subject: 1, createdAt: 1 })
       .sort({ createdAt: -1 })
       .limit(10)
@@ -68,6 +78,8 @@ export async function getDashboardStats(): Promise<DashboardStatsResult> {
     totalContacts,
     totalSubmissions,
     newEnquiries,
+    totalShareholders,
+    totalPlans,
     activities,
   };
 }

@@ -19,7 +19,7 @@ export default function ContentList() {
   useEffect(() => {
     fetch("/api/admin/content")
       .then((r) => r.json())
-      .then(setPages);
+      .then((res) => setPages(Array.isArray(res.data) ? res.data : []));
   }, []);
 
   return (

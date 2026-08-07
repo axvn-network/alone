@@ -47,24 +47,23 @@ export default function PartnershipCTA() {
         <div className="max-w-[900px] mx-auto text-center">
           <Stagger>
             <StaggerItem>
-              <span
-                className="block text-fortress-gold uppercase mb-6 font-semibold tracking-[6px]"
-                style={{ fontSize: "clamp(0.625rem, 0.5vw + 0.45rem, 0.75rem)" }}
-              >
-                {ctaTag}
-              </span>
+              <div className="flex items-center justify-center gap-3 mb-6">
+                <div className="w-6 h-px bg-fortress-gold/60" />
+                <span className="section-tag">{ctaTag}</span>
+                <div className="w-6 h-px bg-fortress-gold/60" />
+              </div>
             </StaggerItem>
             <StaggerItem>
               <h2
-                className="text-fortress-ivory font-light mb-6 uppercase tracking-tight leading-tight"
-                style={{ fontSize: "var(--text-h2)" }}
+                className="text-fortress-ivory font-light mb-7 uppercase leading-[1.28]"
+                style={{ fontSize: "var(--text-h2)", letterSpacing: "var(--tracking-heading)" }}
               >
                 {ctaTitle}
               </h2>
             </StaggerItem>
             <StaggerItem>
               <p
-                className="text-fortress-silver/90 leading-relaxed mb-4 max-w-[700px] mx-auto"
+                className="text-fortress-silver/88 leading-[1.8] mb-5 max-w-[660px] mx-auto"
                 style={{ fontSize: "var(--text-lead)" }}
               >
                 {ctaParagraph1}
@@ -72,7 +71,7 @@ export default function PartnershipCTA() {
             </StaggerItem>
             <StaggerItem>
               <p
-                className="text-fortress-silver/70 leading-relaxed mb-8 md:mb-12 max-w-[600px] mx-auto"
+                className="text-fortress-silver/65 leading-[1.8] mb-10 md:mb-14 max-w-[580px] mx-auto"
                 style={{ fontSize: "var(--text-body)" }}
               >
                 {ctaParagraph2}
@@ -81,25 +80,27 @@ export default function PartnershipCTA() {
             <StaggerItem>
               <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center">
                 <motion.div
-                  whileHover={{ scale: 1.04, y: -3 }}
+                  whileHover={{ scale: 1.02, y: -3 }}
                   whileTap={{ scale: 0.97 }}
-                  transition={{ type: "spring", stiffness: 380, damping: 22 }}
+                  transition={{ type: "spring", stiffness: 360, damping: 22 }}
                 >
                   <Link
                     href="/invest-with-fortress"
-                    className="block px-8 py-3.5 bg-gradient-to-r from-fortress-gold to-fortress-champagne text-fortress-navy font-bold text-sm tracking-widest shadow-lg rounded-sm hover:opacity-90 transition-opacity"
+                    className="block px-9 py-4 bg-gradient-to-r from-fortress-gold to-fortress-champagne text-fortress-navy font-bold text-xs uppercase shadow-lg shadow-fortress-gold/15 hover:opacity-90 transition-opacity"
+                    style={{ letterSpacing: "var(--tracking-btn)" }}
                   >
                     {ctaBtn1Text}
                   </Link>
                 </motion.div>
                 <motion.div
-                  whileHover={{ scale: 1.04, y: -3 }}
+                  whileHover={{ scale: 1.02, y: -3 }}
                   whileTap={{ scale: 0.97 }}
-                  transition={{ type: "spring", stiffness: 380, damping: 22 }}
+                  transition={{ type: "spring", stiffness: 360, damping: 22 }}
                 >
                   <Link
                     href="/contact"
-                    className="block px-8 py-3.5 border border-fortress-gold text-fortress-gold text-sm tracking-widest font-semibold hover:bg-fortress-gold/10 transition-all duration-300 rounded-sm"
+                    className="block px-9 py-4 border border-fortress-gold/70 text-fortress-gold text-xs uppercase font-semibold hover:bg-fortress-gold/8 hover:border-fortress-gold transition-all duration-300"
+                    style={{ letterSpacing: "var(--tracking-btn)" }}
                   >
                     {ctaBtn2Text}
                   </Link>

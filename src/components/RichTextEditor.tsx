@@ -58,9 +58,9 @@ export default function RichTextEditor({ value, onChange }: RichTextEditorProps)
         formData.append("file", file);
         const res = await fetch("/api/admin/upload", { method: "POST", body: formData });
         const data = await res.json();
-        if (!res.ok) throw new Error(data.error || "Upload failed");
-        if (data.url) {
-          document.execCommand("insertImage", false, data.url);
+        if (!res.ok) throw new Error(data.message || "Upload failed");
+        if (data.data?.url) {
+          document.execCommand("insertImage", false, data.data.url);
           if (editorRef.current) onChange(editorRef.current.innerHTML);
           toast.success("Image inserted");
         }

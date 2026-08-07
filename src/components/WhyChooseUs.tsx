@@ -3,35 +3,38 @@
 import { motion } from "framer-motion";
 import Stagger from "@/components/animations/Stagger";
 import StaggerItem from "@/components/animations/StaggerItem";
-
-const benefits = [
-  { title: "Quy Trình Đầu Tư Kỷ Luật", desc: "Mọi cơ hội đều được phân tích thương mại, tài chính, vận hành và quản trị rủi ro chuyên sâu. Sự thận trọng chính là lý do các đối tác đặt trọn niềm tin vào chúng tôi." },
-  { title: "Tầm Nhìn Dài Hạn Bền Vững", desc: "Chúng tôi không chạy theo lợi nhuận ngắn hạn mà ưu tiên tối đa giá trị tăng trưởng bền vững qua các chu kỳ kinh tế." },
-  { title: "Chuyên Môn Đa Ngành Đa Lĩnh Vực", desc: "Cách tiếp cận đa ngành giúp chúng tôi hiểu rõ đặc thù, dòng tiền và cơ hội của từng ngành công nghiệp để tối ưu danh mục đầu tư." },
-  { title: "Đồng Hành Chiến Lược Sâu Rộng", desc: "Không chỉ dừng lại ở nguồn vốn, chúng tôi đóng góp định hướng chiến lược, phát triển kinh doanh, quản trị và mạng lưới đối tác toàn cầu." },
-  { title: "Đối Tác Tin Cậy & Minh Bạch", desc: "Chúng tôi xây dựng mối quan hệ dựa trên sự minh bạch, bảo mật thông tin và đôi bên cùng có lợi. Uy tín là tài sản vô giá của Fortress." },
-  { title: "Thị Trường Đầy Tiềm Năng", desc: "Đặt trụ sở tại Dubai và mở rộng quốc tế, chúng tôi nằm ở trung tâm giao thoa của dòng vốn thế giới, kết nối các dự án tài sản giá trị cao." },
-];
+import { usePageContent } from "@/hooks/usePageContent";
+import { useLang } from "@/contexts/LangContext";
+import { t } from "@/lib/i18n";
 
 const sectionReveal = {
   hidden: { opacity: 0, y: 60 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const } },
 };
 
-import { usePageContent } from "@/hooks/usePageContent";
-import { useLang } from "@/contexts/LangContext";
-import { t } from "@/lib/i18n";
-
-const defaultWhyData: { whyTag: string; whyTitle: string; whyBenefits: { title: string; desc: string }[] } = {
-  whyTag: "", whyTitle: "", whyBenefits: benefits,
+const defaultWhyData: {
+  whyTag: string;
+  whyTitle: string;
+  whyBenefits: { title: string; desc: string }[];
+} = {
+  whyTag: "",
+  whyTitle: "",
+  whyBenefits: [],
 };
 
 export default function WhyChooseUs() {
   const { content } = usePageContent("home", defaultWhyData);
   const { lang } = useLang();
-  const whyTag = content.whyTag || t("why.tag", lang);
+
+  const whyTag   = content.whyTag   || t("why.tag",   lang);
   const whyTitle = content.whyTitle || t("why.title", lang);
-  const benefitList = content.whyBenefits && Array.isArray(content.whyBenefits) ? content.whyBenefits : benefits;
+
+  // Nguồn duy nhất: CMS → i18n benefits — không hardcode ở đây
+  const i18nBenefits = (t("why.benefits", lang) as unknown as { title: string; desc: string }[] | string);
+  const fallbackBenefits = Array.isArray(i18nBenefits) ? i18nBenefits : [];
+  const benefitList = (content.whyBenefits && Array.isArray(content.whyBenefits) && content.whyBenefits.length > 0)
+    ? content.whyBenefits
+    : fallbackBenefits;
 
   return (
     <motion.section
@@ -46,26 +49,24 @@ export default function WhyChooseUs() {
       <div className="relative max-w-[1280px] mx-auto section-px">
         <Stagger>
           <StaggerItem>
-            <span
-              className="block text-fortress-gold/50 uppercase mb-6 font-medium tracking-[6px]"
-              style={{ fontSize: "clamp(0.625rem, 0.5vw + 0.45rem, 0.75rem)" }}
-            >
-              {whyTag}
-            </span>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-6 h-px bg-fortress-gold/60" />
+              <span className="section-tag">{whyTag}</span>
+            </div>
           </StaggerItem>
           <StaggerItem>
             <h2
-              className="font-bold text-fortress-ivory mb-8 md:mb-12 leading-tight"
-              style={{ fontSize: "var(--text-h2)" }}
+              className="font-light text-fortress-ivory mb-10 md:mb-14 leading-[1.28] uppercase"
+              style={{ fontSize: "var(--text-h2)", letterSpacing: "var(--tracking-heading)" }}
             >
               {whyTitle}
             </h2>
           </StaggerItem>
           <StaggerItem>
             <div className="grid md:grid-cols-2 gap-x-16 gap-y-8 md:gap-y-10">
-              {benefitList.map((item) => (
+              {benefitList.map((item, i) => (
                 <motion.div
-                  key={item.title}
+                  key={i}
                   className="group cursor-default"
                   whileHover={{ x: 4 }}
                   transition={{ type: "spring", stiffness: 400, damping: 28 }}
@@ -76,13 +77,13 @@ export default function WhyChooseUs() {
                     transition={{ duration: 0.3, ease: "easeOut" }}
                   />
                   <h3
-                    className="font-bold text-fortress-gold mb-3 transition-colors duration-300 group-hover:text-fortress-champagne"
+                    className="font-semibold text-fortress-gold mb-3 transition-colors duration-300 group-hover:text-fortress-champagne leading-[1.4]"
                     style={{ fontSize: "var(--text-h3)" }}
                   >
                     {item.title}
                   </h3>
                   <p
-                    className="text-fortress-silver/60 leading-relaxed transition-colors duration-300 group-hover:text-fortress-silver/80"
+                    className="text-fortress-silver/65 leading-[1.8] transition-colors duration-300 group-hover:text-fortress-silver/85"
                     style={{ fontSize: "var(--text-body)" }}
                   >
                     {item.desc}

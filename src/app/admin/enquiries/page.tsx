@@ -14,6 +14,7 @@ import {
 import AdminSidebar from "@/components/AdminSidebar";
 import AdminNavbar from "@/components/AdminNavbar";
 import { timeAgo } from "@/utils/time";
+import { useCsrf } from "@/contexts/CsrfContext";
 
 interface EnquiryItem {
   id: string;
@@ -33,6 +34,7 @@ interface EnquiryItem {
 }
 
 export default function EnquiriesPage() {
+  const { csrfFetch } = useCsrf();
   const [enquiries, setEnquiries] = useState<EnquiryItem[]>([]);
   const [selected, setSelected] = useState<EnquiryItem | null>(null);
   const [filter, setFilter] = useState<"all" | "contact" | "submission">("all");
@@ -40,14 +42,18 @@ export default function EnquiriesPage() {
   function load() {
     fetch("/api/admin/enquiries")
       .then((r) => r.json())
-      .then(setEnquiries);
+      .then((res) => setEnquiries(Array.isArray(res.data) ? res.data : []));
   }
 
   useEffect(load, []);
 
   async function handleMarkRead(id: string) {
     try {
-      const res = await fetch(`/api/admin/enquiries/${id}`, { method: "PATCH" });
+      const res = await csrfFetch(`/api/admin/enquiries/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: "read" }),
+      });
       if (!res.ok) throw new Error("Failed");
       toast.success("Đã đánh dấu là đã đọc");
       load();
@@ -59,7 +65,7 @@ export default function EnquiriesPage() {
   async function handleDelete(id: string) {
     if (!confirm("Xóa yêu cầu này?")) return;
     try {
-      const res = await fetch(`/api/admin/enquiries/${id}`, { method: "DELETE" });
+      const res = await csrfFetch(`/api/admin/enquiries/${id}`, { method: "DELETE" });
       if (!res.ok) throw new Error("Failed");
       toast.success("Đã xóa yêu cầu");
       setSelected(null);

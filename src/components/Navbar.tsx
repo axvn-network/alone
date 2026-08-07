@@ -2,9 +2,9 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { User, Target, Handshake, Newspaper, TrendingUp, Mail } from "lucide-react";
+import { User, Target, Handshake, Newspaper, TrendingUp, FileText, LayoutGrid, X, Phone } from "lucide-react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { navVariants } from "@/lib/animation";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { usePathname } from "next/navigation";
@@ -38,24 +38,46 @@ const NavLink = ({ href, icon: Icon, label }: { href: string; icon: React.Compon
 );
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const headerRef = useRef<HTMLElement>(null);
-  const pathname = usePathname();
-  const { lang } = useLang();
+  const [scrolled, setScrolled]     = useState(false);
+  const [menuOpen, setMenuOpen]      = useState(false);
+  const headerRef                    = useRef<HTMLElement>(null);
+  const pathname                     = usePathname();
+  const { lang }                     = useLang();
 
+  // All nav items
   const navItems = [
-    { label: t("nav.about", lang), href: "/about", icon: User },
-    { label: t("nav.investmentFocus", lang), href: "/investment-focus", icon: Target },
-    { label: t("nav.approach", lang), href: "/our-approach", icon: Handshake },
-    { label: t("nav.investWithUs", lang), href: "/invest-with-fortress", icon: TrendingUp },
-    { label: t("nav.insights", lang), href: "/insights", icon: Newspaper },
+    { label: t("nav.about", lang),           href: "/about",                         icon: User },
+    { label: t("nav.investmentFocus", lang), href: "/investment-focus",              icon: Target },
+    { label: t("nav.approach", lang),        href: "/our-approach",                  icon: Handshake },
+    { label: t("nav.investWithUs", lang),    href: "/invest-with-fortress",          icon: TrendingUp },
+    { label: t("nav.partnershipPlans", lang), href: "/invest-with-fortress/plans",   icon: Handshake },
+    { label: t("nav.insights", lang),        href: "/insights",                      icon: Newspaper },
+    { label: t("nav.documents", lang),       href: "/documents",                     icon: FileText },
   ];
+
+  // Mobile bottom bar: first 4 tabs + "More" button
+  const BOTTOM_TABS = 4;
+  const primaryTabs  = navItems.slice(0, BOTTOM_TABS);
+  const overflowItems = navItems.slice(BOTTOM_TABS); // items inside the drawer
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Close drawer on route change
+  useEffect(() => { setMenuOpen(false); }, [pathname]);
+
+  // Prevent body scroll when drawer is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [menuOpen]);
 
   const bgClass = "bg-[#07111D]/95 backdrop-blur-md border-b border-white/5";
 
@@ -92,48 +114,35 @@ export default function Navbar() {
               </svg>
             </div>
 
-            <div className="relative w-full h-full flex items-center justify-between px-4 md:px-8">
-              <nav className="hidden md:flex gap-8 shrink-0">
-                {navItems.slice(0, 3).map(item => (
+            {/* ── Desktop layout: flex justify-between ── */}
+            <div className="relative w-full h-full hidden md:flex items-center justify-between px-8">
+              <nav className="flex gap-4 xl:gap-6 shrink-0">
+                {navItems.slice(0, 4).map(item => (
                   <NavLink key={item.href} {...item} />
                 ))}
               </nav>
 
-              <div className="md:hidden flex items-center">
-                <LanguageSwitcher />
-              </div>
-
-              <div className="flex justify-center shrink-0 mx-2 md:mx-4">
+              <div className="flex justify-center shrink-0 mx-4">
                 <Link href="/" className="flex items-center group">
                   <Image
                     src="/large-logo1.png"
                     alt="Fortress Investment Holdings"
                     width={320}
                     height={96}
-                    className="h-14 md:h-24 w-auto object-contain hidden md:block"
+                    className="h-24 w-auto object-contain"
                     priority
                   />
-                  <div className="block md:hidden">
-                    <Image
-                      src="/phone-logo.png"
-                      alt="Fortress Investment Holdings"
-                      width={200}
-                      height={60}
-                      className="h-14 w-auto object-contain"
-                      priority
-                    />
-                  </div>
                 </Link>
               </div>
 
-              <nav className="hidden md:flex gap-6 items-center shrink-0">
-                {navItems.slice(3).map(item => (
+              <nav className="flex gap-4 xl:gap-5 items-center shrink-0">
+                {navItems.slice(4, 7).map(item => (
                   <NavLink key={item.href} {...item} />
                 ))}
                 <div className={`flex gap-4 pl-4 shrink-0 items-center border-l ${
                   scrolled ? "border-fortress-gold/20" : "border-white/10"
                 }`}>
-                  <LanguageSwitcher />
+                  <LanguageSwitcher variant="pills" />
                   <motion.div
                     whileHover={{ scale: 1.03, y: -1 }}
                     whileTap={{ scale: 0.97 }}
@@ -148,10 +157,41 @@ export default function Navbar() {
                   </motion.div>
                 </div>
               </nav>
+            </div>
 
-              <div className="md:hidden flex items-center">
-                <Link href="/contact" className="text-fortress-gold p-2 bg-white/5 rounded-full hover:bg-white/10 transition-colors shadow-sm active:scale-95">
-                  <Mail className="w-5 h-5" />
+            {/* ── Mobile layout: grid 3 cột — toggle | logo (center) | mail ── */}
+            <div className="relative w-full h-full md:hidden grid grid-cols-3 items-center px-4">
+              {/* Cột trái: toggle ngôn ngữ */}
+              <div className="flex items-center justify-start">
+                <LanguageSwitcher variant="toggle" />
+              </div>
+
+              {/* Cột giữa: logo luôn căn giữa */}
+              <div className="flex items-center justify-center">
+                <Link href="/" className="flex items-center active:scale-95 transition-transform duration-150">
+                  <Image
+                    src="/phone-logo.png"
+                    alt="Fortress Investment Holdings"
+                    width={240}
+                    height={72}
+                    className="h-16 w-auto object-contain"
+                    style={{
+                      filter:
+                        "drop-shadow(0 0 6px rgba(201,162,74,0.55)) drop-shadow(0 2px 14px rgba(201,162,74,0.30)) drop-shadow(0 -1px 4px rgba(255,255,255,0.08))",
+                    }}
+                    priority
+                  />
+                </Link>
+              </div>
+
+              {/* Cột phải: nút liên hệ */}
+              <div className="flex items-center justify-end">
+                <Link
+                  href="/contact"
+                  className="text-fortress-gold p-2 bg-white/5 rounded-full hover:bg-white/10 transition-colors shadow-sm active:scale-95"
+                  aria-label="Liên hệ"
+                >
+                  <Phone className="w-5 h-5" />
                 </Link>
               </div>
             </div>
@@ -174,27 +214,136 @@ export default function Navbar() {
         </div>
       </motion.header>
 
-      {/* Mobile Bottom Navigation */}
-      <div className="fixed bottom-0 inset-x-0 z-50 md:hidden bg-[#07111D]/98 backdrop-blur-xl border-t border-white/10 pb-safe">
-        <nav className="flex justify-around items-center h-[72px] px-2">
-          {navItems.map((item) => {
+      {/* ── Mobile Bottom Navigation (max 5 slots) ── */}
+      <div
+        className="fixed bottom-0 inset-x-0 z-50 md:hidden bg-[#07111D]/98 backdrop-blur-xl border-t border-white/10"
+        style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
+      >
+        <nav className="flex justify-around items-center h-[64px] px-1">
+          {/* Slots 1–4: primary tabs */}
+          {primaryTabs.map((item) => {
             const Icon = item.icon;
             const isActive = pathname === item.href || (pathname.startsWith(item.href) && item.href !== "/");
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className="flex flex-col items-center justify-center w-full h-full gap-1.5 active:scale-95 transition-transform"
+                className="flex flex-col items-center justify-center w-full h-full gap-1 active:scale-95 transition-transform"
               >
-                <Icon className={`w-6 h-6 transition-colors ${isActive ? 'text-fortress-gold' : 'text-fortress-silver/60'}`} />
-                <span className={`text-[10px] font-medium transition-colors text-center leading-tight px-1 ${isActive ? 'text-white' : 'text-white/50'}`}>
+                <div className={`flex items-center justify-center w-9 h-9 rounded-xl transition-all duration-200 ${isActive ? "bg-fortress-gold/15" : ""}`}>
+                  <Icon className={`w-5 h-5 transition-colors ${isActive ? "text-fortress-gold" : "text-fortress-silver/55"}`} />
+                </div>
+                <span className={`text-[9.5px] font-medium transition-colors text-center leading-tight px-0.5 ${isActive ? "text-fortress-gold" : "text-white/45"}`}>
                   {item.label}
                 </span>
               </Link>
             );
           })}
+
+          {/* Slot 5: Menu button */}
+          <button
+            onClick={() => setMenuOpen((o) => !o)}
+            className="flex flex-col items-center justify-center w-full h-full gap-1 active:scale-95 transition-transform"
+            aria-label="Mở menu"
+            aria-expanded={menuOpen}
+          >
+            <div className={`flex items-center justify-center w-9 h-9 rounded-xl transition-all duration-200 ${menuOpen ? "bg-fortress-gold/15" : ""}`}>
+              {menuOpen
+                ? <X className="w-5 h-5 text-fortress-gold" />
+                : <LayoutGrid className={`w-5 h-5 transition-colors ${overflowItems.some(i => pathname.startsWith(i.href)) ? "text-fortress-gold" : "text-fortress-silver/55"}`} />
+              }
+            </div>
+            <span className={`text-[9.5px] font-medium transition-colors ${menuOpen || overflowItems.some(i => pathname.startsWith(i.href)) ? "text-fortress-gold" : "text-white/45"}`}>
+              {menuOpen ? "Đóng" : "Menu"}
+            </span>
+          </button>
         </nav>
       </div>
+
+      {/* ── Mobile Menu Drawer (slide up from bottom) ── */}
+      <AnimatePresence>
+        {menuOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              key="backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.22 }}
+              className="fixed inset-0 z-40 md:hidden bg-black/60 backdrop-blur-sm"
+              onClick={() => setMenuOpen(false)}
+            />
+
+            {/* Drawer panel */}
+            <motion.div
+              key="drawer"
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", stiffness: 380, damping: 36, mass: 0.9 }}
+              className="fixed bottom-[64px] inset-x-0 z-40 md:hidden bg-[#07111D] border-t border-fortress-gold/20 rounded-t-2xl overflow-hidden"
+              style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
+            >
+              {/* Handle bar */}
+              <div className="flex justify-center pt-3 pb-1">
+                <div className="w-10 h-1 bg-white/15 rounded-full" />
+              </div>
+
+              {/* Header row */}
+              <div className="flex items-center justify-between px-5 pt-2 pb-4 border-b border-white/6">
+                <span className="text-[10px] font-semibold tracking-[0.22em] uppercase text-fortress-gold/70">
+                  Điều Hướng
+                </span>
+                <LanguageSwitcher variant="toggle" />
+              </div>
+
+              {/* Overflow nav items */}
+              <div className="px-4 py-3 space-y-1">
+                {overflowItems.map((item) => {
+                  const Icon = item.icon;
+                  const isActive = pathname === item.href || pathname.startsWith(item.href);
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setMenuOpen(false)}
+                      className={`flex items-center gap-3.5 px-4 py-3.5 rounded-xl transition-all duration-150 active:scale-[0.98] ${
+                        isActive
+                          ? "bg-fortress-gold/12 border border-fortress-gold/25"
+                          : "hover:bg-white/5 border border-transparent"
+                      }`}
+                    >
+                      <div className={`w-9 h-9 flex items-center justify-center rounded-lg shrink-0 ${isActive ? "bg-fortress-gold/15" : "bg-white/5"}`}>
+                        <Icon className={`w-4.5 h-4.5 ${isActive ? "text-fortress-gold" : "text-fortress-silver/70"}`} />
+                      </div>
+                      <span className={`text-sm font-medium ${isActive ? "text-fortress-gold" : "text-fortress-ivory/80"}`}>
+                        {item.label}
+                      </span>
+                      {isActive && (
+                        <div className="ml-auto w-1.5 h-1.5 rounded-full bg-fortress-gold shrink-0" />
+                      )}
+                    </Link>
+                  );
+                })}
+              </div>
+
+              {/* Contact CTA at bottom of drawer */}
+              <div className="px-4 pb-5 pt-1">
+                <div className="h-px bg-white/6 mb-4" />
+                <Link
+                  href="/contact"
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center justify-center gap-2.5 w-full py-3.5 bg-fortress-gold hover:bg-fortress-champagne active:scale-[0.98] text-fortress-navy font-bold text-xs tracking-[0.18em] uppercase rounded-xl transition-all duration-150"
+                >
+                  <Phone className="w-4 h-4" />
+                  {t("nav.contact", lang)}
+                </Link>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </>
   );
 }

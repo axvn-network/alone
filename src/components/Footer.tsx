@@ -137,7 +137,7 @@ export default function Footer() {
       heading: t("footer.col4Heading", lang),
       links: [
         { label: t("footer.col4Link1", lang), href: "/insights" },
-        { label: t("footer.col4Link2", lang), href: "/insights#reports" },
+        { label: t("footer.col4Link2", lang), href: "/documents" },
         { label: t("footer.col4Link3", lang), href: "/terms-of-use" },
         { label: t("footer.col4Link4", lang), href: "/privacy-policy" },
         { label: t("footer.col4Link5", lang), href: "/investment-disclaimer" },
@@ -259,79 +259,82 @@ export default function Footer() {
 
           <StaggerItem>
             <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="relative z-10 bg-[#060c17] border-t border-[#C9A24A]/15"
-            >
-              <div
-                className="max-w-[1400px] mx-auto py-5 flex flex-col lg:flex-row items-start lg:items-center gap-5 lg:gap-0 justify-between"
-                style={{ paddingLeft: "var(--section-px)", paddingRight: "var(--section-px)" }}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="relative z-10 bg-[#060c17] border-t border-[#C9A24A]/15"
               >
-                <div className="flex flex-col gap-1 shrink-0">
-                  <Link href="/" className="flex items-baseline gap-1.5">
-                    <span className="text-white text-sm font-bold tracking-[5px] uppercase">FORTRESS</span>
-                    <span className="text-[#C9A24A] text-sm font-bold tracking-[5px] uppercase">IH</span>
-                  </Link>
-                  <p className="text-[#8fa0b8]/50 text-[11px] leading-snug">
-                    &copy; {new Date().getFullYear()} Fortress Investment Holdings.
-                    <br />
-                    {t("footer.copyright", lang)}
-                  </p>
-                </div>
-
-                <div className="flex flex-row gap-6 sm:gap-10 lg:gap-14">
-                  {pillars.map((p) => (
-                    <div key={p.title} className="group relative flex items-center justify-center">
-                      <div className="absolute bottom-full mb-3 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-20">
-                        <div className="bg-[#0f1a2e] border border-[#C9A24A]/30 rounded px-3 py-2 shadow-xl whitespace-nowrap">
-                          <p className="text-white text-[11px] font-bold tracking-[2px] uppercase leading-tight text-center">
-                            {p.title}
-                          </p>
-                          <p className="text-[#8fa0b8] text-[10px] leading-snug mt-0.5 text-center">
-                            {p.sub}
-                          </p>
+                <div
+                  className="max-w-[1400px] mx-auto py-5 flex flex-col lg:flex-row items-start lg:items-center gap-4 lg:gap-0 justify-between"
+                  style={{ paddingLeft: "var(--section-px)", paddingRight: "var(--section-px)" }}
+                >
+                  {/* Copyright */}
+                  <div className="flex flex-col gap-1 shrink-0">
+                    <Link href="/" className="flex items-baseline gap-1.5">
+                      <span className="text-white text-sm font-bold tracking-[5px] uppercase">FORTRESS</span>
+                      <span className="text-[#C9A24A] text-sm font-bold tracking-[5px] uppercase">IH</span>
+                    </Link>
+                    <p className="text-[#8fa0b8]/50 text-[11px] leading-snug">
+                      &copy; {new Date().getFullYear()} Fortress Investment Holdings.
+                      <br />
+                      {t("footer.copyright", lang)}
+                    </p>
+                  </div>
+  
+                  {/* Pillars — ẩn trên mobile nhỏ để tiết kiệm không gian */}
+                  <div className="hidden sm:flex flex-row gap-6 sm:gap-10 lg:gap-14">
+                    {pillars.map((p) => (
+                      <div key={p.title} className="group relative flex items-center justify-center">
+                        <div className="absolute bottom-full mb-3 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-20">
+                          <div className="bg-[#0f1a2e] border border-[#C9A24A]/30 rounded px-3 py-2 shadow-xl whitespace-nowrap">
+                            <p className="text-white text-[11px] font-bold tracking-[2px] uppercase leading-tight text-center">
+                              {p.title}
+                            </p>
+                            <p className="text-[#8fa0b8] text-[10px] leading-snug mt-0.5 text-center">
+                              {p.sub}
+                            </p>
+                          </div>
+                          <div className="w-2 h-2 bg-[#0f1a2e] border-r border-b border-[#C9A24A]/30 rotate-45 mx-auto -mt-1" />
                         </div>
-                        <div className="w-2 h-2 bg-[#0f1a2e] border-r border-b border-[#C9A24A]/30 rotate-45 mx-auto -mt-1" />
+                        <div className="relative flex items-center justify-center w-11 h-11 shrink-0">
+                          <svg viewBox="0 0 44 44" className="absolute inset-0 w-full h-full" fill="none">
+                            <polygon
+                              points="22,2 40,12 40,32 22,42 4,32 4,12"
+                              stroke="#C9A24A"
+                              strokeOpacity="0.5"
+                              strokeWidth="1"
+                            />
+                          </svg>
+                          <span className="text-[#C9A24A]/80"><p.Icon /></span>
+                        </div>
                       </div>
-                      <div className="relative flex items-center justify-center w-11 h-11 shrink-0">
-                        <svg viewBox="0 0 44 44" className="absolute inset-0 w-full h-full" fill="none">
-                          <polygon
-                            points="22,2 40,12 40,32 22,42 4,32 4,12"
-                            stroke="#C9A24A"
-                            strokeOpacity="0.5"
-                            strokeWidth="1"
-                          />
-                        </svg>
-                        <span className="text-[#C9A24A]/80"><p.Icon /></span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="flex flex-col gap-2.5 shrink-0">
-                  <p className="text-white text-[11px] font-bold tracking-[3px] uppercase">
-                    {t("footer.followUs", lang)}
-                  </p>
-                  <div className="flex items-center gap-2">
-                    {socialLinks.map((s) => (
-                      <motion.a
-                        key={s.label}
-                        href={s.href}
-                        aria-label={s.label}
-                        className="w-8 h-8 rounded-full border border-[#8fa0b8]/25 flex items-center justify-center text-[#8fa0b8]/60 hover:border-[#C9A24A]/60 hover:text-[#C9A24A] transition-colors"
-                        whileHover={{ scale: 1.12, y: -2 }}
-                        whileTap={{ scale: 0.9 }}
-                        transition={{ type: "spring", stiffness: 450, damping: 18 }}
-                      >
-                        {s.icon}
-                      </motion.a>
                     ))}
                   </div>
+  
+                  {/* Social links */}
+                  <div className="flex flex-col gap-2 shrink-0">
+                    <p className="text-white text-[11px] font-bold tracking-[3px] uppercase">
+                      {t("footer.followUs", lang)}
+                    </p>
+                    <div className="flex items-center flex-wrap gap-1.5">
+                      {socialLinks.map((s) => (
+                        <motion.a
+                          key={s.label}
+                          href={s.href}
+                          aria-label={s.label}
+                          className="w-8 h-8 rounded-full border border-[#8fa0b8]/25 flex items-center justify-center text-[#8fa0b8]/60 hover:border-[#C9A24A]/60 hover:text-[#C9A24A] transition-colors"
+                          whileHover={{ scale: 1.12, y: -2 }}
+                          whileTap={{ scale: 0.9 }}
+                          transition={{ type: "spring", stiffness: 450, damping: 18 }}
+                        >
+                          {s.icon}
+                        </motion.a>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
           </StaggerItem>
         </Stagger>
       </div>

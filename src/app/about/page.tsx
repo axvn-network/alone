@@ -1,189 +1,274 @@
 import Image from "next/image";
-
-
 import { Shield, Eye, Target, Award, Users, Scale, Lock, Hexagon, Heart } from "lucide-react";
 import Reveal from "@/components/animations/Reveal";
 import Stagger from "@/components/animations/Stagger";
 import StaggerItem from "@/components/animations/StaggerItem";
+import PageHero from "@/components/PageHero";
+import SectionHeader from "@/components/SectionHeader";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Giới Thiệu Về Chúng Tôi",
+  title: "Giới Thiệu",
   description:
-    "Tìm hiểu về tầm nhìn, sứ mệnh, giá trị cốt lõi và đội ngũ lãnh đạo chuyên nghiệp của Tập đoàn Fortress Investment Holdings.",
+    "Tìm hiểu về tầm nhìn, sứ mệnh, giá trị cốt lõi và đội ngũ lãnh đạo của Fortress Investment Holdings — tập đoàn đầu tư tiên phong trong FinTech, tài sản mã hóa hợp pháp và kinh tế số Việt Nam.",
   openGraph: {
-    title: "Giới Thiệu Về Chúng Tôi | Fortress Investment Holdings",
+    title: "Giới Thiệu | Fortress Investment Holdings",
     description:
-      "Tìm hiểu về tầm nhìn, sứ mệnh, giá trị cốt lõi và đội ngũ lãnh đạo của Fortress Investment Holdings.",
+      "Tầm nhìn, sứ mệnh, giá trị cốt lõi và đội ngũ lãnh đạo của Fortress Investment Holdings — tiên phong FinTech và tài sản mã hóa hợp pháp tại Việt Nam.",
   },
 };
 
 const values = [
-  { icon: Shield, title: "Liêm Chính", description: "Chúng tôi kinh doanh trung thực, có trách nhiệm và minh bạch trong mọi giao dịch, không có ngoại lệ." },
-  { icon: Hexagon, title: "Kiên Định", description: "Chúng tôi đưa ra quyết định dựa trên tính kỷ luật, sự tự tin và cân nhắc cẩn trọng. Có niềm tin là điều cần thiết; nhưng biết khi nào nên dừng lại cũng quan trọng không kém." },
-  { icon: Eye, title: "Tầm Nhìn", description: "Chúng tôi nhìn xa hơn lợi nhuận trước mắt để xác định giá trị dài hạn và tiềm năng tương lai mà người khác có thể bỏ qua." },
-  { icon: Users, title: "Quan Hệ Đối Tác", description: "Chúng tôi xây dựng mối quan hệ dựa trên niềm tin, sự tôn trọng, sự liên kết và mục tiêu chung. Thành công của đối tác chính là thành công của chúng tôi." },
-  { icon: Award, title: "Xuất Sắc", description: "Chúng tôi giữ tiêu chuẩn cao trong mọi khoản đầu tư, quan hệ đối tác và tương tác kinh doanh." },
-  { icon: Scale, title: "Trách Nhiệm", description: "Chúng tôi chịu trách nhiệm hoàn toàn về quyết định, cam kết và hiệu suất của mình. Chúng tôi làm điều mình nói." },
-  { icon: Lock, title: "Bảo Mật", description: "Chúng tôi bảo vệ thông tin, lợi ích và quyền riêng tư của đối tác và các bên liên quan – luôn luôn." },
-  { icon: Heart, title: "Khách Hàng Là Trung Tâm", description: "Chúng tôi đặt khách hàng vào trung tâm mọi quyết định, tập trung vào niềm tin, sự minh bạch và tạo ra giá trị dài hạn." },
+  { icon: Shield,   title: "Liêm Chính",             description: "Trung thực, trách nhiệm và minh bạch trong mọi quyết định và giao dịch — không có ngoại lệ." },
+  { icon: Hexagon,  title: "Kỷ Luật",                description: "Quyết định dựa trên phân tích, không phải cảm xúc. Biết khi nào nên tiến và khi nào nên dừng." },
+  { icon: Eye,      title: "Tầm Nhìn Dài Hạn",       description: "Nhìn xa hơn lợi nhuận trước mắt để xác định giá trị bền vững mà thị trường đang bỏ qua." },
+  { icon: Users,    title: "Quan Hệ Đối Tác",         description: "Xây dựng mối quan hệ trên niềm tin, tôn trọng và mục tiêu chung. Thành công của đối tác là thành công của chúng tôi." },
+  { icon: Award,    title: "Tiêu Chuẩn Xuất Sắc",    description: "Giữ chuẩn mực cao trong mọi khoản đầu tư, quan hệ đối tác và tương tác kinh doanh." },
+  { icon: Scale,    title: "Trách Nhiệm Giải Trình",  description: "Chịu trách nhiệm hoàn toàn với quyết định, cam kết và hiệu suất. Chúng tôi làm đúng những gì đã nói." },
+  { icon: Lock,     title: "Bảo Mật Tuyệt Đối",       description: "Bảo vệ thông tin, lợi ích và quyền riêng tư của đối tác và các bên liên quan — luôn luôn." },
+  { icon: Heart,    title: "Lấy Đối Tác Làm Trung Tâm", description: "Đặt lợi ích đối tác vào trung tâm mọi quyết định — minh bạch, tin cậy và tạo giá trị dài hạn." },
 ];
 
 const philosophyPoints = [
-  "Nhu cầu thị trường thực sự – khách hàng cần sản phẩm, không phải câu chuyện cần khách hàng",
-  "Tiềm năng thương mại rõ ràng – con đường thực tế đến tăng trưởng có lợi nhuận",
-  "Lãnh đạo có trách nhiệm – đội ngũ quản lý có năng lực và đạo đức",
-  "Vận hành có thể mở rộng – khả năng tăng trưởng mà không gãy vỡ cấu trúc",
-  "Lợi thế cạnh tranh bền vững – lý do doanh nghiệp chiến thắng và duy trì vị thế",
-  "Thông tin tài chính minh bạch – con số sạch sẽ, trình bày trung thực",
-  "Cơ hội tăng trưởng thực tế – tham vọng neo chặt trong bằng chứng cụ thể",
-  "Sự liên kết giữa các bên liên quan – tất cả cùng hướng đến một mục tiêu chung",
+  { label: "Nhu cầu thị trường thực sự",         desc: "Người dùng cần sản phẩm FinTech/tài sản số có giá trị thực — không phải đầu cơ" },
+  { label: "Tuân thủ pháp lý là nền tảng",       desc: "Mọi đầu tư crypto/FinTech phải phù hợp NQ5/2025 và quy định pháp luật hiện hành" },
+  { label: "Lãnh đạo có năng lực & đạo đức",    desc: "Đội ngũ quản lý am hiểu pháp lý, có kinh nghiệm và trách nhiệm cao" },
+  { label: "Vận hành có thể mở rộng quy mô",    desc: "Tăng trưởng mà không gãy vỡ cấu trúc tuân thủ và quản trị" },
+  { label: "Lợi thế cạnh tranh bền vững",        desc: "Doanh nghiệp được cấp phép và định vị đúng trong hệ sinh thái tài sản số" },
+  { label: "Thông tin tài chính minh bạch",      desc: "Con số rõ ràng, trình bày trung thực với nhà đầu tư và cơ quan quản lý" },
+  { label: "Tiềm năng tăng trưởng thực tế",      desc: "Tham vọng được neo chặt trong nhu cầu thị trường tài sản số Việt Nam" },
+  { label: "Liên kết các bên cùng mục tiêu",    desc: "Nhà đầu tư, doanh nghiệp và cơ quan quản lý cùng hướng đến mục tiêu chung" },
 ];
+
+function Section({
+  id,
+  dark,
+  children,
+}: {
+  id?: string;
+  dark?: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <section
+      id={id}
+      className={`rounded-2xl section-mx section-my ${dark ? "bg-fortress-navy" : "bg-white"}`}
+      style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}
+    >
+      <div className="max-w-[1400px] mx-auto section-px">{children}</div>
+    </section>
+  );
+}
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-white">
-      
+    <main className="min-h-screen bg-white pb-safe md:pb-0">
+      {/* ── Hero ── */}
+      <PageHero
+        tag="Về Chúng Tôi"
+        heading={
+          <>
+            Vốn Toàn Cầu.{" "}
+            <span className="font-bold bg-gradient-to-r from-fortress-gold to-fortress-champagne bg-clip-text text-transparent">
+              FinTech & Tài Sản Số.
+            </span>
+            <br />
+            Kinh Tế Số{" "}
+            <span className="font-bold bg-gradient-to-r from-fortress-gold to-fortress-champagne bg-clip-text text-transparent">
+              Việt Nam.
+            </span>
+          </>
+        }
+        description="Fortress Investment Holdings kết nối nguồn vốn quốc tế với cơ hội tại Việt Nam — tiên phong đầu tư vào FinTech, dịch vụ tài sản mã hóa hợp pháp, AI và EdTech, đón đầu Nghị quyết 5/2025/NQ-CP có hiệu lực từ 9/9/2025."
+      />
 
-      {/* Banner */}
-      <section className="relative overflow-hidden bg-white text-center" style={{ paddingTop: "clamp(5.5rem, 8vw + 1rem, 8rem)", paddingBottom: "clamp(2.5rem, 4vw + 0.5rem, 5rem)" }}>
-        <div className="max-w-[1400px] mx-auto" style={{ paddingLeft: "var(--section-px)", paddingRight: "var(--section-px)" }}>
-          <Reveal className="max-w-3xl mx-auto">
-            <p className="text-fortress-gold text-sm font-medium tracking-[2px] md:tracking-[4px] uppercase mb-4">Về Chúng Tôi</p>
-            <h1 className="font-bold mb-4 md:mb-6 leading-tight" style={{ fontSize: "var(--text-display)" }}>
-              <span className="text-fortress-navy">Xây Dựng Để Bảo Vệ. </span>
-              <span className="bg-gradient-to-r from-fortress-gold to-fortress-champagne bg-clip-text text-transparent">
-                Định Vị Để Tăng Trưởng.
-              </span>
-            </h1>
-            <p className="text-fortress-charcoal/70 leading-relaxed max-w-2xl mx-auto" style={{ fontSize: "var(--text-body)" }}>
-              Fortress Investment Holdings kết hợp vốn kỷ luật, tư duy chiến lược và tầm nhìn dài hạn để xây dựng giá trị bền vững trong các doanh nghiệp, tài sản và thị trường được lựa chọn.
+      {/* ── Giới thiệu công ty ── */}
+      <Section dark id="about">
+        <Reveal className="max-w-3xl mx-auto text-center">
+          <SectionHeader
+            tag="Tổng Quan"
+            heading="Cầu Nối Giữa Vốn Quốc Tế Và Kinh Tế Số Việt Nam"
+            description="Fortress Investment Holdings là tập đoàn đầu tư công nghệ có trụ sở tại Dubai, UAE — đặt Việt Nam và hệ sinh thái tài sản mã hóa hợp pháp là trọng tâm chiến lược. Chúng tôi tiên phong đầu tư vào FinTech, dịch vụ tài sản mã hóa được cấp phép, AI và EdTech — bám sát Nghị quyết 5/2025/NQ-CP có hiệu lực từ 9/9/2025."
+            dark
+          />
+        </Reveal>
+      </Section>
+
+      {/* ── Tầm nhìn & Sứ mệnh ── */}
+      <Section id="mission">
+        <Reveal className="text-center mb-10 md:mb-14">
+          <SectionHeader tag="Định Hướng Chiến Lược" heading="Tầm Nhìn & Sứ Mệnh" />
+        </Reveal>
+        <Stagger className="grid md:grid-cols-2 gap-5 md:gap-8">
+          <StaggerItem className="bg-fortress-navy border border-fortress-gold/10 hover:border-fortress-gold/30 transition-all duration-300 rounded-2xl p-7 md:p-10">
+            <div className="w-11 h-11 bg-fortress-gold/10 border border-fortress-gold/20 flex items-center justify-center rounded-sm mb-6">
+              <Eye className="w-5 h-5 text-fortress-gold" />
+            </div>
+            <p className="section-tag mb-3">Tầm Nhìn</p>
+            <h3
+              className="font-semibold text-fortress-ivory mb-4 leading-snug"
+              style={{ fontSize: "var(--text-h3)" }}
+            >
+              Trở Thành Cổng Đầu Tư FinTech & Tài Sản Mã Hóa Hàng Đầu Kết Nối Việt Nam Với Thế Giới
+            </h3>
+            <p className="text-fortress-silver/80 leading-[1.8]" style={{ fontSize: "var(--text-body)" }}>
+              Được công nhận là đối tác đầu tư tin cậy cho doanh nghiệp FinTech, dịch vụ tài sản mã hóa được cấp phép, EdTech và nhà đầu tư muốn tiếp cận hệ sinh thái tài sản số hợp pháp đầu tiên của Việt Nam — được xây dựng trên nền tảng minh bạch, tuân thủ pháp lý và giá trị thực sự đo lường được.
             </p>
-          </Reveal>
-        </div>
-      </section>
+          </StaggerItem>
 
-      {/* Company Introduction */}
-      <section className="bg-fortress-navy rounded-2xl section-mx section-my" style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}>
-        <div className="max-w-[1400px] mx-auto section-px">
-          <Reveal className="max-w-3xl mx-auto text-center">
-            <p className="text-fortress-gold text-sm font-medium tracking-[2px] md:tracking-[4px] uppercase mb-4">Về Fortress Investment Holdings</p>
-            <h2 className="font-bold text-fortress-ivory mb-4 md:mb-6" style={{ fontSize: "var(--text-h2)" }}>
-              Nền Tảng Được Xây Dựng Vì Giá Trị Dài Hạn
-            </h2>
-            <p className="text-fortress-silver leading-relaxed" style={{ fontSize: "var(--text-body)" }}>
-              Fortress Investment Holdings là tập đoàn đầu tư đa ngành có trụ sở tại Dubai, UAE. Chúng tôi xác định các cơ hội đầu tư giá trị, đầu tư có trách nhiệm và hỗ trợ các doanh nghiệp có tiềm năng tăng trưởng bền vững thực sự.
+          <StaggerItem className="bg-fortress-deep border border-fortress-gold/10 hover:border-fortress-gold/30 transition-all duration-300 rounded-2xl p-7 md:p-10">
+            <div className="w-11 h-11 bg-fortress-gold/10 border border-fortress-gold/20 flex items-center justify-center rounded-sm mb-6">
+              <Target className="w-5 h-5 text-fortress-gold" />
+            </div>
+            <p className="section-tag mb-3">Sứ Mệnh</p>
+            <h3
+              className="font-semibold text-fortress-ivory mb-4 leading-snug"
+              style={{ fontSize: "var(--text-h3)" }}
+            >
+              Đầu Tư Có Kỷ Luật. Tuân Thủ Pháp Lý. Tạo Giá Trị Bền Vững.
+            </h3>
+            <p className="text-fortress-silver/80 leading-[1.8]" style={{ fontSize: "var(--text-body)" }}>
+              Kết nối nguồn vốn quốc tế với hệ sinh thái FinTech, tài sản mã hóa hợp pháp và kinh tế số tại Việt Nam. Đồng hành cùng nhà sáng lập, doanh nghiệp và nhà đầu tư để xây dựng những tổ chức thực sự bền vững trong thị trường tài sản mã hóa hợp pháp đầu tiên của Việt Nam theo Nghị quyết 5/2025/NQ-CP.
             </p>
-          </Reveal>
-        </div>
-      </section>
+          </StaggerItem>
+        </Stagger>
+      </Section>
 
-      {/* Vision & Mission */}
-      <section className="rounded-2xl section-mx section-my bg-white" style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}>
-        <div className="max-w-[1400px] mx-auto section-px">
-          <Stagger className="grid md:grid-cols-2 gap-6 md:gap-12">
-            <StaggerItem className="bg-fortress-navy border border-fortress-gold/10 p-6 md:p-10 rounded-2xl">
-              <div className="w-12 h-12 md:w-14 md:h-14 bg-fortress-gold/10 flex items-center justify-center mb-4 md:mb-6 rounded-sm">
-                <Eye className="w-6 h-6 md:w-7 md:h-7 text-fortress-gold" />
+      {/* ── Ban lãnh đạo ── */}
+      <Section dark id="leadership">
+        <Reveal className="text-center mb-10 md:mb-14">
+          <SectionHeader
+            tag="Ban Lãnh Đạo"
+            heading="Lãnh Đạo Xây Dựng Trên Tầm Nhìn & Trách Nhiệm"
+            dark
+          />
+        </Reveal>
+        <Stagger className="grid lg:grid-cols-2 gap-6 md:gap-10">
+          {[
+            {
+              src: "/Azzam-El-Khatib.jpeg",
+              name: "Azzam El-Khatib",
+              role: "Nhà Sáng Lập & Tổng Giám Đốc Điều Hành (CEO)",
+              bio: [
+                "Azzam El-Khatib lãnh đạo Fortress Investment Holdings với cam kết sâu sắc về tăng trưởng kỷ luật, dịch vụ khách hàng xuất sắc và quản lý đầu tư có trách nhiệm.",
+                "Với mạng lưới rộng khắp tại UAE, GCC và các thị trường quốc tế, Azzam đóng vai trò trung tâm trong việc kiến tạo quan hệ chiến lược và định hình tầm nhìn dài hạn của tập đoàn.",
+                "Phong cách lãnh đạo của ông được định hình bởi kỷ luật, trách nhiệm và triết lý lấy đối tác làm trung tâm — cam kết bảo vệ lợi ích đối tác và kiến tạo giá trị bền vững.",
+              ],
+            },
+            {
+              src: "/Serhii-Pohrebniak.jpeg",
+              name: "Serhii Pohrebniak",
+              role: "Giám Đốc Chiến Lược Doanh Nghiệp",
+              bio: [
+                "Serhii Pohrebniak là bộ óc chiến lược đằng sau tầm nhìn và định hướng phát triển của tập đoàn. Với nền tảng quân ngũ, ông mang đến kỷ luật, kiên cường và trách nhiệm cao trong mọi hoạt động kinh doanh.",
+                "Kinh nghiệm phong phú trong thương trường và cuộc sống giúp ông tiếp cận thách thức với sự rõ ràng, tư duy thực tế và góc nhìn chiến lược dài hạn.",
+                "Ông tin rằng mục tiêu có ý nghĩa chỉ đạt được thông qua kiên trì, kỷ luật và hành động tập trung — triết lý này là nền tảng cho mọi quyết định chiến lược của ông.",
+              ],
+            },
+          ].map((person) => (
+            <StaggerItem
+              key={person.name}
+              className="group bg-gradient-to-br from-fortress-navy to-fortress-charcoal border border-fortress-gold/10 hover:border-fortress-gold/35 hover:shadow-2xl hover:shadow-fortress-gold/8 hover:-translate-y-1 transition-all duration-500 rounded-2xl overflow-hidden"
+            >
+              <div className="relative w-full aspect-[4/3] overflow-hidden">
+                <Image
+                  src={person.src}
+                  alt={person.name}
+                  fill
+                  className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                  loading="lazy"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-fortress-navy/60 to-transparent" />
               </div>
-              <p className="text-fortress-gold text-sm font-medium tracking-[4px] uppercase mb-3">Tầm Nhìn</p>
-              <h3 className="text-lg md:text-2xl font-bold text-fortress-ivory mb-3 md:mb-4">Xây Dựng Tập Đoàn Đầu Tư Uy Tín Toàn Cầu, Lấy Khách Hàng Làm Trung Tâm</h3>
-              <p className="text-fortress-silver text-sm md:text-base leading-relaxed">
-                Tầm nhìn của chúng tôi là khẳng định Fortress Investment Holdings trở thành một tập đoàn đầu tư đa dạng, được tin cậy và được công nhận quốc tế – được xây dựng xung quanh sự tin tưởng của khách hàng, tăng trưởng kỷ luật và tạo ra giá trị dài hạn. Chúng tôi đo lường thành công bằng sức mạnh danh mục đầu tư và niềm tin chúng tôi xây dựng với mọi khách hàng và đối tác.
-              </p>
-            </StaggerItem>
-            <StaggerItem className="bg-fortress-deep border border-fortress-gold/10 p-6 md:p-10 rounded-2xl">
-              <div className="w-12 h-12 md:w-14 md:h-14 bg-fortress-gold/10 flex items-center justify-center mb-4 md:mb-6 rounded-sm">
-                <Target className="w-6 h-6 md:w-7 md:h-7 text-fortress-gold" />
-              </div>
-              <p className="text-fortress-gold text-sm font-medium tracking-[4px] uppercase mb-3">Sứ Mệnh</p>
-              <h3 className="text-lg md:text-2xl font-bold text-fortress-ivory mb-3 md:mb-4">Đầu Tư Với Sức Mạnh. Phục Vụ Với Niềm Tin. Tạo Giá Trị Bền Vững.</h3>
-              <p className="text-fortress-silver text-sm md:text-base leading-relaxed">
-                Sứ mệnh của chúng tôi là xác định các cơ hội tiềm năng cao, triển khai vốn có trách nhiệm và hỗ trợ tăng trưởng bền vững thông qua sự tham gia chiến lược, quản trị mạnh mẽ và quan hệ đối tác dài hạn. Chúng tôi đặt khách hàng vào trung tâm mọi quyết định, tập trung vào sự minh bạch, niềm tin và kết quả đích thực.
-              </p>
-            </StaggerItem>
-          </Stagger>
-        </div>
-      </section>
-
-      {/* Leadership */}
-      <section className="bg-fortress-deep rounded-2xl section-mx section-my" style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}>
-        <div className="max-w-[1400px] mx-auto section-px">
-          <Reveal className="text-center mb-8 md:mb-12">
-            <p className="text-fortress-gold text-sm font-medium tracking-[2px] md:tracking-[4px] uppercase mb-4">Ban Lãnh Đạo</p>
-            <h2 className="font-bold text-fortress-ivory" style={{ fontSize: "var(--text-h2)" }}>Lãnh Đạo Xây Dựng Trên Tầm Nhìn Và Trách Nhiệm</h2>
-          </Reveal>
-          <Stagger className="grid lg:grid-cols-2 gap-6 md:gap-12">
-            <StaggerItem className="group bg-gradient-to-br from-fortress-navy to-fortress-charcoal border border-fortress-gold/10 p-6 md:p-10 rounded-2xl transition-all duration-500 hover:border-fortress-gold/40 hover:shadow-2xl hover:shadow-fortress-gold/10 hover:-translate-y-1">
-              <div className="relative w-full aspect-[4/5] mb-6 overflow-hidden rounded-lg">
-                <Image src="/Azzam-El-Khatib.jpeg" alt="Azzam El-Khatib" fill className="object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" sizes="(max-width: 768px) 100vw, 50vw" />
-              </div>
-              <h3 className="text-lg md:text-xl font-bold text-fortress-ivory mb-1 transition-colors duration-500 group-hover:text-fortress-gold">Azzam El-Khatib</h3>
-              <p className="text-fortress-gold text-sm font-medium mb-4 md:mb-6">Nhà Sáng Lập & Tổng Giám Đốc Điều Hành (CEO)</p>
-              <div className="space-y-3 md:space-y-4 text-fortress-silver text-sm md:text-base leading-relaxed">
-                <p>Azzam El-Khatib lãnh đạo Fortress Investment Holdings với cam kết sâu sắc về tăng trưởng kỷ luật, dịch vụ khách hàng và quản lý đầu tư có trách nhiệm.</p>
-                <p>Với mạng lưới rộng khắp tại UAE, GCC và các thị trường quốc tế, Azzam đóng vai trò trung tâm trong việc xây dựng mối quan hệ chiến lược, xác định các cơ hội đầu tư và định hình tầm nhìn dài hạn của tập đoàn.</p>
-                <p>Phong cách lãnh đạo của ông được định hình bởi tính kỷ luật, trách nhiệm và triết lý xem khách hàng là trung tâm. Ông cam kết bảo vệ lợi ích của đối tác, kiến tạo giá trị bền vững và mang lại hiệu quả đầu tư tối ưu.</p>
-              </div>
-            </StaggerItem>
-            <StaggerItem className="group bg-gradient-to-br from-fortress-navy to-fortress-charcoal border border-fortress-gold/10 p-6 md:p-10 rounded-2xl transition-all duration-500 hover:border-fortress-gold/40 hover:shadow-2xl hover:shadow-fortress-gold/10 hover:-translate-y-1">
-              <div className="relative w-full aspect-[4/5] mb-6 overflow-hidden rounded-lg">
-                <Image src="/Serhii-Pohrebniak.jpeg" alt="Serhii Pohrebniak" fill className="object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" sizes="(max-width: 768px) 100vw, 50vw" />
-              </div>
-              <h3 className="text-lg md:text-xl font-bold text-fortress-ivory mb-1 transition-colors duration-500 group-hover:text-fortress-gold">Serhii Pohrebniak</h3>
-              <p className="text-fortress-gold text-sm font-medium mb-4 md:mb-6">Giám Đốc Chiến Lược Doanh Nghiệp</p>
-              <div className="space-y-3 md:space-y-4 text-fortress-silver text-sm md:text-base leading-relaxed">
-                <p>Serhii Pohrebniak là thành viên chủ chốt của Fortress Investment Holdings và là một trong những bộ óc chiến lược đằng sau tầm nhìn và định hướng của tập đoàn. Với kinh nghiệm trong môi trường quân ngũ, ông mang đến tính kỷ luật, sự kiên cường, cấu trúc chặt chẽ và tinh thần trách nhiệm cao trong mọi hoạt động kinh doanh.</p>
-                <p>Những trải nghiệm phong phú trong cuộc sống và thương trường giúp ông tiếp cận các thách thức với sự rõ ràng, tư duy thực tế và góc nhìn dài hạn. Serhii đóng vai trò quan trọng trong việc xây dựng chiến lược kinh doanh, tìm kiếm cơ hội và thúc đẩy sự phát triển của công ty.</p>
-                <p>Ông tin tưởng mạnh mẽ rằng các mục tiêu ý nghĩa chỉ đạt được thông qua sự kiên trì, kỷ luật và hành động tập trung. Triết lý này chính là nền tảng cho phương châm làm việc và cuộc sống của ông.</p>
-              </div>
-            </StaggerItem>
-          </Stagger>
-        </div>
-      </section>
-
-      {/* Values */}
-      <section className="rounded-2xl section-mx section-my bg-white" style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}>
-        <div className="max-w-[1400px] mx-auto section-px">
-          <Reveal className="text-center mb-10 md:mb-16">
-            <p className="text-fortress-gold text-sm font-medium tracking-[2px] md:tracking-[4px] uppercase mb-4">Giá Trị Cốt Lõi</p>
-            <h2 className="font-bold text-fortress-navy" style={{ fontSize: "var(--text-h2)" }}>Nguyên Tắc Đằng Sau Mọi Quyết Định</h2>
-          </Reveal>
-          <Stagger className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-            {values.map((v) => (
-              <StaggerItem key={v.title} className="bg-fortress-navy border border-fortress-gold/10 p-6 md:p-8 hover:border-fortress-gold/30 hover:shadow-xl hover:shadow-fortress-gold/5 hover:-translate-y-1 transition-all duration-300 rounded-2xl">
-                <div className="w-10 h-10 md:w-12 md:h-12 bg-fortress-gold/10 flex items-center justify-center mb-4 md:mb-5 rounded-sm">
-                  <v.icon className="w-5 h-5 md:w-6 md:h-6 text-fortress-gold" />
+              <div className="p-7 md:p-10">
+                <div className="flex items-start justify-between mb-5">
+                  <div>
+                    <h3
+                      className="font-bold text-fortress-ivory mb-1 group-hover:text-fortress-gold transition-colors duration-300"
+                      style={{ fontSize: "var(--text-h3)" }}
+                    >
+                      {person.name}
+                    </h3>
+                    <p className="section-tag">{person.role}</p>
+                  </div>
+                  <div className="w-8 h-px bg-fortress-gold/40 mt-2 shrink-0" />
                 </div>
-                <h3 className="text-fortress-ivory font-bold text-base md:text-lg mb-2 md:mb-3">{v.title}</h3>
-                <p className="text-fortress-silver text-xs md:text-sm leading-relaxed">{v.description}</p>
-              </StaggerItem>
-            ))}
-          </Stagger>
-        </div>
-      </section>
+                <div className="space-y-3">
+                  {person.bio.map((para, i) => (
+                    <p key={i} className="text-fortress-silver/75 leading-[1.8]" style={{ fontSize: "var(--text-body)" }}>
+                      {para}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            </StaggerItem>
+          ))}
+        </Stagger>
+      </Section>
 
-      {/* Investment Philosophy */}
-      <section className="bg-fortress-navy rounded-2xl section-mx section-my" style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}>
-        <div className="max-w-[1400px] mx-auto section-px">
-          <Reveal className="text-center mb-8 md:mb-12">
-            <p className="text-fortress-gold text-sm font-medium tracking-[2px] md:tracking-[4px] uppercase mb-4">Triết Lý Đầu Tư</p>
-            <h2 className="font-bold text-fortress-ivory mb-3 md:mb-4" style={{ fontSize: "var(--text-h2)" }}>Vốn Kỷ Luật. Tăng Trưởng Chiến Lược.</h2>
-            <p className="text-fortress-ivory/80 leading-relaxed max-w-2xl mx-auto" style={{ fontSize: "var(--text-body)" }}>
-              Giá trị bền vững bắt đầu từ nền tảng cơ bản vững chắc. Tất cả những thứ khác chỉ là những ảo ảnh nhất thời.
-            </p>
-          </Reveal>
-          <Stagger className="grid sm:grid-cols-2 gap-3 md:gap-4 max-w-4xl mx-auto">
-            {philosophyPoints.map((point, i) => (
-              <StaggerItem key={i} className="p-4 md:p-5 bg-fortress-deep border border-fortress-gold/10 rounded-sm transition-all duration-300 hover:border-fortress-gold/30 hover:shadow-lg hover:shadow-fortress-gold/5 hover:-translate-y-0.5">
-                <p className="text-fortress-silver text-xs md:text-sm leading-relaxed">{point}</p>
-              </StaggerItem>
-            ))}
-          </Stagger>
-        </div>
-      </section>
+      {/* ── Giá trị cốt lõi ── */}
+      <Section id="values">
+        <Reveal className="text-center mb-10 md:mb-14">
+          <SectionHeader
+            tag="Giá Trị Cốt Lõi"
+            heading="Nguyên Tắc Đằng Sau Mọi Quyết Định"
+            description="Tám giá trị không thể thỏa hiệp — là la bàn hướng dẫn mọi hành động và cam kết của Fortress."
+          />
+        </Reveal>
+        <Stagger className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+          {values.map((v) => (
+            <StaggerItem
+              key={v.title}
+              className="group bg-fortress-navy border border-fortress-gold/10 hover:border-fortress-gold/30 hover:-translate-y-1 hover:shadow-lg hover:shadow-fortress-gold/5 transition-all duration-300 rounded-2xl p-6 md:p-7"
+            >
+              <div className="w-10 h-10 bg-fortress-gold/10 border border-fortress-gold/15 flex items-center justify-center rounded-sm mb-5 group-hover:bg-fortress-gold/20 transition-colors">
+                <v.icon className="w-5 h-5 text-fortress-gold" />
+              </div>
+              <h3
+                className="font-semibold text-fortress-ivory mb-2.5 leading-snug"
+                style={{ fontSize: "var(--text-h3)" }}
+              >
+                {v.title}
+              </h3>
+              <p className="text-fortress-silver/70 leading-[1.75]" style={{ fontSize: "var(--text-body)" }}>
+                {v.description}
+              </p>
+            </StaggerItem>
+          ))}
+        </Stagger>
+      </Section>
 
-      
+      {/* ── Triết lý đầu tư ── */}
+      <Section dark id="philosophy">
+        <Reveal className="text-center mb-10 md:mb-14">
+          <SectionHeader
+            tag="Triết Lý Đầu Tư"
+            heading={
+              <>
+                Vốn Kỷ Luật.{" "}
+                <span className="font-bold text-fortress-gold">Tuân Thủ. Tăng Trưởng Bền Vững.</span>
+              </>
+            }
+            description="Giá trị bền vững trong kinh tế số bắt đầu từ tuân thủ pháp lý, nền tảng thị trường vững chắc và đội ngũ đủ năng lực — tất cả những thứ khác chỉ là ảo ảnh nhất thời."
+            dark
+          />
+        </Reveal>
+        <Stagger className="grid sm:grid-cols-2 gap-3 md:gap-4 max-w-4xl mx-auto">
+          {philosophyPoints.map((point, i) => (
+            <StaggerItem
+              key={i}
+              className="group flex items-start gap-4 p-5 md:p-6 bg-fortress-deep border border-fortress-gold/10 hover:border-fortress-gold/30 hover:-translate-y-0.5 hover:shadow-md hover:shadow-fortress-gold/5 transition-all duration-300 rounded-sm"
+            >
+              <div className="w-px h-full min-h-[2.5rem] bg-fortress-gold/30 shrink-0 group-hover:bg-fortress-gold/60 transition-colors" />
+              <div>
+                <p className="font-semibold text-fortress-ivory text-sm mb-1">{point.label}</p>
+                <p className="text-fortress-silver/60 leading-relaxed" style={{ fontSize: "var(--text-body)" }}>{point.desc}</p>
+              </div>
+            </StaggerItem>
+          ))}
+        </Stagger>
+      </Section>
     </main>
   );
 }

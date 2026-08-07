@@ -24,6 +24,7 @@ import {
 import AdminSidebar from "@/components/AdminSidebar";
 import AdminNavbar from "@/components/AdminNavbar";
 import { timeAgo } from "@/utils/time";
+import { useCsrf } from "@/contexts/CsrfContext";
 
 interface ArticleItem {
   slug: string;
@@ -134,6 +135,7 @@ function DeleteModal({
 
 /* ─── Main Component ─────────────────────────────────────────── */
 export default function BlogList() {
+  const { csrfFetch } = useCsrf();
   const [articles, setArticles] = useState<ArticleItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -145,7 +147,7 @@ export default function BlogList() {
     setLoading(true);
     fetch("/api/admin/articles")
       .then((r) => r.json())
-      .then((data) => { setArticles(Array.isArray(data) ? data : []); setLoading(false); })
+      .then((res) => { setArticles(Array.isArray(res.data) ? res.data : []); setLoading(false); })
       .catch(() => setLoading(false));
   }
 
@@ -155,8 +157,8 @@ export default function BlogList() {
     if (!deleteTarget) return;
     setDeleteLoading(true);
     try {
-      const res = await fetch(`/api/admin/articles/${deleteTarget.slug}`, { method: "DELETE" });
-      if (!res.ok) throw new Error("Xóa thất bại");
+      const res = await csrfFetch(`/api/admin/articles/${deleteTarget.slug}`, { method: "DELETE" });
+      if (!res.ok) { const d = await res.json(); throw new Error(d.message || "Xóa thất bại"); }
       toast.success("Đã xóa bài viết");
       load();
     } catch {

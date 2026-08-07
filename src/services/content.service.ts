@@ -35,6 +35,7 @@ export async function updatePage(slug: string, data: Partial<PageContentInput>) 
   if (data.hero) updateData.hero = data.hero;
   if (data.sections) updateData.sections = data.sections;
   if (data.seo) updateData.seo = data.seo;
+  if (data.data !== undefined) updateData.data = data.data;
   updateData.updatedAt = new Date();
 
   const page = await Page.findOneAndUpdate(

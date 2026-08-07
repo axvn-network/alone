@@ -1,10 +1,11 @@
 "use client";
 
 import { Toaster } from "sonner";
+import { CsrfProvider } from "@/contexts/CsrfContext";
 
 export default function AdminProviders({ children }: { children: React.ReactNode }) {
   return (
-    <>
+    <CsrfProvider>
       {children}
       <Toaster
         position="top-right"
@@ -17,6 +18,6 @@ export default function AdminProviders({ children }: { children: React.ReactNode
           },
         }}
       />
-    </>
+    </CsrfProvider>
   );
 }

@@ -38,14 +38,11 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
-  // ── Output — "standalone" bundles .next/standalone for direct node server.js deploy
-  output: "standalone",
-  outputFileTracingRoot: __dirname,
-
   // ── Performance ──────────────────────────────────────────────────────────────
   compress: true,
   poweredByHeader: false,
   reactStrictMode: true,
+  trailingSlash: false,
 
   // ── Server-side native modules (bypass webpack bundling) ─────────────────────
   serverExternalPackages: ["cloudinary", "mongoose", "bcryptjs", "nodemailer"],
@@ -90,12 +87,6 @@ const nextConfig: NextConfig = {
     ];
   },
 
-  // ── Redirects ─────────────────────────────────────────────────────────────────
-  async redirects() {
-    return [
-      { source: "/admin", destination: "/admin/", permanent: true },
-    ];
-  },
 };
 
 export default nextConfig;

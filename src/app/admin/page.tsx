@@ -15,10 +15,12 @@ import {
   ChevronRight,
   FileText,
   BarChart3,
+  Users,
+  Handshake,
 } from "lucide-react";
 import { timeAgo } from "@/utils/time";
 
-interface Activity {
+interface ActivityItem {
   id: string;
   type: "contact" | "submission";
   title: string;
@@ -30,20 +32,27 @@ interface Stats {
   blogPosts: number;
   totalContacts: number;
   totalSubmissions: number;
-  activities: Activity[];
+  totalShareholders: number;
+  totalPlans: number;
+  newEnquiries: number;
+  activities: ActivityItem[];
 }
 
 const statCards = [
   { key: "blogPosts" as const, label: "Bài Viết", icon: Newspaper },
   { key: "totalContacts" as const, label: "Yêu Cầu Liên Hệ", icon: MessageCircle },
   { key: "totalSubmissions" as const, label: "Đề Xuất Đầu Tư", icon: TrendingUp },
+  { key: "totalShareholders" as const, label: "Cổ Đông Hoạt Động", icon: Users },
+  { key: "totalPlans" as const, label: "Gói Đầu Tư", icon: Handshake },
 ];
 
 const quickActions = [
   { label: "Tạo Bài Viết", icon: PlusCircle, href: "/admin/blog/new" },
-  { label: "Sửa Trang Chủ", icon: Edit3, href: "/admin/content/home" },
+  { label: "Thêm Tài Liệu", icon: FileText, href: "/admin/documents" },
   { label: "Xem Yêu Cầu", icon: MessageCircle, href: "/admin/enquiries" },
-  { label: "Quản Lý Nội Dung", icon: FileText, href: "/admin/content" },
+  { label: "Quản Lý Nội Dung", icon: Edit3, href: "/admin/content" },
+  { label: "Hạng Mục Hợp Tác", icon: Handshake, href: "/admin/investment-plans" },
+  { label: "Cổ Đông Portal", icon: Users, href: "/admin/shareholders" },
 ];
 
 export default function AdminDashboard() {
@@ -52,7 +61,10 @@ export default function AdminDashboard() {
   useEffect(() => {
     fetch("/api/admin/stats")
       .then((r) => r.json())
-      .then(setStats);
+      .then((res) => {
+        if (res.success) setStats(res.data);
+      })
+      .catch(() => {/* non-fatal */});
   }, []);
 
   if (!stats) {
@@ -83,25 +95,24 @@ export default function AdminDashboard() {
             </div>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
               {statCards.map((card) => (
-                <div 
-                  key={card.key} 
-                  className="group relative bg-[#07111D]/80 backdrop-blur-xl rounded-2xl overflow-hidden border border-fortress-gold/10 hover:border-fortress-gold/30 hover:-translate-y-1 transition-all duration-500 shadow-2xl shadow-black/40 hover:shadow-fortress-gold/5"
+                <div
+                  key={card.key}
+                  className="group relative bg-[#07111D]/80 backdrop-blur-xl rounded-2xl overflow-hidden border border-fortress-gold/10 hover:border-fortress-gold/30 hover:-translate-y-1 transition-all duration-500 shadow-2xl shadow-black/40"
                 >
-                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-fortress-gold/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="p-6">
-                    <div className="flex items-start justify-between mb-6">
-                      <div className="w-12 h-12 rounded-xl bg-fortress-deep/80 border border-fortress-gold/10 flex items-center justify-center group-hover:bg-[#0b1b2e] transition-colors duration-300">
-                        <card.icon className="w-5 h-5 text-fortress-gold group-hover:scale-110 transition-transform duration-500" />
+                  <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-fortress-gold/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="p-5">
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="w-10 h-10 rounded-xl bg-fortress-deep/80 border border-fortress-gold/10 flex items-center justify-center group-hover:bg-[#0b1b2e] transition-colors duration-300">
+                        <card.icon className="w-4 h-4 text-fortress-gold group-hover:scale-110 transition-transform duration-500" />
                       </div>
-                      <span className="text-fortress-silver/60 text-[10px] uppercase tracking-[0.2em] font-semibold">{card.label}</span>
                     </div>
                     <div>
-                      <p className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-fortress-ivory to-fortress-silver tracking-tight">
+                      <p className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-fortress-ivory to-fortress-silver tracking-tight">
                         {stats[card.key]}
                       </p>
-                      <p className="text-xs text-fortress-silver/50 mt-2 font-medium">Tổng số hệ thống</p>
+                      <p className="text-[10px] text-fortress-silver/50 mt-1.5 font-medium leading-tight">{card.label}</p>
                     </div>
                   </div>
                 </div>
@@ -151,6 +162,18 @@ export default function AdminDashboard() {
                           </div>
                         </div>
                       ))}
+                    </div>
+                  )}
+                  {stats.newEnquiries > 0 && (
+                    <div className="p-3 border-t border-fortress-charcoal/50">
+                      <Link
+                        href="/admin/enquiries"
+                        className="flex items-center justify-center gap-2 text-xs text-fortress-gold hover:text-fortress-champagne transition-colors font-medium"
+                      >
+                        <span className="w-5 h-5 bg-fortress-gold rounded-full text-fortress-navy text-[10px] font-bold flex items-center justify-center">{stats.newEnquiries}</span>
+                        yêu cầu chưa đọc — Xem tất cả
+                        <ArrowRight className="w-3 h-3" />
+                      </Link>
                     </div>
                   )}
                 </div>

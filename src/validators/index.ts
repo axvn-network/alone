@@ -60,6 +60,7 @@ export const pageContentSchema = z.object({
     image: z.string().optional(),
     order: z.number(),
   })).optional(),
+  data: z.record(z.string(), z.unknown()).optional(),
   seo: z.object({
     title: z.string().optional().default(""),
     description: z.string().optional().default(""),
@@ -78,6 +79,14 @@ export const seoSchema = z.object({
   canonicalUrl: z.string().optional(),
 });
 
+export const chatButtonSchema = z.object({
+  type: z.enum(["whatsapp", "telegram", "zalo", "livechat"]),
+  enabled: z.boolean().default(true),
+  value: z.string().default(""),
+  messageVi: z.string().optional().default(""),
+  messageEn: z.string().optional().default(""),
+});
+
 export const settingsSchema = z.object({
   companyName: z.string().optional(),
   logo: z.string().optional(),
@@ -94,7 +103,79 @@ export const settingsSchema = z.object({
   googleAnalyticsId: z.string().optional(),
   metaPixelId: z.string().optional(),
   footer: z.string().optional(),
+  chatButtons: z.array(chatButtonSchema).optional(),
 });
+
+// ─── Investment Plan ──────────────────────────────────────────────────────────
+
+export const investmentPlanSchema = z.object({
+  tier: z.enum(["seed", "growth", "expansion", "strategic", "anchor"]),
+  name: z.string().min(1, "Tên (VI) là bắt buộc").max(200),
+  nameEn: z.string().min(1, "Tên (EN) là bắt buộc").max(200),
+  tagline: z.string().optional().default(""),
+  taglineEn: z.string().optional().default(""),
+  minCommitment: z.number().min(0, "Vốn cam kết tối thiểu phải >= 0"),
+  maxCommitment: z.number().min(0).optional().default(0),
+  currency: z.string().optional().default("VND"),
+  duration: z.string().optional().default(""),
+  durationEn: z.string().optional().default(""),
+  equityRange: z.string().optional().default(""),
+  equityRangeEn: z.string().optional().default(""),
+  benefits: z.array(z.string()).optional().default([]),
+  benefitsEn: z.array(z.string()).optional().default([]),
+  conditions: z.array(z.string()).optional().default([]),
+  conditionsEn: z.array(z.string()).optional().default([]),
+  rights: z.array(z.string()).optional().default([]),
+  obligations: z.array(z.string()).optional().default([]),
+  documents: z.array(z.string()).optional().default([]),
+  shareholderType: z.string().optional().default(""),
+  highlighted: z.boolean().optional().default(false),
+  badge: z.string().optional().default(""),
+  badgeEn: z.string().optional().default(""),
+  order: z.number().optional().default(0),
+  status: z.enum(["active", "draft", "closed"]).optional().default("draft"),
+});
+
+// ─── Document ─────────────────────────────────────────────────────────────────
+
+export const documentSchema = z.object({
+  title: z.string().min(1, "Tiêu đề là bắt buộc").max(500),
+  titleEn: z.string().optional().default(""),
+  category: z.enum([
+    "financial_report",
+    "disclosure",
+    "charter",
+    "shareholder_meeting",
+    "annual_report",
+    "governance_report",
+  ]),
+  fileUrl: z.string().url("URL file không hợp lệ"),
+  fileType: z.enum(["pdf", "doc", "xlsx", "other"]).optional().default("pdf"),
+  publishedDate: z.string().min(1, "Ngày công bố là bắt buộc"),
+  year: z.number().int().min(2000).max(2100),
+  quarter: z.number().int().min(1).max(4).optional(),
+  reportType: z.string().optional().default(""),
+  isFeatured: z.boolean().optional().default(false),
+  status: z.enum(["published", "draft"]).optional().default("published"),
+});
+
+// ─── Shareholder ──────────────────────────────────────────────────────────────
+
+export const shareholderSchema = z.object({
+  name: z.string().min(1, "Họ tên là bắt buộc").max(200),
+  email: z.string().email("Email không hợp lệ"),
+  password: z.string().min(6, "Mật khẩu tối thiểu 6 ký tự").optional(),
+  phone: z.string().optional().default(""),
+  role: z.enum(["tech", "financial", "tech-company", "individual", "legal", "foreign"]),
+  status: z.enum(["pending", "active", "suspended"]).optional().default("pending"),
+  equityPercent: z.number().min(0).max(100).optional().default(0),
+  capitalCommitted: z.number().min(0).optional().default(0),
+  capitalPaid: z.number().min(0).optional().default(0),
+  notes: z.string().optional().default(""),
+  avatarUrl: z.string().optional().default(""),
+});
+
+// ─── Types ────────────────────────────────────────────────────────────────────
 
 export type LoginInput = z.infer<typeof loginSchema>;
 export type BlogInput = z.infer<typeof blogSchema>;
@@ -102,6 +183,9 @@ export type ContactEnquiryInput = z.infer<typeof contactEnquirySchema>;
 export type PageContentInput = z.infer<typeof pageContentSchema>;
 export type SEOInput = z.infer<typeof seoSchema>;
 export type SettingsInput = z.infer<typeof settingsSchema>;
+export type InvestmentPlanInput = z.infer<typeof investmentPlanSchema>;
+export type DocumentInput = z.infer<typeof documentSchema>;
+export type ShareholderInput = z.infer<typeof shareholderSchema>;
 
 export function formatZodErrors(error: z.ZodError): Record<string, string[]> {
   const formatted: Record<string, string[]> = {};

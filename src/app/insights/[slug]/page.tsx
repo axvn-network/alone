@@ -39,11 +39,16 @@ const CAT_COLORS: Record<string, string> = {
 
 function formatDate(date: Date | string | undefined) {
   if (!date) return "";
-  return new Date(date).toLocaleDateString("en-US", { year: "numeric", month: "long" });
+  return new Date(date).toLocaleDateString("vi-VN", { year: "numeric", month: "long", day: "numeric" });
+}
+
+function formatDateTime(date: Date | string | undefined) {
+  if (!date) return "";
+  return new Date(date).toLocaleDateString("vi-VN", { year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" });
 }
 
 function computeReadTime(content: string) {
-  return `${Math.max(1, Math.ceil((content || "").length / 2000))} min read`;
+  return `${Math.max(1, Math.ceil((content || "").length / 2000))} phút đọc`;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -52,6 +57,7 @@ function mapPost(post: Record<string, unknown>): any {
     ...post,
     date: formatDate((post.publishedAt as string | undefined) || (post.createdAt as string | undefined)),
     readTime: computeReadTime(post.content as string),
+    updatedAt: post.updatedAt as string | undefined,
   };
 }
 
@@ -102,7 +108,7 @@ export default async function ArticlePage({ params }: Props) {
   const heroImage = article.featuredImage || CAT_IMAGES[article.category] || "/business.jpg";
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-white pb-safe md:pb-0">
       
 
       <div className="relative h-[420px] md:h-[520px] w-full overflow-hidden mt-16">
@@ -120,14 +126,14 @@ export default async function ArticlePage({ params }: Props) {
             href="/insights"
             className="inline-flex items-center gap-2 text-white/60 hover:text-[#C9A24A] text-sm font-medium transition-colors mb-5"
           >
-            <ArrowLeft className="w-4 h-4" /> Back to Insights
+            <ArrowLeft className="w-4 h-4" /> Quay Lại Insights
           </Link>
           <div className="flex items-center gap-3 mb-4">
             <span className={`text-[11px] font-bold px-3 py-1.5 border backdrop-blur-sm ${CAT_COLORS[article.category] || "bg-white/90 text-gray-700 border-gray-200"}`}>
               {article.category}
             </span>
             <span className="text-white/40 text-xs flex items-center gap-1.5">
-              <BookOpen className="w-3.5 h-3.5" /> Article
+              <BookOpen className="w-3.5 h-3.5" /> Bài Viết
             </span>
           </div>
           <h1 className="text-3xl md:text-5xl font-bold text-white leading-tight max-w-3xl">
@@ -142,6 +148,13 @@ export default async function ArticlePage({ params }: Props) {
           <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-[#C9A24A]" /> {article.readTime}</span>
           {article.tags && (article.tags as string[]).length > 0 && (
             <span className="flex items-center gap-1.5"><Tag className="w-3.5 h-3.5 text-[#C9A24A]" /> {(article.tags as string[]).join(", ")}</span>
+          )}
+          {article.updatedAt && (
+            <span className="flex items-center gap-1.5 text-xs border-l border-gray-200 pl-5">
+              <Calendar className="w-3 h-3 text-[#C9A24A]" />
+              <span className="text-gray-500">Cập nhật lần cuối:</span>
+              <span className="font-medium text-gray-700">{formatDateTime(article.updatedAt)}</span>
+            </span>
           )}
         </div>
       </div>
@@ -162,7 +175,7 @@ export default async function ArticlePage({ params }: Props) {
               href="/insights"
               className="inline-flex items-center gap-2 px-6 py-3 bg-[#07111D] hover:bg-[#C9A24A] text-white hover:text-[#07111D] text-sm font-bold transition-all duration-200"
             >
-              <ArrowLeft className="w-4 h-4" /> Back to All Insights
+              <ArrowLeft className="w-4 h-4" /> Quay Lại Tất Cả Bài Viết
             </Link>
           </div>
         </div>
@@ -173,10 +186,10 @@ export default async function ArticlePage({ params }: Props) {
           <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
             <div className="flex items-center gap-3 mb-8">
               <div className="h-px flex-1 bg-gray-200" />
-              <p className="text-[10px] font-bold text-gray-400 tracking-widest uppercase">Continue Reading</p>
+              <p className="text-[10px] font-bold text-gray-400 tracking-widest uppercase">Tiếp Tục Đọc</p>
               <div className="h-px flex-1 bg-gray-200" />
             </div>
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8 text-center">More Insights</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8 text-center">Bài Viết Khác</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {related.map((a) => (
                 <Link key={a.slug} href={`/insights/${a.slug}`} className="group">

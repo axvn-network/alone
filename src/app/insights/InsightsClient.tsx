@@ -9,7 +9,7 @@ import {
   ArrowRight, BookOpen, Star,
   Building2, Briefcase, Cpu, UtensilsCrossed, Truck,
   LineChart, Newspaper, Handshake,
-  Crown, FileText, Users, ChevronLeft, ChevronRight, TrendingUp
+  FileText, Users, ChevronLeft, ChevronRight, TrendingUp, Calendar
 } from "lucide-react";
 import { categories as rawCategories } from "./articles";
 
@@ -38,6 +38,7 @@ interface Article {
   slug: string; category: string; title: string; excerpt: string;
   date: string; readTime: string; tags?: string[];
   featuredImage?: string;
+  updatedAt?: string;
 }
 
 /* ─── Category helpers ───────────────────────────────────────── */
@@ -132,6 +133,7 @@ export default function InsightsClient() {
           setArticles(data.data.posts.map((p: Record<string, unknown>) => ({
             ...p,
             date: p.publishedAt || p.createdAt,
+            updatedAt: p.updatedAt as string | undefined,
           }) as Article));
         }
       })
@@ -184,12 +186,12 @@ export default function InsightsClient() {
       {/* Categories */}
       <div className="bg-white border border-gray-200 shadow-sm p-4 ">
         <h3 className="text-[10px] font-bold text-gray-500 tracking-widest uppercase mb-3 flex items-center gap-1.5">
-          <BookOpen className="w-3 h-3 text-[#C9A24A]" /> Categories
+          <BookOpen className="w-3 h-3 text-[#C9A24A]" /> Danh Mục
         </h3>
         <div className="flex flex-col">
           <button onClick={()=>{setSelectedCategories([]);setPage(1);}}
             className={`flex items-center justify-between px-2 py-2 text-sm transition-all border-l-2 ${selectedCategories.length===0?"border-[#C9A24A] text-[#C9A24A] font-semibold bg-[#C9A24A]/5":"border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50"}`}>
-            <span className="flex items-center gap-2"><Grid3X3 className="w-3.5 h-3.5" /> All</span>
+            <span className="flex items-center gap-2"><Grid3X3 className="w-3.5 h-3.5" /> Tất Cả</span>
             <span className="text-[10px] bg-gray-100 text-gray-600 px-1.5 py-0.5 ">{articles.length}</span>
           </button>
           {rawCategories.map(cat=>(
@@ -251,15 +253,23 @@ export default function InsightsClient() {
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between pt-3 border-t border-gray-200">
+        <div className="flex flex-col gap-1.5 pt-3 border-t border-gray-200">
+          {article.updatedAt && (
+            <p className="text-[10px] text-gray-400 flex items-center gap-1">
+              <Calendar className="w-2.5 h-2.5 text-[#C9A24A]" />
+              Cập nhật: {formatDate(article.updatedAt)}
+            </p>
+          )}
+          <div className="flex items-center justify-between">
           <div className="flex items-center gap-3 text-[11px] text-gray-500">
             <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {article.readTime}</span>
             <span>{formatDate(article.date)}</span>
           </div>
           <Link href={`/insights/${article.slug}`}
             className="inline-flex items-center gap-1 px-3 py-1.5 bg-[#C9A24A]/10 text-[#C9A24A] border border-[#C9A24A]/20 text-[11px] font-semibold  hover:bg-[#C9A24A] hover:text-[#07111D] transition-all">
-            Read <ArrowRight className="w-3 h-3" />
+            Đọc <ArrowRight className="w-3 h-3" />
           </Link>
+          </div>
         </div>
       </div>
     </article>
@@ -285,13 +295,21 @@ export default function InsightsClient() {
           ))}
         </div>
         <div className="flex items-center justify-between mt-auto gap-2">
-          <div className="flex items-center gap-3 text-[11px] text-gray-500">
-            <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{article.readTime}</span>
-            <span className="hidden sm:inline">{formatDate(article.date)}</span>
+          <div className="flex flex-col gap-0.5">
+            <div className="flex items-center gap-3 text-[11px] text-gray-500">
+              <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{article.readTime}</span>
+              <span className="hidden sm:inline">{formatDate(article.date)}</span>
+            </div>
+            {article.updatedAt && (
+              <p className="text-[10px] text-gray-400 flex items-center gap-1">
+                <Calendar className="w-2.5 h-2.5 text-[#C9A24A]" />
+                Cập nhật: {formatDate(article.updatedAt)}
+              </p>
+            )}
           </div>
           <div className="flex items-center gap-1 shrink-0">
             <Link href={`/insights/${article.slug}`} className="px-3 py-1.5 bg-[#C9A24A]/10 text-[#C9A24A] border border-[#C9A24A]/20 text-[11px] font-semibold  hover:bg-[#C9A24A] hover:text-[#07111D] transition-all flex items-center gap-1">
-              Read <ArrowRight className="w-3 h-3" />
+              Đọc <ArrowRight className="w-3 h-3" />
             </Link>
           </div>
         </div>
@@ -305,23 +323,30 @@ export default function InsightsClient() {
   return (
     <>
       {/* ══ HERO ══ */}
-      <motion.section {...fadeUp} className="relative pt-32 sm:pt-36 pb-24 sm:pb-32 bg-[#07111D] overflow-hidden">
+      <motion.section {...fadeUp} className="relative bg-[#07111D] overflow-hidden" style={{ paddingTop: "calc(var(--section-py) + 4rem)", paddingBottom: "var(--section-py)" }}>
         <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage:"radial-gradient(#C9A24A 1px,transparent 1px)", backgroundSize:"32px 32px" }} />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#07111D]" />
         <div className="relative max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12 text-center">
-
-          <h1 className="text-white text-3xl sm:text-4xl md:text-6xl font-bold mb-4 sm:mb-5 leading-tight mt-4 sm:mt-0">
-            Insights &amp; <span className="bg-gradient-to-r from-[#C9A24A] to-[#E6C879] bg-clip-text text-transparent">Resources</span>
+          <div className="flex items-center justify-center gap-3 mb-5">
+            <div className="w-8 h-px bg-[#C9A24A]/40" />
+            <span className="text-[#C9A24A] text-[10px] font-semibold tracking-[0.22em] uppercase">Phân Tích & Chiến Lược</span>
+            <div className="w-8 h-px bg-[#C9A24A]/40" />
+          </div>
+          <h1
+            className="font-light text-white uppercase leading-[1.28] mb-4 sm:mb-5"
+            style={{ fontSize: "clamp(2rem, 5vw + 0.5rem, 4rem)", letterSpacing: "0.04em" }}
+          >
+            Góc Nhìn &amp; <span className="font-bold bg-gradient-to-r from-[#C9A24A] to-[#E6C879] bg-clip-text text-transparent">Chuyên Sâu</span>
           </h1>
-          <p className="text-gray-400 text-sm sm:text-base md:text-lg max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed px-2">
-            Investment perspectives, market analysis, and strategic commentary from Fortress Investment Holdings.
+          <p className="text-gray-400 max-w-2xl mx-auto mb-8 sm:mb-10 leading-[1.8] px-2" style={{ fontSize: "clamp(0.9rem, 1.5vw + 0.3rem, 1.125rem)" }}>
+            Góc nhìn đầu tư, phân tích thị trường và bình luận chiến lược từ Fortress Investment Holdings.
           </p>
           {/* Search bar */}
           <div className="max-w-2xl mx-auto mb-6 sm:mb-8 relative">
             <Search className="absolute left-4 sm:left-5 top-1/2 -translate-y-1/2 w-4 sm:w-5 h-4 sm:h-5 text-gray-500" />
             <input type="text" value={search} onChange={e=>{setSearch(e.target.value);setPage(1);}}
-              placeholder="Search articles…"
-              className="w-full pl-11 sm:pl-14 pr-11 sm:pr-14 py-4 sm:py-[18px] bg-gray-50 border border-gray-200 text-gray-900 text-sm placeholder:text-gray-500 focus:outline-none focus:border-[#C9A24A]/50 transition-all backdrop-blur-sm  rounded-full" />
+              placeholder="Tìm kiếm bài viết…"
+              className="w-full pl-11 sm:pl-14 pr-11 sm:pr-14 py-4 sm:py-[18px] bg-gray-50 border border-gray-200 text-gray-900 text-sm placeholder:text-gray-500 focus:outline-none focus:border-[#C9A24A]/50 transition-all backdrop-blur-sm rounded-full" />
             {search && <button onClick={()=>setSearch("")} className="absolute right-4 sm:right-5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"><X className="w-4 h-4" /></button>}
           </div>
 
@@ -344,13 +369,13 @@ export default function InsightsClient() {
             <div className="md:hidden flex items-center gap-2 mb-4">
               <button onClick={()=>setMobileDrawerOpen(true)}
                 className="flex items-center gap-1.5 px-3 py-2.5 bg-white border border-white/10 text-sm font-medium text-gray-500 hover:border-[#C9A24A]/50 hover:text-[#C9A24A] transition-all  shrink-0">
-                <Filter className="w-4 h-4" /> Filters
+                <Filter className="w-4 h-4" /> Bộ Lọc
                 {activeFilterCount>0&&<span className="bg-[#C9A24A] text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center ">{activeFilterCount}</span>}
               </button>
               <div className="flex-1 relative min-w-0">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                 <input type="text" value={search} onChange={e=>{setSearch(e.target.value);setPage(1);}}
-                  placeholder="Search…" className="w-full pl-9 pr-3 py-2.5 bg-white border border-white/10 text-sm text-gray-900 placeholder:text-gray-500 focus:outline-none focus:border-[#C9A24A]/60 transition-all " />
+                  placeholder="Tìm kiếm…" className="w-full pl-9 pr-3 py-2.5 bg-white border border-white/10 text-sm text-gray-900 placeholder:text-gray-500 focus:outline-none focus:border-[#C9A24A]/60 transition-all " />
               </div>
             </div>
 
@@ -359,7 +384,7 @@ export default function InsightsClient() {
               <motion.section {...fadeUp} className="mb-8 sm:mb-10">
                 <div className="flex items-center gap-3 mb-4">
                   <span className="text-[10px] font-bold text-gray-500 tracking-widest uppercase flex items-center gap-1.5 shrink-0">
-                    <BookOpen className="w-3.5 h-3.5 text-[#C9A24A]" /> Latest Article
+                    <BookOpen className="w-3.5 h-3.5 text-[#C9A24A]" /> Bài Viết Mới Nhất
                   </span>
                   <div className="h-px flex-1 bg-gray-200" />
                 </div>
@@ -387,7 +412,7 @@ export default function InsightsClient() {
                         <span className="text-xs text-gray-500">{formatDate(filtered[0].date)}</span>
                         <Link href={`/insights/${filtered[0].slug}`}
                           className="inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-[#C9A24A]/10 text-[#C9A24A] border border-[#C9A24A]/20 text-sm font-semibold  hover:bg-[#C9A24A] hover:text-[#07111D] transition-all w-full sm:w-auto justify-center">
-                          Read Article <ArrowRight className="w-4 h-4" />
+                          Đọc Bài Viết <ArrowRight className="w-4 h-4" />
                         </Link>
                       </div>
                     </div>
@@ -399,10 +424,10 @@ export default function InsightsClient() {
             {/* ── TOOLBAR ── */}
             <motion.div {...stagger} className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-3 mb-4 sm:mb-5 py-3 border-t border-b border-gray-200">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-sm text-gray-500"><span className="font-bold text-gray-900">{filtered.length}</span> articles</span>
+                <span className="text-sm text-gray-500"><span className="font-bold text-gray-900">{filtered.length}</span> bài viết</span>
                 {activeFilterCount>0&&(
                   <button onClick={clearAll} className="flex items-center gap-1 text-xs text-red-400 font-medium bg-red-500/10 px-2.5 py-1.5 border border-red-500/20 ">
-                    <X className="w-3 h-3" /> Clear ({activeFilterCount})
+                    <X className="w-3 h-3" /> Xóa ({activeFilterCount})
                   </button>
                 )}
                 {selectedCategories.slice(0,2).map(c=>(
@@ -429,9 +454,9 @@ export default function InsightsClient() {
                 <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white/5 flex items-center justify-center mb-4 sm:mb-5 ">
                   <Search className="w-7 h-7 sm:w-8 sm:h-8 text-gray-500/30" />
                 </div>
-                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">No articles found</h3>
-                <p className="text-gray-500 text-sm mb-5 sm:mb-6 max-w-xs">Try adjusting your search or removing some filters.</p>
-                <button onClick={clearAll} className="px-5 sm:px-6 py-2.5 sm:py-3 bg-[#C9A24A]/10 text-[#C9A24A] border border-[#C9A24A]/20 text-sm font-semibold  hover:bg-[#C9A24A] hover:text-[#07111D] transition-all">Clear All Filters</button>
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">Không tìm thấy bài viết</h3>
+                <p className="text-gray-500 text-sm mb-5 sm:mb-6 max-w-xs">Thử điều chỉnh từ khóa hoặc bỏ bớt bộ lọc.</p>
+                <button onClick={clearAll} className="px-5 sm:px-6 py-2.5 sm:py-3 bg-[#C9A24A]/10 text-[#C9A24A] border border-[#C9A24A]/20 text-sm font-semibold  hover:bg-[#C9A24A] hover:text-[#07111D] transition-all">Xóa Tất Cả Bộ Lọc</button>
               </motion.div>
             ) : (
               <motion.div {...stagger} className={viewMode==="grid"?"grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5":"flex flex-col gap-3 sm:gap-4"}>
@@ -463,35 +488,40 @@ export default function InsightsClient() {
       </div>
 
       {/* ══ PREMIUM CTA ══ */}
-      <motion.section {...fadeUp} className="bg-[#07111D] py-20 mx-4 md:mx-8 mb-10 overflow-hidden relative rounded-2xl">
+      <motion.section {...fadeUp} className="bg-[#07111D] section-mx section-my overflow-hidden relative rounded-2xl" style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}>
         <div className="absolute inset-0 opacity-[0.04]" style={{backgroundImage:"radial-gradient(#C9A24A 1px,transparent 1px)",backgroundSize:"28px 28px"}} />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-px bg-gradient-to-r from-transparent via-[#C9A24A]/50 to-transparent" />
         <div className="relative max-w-[900px] mx-auto px-6 text-center">
-          <div className="inline-flex items-center gap-2 bg-[#C9A24A]/10 border border-[#C9A24A]/20 text-[#C9A24A] text-xs font-semibold tracking-widest uppercase px-4 py-2 mb-6">
-            <Crown className="w-3.5 h-3.5" /> Premium Access
+          <div className="flex items-center justify-center gap-3 mb-5">
+            <div className="w-8 h-px bg-[#C9A24A]/40" />
+            <span className="text-[#C9A24A] text-[10px] font-semibold tracking-[0.22em] uppercase">Truy Cập Cao Cấp</span>
+            <div className="w-8 h-px bg-[#C9A24A]/40" />
           </div>
-          <h2 className="text-white text-3xl md:text-5xl font-bold mb-4 leading-tight">
-            Unlock Exclusive<br /><span className="bg-gradient-to-r from-[#C9A24A] to-[#E6C879] bg-clip-text text-transparent">Investment Intelligence</span>
+          <h2
+            className="font-light text-white uppercase leading-[1.28] mb-4"
+            style={{ fontSize: "clamp(1.5rem, 3.2vw + 0.4rem, 3.25rem)", letterSpacing: "0.04em" }}
+          >
+            Mở Khóa Thông Tin<br /><span className="font-bold bg-gradient-to-r from-[#C9A24A] to-[#E6C879] bg-clip-text text-transparent">Đầu Tư Chuyên Sâu</span>
           </h2>
-          <p className="text-gray-400 text-base mb-10 max-w-xl mx-auto leading-relaxed">
-            Get unlimited access to premium research, templates, and expert consultancy resources curated for serious investors.
+          <p className="text-gray-400 mb-10 max-w-xl mx-auto leading-[1.8]" style={{ fontSize: "clamp(0.9rem, 1.5vw + 0.3rem, 1.125rem)" }}>
+            Tiếp cận không giới hạn các nghiên cứu cao cấp, tài liệu chiến lược và nguồn tư vấn chuyên gia được tuyển chọn dành cho nhà đầu tư nghiêm túc.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
             {[
-              {icon:<FileText className="w-5 h-5"/>,title:"Premium Articles",desc:"In-depth analysis & research"},
-              {icon:<Users className="w-5 h-5"/>,title:"Expert Consultancy",desc:"Direct access to our team"},
-              {icon:<Star className="w-5 h-5"/>,title:"Market Reports",desc:"Exclusive sector insights"},
+              {icon:<FileText className="w-5 h-5"/>,title:"Bài Viết Cao Cấp",desc:"Phân tích chuyên sâu & nghiên cứu"},
+              {icon:<Users className="w-5 h-5"/>,title:"Tư Vấn Chuyên Gia",desc:"Kết nối trực tiếp với đội ngũ"},
+              {icon:<Star className="w-5 h-5"/>,title:"Báo Cáo Thị Trường",desc:"Góc nhìn ngành độc quyền"},
             ].map((b,i)=>(
-              <motion.div key={b.title} initial={{opacity:0,y:30}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*0.12,duration:0.5,ease:"easeOut"}} className="bg-gray-50 border border-gray-200 p-5 text-left hover:border-[#C9A24A]/30 transition-colors rounded-xl">
+              <motion.div key={b.title} initial={{opacity:0,y:30}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*0.12,duration:0.5,ease:"easeOut"}} className="bg-[#0d1e30] border border-[#C9A24A]/15 p-5 text-left hover:border-[#C9A24A]/40 transition-colors rounded-xl">
                 <div className="text-[#C9A24A] mb-3">{b.icon}</div>
-                <p className="text-white text-sm font-semibold mb-1">{b.title}</p>
-                <p className="text-gray-500 text-xs">{b.desc}</p>
+                <p className="text-fortress-ivory text-sm font-semibold mb-1">{b.title}</p>
+                <p className="text-fortress-silver/60 text-xs">{b.desc}</p>
               </motion.div>
             ))}
           </div>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <Link href="/invest-with-fortress" className="px-8 py-4 bg-[#C9A24A] hover:bg-[#E6C879] text-[#07111D] font-bold text-sm transition-all shadow-xl hover:-translate-y-0.5 rounded-lg">Become a Member</Link>
-            <Link href="/contact" className="px-8 py-4 border border-white/20 hover:border-white/40 text-white font-bold text-sm transition-all hover:bg-white/5 rounded-lg">Talk to Our Team</Link>
+            <Link href="/invest-with-fortress" className="px-8 py-4 bg-[#C9A24A] hover:bg-[#E6C879] text-[#07111D] font-bold text-sm transition-all shadow-xl hover:-translate-y-0.5 rounded-lg">Trở Thành Thành Viên</Link>
+            <Link href="/contact" className="px-8 py-4 border border-white/20 hover:border-white/40 text-white font-bold text-sm transition-all hover:bg-white/5 rounded-lg">Liên Hệ Đội Ngũ</Link>
           </div>
         </div>
       </motion.section>
@@ -501,21 +531,21 @@ export default function InsightsClient() {
         <div className="fixed inset-0 z-50 md:hidden">
           <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={()=>setMobileDrawerOpen(false)} />
           <div className="absolute left-0 top-0 bottom-0 w-[80vw] max-w-[300px] sm:max-w-[320px] bg-[#03080e] overflow-y-auto shadow-2xl border-r border-gray-200">
-            <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-[#07111D] sticky top-0 z-10">
-              <h2 className="font-bold text-gray-900 flex items-center gap-2">
-                <Filter className="w-4 h-4 text-[#C9A24A]" /> Filters
+            <div className="flex items-center justify-between p-4 border-b border-white/10 bg-[#07111D] sticky top-0 z-10">
+              <h2 className="font-bold text-fortress-ivory flex items-center gap-2">
+                <Filter className="w-4 h-4 text-[#C9A24A]" /> Bộ Lọc
                 {activeFilterCount>0&&<span className="bg-[#C9A24A] text-[#07111D] text-[10px] font-bold px-2 py-0.5 ">{activeFilterCount}</span>}
               </h2>
               <div className="flex items-center gap-2">
-                {activeFilterCount>0&&<button onClick={clearAll} className="text-xs text-red-400 font-medium">Clear all</button>}
-                <button onClick={()=>setMobileDrawerOpen(false)} className="p-1.5 hover:bg-white/5 text-gray-500 transition-colors "><X className="w-5 h-5" /></button>
+                {activeFilterCount>0&&<button onClick={clearAll} className="text-xs text-red-400 font-medium">Xóa tất cả</button>}
+                <button onClick={()=>setMobileDrawerOpen(false)} className="p-1.5 hover:bg-white/5 text-fortress-silver/60 hover:text-fortress-ivory transition-colors "><X className="w-5 h-5" /></button>
               </div>
             </div>
             <div className="p-4 flex flex-col gap-4"><Sidebar /></div>
-            <div className="sticky bottom-0 p-4 bg-[#07111D] border-t border-gray-200">
+            <div className="sticky bottom-0 p-4 bg-[#07111D] border-t border-white/10">
               <button onClick={()=>setMobileDrawerOpen(false)}
                 className="w-full py-3 bg-[#C9A24A]/10 text-[#C9A24A] border border-[#C9A24A]/20 text-sm font-semibold  hover:bg-[#C9A24A] hover:text-[#07111D] transition-all">
-                Show {filtered.length} Articles
+                Xem {filtered.length} Bài Viết
               </button>
             </div>
           </div>

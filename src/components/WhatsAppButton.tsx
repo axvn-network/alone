@@ -28,12 +28,16 @@ export default function WhatsAppButton() {
       href={`https://wa.me/${phone}?text=${message}`}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-28 right-4 md:bottom-6 md:right-6 z-[60] group"
+      className="fixed right-4 md:bottom-6 md:right-6 z-[60] group whatsapp-btn"
       aria-label="Chat on WhatsApp"
     >
+      <style>{`
+        .whatsapp-btn { bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px) + 0.75rem); }
+        @media (min-width: 768px) { .whatsapp-btn { bottom: 1.5rem; } }
+      `}</style>
       <div className="relative">
         <div className="absolute inset-0 bg-green-500 animate-ping opacity-20 rounded-full" />
-        <div className="relative w-14 h-14 bg-[#25D366] hover:bg-[#1ebe5d] flex items-center justify-center shadow-lg shadow-green-500/30 transition-all duration-300 hover:scale-110 rounded-full">
+        <div className="relative w-12 h-12 md:w-14 md:h-14 bg-[#25D366] hover:bg-[#1ebe5d] flex items-center justify-center shadow-lg shadow-green-500/30 transition-all duration-300 hover:scale-110 rounded-full">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 32 32"

@@ -4,3 +4,6 @@ export * as enquiryService from "./enquiry.service";
 export * as settingsService from "./settings.service";
 export * as mediaService from "./media.service";
 export * as dashboardService from "./dashboard.service";
+export * as investmentPlanService from "./investment-plan.service";
+export * as documentService from "./document.service";
+export * as shareholderService from "./shareholder.service";

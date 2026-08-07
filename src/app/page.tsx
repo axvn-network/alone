@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <PageTransition>
-      <main className="min-h-screen bg-white relative">
+      <main className="min-h-screen bg-white relative pb-safe md:pb-0">
         <FloatingBlobs />
         
         <Hero />

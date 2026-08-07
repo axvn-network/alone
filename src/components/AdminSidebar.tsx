@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -12,14 +13,22 @@ import {
   LogOut,
   Menu,
   X,
+  FolderOpen,
+  Layers,
+  Handshake,
+  Users,
 } from "lucide-react";
 
 const links = [
-  { label: "Tổng quan", hrefKey: "Dashboard", icon: LayoutDashboard, href: "/admin" },
-  { label: "Quản lý nội dung", hrefKey: "Content", icon: FileText, href: "/admin/content" },
-  { label: "Bài viết & Tin tức", hrefKey: "Blog Posts", icon: Newspaper, href: "/admin/blog" },
-  { label: "Yêu cầu hợp tác", hrefKey: "Enquiries", icon: MessageCircle, href: "/admin/enquiries" },
-  { label: "Cài đặt hệ thống", hrefKey: "Settings", icon: Settings, href: "/admin/settings" },
+  { label: "Tổng quan",          hrefKey: "Dashboard",         icon: LayoutDashboard, href: "/admin" },
+  { label: "Visual Editor",      hrefKey: "Visual Editor",     icon: Layers,          href: "/admin/visual-editor" },
+  { label: "Cổ Đông Portal",     hrefKey: "Shareholders",      icon: Users,           href: "/admin/shareholders" },
+  { label: "Quản lý nội dung",   hrefKey: "Content",           icon: FileText,        href: "/admin/content" },
+  { label: "Bài viết & Tin tức", hrefKey: "Blog Posts",        icon: Newspaper,       href: "/admin/blog" },
+  { label: "Tài liệu & CBTT",    hrefKey: "Documents",         icon: FolderOpen,      href: "/admin/documents" },
+  { label: "Hạng Mục Hợp Tác",       hrefKey: "Investment Plans",   icon: Handshake,       href: "/admin/investment-plans" },
+  { label: "Yêu cầu hợp tác",   hrefKey: "Enquiries",          icon: MessageCircle,   href: "/admin/enquiries" },
+  { label: "Cài đặt hệ thống",  hrefKey: "Settings",           icon: Settings,        href: "/admin/settings" },
 ];
 
 interface AdminSidebarProps {
@@ -27,7 +36,17 @@ interface AdminSidebarProps {
 }
 
 export default function AdminSidebar({ active }: AdminSidebarProps) {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
+
+  async function handleLogout() {
+    try {
+      await fetch("/api/admin-logout", { method: "POST" });
+    } catch {
+      // ignore
+    }
+    router.push("/admin-login");
+  }
 
   return (
     <>
@@ -85,14 +104,13 @@ export default function AdminSidebar({ active }: AdminSidebarProps) {
           })}
         </nav>
         <div className="p-4 border-t border-fortress-gold/10">
-          <Link
-            href="/admin-login"
-            onClick={() => setOpen(false)}
-            className="flex items-center gap-3 px-4 py-3 text-sm text-fortress-silver/60 hover:text-fortress-champagne transition-all duration-300 hover:bg-fortress-gold/5 rounded-xl group"
+          <button
+            onClick={() => { setOpen(false); handleLogout(); }}
+            className="w-full flex items-center gap-3 px-4 py-3 text-sm text-fortress-silver/60 hover:text-fortress-champagne transition-all duration-300 hover:bg-fortress-gold/5 rounded-xl group"
           >
             <LogOut className="w-4 h-4 shrink-0 group-hover:-translate-x-1 transition-transform" />
             <span className="tracking-wide">Đăng xuất</span>
-          </Link>
+          </button>
         </div>
       </aside>
     </>

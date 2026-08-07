@@ -1,98 +1,132 @@
+import PageHero from "@/components/PageHero";
+import ProseDoc, { ProseList, ProseNote } from "@/components/ProseSection";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Chính Sách Bảo Mật | Fortress Investment Holdings",
+  title: "Chính Sách Bảo Mật",
   description:
-    "Chính sách bảo mật thông tin của Fortress Investment Holdings. Tìm hiểu cách chúng tôi thu thập, sử dụng, lưu trữ và bảo vệ dữ liệu cá nhân của bạn.",
+    "Chính sách bảo mật thông tin của Fortress Investment Holdings — cách chúng tôi thu thập, sử dụng, lưu trữ và bảo vệ dữ liệu cá nhân của bạn.",
 };
 
 export default function PrivacyPolicyPage() {
   return (
-    <main className="min-h-screen bg-white">
-      
+    <main className="min-h-screen bg-white pb-safe md:pb-0">
+      <PageHero
+        tag="Pháp Lý"
+        heading="Chính Sách Bảo Mật Quyền Riêng Tư"
+        description="Fortress Investment Holdings tôn trọng quyền riêng tư của mọi người dùng. Tài liệu này giải thích cách chúng tôi thu thập, sử dụng, lưu trữ và bảo vệ dữ liệu cá nhân của bạn."
+      />
 
-      <section className="bg-white pt-24 md:pt-32 pb-12 md:pb-20 text-center">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
-          <p className="text-fortress-gold text-xs md:text-sm font-medium tracking-[2px] md:tracking-[4px] uppercase mb-4">
-            Pháp Lý
-          </p>
-          <h1 className="text-3xl md:text-5xl font-bold text-fortress-navy mb-4">
-            Chính Sách Bảo Mật Quyền Riêng Tư
-          </h1>
-          <p className="text-fortress-charcoal/70 text-sm">
-            Cập nhật lần cuối: 2026
-          </p>
-        </div>
-      </section>
-
-      <section className="bg-white my-8 md:my-12 mx-2 sm:mx-4 rounded-2xl py-12 md:py-20 px-6 lg:px-20">
-        <div className="max-w-[860px] mx-auto">
-          <div className="space-y-10 text-fortress-charcoal/70 leading-relaxed text-sm sm:text-base">
-
-            <p>
-              Fortress Investment Holdings luôn tôn trọng quyền riêng tư của mọi người dùng truy cập website, liên hệ với chúng tôi hoặc gửi thông tin qua các biểu mẫu trực tuyến.
-            </p>
-            <p>
-              Chính sách bảo mật này giải thích cách thức chúng tôi thu thập, sử dụng, lưu trữ và bảo vệ dữ liệu cá nhân của bạn.
-            </p>
-
-            <div>
-              <h2 className="text-xl font-bold text-fortress-navy mb-4">Thông Tin Chúng Tôi Thu Thập</h2>
-              <ul className="list-disc pl-5 space-y-2">
-                <li>Họ và tên, tên công ty và chức danh</li>
-                <li>Địa chỉ Email, số điện thoại và quốc gia</li>
-                <li>Thông tin chi tiết về đề xuất kinh doanh, đầu tư hoặc hợp tác</li>
-                <li>Các tài liệu được tải lên qua trang web</li>
-                <li>Thông tin sử dụng trang web, thiết bị và trình duyệt, bao gồm địa chỉ IP</li>
-              </ul>
-            </div>
-
-            <div>
-              <h2 className="text-xl font-bold text-fortress-navy mb-4">Cách Thức Sử Dụng Thông Tin</h2>
-              <ul className="list-disc pl-5 space-y-2">
-                <li>Phản hồi các câu hỏi và giao tiếp trực tiếp với người dùng</li>
-                <li>Đánh giá các cơ hội đầu tư và đề xuất thâu tóm doanh nghiệp</li>
-                <li>Thẩm định các yêu cầu hợp tác liên doanh</li>
-                <li>Cung cấp thông tin theo yêu cầu của đối tác</li>
-              </ul>
-            </div>
-
-            <div>
-              <h2 className="text-xl font-bold text-fortress-navy mb-4">Bảo Mật Tài Liệu Tải Lên</h2>
-              <p>
-                Tài liệu tải lên qua website được cam kết bảo mật theo tiêu chuẩn nội bộ. Vui lòng chỉ cung cấp các thông tin bạn được quyền chia sẻ.
-              </p>
-            </div>
-
-            <div>
-              <h2 className="text-xl font-bold text-fortress-navy mb-4">Cookie & Công Nghệ Theo Dõi</h2>
-              <p>
-                Website có thể sử dụng cookie để nâng cao trải nghiệm người dùng, phân tích lưu lượng truy cập và hỗ trợ tối ưu hóa nội dung thông qua Google Analytics và Meta Pixel.
-              </p>
-            </div>
-
-            <div>
-              <h2 className="text-xl font-bold text-fortress-navy mb-4">Bảo Mật Dữ Liệu</h2>
-              <p>
-                Chúng tôi áp dụng các biện pháp quản lý, kỹ thuật và tổ chức phù hợp để bảo vệ thông tin khỏi các truy cập trái phép, rò rỉ hoặc mất mát.
-              </p>
-            </div>
-
-            <div>
-              <h2 className="text-xl font-bold text-fortress-navy mb-4">Liên Hệ</h2>
-              <p>Mọi thắc mắc liên quan đến quyền riêng tư, vui lòng liên hệ:</p>
-              <div className="mt-3 space-y-1 font-medium">
-                <p>Fortress Investment Holdings</p>
-                <p>Email: info@fortressih.com</p>
-                <p>Địa chỉ: Dubai, Các Quốc Gia Ả Rập Thống Nhất</p>
-              </div>
-            </div>
-
+      <section
+        className="bg-white section-mx section-my"
+        style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}
+      >
+        <div className="max-w-[860px] mx-auto section-px">
+          {/* Ngày cập nhật */}
+          <div className="flex items-center gap-3 mb-10 md:mb-14 pb-6 border-b border-fortress-gold/15">
+            <div className="w-1.5 h-1.5 rounded-full bg-fortress-gold/60" />
+            <p className="text-fortress-charcoal/45 text-xs font-mono tracking-widest uppercase">Cập nhật lần cuối: 2025</p>
           </div>
+
+          <ProseDoc
+            sections={[
+              {
+                id: "intro",
+                title: "Cam Kết Bảo Mật",
+                content: (
+                  <p>
+                    Fortress Investment Holdings luôn tôn trọng quyền riêng tư của mọi người dùng truy cập website,
+                    liên hệ với chúng tôi hoặc gửi thông tin qua các biểu mẫu trực tuyến.
+                    Chính sách này giải thích cách thức chúng tôi xử lý dữ liệu cá nhân của bạn một cách minh bạch và có trách nhiệm.
+                  </p>
+                ),
+              },
+              {
+                id: "collection",
+                title: "Thông Tin Chúng Tôi Thu Thập",
+                content: (
+                  <>
+                    <p>Chúng tôi có thể thu thập các loại thông tin sau khi bạn tương tác với website hoặc liên hệ trực tiếp:</p>
+                    <ProseList items={[
+                      "Họ và tên, tên công ty và chức danh nghề nghiệp",
+                      "Địa chỉ email, số điện thoại và quốc gia cư trú",
+                      "Thông tin chi tiết về đề xuất kinh doanh, đầu tư hoặc hợp tác",
+                      "Tài liệu được tải lên qua trang web",
+                      "Dữ liệu sử dụng website: thiết bị, trình duyệt, địa chỉ IP",
+                    ]} />
+                  </>
+                ),
+              },
+              {
+                id: "usage",
+                title: "Cách Thức Sử Dụng Thông Tin",
+                content: (
+                  <>
+                    <p>Thông tin thu thập được sử dụng cho các mục đích hợp pháp sau:</p>
+                    <ProseList items={[
+                      "Phản hồi các câu hỏi và giao tiếp trực tiếp với người dùng",
+                      "Đánh giá các cơ hội đầu tư và đề xuất thâu tóm doanh nghiệp",
+                      "Thẩm định các yêu cầu hợp tác, liên doanh chiến lược",
+                      "Cung cấp thông tin cập nhật theo yêu cầu của đối tác",
+                    ]} />
+                  </>
+                ),
+              },
+              {
+                id: "documents",
+                title: "Bảo Mật Tài Liệu Tải Lên",
+                content: (
+                  <>
+                    <p>
+                      Tài liệu tải lên qua website được bảo mật theo tiêu chuẩn nội bộ nghiêm ngặt của Fortress.
+                      Chỉ những nhân sự được ủy quyền mới có quyền truy cập.
+                    </p>
+                    <ProseNote>
+                      Vui lòng chỉ cung cấp các thông tin bạn được quyền chia sẻ và không gửi tài liệu có tính bảo mật cao qua kênh không được mã hóa.
+                    </ProseNote>
+                  </>
+                ),
+              },
+              {
+                id: "cookies",
+                title: "Cookie & Công Nghệ Theo Dõi",
+                content: (
+                  <p>
+                    Website có thể sử dụng cookie và công nghệ tương tự để nâng cao trải nghiệm người dùng, phân tích lưu lượng truy cập
+                    và hỗ trợ tối ưu hóa nội dung thông qua Google Analytics và Meta Pixel.
+                    Bạn có thể điều chỉnh cài đặt cookie trong trình duyệt của mình bất kỳ lúc nào.
+                  </p>
+                ),
+              },
+              {
+                id: "security",
+                title: "Bảo Mật Dữ Liệu",
+                content: (
+                  <p>
+                    Chúng tôi áp dụng các biện pháp quản lý, kỹ thuật và tổ chức phù hợp để bảo vệ thông tin khỏi
+                    các truy cập trái phép, rò rỉ hoặc mất mát. Tuy nhiên, không có phương thức truyền tải nào qua Internet
+                    được bảo đảm hoàn toàn an toàn tuyệt đối.
+                  </p>
+                ),
+              },
+              {
+                id: "contact",
+                title: "Liên Hệ Về Quyền Riêng Tư",
+                content: (
+                  <>
+                    <p>Mọi thắc mắc liên quan đến quyền riêng tư và dữ liệu cá nhân, vui lòng liên hệ với chúng tôi qua:</p>
+                    <div className="mt-4 p-5 bg-fortress-navy/3 border border-fortress-gold/12 rounded-sm space-y-1.5">
+                      <p className="font-semibold text-fortress-navy">Fortress Investment Holdings</p>
+                      <p>Email: <a href="mailto:info@fortressih.com" className="text-fortress-gold hover:underline font-medium">info@fortressih.com</a></p>
+                      <p>Địa chỉ: Dubai, Các Tiểu Vương Quốc Ả Rập Thống Nhất</p>
+                    </div>
+                  </>
+                ),
+              },
+            ]}
+          />
         </div>
       </section>
-
-      
     </main>
   );
 }

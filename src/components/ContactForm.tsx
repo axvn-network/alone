@@ -33,79 +33,77 @@ export default function ContactForm() {
 
   if (submitted) {
     return (
-      <div className="text-center py-16">
-        <div className="w-20 h-20 bg-fortress-gold/10 flex items-center justify-center mx-auto mb-6 rounded-2xl">
+      <div className="text-center py-16 px-4">
+        <div className="w-20 h-20 bg-fortress-gold/10 border border-fortress-gold/20 flex items-center justify-center mx-auto mb-6 rounded-full">
           <CheckCircle2 className="w-10 h-10 text-fortress-gold" />
         </div>
-        <h3 className="text-2xl font-bold text-fortress-navy mb-3">
-          Đã Gửi Yêu Cầu Thành Công
+        <h3
+          className="font-semibold text-fortress-navy mb-3 uppercase tracking-[0.06em]"
+          style={{ fontSize: "var(--text-h3)" }}
+        >
+          Yêu Cầu Đã Được Gửi Thành Công
         </h3>
-        <p className="text-fortress-navy/60 max-w-md mx-auto">
-          Cảm ơn bạn đã liên hệ với Fortress. Đội ngũ chuyên gia của chúng tôi sẽ phản hồi trong vòng 1-2 ngày làm việc.
+        <p className="text-fortress-navy/60 max-w-md mx-auto leading-[1.8]" style={{ fontSize: "var(--text-body)" }}>
+          Cảm ơn quý vị đã liên hệ với Fortress. Đội ngũ chuyên gia của chúng tôi sẽ phản hồi trong vòng 1–2 ngày làm việc.
         </p>
       </div>
     );
   }
 
+  const inputCls = "w-full px-4 md:px-5 py-3 md:py-3.5 bg-white border border-fortress-navy/15 text-fortress-navy placeholder:text-fortress-navy/25 focus:outline-none focus-visible:outline-none focus:border-fortress-gold/60 focus:ring-1 focus:ring-fortress-gold/20 transition-colors";
+  const labelCls = "block text-fortress-navy/55 text-[11px] font-semibold uppercase tracking-[0.18em] mb-2";
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
-      <div className="grid sm:grid-cols-2 gap-4 md:gap-6">
+    <form onSubmit={handleSubmit} className="space-y-5 md:space-y-6">
+      <div className="grid sm:grid-cols-2 gap-4 md:gap-5">
         <div>
-          <label className="block text-fortress-navy/70 text-sm mb-2">
-            Họ và Tên *
-          </label>
+          <label className={labelCls}>Họ và Tên <span className="text-fortress-gold">*</span></label>
           <input
             type="text"
             name="name"
             value={formData.name}
             onChange={handleChange}
             required
-            className="w-full px-4 md:px-5 py-3 md:py-3.5 bg-white border border-fortress-navy/20 text-fortress-navy placeholder:text-fortress-navy/30 focus:outline-none focus:border-fortress-gold transition-colors rounded-xl"
-            placeholder="Nhập họ và tên đầy đủ"
+            className={inputCls}
+            placeholder="Nguyễn Văn A"
           />
         </div>
         <div>
-          <label className="block text-fortress-navy/70 text-sm mb-2">
-            Địa chỉ Email *
-          </label>
+          <label className={labelCls}>Địa Chỉ Email <span className="text-fortress-gold">*</span></label>
           <input
             type="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
             required
-            className="w-full px-4 md:px-5 py-3 md:py-3.5 bg-white border border-fortress-navy/20 text-fortress-navy placeholder:text-fortress-navy/30 focus:outline-none focus:border-fortress-gold transition-colors rounded-xl"
+            className={inputCls}
             placeholder="example@email.com"
           />
         </div>
       </div>
 
-      <div className="grid sm:grid-cols-2 gap-4 md:gap-6">
+      <div className="grid sm:grid-cols-2 gap-4 md:gap-5">
         <div>
-          <label className="block text-fortress-navy/70 text-sm mb-2">
-            Số điện thoại
-          </label>
+          <label className={labelCls}>Số Điện Thoại</label>
           <input
             type="tel"
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            className="w-full px-4 md:px-5 py-3 md:py-3.5 bg-white border border-fortress-navy/20 text-fortress-navy placeholder:text-fortress-navy/30 focus:outline-none focus:border-fortress-gold transition-colors rounded-xl"
+            className={inputCls}
             placeholder="+84 90 XXX XXXX"
           />
         </div>
         <div>
-          <label className="block text-fortress-navy/70 text-sm mb-2">
-            Chủ đề liên hệ *
-          </label>
+          <label className={labelCls}>Chủ Đề Liên Hệ <span className="text-fortress-gold">*</span></label>
           <select
             name="subject"
             value={formData.subject}
             onChange={handleChange}
             required
-            className="w-full px-4 md:px-5 py-3 md:py-3.5 bg-white border border-fortress-navy/20 text-fortress-navy focus:outline-none focus:border-fortress-gold transition-colors appearance-none rounded-xl"
+            className={`${inputCls} appearance-none`}
           >
-            <option value="">Chọn chủ đề liên hệ</option>
+            <option value="">Chọn chủ đề</option>
             <option value="general">Thắc mắc chung</option>
             <option value="investment">Cơ hội đầu tư</option>
             <option value="partnership">Hợp tác doanh nghiệp</option>
@@ -116,23 +114,21 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label className="block text-fortress-navy/70 text-sm mb-2">
-          Nội dung lời nhắn *
-        </label>
+        <label className={labelCls}>Nội Dung <span className="text-fortress-gold">*</span></label>
         <textarea
           name="message"
           value={formData.message}
           onChange={handleChange}
           required
           rows={5}
-          className="w-full px-4 md:px-5 py-3 md:py-3.5 bg-white border border-fortress-navy/20 text-fortress-navy placeholder:text-fortress-navy/30 focus:outline-none focus:border-fortress-gold transition-colors resize-none rounded-xl"
-          placeholder="Nhập chi tiết yêu cầu hoặc câu hỏi của bạn..."
+          className={`${inputCls} resize-none`}
+          placeholder="Vui lòng mô tả chi tiết yêu cầu hoặc câu hỏi của quý vị..."
         />
       </div>
 
       <button
         type="submit"
-        className="w-full sm:w-auto px-8 md:px-10 py-3 md:py-4 bg-fortress-gold text-fortress-navy font-bold text-sm hover:opacity-90 transition-all duration-300 flex items-center justify-center gap-2 rounded-xl"
+        className="w-full sm:w-auto px-9 md:px-11 py-3.5 md:py-4 bg-fortress-gold hover:bg-fortress-champagne active:scale-[0.98] text-fortress-navy font-bold text-xs tracking-[0.18em] uppercase transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-fortress-gold/15 focus-visible:outline-2 focus-visible:outline-fortress-gold focus-visible:outline-offset-2"
       >
         <Send className="w-4 h-4" />
         Gửi Yêu Cầu Liên Hệ

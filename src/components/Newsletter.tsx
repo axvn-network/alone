@@ -19,6 +19,9 @@ const defaultNewsData = {
   newsDescription: "Cập nhật góc nhìn thị trường, phân tích xu hướng đầu tư và tin tức mới nhất từ Fortress – gửi tới bạn khi có giá trị thực sự.",
   newsBtnText: "ĐĂNG KÝ",
   newsDisclaimer: "Bằng cách đăng ký, bạn đồng ý nhận các thông tin từ Fortress Investment Holdings. Bạn có thể hủy đăng ký bất kỳ lúc nào.",
+  newsPlaceholder: "Địa chỉ email của bạn",
+  newsSuccessTitle: "Cảm ơn bạn đã đăng ký.",
+  newsSuccessDesc: "Chúng tôi sẽ gửi tới bạn những góc nhìn chuyên sâu quan trọng nhất.",
 };
 
 export default function Newsletter() {
@@ -49,18 +52,18 @@ export default function Newsletter() {
         <div className="max-w-[600px] mx-auto text-center">
           <Stagger>
             <StaggerItem>
-              <h2
-                className="font-bold text-fortress-ivory mb-4"
-                style={{ fontSize: "var(--text-h2)" }}
-              >
-                {content.newsTitle}
-              </h2>
-            </StaggerItem>
-            <StaggerItem>
-              <p className="text-fortress-silver/60 leading-relaxed mb-8" style={{ fontSize: "var(--text-body)" }}>
-                {content.newsDescription}
-              </p>
-            </StaggerItem>
+                <h2
+                  className="font-light text-fortress-ivory mb-5 uppercase leading-[1.28]"
+                  style={{ fontSize: "var(--text-h2)", letterSpacing: "var(--tracking-heading)" }}
+                >
+                  {content.newsTitle}
+                </h2>
+              </StaggerItem>
+              <StaggerItem>
+                <p className="text-fortress-silver/65 leading-[1.8] mb-9" style={{ fontSize: "var(--text-body)" }}>
+                  {content.newsDescription}
+                </p>
+              </StaggerItem>
             <StaggerItem>
               {submitted ? (
                 <motion.div
@@ -69,8 +72,8 @@ export default function Newsletter() {
                   transition={{ type: "spring", stiffness: 300, damping: 22 }}
                   className="py-6 px-8 border border-fortress-gold/30 bg-fortress-gold/5 rounded-sm"
                 >
-                  <p className="text-fortress-gold font-semibold text-sm tracking-widest uppercase">{t("newsletter.successTitle", lang)}</p>
-                  <p className="text-fortress-silver/60 text-xs mt-2">{t("newsletter.successDesc", lang)}</p>
+                  <p className="text-fortress-gold font-semibold text-sm tracking-widest uppercase">{content.newsSuccessTitle || t("newsletter.successTitle", lang)}</p>
+                  <p className="text-fortress-silver/60 text-xs mt-2">{content.newsSuccessDesc || t("newsletter.successDesc", lang)}</p>
                 </motion.div>
               ) : (
                 <form
@@ -81,7 +84,7 @@ export default function Newsletter() {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder={t("newsletter.placeholder", lang)}
+                    placeholder={content.newsPlaceholder || t("newsletter.placeholder", lang)}
                     required
                     className="w-full sm:flex-1 px-5 py-3.5 bg-fortress-navy border border-fortress-gold/20 text-fortress-ivory text-sm placeholder:text-fortress-silver/40 focus:outline-none focus:border-fortress-gold/50 transition-colors"
                     whileFocus={{ borderColor: "rgba(201,162,74,0.5)", backgroundColor: "rgba(201,162,74,0.03)" }}

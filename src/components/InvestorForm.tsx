@@ -38,7 +38,16 @@ const enquiryTypes = [
   },
 ];
 
-export default function InvestorForm() {
+const PARTNERSHIP_PLANS = [
+  { value: "",                        label: "Chưa chọn — tôi muốn tìm hiểu thêm" },
+  { value: "Hạng Mục Hạt Giống",     label: "Hạng Mục Hạt Giống — từ 500 triệu VNĐ" },
+  { value: "Hạng Mục Tăng Trưởng",   label: "Hạng Mục Tăng Trưởng — từ 2 tỷ VNĐ" },
+  { value: "Hạng Mục Mở Rộng",       label: "Hạng Mục Mở Rộng — từ 5 tỷ VNĐ" },
+  { value: "Hạng Mục Chiến Lược",    label: "Hạng Mục Chiến Lược — từ 15 tỷ VNĐ" },
+  { value: "Hạng Mục Neo Chiến Lược",label: "Hạng Mục Neo Chiến Lược — từ 50 tỷ VNĐ" },
+];
+
+export default function InvestorForm({ defaultPlan = "" }: { defaultPlan?: string }) {
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
@@ -55,6 +64,7 @@ export default function InvestorForm() {
     objectives: "",
     fileName: "",
     enquiryType: "",
+    partnershipPlan: defaultPlan,
   });
 
   const handleChange = (
@@ -73,10 +83,20 @@ export default function InvestorForm() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    // Append selected partnership plan into objectives message for visibility
+    const enriched = {
+      ...formData,
+      subject: formData.partnershipPlan
+        ? `Gói: ${formData.partnershipPlan}`
+        : formData.enquiryType,
+      message: formData.partnershipPlan
+        ? `[Gói quan tâm: ${formData.partnershipPlan}]\n\n${formData.objectives}`
+        : formData.objectives,
+    };
     await fetch("/api/partner-submit", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(enriched),
     });
     setSubmitted(true);
   };
@@ -326,6 +346,29 @@ export default function InvestorForm() {
         </div>
       </div>
 
+      {/* Partnership Plan */}
+      <div>
+        <label className="block text-fortress-silver text-sm mb-2">
+          Hạng mục hợp tác quan tâm
+        </label>
+        <select
+          name="partnershipPlan"
+          value={formData.partnershipPlan}
+          onChange={handleChange}
+          className="w-full px-5 py-3.5 bg-fortress-navy border border-fortress-gold/20 text-fortress-ivory focus:outline-none focus:border-fortress-gold/50 transition-colors appearance-none rounded-sm"
+        >
+          {PARTNERSHIP_PLANS.map((p) => (
+            <option key={p.value} value={p.value}>{p.label}</option>
+          ))}
+        </select>
+        <p className="text-fortress-silver/40 text-xs mt-1.5">
+          Xem chi tiết các gói:{" "}
+          <a href="/invest-with-fortress/plans" target="_blank" className="text-fortress-gold/70 underline hover:text-fortress-gold transition-colors">
+            /invest-with-fortress/plans
+          </a>
+        </p>
+      </div>
+
       {/* Preferred Sectors */}
       <div>
         <label className="block text-fortress-silver text-sm mb-2">
@@ -337,7 +380,7 @@ export default function InvestorForm() {
           value={formData.preferredSectors}
           onChange={handleChange}
           className="w-full px-5 py-3.5 bg-fortress-navy border border-fortress-gold/20 text-fortress-ivory placeholder:text-fortress-silver/40 focus:outline-none focus:border-fortress-gold/50 transition-colors rounded-sm"
-          placeholder="Bất động sản, Mua bán doanh nghiệp, Công nghệ AI, Khách sạn..."
+          placeholder="FinTech, Tài sản mã hóa, AI, Blockchain, EdTech..."
         />
       </div>
 

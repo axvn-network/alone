@@ -4,11 +4,16 @@ import { createHmac } from "crypto";
 
 // ── Constants are inlined — middleware runs in Edge, cannot import from Node lib ──
 const SESSION_COOKIE_NAME = "admin_session";
+const SH_COOKIE_NAME = "sh_session";
 const CSRF_COOKIE = "csrf_token";
 const CSRF_HEADER = "x-csrf-token";
 
 const PROTECTED_PREFIXES = ["/admin"] as const;
-const PUBLIC_PATHS = ["/admin-login"] as const;
+const PUBLIC_PATHS = ["/admin-login", "/admin-login/"] as const;
+
+// Shareholder portal
+const SH_PROTECTED_PREFIX = "/shareholders/dashboard";
+const SH_LOGIN_PATH = "/shareholders/login";
 
 // CSRF is enforced on all mutating admin API routes
 const CSRF_METHODS = new Set(["POST", "PUT", "PATCH", "DELETE"]);
@@ -86,10 +91,13 @@ export async function middleware(request: NextRequest) {
   const reqMethod = request.method;
 
   // ── 1. Admin page protection ───────────────────────────────────────────────
-  const isProtected = PROTECTED_PREFIXES.some((p) => pathname.startsWith(p));
-  const isPublic = PUBLIC_PATHS.some((p) => pathname === p);
+  // NOTE: /admin-login starts with /admin — must exclude it first
+  const isPublic = PUBLIC_PATHS.some((p) => pathname === p || pathname.startsWith(p));
+  const isProtected = !isPublic && PROTECTED_PREFIXES.some((p) =>
+    pathname === p || pathname.startsWith(p + "/")
+  );
 
-  if (isProtected && !isPublic) {
+  if (isProtected) {
     const sessionCookie = request.cookies.get(SESSION_COOKIE_NAME)?.value;
     if (!sessionCookie || !verifySessionCookie(sessionCookie)) {
       const loginUrl = new URL("/admin-login", request.url);
@@ -98,6 +106,19 @@ export async function middleware(request: NextRequest) {
       applySecurityHeaders(res);
       return res;
     }
+  }
+
+  // ── 1b. Shareholder portal protection ─────────────────────────────────────
+  if (pathname === SH_PROTECTED_PREFIX || pathname.startsWith(SH_PROTECTED_PREFIX + "/")) {
+    const shCookie = request.cookies.get(SH_COOKIE_NAME)?.value;
+    if (!shCookie) {
+      const loginUrl = new URL(SH_LOGIN_PATH, request.url);
+      const res = NextResponse.redirect(loginUrl);
+      applySecurityHeaders(res);
+      return res;
+    }
+    // Token validity is verified server-side in the API routes;
+    // here we just ensure the cookie is present to avoid redirect loops.
   }
 
   // ── 2. CSRF protection for mutating admin API routes ──────────────────────
@@ -132,8 +153,12 @@ function applySecurityHeaders(res: NextResponse) {
 
 export const config = {
   matcher: [
-    // Admin UI pages
+    // Admin UI pages — includes /admin exact and all sub-paths
+    "/admin",
     "/admin/:path*",
+    // Shareholder portal
+    "/shareholders/dashboard",
+    "/shareholders/dashboard/:path*",
     // All API routes (for security headers + CSRF on admin mutations)
     "/api/:path*",
   ],

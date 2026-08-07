@@ -21,6 +21,15 @@ const DEFAULT_SETTINGS = {
   googleAnalyticsId: "",
   metaPixelId: "",
   footer: "",
+  chatButtons: [
+    {
+      type: "whatsapp" as const,
+      enabled: true,
+      value: "971500000000",
+      messageVi: "Xin chào, tôi muốn tìm hiểu thêm về Fortress Investment Holdings.",
+      messageEn: "Hello, I would like to enquire about Fortress Investment Holdings.",
+    },
+  ],
 };
 
 export async function getSettings() {

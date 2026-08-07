@@ -169,3 +169,88 @@ export interface AdminUser {
   role: "admin" | "superadmin";
   lastLogin: Date | null;
 }
+
+// ─── Shareholder ──────────────────────────────────────────────────────────────
+
+export type ShareholderRole = "tech" | "financial" | "tech-company" | "individual" | "legal" | "foreign";
+export type ShareholderStatus = "pending" | "active" | "suspended";
+
+export interface ShareholderUser {
+  _id: string;
+  name: string;
+  email: string;
+  phone: string;
+  role: ShareholderRole;
+  status: ShareholderStatus;
+  equityPercent: number;
+  capitalCommitted: number;
+  capitalPaid: number;
+  notes: string;
+  avatarUrl: string;
+  lastLogin: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// ─── Investment Plan ──────────────────────────────────────────────────────────
+
+export type PlanTier = "seed" | "growth" | "expansion" | "strategic" | "anchor";
+export type PlanStatus = "active" | "draft" | "closed";
+
+export interface InvestmentPlanItem {
+  _id: string;
+  tier: PlanTier;
+  name: string;
+  nameEn: string;
+  tagline: string;
+  taglineEn: string;
+  minCommitment: number;
+  maxCommitment: number;
+  currency: string;
+  duration: string;
+  durationEn: string;
+  equityRange: string;
+  equityRangeEn: string;
+  benefits: string[];
+  benefitsEn: string[];
+  conditions: string[];
+  conditionsEn: string[];
+  rights: string[];
+  obligations: string[];
+  documents: string[];
+  shareholderType: string;
+  highlighted: boolean;
+  badge: string;
+  badgeEn: string;
+  order: number;
+  status: PlanStatus;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// ─── Document ─────────────────────────────────────────────────────────────────
+
+export type DocumentCategory =
+  | "financial_report"
+  | "disclosure"
+  | "charter"
+  | "shareholder_meeting"
+  | "annual_report"
+  | "governance_report";
+
+export interface DocumentItem {
+  _id: string;
+  title: string;
+  titleEn?: string;
+  category: DocumentCategory;
+  fileUrl: string;
+  fileType: "pdf" | "doc" | "xlsx" | "other";
+  publishedDate: string;
+  year: number;
+  quarter?: 1 | 2 | 3 | 4;
+  reportType?: string;
+  isFeatured: boolean;
+  status: "published" | "draft";
+  createdAt: string;
+  updatedAt: string;
+}

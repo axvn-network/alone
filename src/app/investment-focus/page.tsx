@@ -1,200 +1,179 @@
 import Image from "next/image";
 import {
-  Building2,
-  Cpu,
-  Briefcase,
   TrendingUp,
-  UtensilsCrossed,
   Wifi,
-  Truck,
-  Gem,
+  BookOpen,
+  Layers,
+  ShoppingCart,
   Handshake,
+  Coins,
   ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
+import PageHero from "@/components/PageHero";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Lĩnh Vực Đầu Tư",
   description:
-    "Khám phá các lĩnh vực đầu tư chiến lược của Fortress Investment Holdings: Bất động sản, thâu tóm M&A, Private Equity, Công nghệ AI, Khách sạn & Nghỉ dưỡng, Năng lượng và Liên minh chiến lược.",
+    "Khám phá các lĩnh vực đầu tư chiến lược của Fortress Investment Holdings: Dịch vụ tài sản mã hóa hợp pháp, FinTech, Công nghệ AI, EdTech, Blockchain và Kinh tế số — phù hợp với Nghị quyết 5/2025/NQ-CP có hiệu lực từ 9/9/2025.",
   openGraph: {
     title: "Lĩnh Vực Đầu Tư | Fortress Investment Holdings",
     description:
-      "Khám phá các lĩnh vực đầu tư chiến lược của Fortress Investment Holdings.",
+      "Đầu tư vào FinTech, tài sản mã hóa hợp pháp, AI và kinh tế số tại Việt Nam — bám sát Nghị quyết 5/2025/NQ-CP.",
   },
 };
 
 const sectors = [
   {
-    id: "real-estate",
-    icon: Building2,
-    title: "Bất Động Sản",
-    subtitle: "Kiến Tạo Giá Trị Thông Qua Đầu Tư Bất Động Sản Chiến Lược",
-    image: "/1.png",
-    body: "UAE là thị trường bất động sản trọng tâm của chúng tôi, được hậu thuẫn bởi tăng trưởng dân số mạnh mẽ, môi trường pháp lý thân thiện với nhà đầu tư, hạ tầng đẳng cấp thế giới và nhu cầu quốc tế bền vững. Bên cạnh trọng tâm UAE, chúng tôi cũng xem xét các cơ hội bất động sản được lựa chọn kỹ lưỡng tại các thị trường quốc tế phát triển và mới nổi có tiềm năng tăng trưởng và hồ sơ rủi ro phù hợp với chiến lược đầu tư của chúng tôi.",
+    id: "crypto-asset-services",
+    icon: Coins,
+    title: "Dịch Vụ Tài Sản Mã Hóa (Có Cấp Phép)",
+    subtitle: "Tiên Phong Trên Thị Trường Thí Điểm Tài Sản Mã Hóa Hợp Pháp Của Việt Nam",
+    image: "/2.png",
+    body: "Nghị quyết 5/2025/NQ-CP có hiệu lực từ ngày 9/9/2025 đánh dấu bước ngoặt lịch sử: Việt Nam chính thức cho phép thí điểm giao dịch tài sản mã hóa hợp pháp trong vòng 5 năm. Đây là cửa sổ cơ hội tiên phong hiếm có cho các nhà đầu tư và doanh nghiệp có tầm nhìn.\n\nFortress Investment Holdings định vị sớm để đồng hành cùng các tổ chức cung cấp dịch vụ tài sản mã hóa được Bộ Tài chính cấp phép — từ tổ chức thị trường giao dịch, lưu ký, phát hành đến tự doanh tài sản mã hóa — trong một thị trường được quản lý chặt chẽ, minh bạch và bền vững.",
     items: [
-      { heading: "Bất Động Sản Nhà Ở", desc: "Căn hộ, biệt thự và khu đô thị tại các vị trí có nhu cầu cao ở UAE và các thị trường quốc tế được chọn lọc." },
-      { heading: "Bất Động Sản Thương Mại", desc: "Văn phòng, mặt bằng bán lẻ và tài sản đa năng có tỷ lệ lấp đầy ổn định và hồ sơ thu nhập đáng tin cậy." },
-      { heading: "Bất Động Sản Nghỉ Dưỡng", desc: "Khách sạn, khu nghỉ dưỡng, căn hộ dịch vụ và các dự án phát triển dịch vụ lưu trú tại các điểm đến chiến lược." },
-      { heading: "Công Nghiệp & Logistics", desc: "Kho bãi, cơ sở phân phối, trung tâm logistics và hạ tầng chuỗi cung ứng." },
-      { heading: "Phát Triển & Đất Đai", desc: "Các khu đất tọa lạc chiến lược và dự án phát triển có nền tảng vững chắc và kế hoạch thi công khả thi." },
-      { heading: "Tài Sản Tạo Thu Nhập", desc: "Bất động sản ổn định có khả năng tạo thu nhập cho thuê đều đặn và giá trị dài hạn." },
+      { heading: "Tổ Chức Thị Trường Giao Dịch Tài Sản Mã Hóa", desc: "Đầu tư vào các nền tảng được cấp phép cung cấp hạ tầng trao đổi, khớp lệnh mua/bán và thanh toán tài sản mã hóa theo Điều 3 NQ5/2025." },
+      { heading: "Dịch Vụ Lưu Ký Tài Sản Mã Hóa", desc: "Hỗ trợ xây dựng và đầu tư vào các tổ chức lưu ký tài sản mã hóa an toàn, tuân thủ tiêu chuẩn bảo mật quốc tế." },
+      { heading: "Nền Tảng Phát Hành Tài Sản Mã Hóa", desc: "Đầu tư vào các doanh nghiệp xây dựng hạ tầng phát hành tài sản mã hóa dựa trên tài sản cơ sở thực, theo điều kiện NQ5/2025." },
+      { heading: "Tự Doanh Tài Sản Mã Hóa", desc: "Các doanh nghiệp được cấp phép thực hiện hoạt động tự doanh tài sản mã hóa trong khuôn khổ pháp lý được Bộ Tài chính quản lý." },
+      { heading: "Mã Hóa Tài Sản Thực (Tokenisation)", desc: "Nền tảng mã hóa tài sản vật lý như bất động sản, hàng hóa, quỹ đầu tư thành tài sản mã hóa được pháp luật công nhận." },
+      { heading: "Tuân Thủ Pháp Lý & Quản Trị Rủi Ro", desc: "Hỗ trợ doanh nghiệp xây dựng hệ thống tuân thủ, kiểm soát nội bộ và quản trị rủi ro đáp ứng yêu cầu cấp phép của Bộ Tài chính." },
     ],
+    subheading: "Khung Pháp Lý Theo Nghị Quyết 5/2025/NQ-CP",
+    subitems: [
+      "Có hiệu lực từ ngày 9/9/2025 — thí điểm trong vòng 5 năm",
+      "Nhà đầu tư trong nước được mở tài khoản tại tổ chức cung cấp dịch vụ được Bộ Tài chính cấp phép để lưu ký, mua, bán tài sản mã hóa",
+      "Nhà đầu tư nước ngoài được phép giao dịch tài sản mã hóa tại Việt Nam qua các tổ chức được cấp phép",
+      "Tổ chức phát hành tài sản mã hóa phải là doanh nghiệp Việt Nam — TNHH hoặc Cổ phần theo Luật Doanh nghiệp",
+      "Tài sản mã hóa phải dựa trên tài sản cơ sở thực (không bao gồm chứng khoán, tiền pháp định)",
+      "Sau 6 tháng kể từ khi tổ chức đầu tiên được cấp phép, giao dịch ngoài khuôn khổ sẽ bị xử lý vi phạm",
+    ],
+    disclaimer:
+      "Fortress Investment Holdings không khuyến khích đầu cơ ngắn hạn. Mọi hoạt động đầu tư liên quan đến tài sản mã hóa phải tuân thủ quy định pháp luật hiện hành.",
     closing:
-      "Hoạt động bất động sản của chúng tôi bao gồm mua trực tiếp, hợp tác phát triển, cơ hội đất đai, đầu tư có cấu trúc và tham gia dự án. UAE luôn là trọng tâm chiến lược, trong khi các cơ hội quốc tế được chọn lọc giúp đa dạng hóa và mở rộng danh mục sang các thị trường tăng trưởng mới. Trong mọi khoản đầu tư, chúng tôi ưu tiên chất lượng, vị trí, nền tảng thị trường, phát triển có trách nhiệm và lợi suất bền vững dài hạn hơn đầu cơ ngắn hạn.",
+      "Đây là thời điểm vàng để định vị sớm trong thị trường tài sản mã hóa hợp pháp đầu tiên của Việt Nam. Fortress đồng hành cùng doanh nghiệp và nhà đầu tư tận dụng cửa sổ pháp lý lịch sử 5 năm này — với sự thận trọng, tuân thủ và tầm nhìn dài hạn.",
   },
   {
-    id: "business-acquisitions",
-    icon: Briefcase,
-    title: "Thâu Tóm Doanh Nghiệp (M&A)",
-    subtitle:
-      "Chúng tôi thâu tóm và đầu tư vào các doanh nghiệp đã khẳng định vị thế với nền tảng vững chắc và tiềm năng tăng trưởng bền vững rõ ràng.",
-    image: "/3.png",
-    body: "Đằng sau mỗi doanh nghiệp lâu năm là nhiều năm nỗ lực, mối quan hệ và hiểu biết thị trường. Chúng tôi tôn trọng di sản đó và tiếp cận mỗi giao dịch với sự chuyên nghiệp, bảo mật và tầm nhìn dài hạn.\n\nChúng tôi xem xét các doanh nghiệp có vận hành đã được kiểm chứng, nhu cầu khách hàng đáng tin cậy, đội ngũ lãnh đạo kinh nghiệm và cơ hội cải thiện hiệu suất hoặc mở rộng sang thị trường mới.",
-    items: [
-      { heading: "Thâu Tóm Toàn Bộ Doanh Nghiệp", desc: "Chuyển giao quyền sở hữu hoàn toàn được thực hiện chuyên nghiệp và bảo mật tuyệt đối." },
-      { heading: "Nắm Giữ Cổ Phần Kiểm Soát", desc: "Vị thế kiểm soát có sự tiếp tục tham gia của người sáng lập hoặc ban quản lý." },
-      { heading: "Đầu Tư Cổ Phần Chiến Lược Thiểu Số", desc: "Cổ phần quan trọng được hỗ trợ bởi sự tham gia chiến lược chủ động." },
-      { heading: "Mua Lại Do Ban Quản Lý Dẫn Dắt (MBO)", desc: "Hỗ trợ các đội ngũ lãnh đạo tài năng thâu tóm và phát triển doanh nghiệp họ đang quản lý." },
-      { heading: "Thâu Tóm Đồng Đầu Tư", desc: "Hợp tác với các nhà đồng đầu tư cho các cơ hội quy mô lớn hoặc chuyên biệt." },
-      { heading: "Giao Dịch Chuyển Giao Thế Hệ", desc: "Giải pháp có cấu trúc cho các chủ doanh nghiệp lên kế hoạch thoái vốn an toàn và bài bản." },
-      { heading: "Hợp Tác Cấp Vốn Tăng Trưởng", desc: "Đầu tư kết hợp với hỗ trợ chiến lược cho mở rộng và phát triển." },
-    ],
-    closing:
-      "Trọng tâm chính là UAE, đồng thời chúng tôi cũng đánh giá các cơ hội chọn lọc tại GCC và thị trường quốc tế. Thông qua sự tham gia chủ động, quản lý kỷ luật và hỗ trợ chiến lược, chúng tôi hướng đến củng cố vận hành, mở rộng thị trường và tạo ra giá trị bền vững cho tất cả các bên liên quan.",
-  },
-  {
-    id: "private-equity",
+    id: "fintech-payments",
     icon: TrendingUp,
-    title: "Đầu Tư Tư Nhân (Private Equity)",
-    subtitle: "Hỗ Trợ Các Công Ty Tư Nhân Tiềm Năng Cao",
-    image: "/4.png",
-    body: "Những công ty giá trị nhất của thập kỷ tới vẫn đang là doanh nghiệp tư nhân hôm nay. Tìm kiếm chúng – và giúp họ tăng trưởng – chính là sứ mệnh của hoạt động private equity tại Fortress.",
+    title: "FinTech & Thanh Toán Số",
+    subtitle: "Hạ Tầng Tài Chính Số Cho Thị Trường 100 Triệu Người",
+    image: "/3.png",
+    body: "Việt Nam có trên 78 triệu người dùng internet, tỷ lệ thanh toán số tăng trưởng mạnh mẽ và thị trường tài chính với hàng triệu người chưa được phục vụ đầy đủ — tạo ra nền tảng lý tưởng cho FinTech.\n\nFortress đầu tư vào các doanh nghiệp FinTech xây dựng hạ tầng tài chính số thiết thực, giải quyết nhu cầu thực của thị trường Việt Nam và tích hợp tự nhiên vào hệ sinh thái tài sản mã hóa đang hình thành.",
     items: [
-      "Vốn tăng trưởng – tài trợ mở rộng, phát triển sản phẩm và gia nhập thị trường mới",
-      "Hỗ trợ chiến lược – định hướng cấp hội đồng quản trị và dẫn dắt thương mại",
-      "Tiếp cận thị trường – kết nối qua mạng lưới UAE và quốc tế của chúng tôi",
-      "Hướng dẫn quản trị – cấu trúc xây dựng uy tín định chế",
-      "Nguồn lực phát triển kinh doanh – hỗ trợ thực tiễn thúc đẩy tăng trưởng",
+      { heading: "Hạ Tầng Thanh Toán Số", desc: "Cổng thanh toán, ví điện tử, QR code và giải pháp thanh toán không tiền mặt tích hợp sâu vào hành vi tiêu dùng Việt Nam." },
+      { heading: "Cho Vay Số & Tín Dụng Thay Thế", desc: "Nền tảng cho vay P2P, cho vay doanh nghiệp nhỏ và tín dụng thay thế cho phân khúc chưa tiếp cận được ngân hàng truyền thống." },
+      { heading: "Bảo Hiểm Công Nghệ (InsurTech)", desc: "Sản phẩm bảo hiểm số, micro-insurance và bảo hiểm nhúng tích hợp vào nền tảng thương mại điện tử và dịch vụ số." },
+      { heading: "Quản Lý Tài Sản Cá Nhân (WealthTech)", desc: "Ứng dụng đầu tư tự động, robo-advisor và nền tảng quản lý danh mục cho nhà đầu tư cá nhân tại Việt Nam." },
+      { heading: "Hạ Tầng Thanh Toán Tài Sản Mã Hóa", desc: "Giải pháp thanh toán tích hợp stablecoin, USDT và tài sản mã hóa được cấp phép cho thương mại điện tử và dịch vụ số." },
+      { heading: "RegTech & Tuân Thủ Tự Động", desc: "Công nghệ KYC/AML tự động, giám sát giao dịch và tuân thủ pháp lý cho các tổ chức tài chính và FinTech." },
     ],
     closing:
-      "Mục tiêu của chúng tôi rất rõ ràng: cùng nhau kiến tạo giá trị với người sáng lập, ban quản lý và các cổ đông – không phải tạo ra giá trị bằng cách tổn hại họ.",
+      "Chúng tôi ưu tiên các doanh nghiệp FinTech có mô hình doanh thu rõ ràng, đội ngũ am hiểu thị trường Việt Nam và khả năng tích hợp vào hệ sinh thái tài sản mã hóa hợp pháp đang hình thành từ 9/9/2025.",
   },
   {
     id: "ai-technology",
     icon: Wifi,
     title: "Công Nghệ AI & Đột Phá",
-    subtitle: "Đầu Tư Vào Tương Lai Của Đổi Mới Thông Minh",
+    subtitle: "Trọng Tâm Chiến Lược — Việt Nam, Đông Nam Á & Toàn Cầu",
     image: "/6.png",
-    body: "Chúng tôi đầu tư vào các công ty trí tuệ nhân tạo và công nghệ mới nổi có tiềm năng chuyển đổi ngành công nghiệp, cải thiện hiệu suất và tạo ra giá trị thương mại có thể mở rộng.\n\nTrọng tâm của chúng tôi là các công nghệ thực tiễn, tăng trưởng cao – giải quyết các vấn đề kinh doanh thực tế, hỗ trợ chuyển đổi số và tạo ra giá trị dài hạn tại UAE, GCC và thị trường toàn cầu.",
+    body: "Công nghệ AI là một trong các trọng tâm đầu tư hàng đầu của Fortress. Việt Nam — với hơn 78 triệu người dùng internet, tốc độ tăng trưởng thương mại điện tử hàng đầu Đông Nam Á và hệ sinh thái startup công nghệ năng động — là thị trường chiến lược mà chúng tôi cam kết đầu tư dài hạn.\n\nChúng tôi không chạy theo xu hướng. Chúng tôi đầu tư vào các doanh nghiệp công nghệ giải quyết vấn đề thực tiễn, có mô hình doanh thu rõ ràng và đội ngũ sáng lập đủ năng lực để mở rộng quy mô.",
     items: [
-      { heading: "Trí Tuệ Nhân Tạo (AI)", desc: "Nền tảng AI, hệ thống tự động hóa, giải pháp machine learning và công cụ thông minh với ứng dụng thương mại rõ ràng." },
-      { heading: "Tự Động Hóa Doanh Nghiệp", desc: "Công nghệ cải thiện năng suất, giảm chi phí vận hành và nâng cao hiệu suất kinh doanh." },
-      { heading: "Nền Tảng Phần Mềm & SaaS", desc: "Doanh nghiệp phần mềm có thể mở rộng với mô hình doanh thu định kỳ và nhu cầu thị trường mạnh mẽ." },
-      { heading: "FinTech", desc: "Giải pháp thanh toán số, nền tảng cho vay, hạ tầng tài chính và công nghệ cải thiện khả năng tiếp cận dịch vụ tài chính." },
-      { heading: "PropTech", desc: "Công nghệ bất động sản hỗ trợ đầu tư, mua bán, cho thuê, quản lý và thông tin thị trường thông minh hơn." },
-      { heading: "An Ninh Mạng", desc: "Giải pháp bảo vệ doanh nghiệp, dữ liệu, hạ tầng số và giao dịch trực tuyến." },
-      { heading: "Phân Tích Dữ Liệu", desc: "Nền tảng chuyển đổi dữ liệu thành thông tin chiến lược, giúp doanh nghiệp ra quyết định nhanh hơn và chính xác hơn." },
-      { heading: "Thương Mại Điện Tử", desc: "Thương mại điện tử, nền tảng marketplace và doanh nghiệp bán lẻ dựa trên công nghệ với tiềm năng tăng trưởng cao." },
+      { heading: "Trí Tuệ Nhân Tạo (AI)", desc: "Nền tảng AI, hệ thống tự động hóa, machine learning và công cụ thông minh ứng dụng thực tiễn trong doanh nghiệp Việt Nam và khu vực." },
+      { heading: "SaaS & Phần Mềm Đóng Gói", desc: "Sản phẩm phần mềm có thể mở rộng với mô hình doanh thu định kỳ (subscription), chi phí thấp và biên lợi nhuận cao." },
+      { heading: "AI Ứng Dụng Trong FinTech & Crypto", desc: "AI phân tích rủi ro tín dụng, phát hiện gian lận, phân tích giá tài sản mã hóa và giám sát tuân thủ tự động." },
+      { heading: "Tự Động Hóa & Chuyển Đổi Số", desc: "Công nghệ giúp doanh nghiệp truyền thống số hóa quy trình, tăng năng suất và giảm chi phí vận hành đáng kể." },
+      { heading: "Phân Tích Dữ Liệu & Business Intelligence", desc: "Nền tảng chuyển đổi dữ liệu thành thông tin chiến lược, hỗ trợ doanh nghiệp ra quyết định chính xác và nhanh hơn." },
+      { heading: "Thương Mại Điện Tử & Marketplace", desc: "Nền tảng thương mại điện tử, marketplace ngành dọc và doanh nghiệp bán lẻ dựa trên công nghệ với lộ trình tăng trưởng rõ ràng." },
     ],
     closing:
-      "Chúng tôi đầu tư vào công nghệ có mục đích – các doanh nghiệp kết hợp đổi mới sáng tạo, thực thi mạnh mẽ, nhu cầu thị trường và lộ trình tăng trưởng thương mại dài hạn rõ ràng.",
+      "Chúng tôi đặc biệt quan tâm đến các startup và doanh nghiệp công nghệ tại Việt Nam đang tìm kiếm nguồn vốn tăng trưởng, đối tác chiến lược quốc tế và hỗ trợ mở rộng thị trường. Nếu bạn đang xây dựng thứ gì đó thực sự có giá trị — hãy nói chuyện với chúng tôi.",
   },
   {
-    id: "hospitality",
-    icon: UtensilsCrossed,
-    title: "Khách Sạn & Nghỉ Dưỡng",
-    subtitle: "Đầu Tư Vào Trải Nghiệm, Du Lịch Và Phong Cách Sống",
+    id: "edtech",
+    icon: BookOpen,
+    title: "Công Nghệ Giáo Dục (EdTech)",
+    subtitle: "Xây Dựng Nguồn Nhân Lực Số Cho Kỷ Nguyên Tài Sản Mã Hóa",
+    image: "/4.png",
+    body: "Với hơn 100 triệu dân, tỷ lệ phổ cập internet cao và văn hóa đề cao học tập, Việt Nam là một trong những thị trường EdTech hấp dẫn nhất Đông Nam Á.\n\nSự ra đời của thị trường tài sản mã hóa hợp pháp từ 9/9/2025 tạo ra nhu cầu đào tạo khổng lồ — từ kiến thức tài chính số cơ bản cho nhà đầu tư cá nhân đến đào tạo chuyên sâu blockchain, FinTech và quản trị tài sản số cho chuyên gia.",
+    items: [
+      { heading: "Nền Tảng Học Trực Tuyến (E-Learning)", desc: "LMS, MOOC và ứng dụng học tập thích ứng phục vụ sinh viên, người đi làm và doanh nghiệp tại Việt Nam." },
+      { heading: "Đào Tạo Tài Chính Số & Blockchain", desc: "Chương trình giáo dục tài chính số, blockchain, crypto và quản lý tài sản mã hóa dành cho nhà đầu tư cá nhân và tổ chức." },
+      { heading: "Phát Triển Kỹ Năng Công Nghệ", desc: "Đào tạo lập trình, AI, data science, cybersecurity và các kỹ năng số cần thiết cho nền kinh tế số." },
+      { heading: "Chứng Chỉ Chuyên Môn & Đào Tạo Doanh Nghiệp", desc: "Chương trình chứng chỉ nghề nghiệp, đào tạo nội bộ doanh nghiệp và phát triển kỹ năng lãnh đạo số." },
+      { heading: "EdTech Cho Trẻ Em & Phổ Thông", desc: "Giáo dục STEM, lập trình cho thiếu nhi và nền tảng bổ trợ học tập phổ thông tích hợp công nghệ AI." },
+      { heading: "Nền Tảng Đào Tạo Nghề & Kết Nối Việc Làm", desc: "HRTech và WORKTech kết nối đào tạo nghề với nhu cầu tuyển dụng thực tế, đặc biệt trong lĩnh vực kinh tế số." },
+    ],
+    closing:
+      "Chúng tôi đặc biệt quan tâm đến các nền tảng EdTech tập trung vào kỹ năng số, tài chính số và kiến thức blockchain — lĩnh vực sẽ bùng nổ nhu cầu khi thị trường tài sản mã hóa Việt Nam chính thức đi vào hoạt động hợp pháp.",
+  },
+  {
+    id: "blockchain-infrastructure",
+    icon: Layers,
+    title: "Hạ Tầng Blockchain",
+    subtitle: "Nền Tảng Kỹ Thuật Cho Nền Kinh Tế Tài Sản Mã Hóa",
     image: "/5.png",
-    body: "UAE là trọng tâm chính, được bổ sung bởi các cơ hội chọn lọc tại GCC và thị trường toàn cầu. Với nhu cầu du lịch mạnh mẽ, hạ tầng đẳng cấp thế giới và nền kinh tế phong cách sống đang phát triển, khu vực này tiếp tục mang lại tiềm năng đầu tư khách sạn hấp dẫn.",
+    body: "Sự phát triển của thị trường tài sản mã hóa hợp pháp tại Việt Nam đòi hỏi hạ tầng blockchain vững chắc, an toàn và có khả năng mở rộng.\n\nFortress đầu tư vào các công ty xây dựng hạ tầng kỹ thuật thiết yếu — từ mạng lưới blockchain cấp doanh nghiệp đến các giao thức bảo mật, hợp đồng thông minh và giải pháp tương tác liên chuỗi — tạo nền tảng cho hệ sinh thái tài sản mã hóa Việt Nam.",
     items: [
-      { heading: "Khách Sạn & Khu Nghỉ Dưỡng", desc: "Tài sản dịch vụ lưu trú đã vận hành và các dự án phát triển uy tín có vị trí, nhu cầu và tiềm năng khai thác tốt." },
-      { heading: "Căn Hộ Dịch Vụ & Du Lịch", desc: "Cơ hội lưu trú ngắn và trung hạn có nhu cầu cao, đặc biệt tại các thị trường có du lịch và công tác phát triển mạnh." },
-      { heading: "Nhà Hàng & Ẩm Thực (F&B)", desc: "Mô hình ẩm thực đã được kiểm chứng với bản sắc thương hiệu rõ ràng, kinh tế đơn vị vững chắc và tiềm năng mở rộng." },
-      { heading: "Giải Trí & Trải Nghiệm Du Lịch", desc: "Địa điểm giải trí, trải nghiệm và doanh nghiệp liên quan đến du lịch phục vụ cư dân địa phương, du khách và khách quốc tế." },
-      { heading: "Chăm Sóc Sức Khỏe & Wellness", desc: "Doanh nghiệp sức khỏe, thể thao, spa và wellbeing có nhu cầu khách hàng mạnh và tiềm năng doanh thu lặp lại." },
-      { heading: "Công Nghệ Khách Sạn", desc: "Nền tảng công nghệ cải thiện cách các doanh nghiệp dịch vụ lưu trú vận hành, phục vụ khách hàng, quản lý đặt phòng và tăng hiệu quả." },
-      { heading: "Dịch Vụ Phong Cách Sống Cao Cấp", desc: "Dịch vụ cao cấp dành cho cư dân, du khách, doanh nhân và khách hàng thu nhập cao." },
+      "Mạng Lưới Blockchain Cấp Doanh Nghiệp: blockchain riêng, consortium và các giải pháp Layer-2 tối ưu hiệu suất cho dịch vụ tài chính",
+      "Hợp Đồng Thông Minh & DApps: nền tảng tự động hóa quy trình tài chính, phát hành tài sản mã hóa và thực thi điều khoản pháp lý",
+      "Bảo Mật & Kiểm Tra Mã Nguồn: dịch vụ audit smart contract, penetration testing và giải pháp bảo mật blockchain",
+      "Hạ Tầng Tương Tác Liên Chuỗi (Interoperability): giải pháp kết nối đa blockchain, bridge protocol và tiêu chuẩn tương tác",
+      "Công Nghệ Lưu Ký & Khóa Mã Hóa: HSM, multi-signature và giải pháp quản lý khóa mật mã an toàn cấp tổ chức",
+      "Phân Tích & Giám Sát On-Chain: công cụ phân tích dữ liệu blockchain phục vụ tuân thủ AML/KYC và giám sát thị trường",
     ],
     closing:
-      "Chúng tôi tập trung vào các mô hình khách sạn có định vị thị trường mạnh, vận hành chuyên nghiệp và khả năng mang lại giá trị khách hàng ổn định tại UAE, với tiềm năng mở rộng sang GCC và quốc tế.",
+      "Với sự ra đời của khung pháp lý tài sản mã hóa tại Việt Nam, nhu cầu hạ tầng blockchain đáng tin cậy, được kiểm chứng và tuân thủ sẽ tăng trưởng mạnh mẽ trong 5 năm thí điểm.",
   },
   {
-    id: "digital-assets",
-    icon: Cpu,
-    title: "Tài Sản Số & Blockchain",
-    subtitle: "Tham Gia Có Chọn Lọc Vào Nền Kinh Tế Số",
-    image: "/2.png",
-    body: "Blockchain và tài sản số đang định hình lại cách thức tạo ra, chuyển giao và bảo đảm giá trị. Tại UAE – một trong những quốc gia tiến bộ nhất thế giới về quy định tài sản số – sự chuyển dịch này đang tạo ra các cơ hội thương mại nghiêm túc và dài hạn.\n\nFortress Investment Holdings tham gia vào lĩnh vực này theo cách tiếp cận nhất quán như mọi lĩnh vực khác: có chọn lọc, có trách nhiệm và tập trung rõ ràng vào giá trị thực thay vì đầu cơ.\n\nChúng tôi không phải nhà giao dịch chạy theo chu kỳ thị trường. Chúng tôi là nhà đầu tư dài hạn, hậu thuẫn cho hạ tầng, nền tảng và doanh nghiệp đang xây dựng nền móng của nền kinh tế số.",
-    items: [
-      "Hạ tầng Blockchain – mạng lưới, giao thức và hệ thống cấp doanh nghiệp cung cấp năng lực cho giao dịch số an toàn",
-      "Nền tảng Tài sản Số – sàn giao dịch có cấp phép, giải pháp lưu ký và công nghệ quản lý tài sản",
-      "Token hóa Tài sản – token hóa tài sản thực, bao gồm bất động sản, quỹ đầu tư và hàng hóa",
-      "Công Nghệ Tài Chính (FinTech) – hệ thống thanh toán, ngân hàng số và dịch vụ tài chính blockchain",
-      "Web3 & Giải Pháp Doanh Nghiệp – doanh nghiệp ứng dụng công nghệ phân tán vào các thách thức thương mại thực tiễn",
-    ],
-    subheading: "Tiêu Chí Đánh Giá Cơ Hội Tài Sản Số",
-    subitems: [
-      "Tuân Thủ Pháp Lý – phù hợp với khung pháp lý UAE bao gồm VARA và nhận thức về tiêu chuẩn quốc tế",
-      "Giá Trị Ứng Dụng Thực – công nghệ giải quyết vấn đề thị trường thực sự, không phải câu chuyện đầu cơ",
-      "Bảo Mật & Lưu Ký – an ninh mạng vững chắc, cơ chế lưu ký minh bạch, quản trị có trách nhiệm",
-      "Khả Năng Thương Mại – mô hình doanh thu rõ ràng, lãnh đạo uy tín và lộ trình mở rộng thực tế",
-      "Tính Dài Hạn – doanh nghiệp được định vị để hoạt động vượt qua tâm lý thị trường ngắn hạn",
-    ],
-    disclaimer:
-      "Fortress Investment Holdings không khuyến khích đầu cơ ngắn hạn và không bảo đảm lợi nhuận từ tài sản số.",
-  },
-  {
-    id: "energy-commodities",
-    icon: Truck,
-    title: "Năng Lượng & Hàng Hóa Vật Chất",
-    subtitle: "Đầu Tư Vào Tài Nguyên Thiết Yếu Và Dòng Chảy Thương Mại Toàn Cầu",
+    id: "digital-economy",
+    icon: ShoppingCart,
+    title: "Kinh Tế Số & Thương Mại Điện Tử",
+    subtitle: "Đầu Tư Vào Hạ Tầng Nền Tảng Của Kinh Tế Số Việt Nam",
     image: "/7.png",
-    body: "Năng lượng và hàng hóa vật chất vẫn là yếu tố thiết yếu cho tăng trưởng toàn cầu, phát triển công nghiệp, hạ tầng và hoạt động kinh tế hàng ngày.\n\nFortress Investment Holdings tập trung vào các cơ hội gắn với hàng hóa thực, hữu hình – bao gồm sản phẩm năng lượng, nguyên liệu thô và hàng hóa vật chất có nhu cầu thực sự trên thị trường khu vực và toàn cầu.",
+    body: "Kinh tế số Việt Nam đang tăng trưởng với tốc độ hàng đầu Đông Nam Á — thương mại điện tử, nội dung số, dịch vụ trực tuyến và hạ tầng logistics số tất cả đều đang trong giai đoạn mở rộng mạnh mẽ.\n\nFortress đầu tư vào các doanh nghiệp xây dựng hạ tầng nền tảng và mô hình kinh doanh bền vững trong kinh tế số — những doanh nghiệp tạo ra giá trị thực và có lộ trình tích hợp với hệ sinh thái tài sản số đang hình thành.",
     items: [
-      "Sản Phẩm Năng Lượng: cơ hội liên quan đến dầu thô, sản phẩm dầu mỏ tinh chế, cung ứng nhiên liệu và giao dịch năng lượng",
-      "Hàng Hóa Vật Chất: hàng hóa hữu hình như kim loại, khoáng sản, nông sản, vật liệu xây dựng và các tài nguyên vật chất có nhu cầu cao",
-      "Mạng Lưới Cung Ứng & Phân Phối: doanh nghiệp có năng lực thu mua, logistics, lưu trữ và phân phối đã được thiết lập",
-      "Đối Tác Thương Mại Đáng Tin Cậy: quan hệ nhà cung cấp và người mua mạnh mẽ với đầy đủ hồ sơ pháp lý, tuân thủ và năng lực giao hàng",
-      "Nhu Cầu Khu Vực & Toàn Cầu: hàng hóa có nhu cầu tích cực tại UAE, GCC, châu Phi, châu Á và thị trường quốc tế",
-      "Năng Lực Vận Hành Vững Chắc: doanh nghiệp có dòng giao dịch đã được kiểm chứng, biên lợi nhuận cao, kiểm soát rủi ro và thực thi minh bạch",
+      { heading: "Sàn Thương Mại Điện Tử & Marketplace", desc: "Nền tảng B2B, B2C và marketplace ngành dọc với mô hình doanh thu rõ ràng và đội ngũ vận hành có kinh nghiệm." },
+      { heading: "Hạ Tầng Logistics & Chuỗi Cung Ứng Số", desc: "Công nghệ tối ưu hóa vận chuyển, quản lý kho bãi, theo dõi đơn hàng và tích hợp nhà bán/người mua trên nền tảng số." },
+      { heading: "Nội Dung Số & Truyền Thông Kỹ Thuật Số", desc: "Media tech, content platforms, streaming và nền tảng sáng tạo nội dung với mô hình kiếm tiền số bền vững." },
+      { heading: "SaaS & Công Cụ Kinh Doanh Số", desc: "Phần mềm quản lý doanh nghiệp, CRM, ERP và công cụ số hóa vận hành cho SME Việt Nam." },
+      { heading: "Hạ Tầng Dữ Liệu & Điện Toán Đám Mây", desc: "Trung tâm dữ liệu, cloud infrastructure và dịch vụ lưu trữ dữ liệu phục vụ nhu cầu số hóa của doanh nghiệp Việt Nam." },
+      { heading: "Thanh Toán Tích Hợp & Super Apps", desc: "Ứng dụng siêu tổng hợp kết hợp thương mại điện tử, thanh toán, dịch vụ tài chính và tài sản mã hóa trong một hệ sinh thái." },
     ],
     closing:
-      "Chúng tôi tập trung vào các cơ hội hàng hóa vật chất được hậu thuẫn bởi nhu cầu thực tế, chuỗi cung ứng đáng tin cậy, thực thi kỷ luật và tiềm năng thị trường khu vực hoặc toàn cầu mạnh mẽ.",
+      "Chúng tôi tập trung vào các doanh nghiệp kinh tế số có nền tảng công nghệ vững chắc, mô hình doanh thu đã được kiểm chứng và khả năng mở rộng sang thị trường khu vực Đông Nam Á.",
   },
   {
-    id: "luxury-assets",
-    icon: Gem,
-    title: "Tài Sản Sang Trọng",
-    subtitle:
-      "Đầu Tư Vào Tài Sản Cao Cấp Và Cơ Hội Phong Cách Sống Hạng Sang",
-    image: "/8.png",
-    body: "Fortress Investment Holdings đầu tư vào các cơ hội tài sản xa xỉ được chọn lọc với nhu cầu thị trường mạnh mẽ, tiềm năng giá trị dài hạn và cơ cấu sở hữu hoặc thương mại rõ ràng.\n\nTrọng tâm của chúng tôi là các tài sản cao cấp và doanh nghiệp liên quan đến xa xỉ có thể tạo ra giá trị thông qua tăng giá tài sản, thu nhập, nhu cầu cho thuê, sức mạnh thương hiệu hoặc định vị thị trường chiến lược.",
+    id: "private-equity",
+    icon: TrendingUp,
+    title: "Đầu Tư Tư Nhân (Private Equity) & Vốn Tăng Trưởng",
+    subtitle: "Đồng Hành Cùng Startup & Doanh Nghiệp Tăng Trưởng Cao Trong Kỷ Nguyên Số",
+    image: "/9.png",
+    body: "Việt Nam đang sản sinh ra thế hệ doanh nghiệp tư nhân mạnh mẽ tiếp theo, đặc biệt trong các lĩnh vực FinTech, công nghệ và kinh tế số. Chúng tôi tìm kiếm và đồng hành cùng các startup công nghệ, doanh nghiệp FinTech tăng trưởng nhanh và công ty tiềm năng đang cần nguồn vốn thông minh và đối tác chiến lược để bứt phá.",
     items: [
-      { heading: "Bất Động Sản Hạng Sang", desc: "Tài sản biểu tượng, dự án cao cấp, căn hộ có thương hiệu và bất động sản giá trị cao tại các vị trí đắc địa." },
-      { heading: "Xe Cao Cấp & Siêu Xe", desc: "Ô tô hiếm, sưu tầm và cao cấp với nhu cầu mạnh, giá trị khan hiếm hoặc tiềm năng thu nhập cho thuê." },
-      { heading: "Du Thuyền & Tài Sản Biển", desc: "Sở hữu du thuyền, cơ hội cho thuê, dịch vụ hàng hải và nền tảng quản lý tài sản liên quan đến thị trường phong cách sống xa xỉ." },
-      { heading: "Tài Sản Liên Quan Đến Hàng Không", desc: "Cơ hội hàng không tư nhân, dịch vụ liên quan đến máy bay, doanh nghiệp hỗ trợ hàng không và giải pháp di chuyển cao cấp." },
-      { heading: "Đồ Sưu Tầm & Nghệ Thuật Cao Cấp", desc: "Đồ sưu tầm, nghệ thuật đương đại, đồng hồ xa xỉ, trang sức và tài sản hiếm có nguồn gốc rõ ràng và độ sâu thị trường." },
-      { heading: "Doanh Nghiệp Phong Cách Sống Cao Cấp", desc: "Thương hiệu và doanh nghiệp dịch vụ xa xỉ phục vụ khách hàng thu nhập cao, du khách, doanh nhân và người tiêu dùng phong cách sống premium." },
-      { heading: "Nền Tảng Cho Thuê & Quản Lý Tài Sản Hạng Sang", desc: "Doanh nghiệp kiếm tiền từ tài sản cao cấp thông qua cho thuê, cho mướn, quản lý, hội viên hoặc tiếp cận khách hàng được tuyển chọn." },
+      "Vốn tăng trưởng — tài trợ mở rộng quy mô, phát triển sản phẩm và gia nhập thị trường mới trong và ngoài Việt Nam",
+      "Hỗ trợ chiến lược — định hướng sản phẩm, chiến lược go-to-market và dẫn dắt thương mại cấp hội đồng quản trị",
+      "Kết nối toàn cầu — mở ra mạng lưới đối tác, khách hàng và nhà đầu tư tại UAE, Đông Nam Á và quốc tế",
+      "Hướng dẫn quản trị — xây dựng cấu trúc công ty đủ chuẩn để thu hút vốn các vòng tiếp theo",
+      "Hỗ trợ pháp lý — tư vấn điều hướng khung pháp lý tài sản mã hóa và FinTech tại Việt Nam",
+      "Hỗ trợ vận hành thực chất — từ tuyển dụng, tài chính đến xây dựng thương hiệu và mở rộng thị trường",
     ],
     closing:
-      "Chúng tôi đầu tư có chọn lọc vào tài sản xa xỉ và cơ hội phong cách sống cao cấp, nơi định giá, nhu cầu, thanh khoản, chi phí sở hữu và tiềm năng lợi suất dài hạn được đánh giá kỹ lưỡng.",
+      "Chúng tôi đầu tư vào con người trước, sản phẩm sau. Mục tiêu rõ ràng: cùng người sáng lập kiến tạo giá trị thực — không phải tạo ra giá trị bằng cách tổn hại họ. Nếu bạn đang xây dựng doanh nghiệp tăng trưởng cao tại Việt Nam, hãy liên hệ với chúng tôi.",
   },
   {
     id: "strategic-investment-management",
     icon: Handshake,
     title: "Quản Lý Đầu Tư Chiến Lược",
     subtitle: "Phân Bổ Vốn Kỷ Luật. Kiến Tạo Giá Trị Bền Vững.",
-    image: "/9.png",
-    body: "Chúng tôi xác định và quản lý các cơ hội đầu tư được lựa chọn kỹ lưỡng trên nhiều lĩnh vực, với trọng tâm kỷ luật vào quản lý rủi ro, tiềm năng thu nhập và tăng trưởng vốn dài hạn.\n\nPhương pháp tiếp cận của chúng tôi được thiết kế dành cho các nhà đầu tư tìm kiếm sự tham gia được quản lý chuyên nghiệp vào các doanh nghiệp, dự án và tài sản tại UAE, GCC và thị trường toàn cầu được chọn lọc.",
+    image: "/8.png",
+    body: "Chúng tôi xác định và quản lý các cơ hội đầu tư được lựa chọn kỹ lưỡng trong lĩnh vực FinTech, tài sản mã hóa và kinh tế số — với trọng tâm kỷ luật vào quản lý rủi ro, tiềm năng thu nhập và tăng trưởng vốn dài hạn.\n\nPhương pháp tiếp cận của chúng tôi được thiết kế dành cho các nhà đầu tư tìm kiếm sự tham gia được quản lý chuyên nghiệp vào hệ sinh thái tài sản số và kinh tế kỹ thuật số Việt Nam.",
     items: [
-      { heading: "Phân Bổ Đầu Tư Đa Dạng", desc: "Phân bổ vốn trên các lĩnh vực và cơ hội được chọn lọc để tạo danh mục đầu tư cân bằng." },
-      { heading: "Cơ Hội Tạo Thu Nhập", desc: "Xác định các khoản đầu tư có tiềm năng tạo thu nhập định kỳ và phân phối có cấu trúc." },
-      { heading: "Đầu Tư Tăng Trưởng Vốn", desc: "Đầu tư vào doanh nghiệp, dự án và tài sản có nền tảng thương mại vững chắc và tiềm năng tăng giá dài hạn." },
-      { heading: "Cơ Hội Thị Trường Tư Nhân", desc: "Cung cấp quyền truy cập vào các cơ hội được đánh giá kỹ lưỡng ngoài thị trường đại chúng truyền thống." },
+      { heading: "Phân Bổ Đầu Tư Đa Dạng", desc: "Phân bổ vốn trên các lĩnh vực FinTech, crypto, AI và EdTech để tạo danh mục đầu tư cân bằng và tối ưu hóa rủi ro-lợi nhuận." },
+      { heading: "Liên Doanh & Đồng Đầu Tư", desc: "Hợp tác với các đối tác định chế tài chính uy tín cho các cơ hội đầu tư quy mô lớn trong kinh tế số." },
+      { heading: "Quỹ Đầu Tư Chuyên Biệt", desc: "Xây dựng và quản lý các quỹ đầu tư tập trung vào FinTech và tài sản số tại Việt Nam và Đông Nam Á." },
+      { heading: "Cơ Hội Thị Trường Tư Nhân", desc: "Tiếp cận các cơ hội đầu tư đã được thẩm định kỹ lưỡng ngoài thị trường đại chúng trong lĩnh vực công nghệ và tài sản số." },
     ],
     closing: "",
   },
@@ -202,47 +181,40 @@ const sectors = [
 
 export default function InvestmentFocusPage() {
   return (
-    <main className="min-h-screen bg-white">
-      
-
+    <main className="min-h-screen bg-white pb-safe md:pb-0">
       {/* Banner */}
-      <section className="relative overflow-hidden bg-white" style={{ paddingTop: "clamp(5.5rem, 8vw + 1rem, 8rem)", paddingBottom: "clamp(2.5rem, 4vw + 0.5rem, 5rem)" }}>
-        <div className="max-w-[1400px] mx-auto section-px text-center">
-          <div className="max-w-3xl mx-auto">
-            <p className="text-fortress-gold text-sm font-medium tracking-[2px] md:tracking-[4px] uppercase mb-4">
-              Lĩnh Vực Đầu Tư
-            </p>
-            <h1 className="font-bold mb-4 md:mb-6" style={{ fontSize: "var(--text-display)" }}>
-              <span className="text-fortress-navy">Đầu Tư Vào </span>
-              <span className="bg-gradient-to-r from-fortress-gold to-fortress-champagne bg-clip-text text-transparent">
-                Cơ Hội
-              </span>
-            </h1>
-            <p className="text-fortress-charcoal/70 text-base md:text-xl leading-relaxed max-w-2xl mx-auto">
-              Fortress Investment Holdings đầu tư vào các lĩnh vực được chọn lọc, nơi nhu cầu dài hạn, nền tảng vững chắc và sự tham gia chiến lược tạo ra giá trị bền vững.
-            </p>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        tag="Lĩnh Vực Đầu Tư"
+        heading={
+          <>
+            Đầu Tư Vào{" "}
+            <span className="font-bold bg-gradient-to-r from-fortress-gold to-fortress-champagne bg-clip-text text-transparent">
+              Kinh Tế Số
+            </span>
+          </>
+        }
+        description="Fortress Investment Holdings đặt FinTech, tài sản mã hóa hợp pháp và kinh tế số Việt Nam là trọng tâm chiến lược — tiên phong đón đầu Nghị quyết 5/2025/NQ-CP có hiệu lực từ 9/9/2025."
+      />
 
       {/* Introduction */}
       <section className="bg-fortress-navy rounded-2xl section-mx section-my" style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}>
         <div className="max-w-[1400px] mx-auto section-px">
           <div className="max-w-3xl">
-            <p className="text-fortress-gold text-sm font-medium tracking-[2px] md:tracking-[4px] uppercase mb-4">
-              Danh Mục Đầu Tư Đa Dạng
-            </p>
-            <h2 className="text-xl md:text-4xl font-bold text-fortress-ivory mb-4 md:mb-6">
-              Các Lĩnh Vực Chúng Tôi Đầu Tư
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-5 h-px bg-fortress-gold/55" />
+              <span className="section-tag">Danh Mục Đầu Tư Công Nghệ & Tài Sản Số</span>
+            </div>
+            <h2
+              className="font-light text-fortress-ivory mb-6 leading-[1.28] uppercase"
+              style={{ fontSize: "var(--text-h2)", letterSpacing: "var(--tracking-heading)" }}
+            >
+              Các Lĩnh Vực Chiến Lược
             </h2>
-            <p className="text-fortress-ivory/80 text-sm md:text-lg leading-relaxed">
-              Đa dạng hóa là trọng tâm của chiến lược đầu tư chúng tôi – nhưng đa dạng hóa thiếu kỷ luật chỉ là sự phân tán.
+            <p className="text-fortress-silver/80 leading-[1.8] mb-4" style={{ fontSize: "var(--text-body)" }}>
+              Nghị quyết 5/2025/NQ-CP có hiệu lực từ ngày 9/9/2025 mở ra kỷ nguyên mới cho thị trường tài sản mã hóa hợp pháp tại Việt Nam — một cột mốc lịch sử tạo ra cơ hội tiên phong cho các nhà đầu tư và doanh nghiệp có tầm nhìn.
             </p>
-            <p className="text-fortress-silver text-sm md:text-base leading-relaxed mt-3 md:mt-4">
-              Chúng tôi đánh giá cơ hội trên nhiều ngành khác nhau trong khi duy trì quy trình chọn lọc nghiêm ngặt. Mọi khoản đầu tư phải thể hiện tiềm năng thương mại rõ ràng, rủi ro có thể quản lý được và sự phù hợp thực sự với mục tiêu dài hạn của Fortress Investment Holdings.
-            </p>
-            <p className="text-fortress-silver/70 text-sm md:text-base leading-relaxed mt-3 md:mt-4">
-              Đây là các lĩnh vực mà chúng tôi tập trung nguồn vốn và sự chú ý.
+            <p className="text-fortress-silver/70 leading-[1.8] mb-4" style={{ fontSize: "var(--text-body)" }}>
+              Fortress Investment Holdings định vị tập trung vào FinTech, dịch vụ tài sản mã hóa, blockchain, EdTech và kinh tế số — những lĩnh vực đang hội tụ để tạo ra hệ sinh thái tài chính số hoàn toàn mới tại Việt Nam.
             </p>
           </div>
         </div>
@@ -320,15 +292,20 @@ export default function InvestmentFocusPage() {
                     {sector.items.map((item, i) => (
                       <li key={i}>
                         {typeof item === "string" ? (
-                          <span className={`text-xs md:text-sm leading-relaxed ${index % 2 === 1 ? "text-fortress-silver/80" : "text-fortress-charcoal/60"}`}>
-                            {item}
-                          </span>
+                          <div className={`flex items-start gap-3 p-3 border-l-2 border-fortress-gold/30 ${index % 2 === 1 ? "bg-fortress-navy/60" : "bg-fortress-ivory/40"} rounded-sm`}>
+                            <span className="mt-1 text-fortress-gold text-[10px] font-mono font-bold shrink-0 select-none">
+                              {String(i + 1).padStart(2, "0")}
+                            </span>
+                            <span className={`text-xs md:text-sm leading-relaxed ${index % 2 === 1 ? "text-fortress-silver/80" : "text-fortress-charcoal/60"}`}>
+                              {item}
+                            </span>
+                          </div>
                         ) : (
-                          <div>
-                            <p className={`text-sm md:text-base font-semibold ${index % 2 === 1 ? "text-fortress-ivory" : "text-fortress-navy"}`}>
+                          <div className={`p-3 border border-fortress-gold/15 rounded-sm hover:border-fortress-gold/30 transition-colors ${index % 2 === 1 ? "bg-fortress-navy/40" : "bg-fortress-ivory/30"}`}>
+                            <p className={`text-sm font-semibold mb-0.5 ${index % 2 === 1 ? "text-fortress-ivory" : "text-fortress-navy"}`}>
                               {item.heading}
                             </p>
-                            <p className={`text-xs md:text-sm leading-relaxed mt-0.5 ${index % 2 === 1 ? "text-fortress-silver/70" : "text-fortress-charcoal/60"}`}>
+                            <p className={`text-xs leading-relaxed ${index % 2 === 1 ? "text-fortress-silver/70" : "text-fortress-charcoal/60"}`}>
                               {item.desc}
                             </p>
                           </div>
@@ -338,7 +315,7 @@ export default function InvestmentFocusPage() {
                   </ul>
                 </div>
 
-                {/* Digital Assets evaluation criteria */}
+                {/* Sub-criteria (e.g. regulatory framework) */}
                 {sector.subheading && sector.subitems && (
                   <div
                     className={`mt-8 md:mt-10 p-5 md:p-8 border-l border-fortress-gold/25 rounded-sm ${index % 2 === 1 ? "bg-fortress-navy" : "bg-fortress-ivory/30"}`}
@@ -383,14 +360,19 @@ export default function InvestmentFocusPage() {
       {/* CTA */}
       <section className="bg-fortress-navy rounded-2xl section-mx section-my" style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}>
         <div className="max-w-[1400px] mx-auto section-px text-center">
-          <p className="text-fortress-gold text-sm font-medium tracking-[2px] md:tracking-[4px] uppercase mb-4">
-            Hợp Tác Đầu Tư
-          </p>
-          <h2 className="font-bold text-fortress-ivory mb-4 md:mb-6" style={{ fontSize: "var(--text-h2)" }}>
+          <div className="flex items-center justify-center gap-3 mb-5">
+            <div className="w-8 h-px bg-fortress-gold/40" />
+            <span className="section-tag">Hợp Tác Đầu Tư</span>
+            <div className="w-8 h-px bg-fortress-gold/40" />
+          </div>
+          <h2
+            className="font-light text-fortress-ivory mb-4 md:mb-6 uppercase leading-[1.28]"
+            style={{ fontSize: "var(--text-h2)", letterSpacing: "var(--tracking-heading)" }}
+          >
             Gửi Đề Xuất Cơ Hội Tới Fortress
           </h2>
-          <p className="text-fortress-silver/80 text-sm md:text-lg leading-relaxed max-w-2xl mx-auto mb-6 md:mb-8">
-            Chúng tôi chào đón các đề xuất được chọn lọc từ chủ doanh nghiệp, nhà khởi nghiệp, cố vấn, nhà đầu tư, nhà phát triển và đối tác chiến lược. Mọi đề xuất được xem xét chuyên nghiệp và xử lý với sự bảo mật tuyệt đối.
+          <p className="text-fortress-silver/80 leading-[1.8] max-w-2xl mx-auto mb-8" style={{ fontSize: "var(--text-lead)" }}>
+            Chúng tôi chào đón các đề xuất được chọn lọc từ startup FinTech, doanh nghiệp dịch vụ tài sản mã hóa, nền tảng EdTech, nhà phát triển blockchain và đối tác chiến lược trong lĩnh vực kinh tế số. Mọi đề xuất được xem xét chuyên nghiệp và xử lý với sự bảo mật tuyệt đối.
           </p>
           <Link
             href="/invest-with-fortress"

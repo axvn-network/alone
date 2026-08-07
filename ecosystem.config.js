@@ -1,10 +1,28 @@
+// Load env từ .env.local để inject vào PM2 process
+const fs = require("fs");
+const path = require("path");
+
+function loadEnv(filePath) {
+  if (!fs.existsSync(filePath)) return {};
+  return fs.readFileSync(filePath, "utf8")
+    .split("\n")
+    .filter(l => l.trim() && !l.startsWith("#"))
+    .reduce((acc, l) => {
+      const [k, ...v] = l.split("=");
+      if (k) acc[k.trim()] = v.join("=").trim();
+      return acc;
+    }, {});
+}
+
+const env = loadEnv(path.join(__dirname, ".env.local"));
+
 module.exports = {
   apps: [
     {
       name: "fortress-website",
       script: "node_modules/next/dist/bin/next",
       args: "start",
-      cwd: "/var/www/fortress/app",
+      cwd: "/var/lkvip/langding",
       instances: "max",
       exec_mode: "cluster",
       watch: false,
@@ -15,11 +33,8 @@ module.exports = {
       err_file: "/var/log/pm2/fortress-err.log",
       merge_logs: true,
       log_date_format: "YYYY-MM-DD HH:mm:ss Z",
-      env: {
-        NODE_ENV: "development",
-        PORT: 3000,
-      },
       env_production: {
+        ...env,
         NODE_ENV: "production",
         PORT: 3000,
       },

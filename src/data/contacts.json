@@ -6,6 +6,7 @@
     "phone": "+971 50 123 4567",
     "subject": "investment",
     "message": "Interested in learning more about real estate investment opportunities in Dubai.",
+    "read": false,
     "createdAt": "2026-07-10T08:30:00.000Z"
   },
   {
@@ -15,6 +16,7 @@
     "phone": "+1 555 123 4567",
     "subject": "partnership",
     "message": "We are a US-based private equity firm looking for strategic partnerships in the MENA region.",
+    "read": true,
     "createdAt": "2026-07-09T14:15:00.000Z"
   },
   {
@@ -24,6 +26,7 @@
     "phone": "+91 98765 43210",
     "subject": "general",
     "message": "I would like to schedule a call to discuss potential collaboration opportunities.",
+    "read": false,
     "createdAt": "2026-07-08T10:00:00.000Z"
   },
   {
@@ -33,6 +36,7 @@
     "phone": "+34 612 345 678",
     "subject": "investment",
     "message": "Our institutional investment group is interested in your hospitality sector portfolio.",
+    "read": false,
     "createdAt": "2026-07-07T16:45:00.000Z"
   }
 ]

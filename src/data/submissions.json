@@ -10,6 +10,7 @@
     "investmentRange": "5m-25m",
     "message": "We have a compelling investment opportunity in the fintech space.",
     "fileName": "pitch-deck-2026.pdf",
+    "read": true,
     "createdAt": "2026-07-11T09:00:00.000Z"
   },
   {
@@ -23,6 +24,7 @@
     "investmentRange": "1m-5m",
     "message": "Proposing a JV for a logistics and distribution center in Dubai South.",
     "fileName": "",
+    "read": false,
     "createdAt": "2026-07-09T11:30:00.000Z"
   },
   {
@@ -36,6 +38,7 @@
     "investmentRange": "25m-100m",
     "message": "Seeking a strategic partnership to co-invest in large-scale real estate developments.",
     "fileName": "partnership-proposal.docx",
+    "read": false,
     "createdAt": "2026-07-06T13:20:00.000Z"
   }
 ]

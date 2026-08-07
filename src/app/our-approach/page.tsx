@@ -6,6 +6,7 @@ import PageTransition from "@/components/animations/PageTransition";
 import Reveal from "@/components/animations/Reveal";
 import Stagger from "@/components/animations/Stagger";
 import StaggerItem from "@/components/animations/StaggerItem";
+import PageHero from "@/components/PageHero";
 import {
   Search,
   ClipboardCheck,
@@ -116,81 +117,63 @@ const evaluationPrinciples = [
 export default function OurApproachPage() {
   return (
     <PageTransition>
-      <main className="min-h-screen bg-white text-fortress-ivory relative">
-        
-
-        {/* ── 1. Hero Section ──────────────────────────────────────────────── */}
-        <section className="relative pt-24 pb-14 md:pt-36 md:pb-28 overflow-hidden bg-fortress-navy border-b border-fortress-gold/10">
-          {/* Background mesh */}
-          <div className="absolute inset-0 opacity-[0.04] bg-[radial-gradient(#C9A24A_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
-          {/* Ambient glows */}
-          <div className="absolute top-0 right-0 w-64 h-64 md:w-[500px] md:h-[500px] bg-fortress-gold/10 rounded-full blur-3xl -translate-y-1/3 translate-x-1/3 pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-48 h-48 md:w-[400px] md:h-[400px] bg-fortress-champagne/10 rounded-full blur-3xl translate-y-1/3 -translate-x-1/3 pointer-events-none" />
-
-          <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
-            <div className="max-w-3xl mx-auto text-center">
-              <Reveal>
-                <span className="inline-block text-fortress-gold text-xs sm:text-sm font-semibold tracking-[4px] sm:tracking-[6px] uppercase mb-4 px-4 py-1.5 rounded-full border border-fortress-gold/20 bg-fortress-gold/10">
-                  Phương Pháp Tiếp Cận
-                </span>
-              </Reveal>
-
-              <Reveal delay={0.1}>
-                <h1 className="text-4xl sm:text-5xl md:text-6xl font-light tracking-tight text-white uppercase mb-5 sm:mb-6 leading-[1.15]">
-                  Kỷ Luật.{" "}
-                  <span className="font-bold bg-gradient-to-r from-fortress-gold to-fortress-champagne bg-clip-text text-transparent">
-                    Chiến Lược.
-                  </span>{" "}
-                  Dài Hạn.
-                </h1>
-              </Reveal>
-
-              <Reveal delay={0.2}>
-                <p className="text-fortress-silver/90 text-sm sm:text-lg md:text-xl leading-relaxed mb-8 md:mb-10 font-light mx-auto">
-                  Quy trình đầu tư của chúng tôi được thiết kế để xác định các cơ hội chất lượng, quản lý rủi ro và xây dựng giá trị bền vững thông qua đánh giá kỹ lưỡng và sự tham gia chiến lược chủ động.
-                </p>
-              </Reveal>
-
-              <Reveal delay={0.3}>
-                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
-                  <Link
-                    href="#process"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 bg-gradient-to-r from-fortress-gold to-fortress-champagne text-fortress-navy font-bold text-xs tracking-widest uppercase hover:opacity-90 transition-all rounded-sm shadow-xl shadow-fortress-gold/15 group"
-                  >
-                    Khám Phá Quy Trình Của Chúng Tôi
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                  <Link
-                    href="#principles"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 border border-fortress-gold/30 text-fortress-ivory font-bold text-xs tracking-widest uppercase hover:bg-white/10 hover:border-white transition-all rounded-sm"
-                  >
-                    Nguyên Tắc Đánh Giá
-                  </Link>
-                </div>
-              </Reveal>
-            </div>
+      <main className="min-h-screen bg-white text-fortress-ivory relative pb-safe md:pb-0">
+        {/* ── 1. Hero Section ── */}
+        <PageHero
+          tag="Phương Pháp Tiếp Cận"
+          heading={
+            <>
+              Kỷ Luật.{" "}
+              <span className="font-bold bg-gradient-to-r from-fortress-gold to-fortress-champagne bg-clip-text text-transparent">
+                Chiến Lược.
+              </span>{" "}
+              Dài Hạn.
+            </>
+          }
+          description="Quy trình đầu tư của chúng tôi được thiết kế để xác định các cơ hội chất lượng, quản lý rủi ro và xây dựng giá trị bền vững thông qua đánh giá kỹ lưỡng và sự tham gia chiến lược chủ động."
+        >
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+            <Link
+              href="#process"
+              className="inline-flex items-center justify-center gap-3 px-7 py-3.5 bg-gradient-to-r from-fortress-gold to-fortress-champagne text-fortress-navy font-bold text-xs tracking-[0.18em] uppercase hover:opacity-90 transition-all shadow-lg shadow-fortress-gold/15 group"
+            >
+              Khám Phá Quy Trình
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+            <Link
+              href="#principles"
+              className="inline-flex items-center justify-center gap-3 px-7 py-3.5 border border-fortress-navy/30 text-fortress-navy font-semibold text-xs tracking-[0.18em] uppercase hover:bg-fortress-navy/5 hover:border-fortress-navy/50 transition-all"
+            >
+              Nguyên Tắc Đánh Giá
+            </Link>
           </div>
-        </section>
+        </PageHero>
 
         {/* ── 2. Investment Process Section ──────────────────────────────── */}
         <section
           id="process"
-          className="py-12 md:py-28 bg-fortress-navy mx-2 sm:mx-4 rounded-2xl border border-fortress-gold/20 my-4 sm:my-8"
+          className="bg-fortress-navy rounded-2xl section-mx section-my"
+          style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}
         >
-          <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-12">
+          <div className="max-w-[1400px] mx-auto section-px">
 
             {/* Section Header */}
             <Reveal className="text-center max-w-3xl mx-auto mb-10 md:mb-20">
-              <span className="text-fortress-gold text-[10px] sm:text-sm font-semibold tracking-[3px] sm:tracking-[6px] uppercase block mb-3">
-                Cách Chúng Tôi Đầu Tư
-              </span>
-              <h2 className="text-2xl sm:text-4xl md:text-5xl font-light text-white uppercase tracking-tight mb-3 sm:mb-4">
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <div className="w-8 h-px bg-fortress-gold/40" />
+                <span className="section-tag">Cách Chúng Tôi Đầu Tư</span>
+                <div className="w-8 h-px bg-fortress-gold/40" />
+              </div>
+              <h2
+                className="font-light text-fortress-ivory uppercase leading-[1.28] mb-3 sm:mb-4"
+                style={{ fontSize: "var(--text-h2)", letterSpacing: "var(--tracking-heading)" }}
+              >
                 Quy Trình <span className="font-semibold text-fortress-gold">Đầu Tư</span>
               </h2>
-              <p className="text-fortress-gold font-semibold text-base sm:text-xl mb-3 sm:mb-4">
+              <p className="text-fortress-gold font-semibold mb-3 sm:mb-4" style={{ fontSize: "var(--text-lead)" }}>
                 Mỗi cơ hội là duy nhất. Tiêu chuẩn của chúng tôi thì không.
               </p>
-              <p className="text-fortress-silver/80 text-sm sm:text-lg leading-relaxed font-light">
+              <p className="text-fortress-silver/80 leading-[1.8] font-light" style={{ fontSize: "var(--text-body)" }}>
                 Các quyết định của chúng tôi tuân theo một khung nhất quán được xây dựng trên nghiên cứu, kỷ luật, minh bạch và sự liên kết dài hạn. Chúng tôi đánh giá chất lượng cơ hội, năng lực của những người đứng sau, môi trường thị trường, yêu cầu tài chính, rủi ro liên quan và tiềm năng thực tế để tạo ra giá trị bền vững.
               </p>
             </Reveal>
@@ -318,18 +301,24 @@ export default function OurApproachPage() {
         {/* ── 3. Evaluation Principles Section ───────────────────────────── */}
         <section
           id="principles"
-          className="py-12 md:py-28 bg-fortress-navy text-fortress-ivory mx-2 sm:mx-4 rounded-2xl border border-fortress-gold/20 my-4 sm:my-8"
+          className="bg-fortress-navy rounded-2xl section-mx section-my"
+          style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}
         >
-          <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-12">
+          <div className="max-w-[1400px] mx-auto section-px">
 
             <Reveal className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
-              <span className="text-fortress-gold text-[10px] sm:text-sm font-semibold tracking-[3px] sm:tracking-[6px] uppercase block mb-3">
-                Chúng Tôi Tìm Gì
-              </span>
-              <h2 className="text-2xl sm:text-4xl md:text-5xl font-light uppercase tracking-tight text-white mb-3 sm:mb-4">
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <div className="w-8 h-px bg-fortress-gold/40" />
+                <span className="section-tag">Chúng Tôi Tìm Gì</span>
+                <div className="w-8 h-px bg-fortress-gold/40" />
+              </div>
+              <h2
+                className="font-light text-fortress-ivory uppercase leading-[1.28] mb-3 sm:mb-4"
+                style={{ fontSize: "var(--text-h2)", letterSpacing: "var(--tracking-heading)" }}
+              >
                 Nguyên Tắc <span className="font-semibold text-fortress-gold">Đánh Giá</span>
               </h2>
-              <p className="text-fortress-silver/80 text-sm sm:text-lg leading-relaxed font-light">
+              <p className="text-fortress-silver/80 leading-[1.8] font-light" style={{ fontSize: "var(--text-body)" }}>
                 Chín tiêu chuẩn không thể thỏa hiệp được áp dụng cho mọi cơ hội chúng tôi đánh giá.
               </p>
             </Reveal>

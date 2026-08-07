@@ -45,39 +45,37 @@ export default function Introduction() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <Stagger>
             <StaggerItem>
-              <span
-                className="block text-fortress-gold uppercase font-semibold tracking-[6px]"
-                style={{ fontSize: "clamp(0.625rem, 0.5vw + 0.45rem, 0.75rem)" }}
-              >
-                {introTag}
-              </span>
-            </StaggerItem>
-            <StaggerItem>
-              <h2
-                className="text-fortress-ivory font-light leading-tight uppercase tracking-tight mt-4"
-                style={{ fontSize: "var(--text-h2)" }}
-              >
-                {introTitle}
-              </h2>
-            </StaggerItem>
-            <StaggerItem>
-              <motion.div variants={goldenDivider} initial="hidden" whileInView="visible" viewport={{ once: true }} className="h-0.5 w-12 bg-fortress-gold/30 my-6" />
-            </StaggerItem>
-            <StaggerItem>
-              <p className="text-fortress-silver/90 leading-relaxed mb-4" style={{ fontSize: "var(--text-body)" }}>
-                {introParagraph1}
-              </p>
-            </StaggerItem>
-            <StaggerItem>
-              <p className="text-fortress-silver/90 leading-relaxed mb-4" style={{ fontSize: "var(--text-body)" }}>
-                {introParagraph2}
-              </p>
-            </StaggerItem>
-            <StaggerItem>
-              <p className="text-fortress-silver/80 leading-relaxed" style={{ fontSize: "var(--text-body)" }}>
-                {introParagraph3}
-              </p>
-            </StaggerItem>
+                <div className="flex items-center gap-3">
+                  <div className="w-6 h-px bg-fortress-gold/60" />
+                  <span className="section-tag">{introTag}</span>
+                </div>
+              </StaggerItem>
+              <StaggerItem>
+                <h2
+                  className="text-fortress-ivory font-light leading-[1.28] uppercase mt-5"
+                  style={{ fontSize: "var(--text-h2)", letterSpacing: "var(--tracking-heading)" }}
+                >
+                  {introTitle}
+                </h2>
+              </StaggerItem>
+              <StaggerItem>
+                <motion.div variants={goldenDivider} initial="hidden" whileInView="visible" viewport={{ once: true }} className="h-px w-10 bg-fortress-gold/40 my-7" />
+              </StaggerItem>
+              <StaggerItem>
+                <p className="text-fortress-silver/85 leading-[1.8] mb-5" style={{ fontSize: "var(--text-body)" }}>
+                  {introParagraph1}
+                </p>
+              </StaggerItem>
+              <StaggerItem>
+                <p className="text-fortress-silver/85 leading-[1.8] mb-5" style={{ fontSize: "var(--text-body)" }}>
+                  {introParagraph2}
+                </p>
+              </StaggerItem>
+              <StaggerItem>
+                <p className="text-fortress-silver/70 leading-[1.8]" style={{ fontSize: "var(--text-body)" }}>
+                  {introParagraph3}
+                </p>
+              </StaggerItem>
           </Stagger>
 
           <motion.div

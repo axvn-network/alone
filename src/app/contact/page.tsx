@@ -1,15 +1,17 @@
 import ContactForm from "@/components/ContactForm";
 import { Phone, Mail, MapPin, Clock, MessageCircle } from "lucide-react";
+import PageHero from "@/components/PageHero";
+import SectionHeader from "@/components/SectionHeader";
 import type { Metadata } from "next";
 import { getSettings } from "@/services/settings.service";
 
 export const metadata: Metadata = {
   title: "Liên Hệ | Fortress Investment Holdings",
   description:
-    "Liên hệ với Fortress Investment Holdings. Đội ngũ chuyên gia sẵn sàng tiếp nhận và phản hồi thông tin yêu cầu của bạn trong vòng 1-2 ngày làm việc.",
+    "Liên hệ với Fortress Investment Holdings. Đội ngũ chuyên gia sẵn sàng tiếp nhận và phản hồi thông tin yêu cầu của bạn trong vòng 1–2 ngày làm việc.",
   openGraph: {
     title: "Liên Hệ | Fortress Investment Holdings",
-    description: "Kết nối trực tiếp với tập đoàn Fortress Investment Holdings.",
+    description: "Kết nối trực tiếp với đội ngũ đầu tư của Fortress Investment Holdings.",
   },
 };
 
@@ -41,7 +43,7 @@ export default async function ContactPage() {
     },
     {
       icon: Mail,
-      label: "Hòm thư Email",
+      label: "Hộp thư Email",
       value: emailVal,
       href: `mailto:${emailVal}`,
     },
@@ -54,50 +56,53 @@ export default async function ContactPage() {
     {
       icon: Clock,
       label: "Giờ làm việc",
-      value: "Thứ 2 - Thứ 6, 8:30 - 17:30",
+      value: "Thứ 2 – Thứ 6, 8:30 – 17:30",
       href: "#",
     },
   ];
+
   return (
-    <main className="min-h-screen bg-white">
-      
+    <main className="min-h-screen bg-white pb-safe md:pb-0">
+      {/* ── Hero ── */}
+      <PageHero
+        tag="Liên Hệ"
+        heading={
+          <>
+            Bắt Đầu{" "}
+            <span className="font-bold bg-gradient-to-r from-fortress-gold to-fortress-champagne bg-clip-text text-transparent">
+              Cuộc Đối Thoại
+            </span>
+          </>
+        }
+        description="Dù bạn có thắc mắc về cơ hội đầu tư, muốn đề xuất dự án hay đơn giản muốn tìm hiểu thêm về Fortress — đội ngũ chuyên gia luôn sẵn sàng lắng nghe và phản hồi."
+      />
 
-      {/* Banner */}
-      <section className="bg-white text-center" style={{ paddingTop: "clamp(5.5rem, 8vw + 1rem, 8rem)", paddingBottom: "clamp(2.5rem, 4vw + 0.5rem, 5rem)" }}>
-        <div className="max-w-[1400px] mx-auto" style={{ paddingLeft: "var(--section-px)", paddingRight: "var(--section-px)" }}>
-          <p className="text-fortress-gold text-sm font-medium tracking-[2px] md:tracking-[4px] uppercase mb-4">
-            Liên Hệ Với Chúng Tôi
-          </p>
-          <h1 className="font-bold text-fortress-navy" style={{ fontSize: "var(--text-display)" }}>
-            Khởi Đầu Sự Hợp Tác Dài Lâu
-          </h1>
-          <p className="text-fortress-navy/60 leading-relaxed max-w-2xl mx-auto mt-6" style={{ fontSize: "var(--text-lead)" }}>
-            Cho dù bạn có thắc mắc, đề xuất dự án đầu tư hay muốn tìm hiểu thêm về Fortress – chúng tôi luôn sẵn sàng hỗ trợ bạn.
-          </p>
-        </div>
-      </section>
-
-      {/* Contact Info Cards */}
-      <section className="bg-fortress-navy rounded-2xl section-mx section-my" style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}>
+      {/* ── Thông tin liên hệ ── */}
+      <section
+        className="bg-fortress-navy rounded-2xl section-mx section-my"
+        style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}
+      >
         <div className="max-w-[1400px] mx-auto section-px">
-          <h2 className="text-center text-fortress-ivory font-bold mb-12" style={{ fontSize: "var(--text-h2)" }}>
-            Thông Tin Kết Nối Trực Tiếp
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          <div className="text-center mb-10 md:mb-12">
+            <SectionHeader
+              tag="Kết Nối Trực Tiếp"
+              heading="Thông Tin Liên Hệ"
+              dark
+            />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
             {contactInfo.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
-                className="flex items-center gap-4 p-5 bg-fortress-charcoal/40 rounded-2xl hover:bg-fortress-charcoal/60 transition-all duration-300"
+                className="group flex items-center gap-4 p-5 bg-fortress-deep border border-fortress-gold/10 hover:border-fortress-gold/30 hover:-translate-y-0.5 transition-all duration-300 rounded-2xl"
               >
-                <div className="w-10 h-10 md:w-12 md:h-12 bg-fortress-gold/10 flex items-center justify-center flex-shrink-0 rounded-xl">
-                  <item.icon className="w-5 h-5 md:w-6 md:h-6 text-fortress-gold" />
+                <div className="w-11 h-11 bg-fortress-gold/10 border border-fortress-gold/15 flex items-center justify-center flex-shrink-0 rounded-sm group-hover:bg-fortress-gold/20 transition-colors">
+                  <item.icon className="w-5 h-5 text-fortress-gold" />
                 </div>
                 <div>
-                  <p className="text-fortress-silver text-xs">{item.label}</p>
-                  <p className="text-fortress-ivory font-medium text-sm">
-                    {item.value}
-                  </p>
+                  <p className="text-fortress-silver/55 text-xs mb-0.5">{item.label}</p>
+                  <p className="text-fortress-ivory font-medium text-sm">{item.value}</p>
                 </div>
               </a>
             ))}
@@ -105,54 +110,55 @@ export default async function ContactPage() {
         </div>
       </section>
 
-      {/* Form + Map */}
+      {/* ── Form + Bản đồ ── */}
       <section className="section-mx section-my">
         <div className="max-w-[1400px] mx-auto section-px">
-          <div className="grid lg:grid-cols-5 gap-8">
+          <div className="grid lg:grid-cols-5 gap-8 items-start">
             {/* Form */}
-            <div className="lg:col-span-2 bg-white rounded-2xl p-6 md:p-10">
-              <h2 className="text-2xl font-bold text-fortress-navy mb-2">
+            <div className="lg:col-span-2 bg-white border border-fortress-navy/8 rounded-2xl p-7 md:p-10">
+              <h2
+                className="font-semibold text-fortress-navy mb-2 leading-snug"
+                style={{ fontSize: "var(--text-h3)" }}
+              >
                 Gửi Lời Nhắn Trực Tiếp
               </h2>
-              <p className="text-fortress-navy/60 text-sm mb-8">
-                Đội ngũ tư vấn sẽ phản hồi trong vòng 1-2 ngày làm việc.
+              <p className="text-fortress-navy/55 mb-7" style={{ fontSize: "var(--text-body)" }}>
+                Đội ngũ tư vấn sẽ phản hồi trong vòng 1–2 ngày làm việc.
               </p>
               <ContactForm />
-
-              <div className="mt-10 pt-8 border-t border-fortress-navy/10">
+              <div className="mt-8 pt-7 border-t border-fortress-navy/8">
                 <a
                   href={`https://wa.me/${whatsapp}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 px-6 py-3 bg-green-500 text-white hover:bg-green-600 transition-all duration-300 text-sm font-medium rounded-xl"
+                  className="inline-flex items-center gap-2.5 px-5 py-2.5 bg-[#25D366] text-white hover:bg-[#1ebe5d] transition-all duration-300 text-sm font-medium rounded-xl shadow-sm shadow-green-500/20"
                 >
-                  <MessageCircle className="w-5 h-5" />
-                  Trò Chuyện Qua WhatsApp
+                  <MessageCircle className="w-4 h-4" />
+                  Nhắn Tin Qua WhatsApp
                 </a>
               </div>
             </div>
 
             {/* Map */}
             <div
-              className="lg:col-span-3 bg-fortress-charcoal rounded-2xl overflow-hidden h-full min-h-[500px]"
+              className="lg:col-span-3 bg-fortress-charcoal border border-fortress-gold/10 rounded-2xl overflow-hidden min-h-[520px]"
               id="map"
             >
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3615.643879742878!2d55.2708!3d25.1972!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f5d348d56a8df%3A0x2e84e1b4b4b4b4b4!2sDubai%20-%20United%20Arab%20Emirates!5e0!3m2!1sen!2sae!4v1234567890"
                 width="100%"
                 height="100%"
-                style={{ border: 0, filter: "grayscale(0.6) contrast(1.1)" }}
+                style={{ border: 0, filter: "grayscale(0.5) contrast(1.1)" }}
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Vị trí văn phòng Fortress Investment Holdings"
+                title="Vị trí văn phòng Fortress Investment Holdings — Dubai, UAE"
+                className="w-full h-full min-h-[520px]"
               />
             </div>
           </div>
         </div>
       </section>
-
-      
     </main>
   );
 }

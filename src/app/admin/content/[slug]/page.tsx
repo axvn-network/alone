@@ -7,6 +7,8 @@ import AdminNavbar from "@/components/AdminNavbar";
 import { toast } from "sonner";
 import { ArrowLeft, Save, Eye } from "lucide-react";
 import RichTextEditor from "@/components/RichTextEditor";
+import AiAssistPanel, { PAGE_AI_ACTIONS } from "@/components/AiAssistPanel";
+import { useCsrf } from "@/contexts/CsrfContext";
 
 const pageLabels: Record<string, string> = {
   home: "Trang chủ",
@@ -22,6 +24,7 @@ const pageLabels: Record<string, string> = {
 
 export default function PageEditor({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
+  const { csrfFetch } = useCsrf();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [pageDataStr, setPageDataStr] = useState("{}");
@@ -31,7 +34,8 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
   useEffect(() => {
     fetch(`/api/admin/content?slug=${slug}`)
       .then((r) => r.json())
-      .then((data) => {
+      .then((res) => {
+        const data = res.success ? res.data : res;
         setTitle(data.title || "");
         setContent(data.content || "");
         setPageDataStr(JSON.stringify(data.data || {}, null, 2));
@@ -53,7 +57,7 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
 
     setSaving(true);
     try {
-      const res = await fetch("/api/admin/content", {
+      const res = await csrfFetch("/api/admin/content", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ slug, title, content, data: parsedData }),
@@ -96,6 +100,34 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
           </div>
 
           <div className="space-y-6">
+
+            {/* AI Assistant — full width banner at top */}
+            <div className="bg-[#070e1a] border border-purple-500/20 rounded-xl p-4">
+              <AiAssistPanel
+                actions={PAGE_AI_ACTIONS}
+                formValues={{
+                  title,
+                  content,
+                  page_name: pageLabels[slug] || slug,
+                  existing_title: title,
+                }}
+                lang="vi"
+                onApply={(action, result) => {
+                  if (action === "page_title") {
+                    setTitle(result.trim());
+                  } else if (action === "page_content" || action === "page_improve") {
+                    setContent(result);
+                  } else if (action === "translate_vi_en") {
+                    navigator.clipboard.writeText(result);
+                    toast.success("Bản dịch đã sao chép vào clipboard");
+                  } else {
+                    navigator.clipboard.writeText(result);
+                    toast.success("Kết quả AI đã sao chép vào clipboard");
+                  }
+                }}
+              />
+            </div>
+
             <div className="bg-fortress-navy border-t-2 border-t-fortress-gold/30 p-5 rounded-lg">
               <label className="block text-fortress-silver text-xs font-medium mb-2 tracking-wide">Tiêu đề trang</label>
               <input

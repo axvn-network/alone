@@ -27,11 +27,20 @@ import {
 import AdminSidebar from "@/components/AdminSidebar";
 import AdminNavbar from "@/components/AdminNavbar";
 import RichTextEditor from "@/components/RichTextEditor";
+import AiAssistPanel, { BLOG_AI_ACTIONS } from "@/components/AiAssistPanel";
+import { useCsrf } from "@/contexts/CsrfContext";
 
 const categories = [
-  "Real Estate", "Business Acquisitions", "Private Equity", "AI & Technology",
-  "Digital Assets & Blockchain", "Hospitality", "Trading & Distribution",
-  "Market Insights", "Company News", "Strategic Investment Management",
+  "FinTech & Tài Sản Mã Hóa",
+  "Công Nghệ AI & Đột Phá",
+  "Công Nghệ Giáo Dục (EdTech)",
+  "Hạ Tầng Blockchain",
+  "Kinh Tế Số & Thương Mại Điện Tử",
+  "Đầu Tư Tư Nhân (Private Equity)",
+  "Thị Trường Tài Sản Số",
+  "Góc Nhìn Thị Trường",
+  "Tin Tức Tập Đoàn",
+  "Quản Lý Đầu Tư Chiến Lược",
 ];
 
 type Tab = "content" | "seo" | "settings";
@@ -63,11 +72,11 @@ function DeleteModal({
         <div className="w-12 h-12 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center justify-center mb-4">
           <AlertTriangle className="w-6 h-6 text-red-400" />
         </div>
-        <h2 className="text-lg font-bold text-fortress-ivory mb-1">Delete Article?</h2>
+        <h2 className="text-lg font-bold text-fortress-ivory mb-1">Xóa Bài Viết?</h2>
         <p className="text-fortress-silver/50 text-sm mb-4 leading-relaxed">
-          This will permanently delete{" "}
+          Thao tác này sẽ xóa vĩnh viễn{" "}
           <span className="text-fortress-ivory font-semibold">&ldquo;{title}&rdquo;</span>.
-          This action cannot be undone.
+          Không thể hoàn tác hành động này.
         </p>
         <div className="flex items-center gap-3 p-3 bg-white/5 border border-white/5 rounded-xl mb-5">
           <div className="relative w-14 h-10 rounded-lg overflow-hidden border border-white/10 shrink-0 bg-white/5">
@@ -87,7 +96,7 @@ function DeleteModal({
             disabled={loading}
             className="flex-1 py-2.5 border border-white/10 text-fortress-silver/70 text-sm font-semibold hover:border-white/20 hover:text-fortress-ivory transition-all rounded-xl"
           >
-            Cancel
+            Hủy
           </button>
           <button
             onClick={onConfirm}
@@ -99,7 +108,7 @@ function DeleteModal({
             ) : (
               <Trash2 className="w-4 h-4" />
             )}
-            {loading ? "Deleting…" : "Delete Article"}
+            {loading ? "Đang xóa…" : "Xóa Bài Viết"}
           </button>
         </div>
       </div>
@@ -111,6 +120,7 @@ function DeleteModal({
 export default function ArticleEditor({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
   const router = useRouter();
+  const { csrfFetch } = useCsrf();
   const isNew = slug === "new";
 
   const [title, setTitle] = useState("");
@@ -145,8 +155,9 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
         if (!r.ok) throw new Error("Not found");
         return r.json();
       })
-      .then((a) => {
-        if (a.error) throw new Error(a.error);
+      .then((res) => {
+        if (!res.success) throw new Error(res.message || "Failed to load");
+        const a = res.data;
         setTitle(a.title || "");
         setExcerpt(a.excerpt || "");
         setContent(a.content || "");
@@ -174,18 +185,26 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
     setSaving(true);
     const articleSlug = isNew ? generateSlug(title) : slug;
     try {
-      const res = await fetch("/api/admin/articles", {
-        method: "POST",
+      const method = isNew ? "POST" : "PUT";
+      const url = isNew
+        ? "/api/admin/articles"
+        : `/api/admin/articles/${slug}`;
+      const res = await csrfFetch(url, {
+        method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          slug: articleSlug, title, excerpt, content, category, tags,
-          readTime, featuredImage, status,
+          title, excerpt, content, category, tags,
+          featuredImage, status,
           seo: { title: seoTitle || title, description: seoDescription || excerpt },
         }),
       });
-      if (!res.ok) { const d = await res.json(); throw new Error(d.error || "Failed to save"); }
+      const d = await res.json();
+      if (!res.ok) throw new Error(d.message || "Failed to save");
       toast.success(isNew ? "Article created" : "Article saved");
-      if (isNew) router.push(`/admin/blog/${articleSlug}`);
+      if (isNew) {
+        const saved = d.data;
+        router.push(`/admin/blog/${saved?.slug || articleSlug}`);
+      }
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Failed to save");
     } finally {
@@ -196,7 +215,7 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
   async function handleDelete() {
     setDeleteLoading(true);
     try {
-      const res = await fetch(`/api/admin/articles/${slug}`, { method: "DELETE" });
+      const res = await csrfFetch(`/api/admin/articles/${slug}`, { method: "DELETE" });
       if (!res.ok) throw new Error("Delete failed");
       toast.success("Article deleted");
       router.push("/admin/blog");
@@ -215,10 +234,10 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
     try {
       const formData = new FormData();
       formData.append("file", file);
-      const res = await fetch("/api/admin/upload", { method: "POST", body: formData });
+      const res = await csrfFetch("/api/admin/upload", { method: "POST", body: formData });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Upload failed");
-      if (data.url) setFeaturedImage(data.url);
+      if (!res.ok) throw new Error(data.message || "Upload failed");
+      if (data.data?.url) setFeaturedImage(data.data.url);
       toast.success("Image uploaded");
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Upload failed";
@@ -230,9 +249,9 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
   }
 
   const tabs: { id: Tab; label: string; icon: React.ReactNode }[] = [
-    { id: "content", label: "Content", icon: <FileText className="w-3.5 h-3.5" /> },
+    { id: "content", label: "Nội Dung", icon: <FileText className="w-3.5 h-3.5" /> },
     { id: "seo", label: "SEO", icon: <Globe className="w-3.5 h-3.5" /> },
-    { id: "settings", label: "Settings", icon: <Settings2 className="w-3.5 h-3.5" /> },
+    { id: "settings", label: "Cài Đặt", icon: <Settings2 className="w-3.5 h-3.5" /> },
   ];
 
   const plainText = content.replace(/<[^>]*>/g, "");
@@ -263,7 +282,7 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
         <div className="absolute top-0 left-1/3 w-[500px] h-[500px] bg-fortress-gold/4 rounded-full blur-[140px] pointer-events-none" />
         <div className="absolute bottom-1/3 right-0 w-[400px] h-[400px] bg-blue-600/4 rounded-full blur-[120px] pointer-events-none" />
 
-        <AdminNavbar title={isNew ? "New Article" : "Edit Article"} />
+        <AdminNavbar title={isNew ? "Tạo Bài Viết Mới" : "Chỉnh Sửa Bài Viết"} />
 
         <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 relative z-10">
 
@@ -271,7 +290,7 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
           {loadError && (
             <div className="mb-5 flex items-center gap-3 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-sm text-red-400">
               <AlertCircle className="w-4 h-4 shrink-0" />
-              Article not found or failed to load. <Link href="/admin/blog" className="underline ml-1">Back to list</Link>
+              Không tìm thấy bài viết hoặc tải thất bại. <Link href="/admin/blog" className="underline ml-1">Quay lại danh sách</Link>
             </div>
           )}
 
@@ -282,14 +301,14 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                 href="/admin/blog"
                 className="flex items-center gap-2 px-3 py-2 border border-white/10 text-fortress-silver/60 hover:text-fortress-gold hover:border-fortress-gold/30 text-xs font-medium transition-all rounded-lg"
               >
-                <ArrowLeft className="w-3.5 h-3.5" /> Back
+                <ArrowLeft className="w-3.5 h-3.5" /> Quay lại
               </Link>
               <div>
                 <h1 className="text-lg font-bold text-fortress-ivory tracking-tight">
-                  {isNew ? "Create New Article" : "Edit Article"}
+                  {isNew ? "Tạo Bài Viết Mới" : "Chỉnh Sửa Bài Viết"}
                 </h1>
                 <p className="text-fortress-silver/40 text-xs mt-0.5">
-                  {isNew ? "Write and publish a new insight" : `/${slug}`}
+                  {isNew ? "Viết và xuất bản bài viết mới" : `/${slug}`}
                 </p>
               </div>
             </div>
@@ -301,13 +320,13 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                   onClick={() => setStatus("draft")}
                   className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all ${status === "draft" ? "bg-amber-500/20 text-amber-400 border border-amber-500/30" : "text-fortress-silver/50 hover:text-fortress-ivory"}`}
                 >
-                  Draft
+                  Bản Nháp
                 </button>
                 <button
                   onClick={() => setStatus("published")}
                   className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all ${status === "published" ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" : "text-fortress-silver/50 hover:text-fortress-ivory"}`}
                 >
-                  Published
+                  Xuất Bản
                 </button>
               </div>
 
@@ -317,7 +336,7 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                   className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-fortress-silver/60 text-sm hover:border-red-500/40 hover:text-red-400 hover:bg-red-500/10 transition-all rounded-lg"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline">Delete</span>
+                  <span className="hidden sm:inline">Xóa</span>
                 </button>
               )}
 
@@ -327,7 +346,7 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                 className="flex items-center gap-2 px-5 py-2.5 bg-fortress-gold text-fortress-navy text-sm font-bold hover:bg-fortress-champagne transition-all disabled:opacity-50 disabled:cursor-not-allowed rounded-lg shadow-lg shadow-fortress-gold/10"
               >
                 <Save className="w-3.5 h-3.5" />
-                {saving ? "Saving…" : "Save"}
+                {saving ? "Đang lưu…" : "Lưu"}
               </button>
             </div>
           </div>
@@ -340,12 +359,12 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
 
               {/* Title field */}
               <div className="bg-[#07111D]/60 backdrop-blur-xl border border-white/5 rounded-xl p-5">
-                <label className="block text-[10px] font-bold text-fortress-silver/40 uppercase tracking-widest mb-3">Article Title</label>
+                <label className="block text-[10px] font-bold text-fortress-silver/40 uppercase tracking-widest mb-3">Tiêu Đề Bài Viết</label>
                 <input
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  placeholder="Enter a compelling headline..."
+                  placeholder="Nhập tiêu đề bài viết..."
                   className="w-full bg-transparent text-fortress-ivory text-xl font-bold placeholder:text-fortress-silver/20 focus:outline-none border-b border-white/5 pb-3 focus:border-fortress-gold/30 transition-colors"
                 />
                 {title && (
@@ -358,13 +377,13 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
               {/* Excerpt */}
               <div className="bg-[#07111D]/60 backdrop-blur-xl border border-white/5 rounded-xl p-5">
                 <div className="flex items-center justify-between mb-3">
-                  <label className="text-[10px] font-bold text-fortress-silver/40 uppercase tracking-widest">Excerpt / Summary</label>
+                  <label className="text-[10px] font-bold text-fortress-silver/40 uppercase tracking-widest">Tóm Tắt Bài Viết</label>
                   <span className={`text-[10px] font-medium ${excerpt.length > 200 ? "text-red-400" : "text-fortress-silver/30"}`}>{excerpt.length}/200</span>
                 </div>
                 <textarea
                   value={excerpt}
                   onChange={(e) => setExcerpt(e.target.value)}
-                  placeholder="A brief summary shown in article cards and search results..."
+                  placeholder="Mô tả ngắn hiển thị trong card và kết quả tìm kiếm..."
                   rows={3}
                   className="w-full bg-transparent text-fortress-ivory text-sm placeholder:text-fortress-silver/20 focus:outline-none resize-none leading-relaxed"
                 />
@@ -378,18 +397,18 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                       key={t.id}
                       onClick={() => setActiveTab(t.id)}
                       className={`flex items-center gap-2 px-4 sm:px-5 py-3.5 text-xs font-semibold transition-all border-b-2 shrink-0 ${
-                        activeTab === t.id
-                          ? "border-fortress-gold text-fortress-gold bg-fortress-gold/5"
-                          : "border-transparent text-fortress-silver/40 hover:text-fortress-ivory hover:bg-white/5"
-                      }`}
-                    >
-                      {t.icon} {t.label}
-                    </button>
-                  ))}
-                  <div className="ml-auto flex items-center px-2 sm:px-4 gap-2 sm:gap-3 text-[9px] sm:text-[10px] text-fortress-silver/30 border-b-2 border-transparent shrink-0">
-                    <span className="whitespace-nowrap">{wordCount} words</span>
-                    <span className="whitespace-nowrap">{charCount} chars</span>
-                  </div>
+                          activeTab === t.id
+                            ? "border-fortress-gold text-fortress-gold bg-fortress-gold/5"
+                            : "border-transparent text-fortress-silver/40 hover:text-fortress-ivory hover:bg-white/5"
+                        }`}
+                      >
+                        {t.icon} {t.label}
+                      </button>
+                    ))}
+                    <div className="ml-auto flex items-center px-2 sm:px-4 gap-2 sm:gap-3 text-[9px] sm:text-[10px] text-fortress-silver/30 border-b-2 border-transparent shrink-0">
+                      <span className="whitespace-nowrap">{wordCount} từ</span>
+                      <span className="whitespace-nowrap">{charCount} ký tự</span>
+                    </div>
                 </div>
 
                 <div className="p-5">
@@ -401,40 +420,40 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                     <div className="space-y-5">
                       <div className="p-4 bg-blue-500/5 border border-blue-500/10 rounded-lg text-xs text-blue-400/80 flex items-start gap-2">
                         <Globe className="w-3.5 h-3.5 shrink-0 mt-0.5" />
-                        Controls how your article appears in Google search results. Falls back to title & excerpt if empty.
+                        Kiểm soát cách bài viết hiển thị trên Google. Nếu để trống, hệ thống sẽ dùng tiêu đề và tóm tắt mặc định.
                       </div>
                       <div>
                         <div className="flex items-center justify-between mb-2">
-                          <label className="text-[10px] font-bold text-fortress-silver/40 uppercase tracking-widest">Meta Title</label>
+                          <label className="text-[10px] font-bold text-fortress-silver/40 uppercase tracking-widest">Tiêu Đề SEO</label>
                           <span className={`text-[10px] font-medium ${seoTitle.length > 60 ? "text-red-400" : "text-fortress-silver/30"}`}>{seoTitle.length}/60</span>
                         </div>
                         <input
                           type="text"
                           value={seoTitle}
                           onChange={(e) => setSeoTitle(e.target.value)}
-                          placeholder={title || "Enter SEO title…"}
+                          placeholder={title || "Nhập tiêu đề SEO…"}
                           className="w-full bg-white/5 border border-white/10 text-fortress-ivory text-sm px-4 py-3 focus:outline-none focus:border-fortress-gold/40 transition-colors rounded-lg placeholder:text-fortress-silver/20"
                         />
                       </div>
                       <div>
                         <div className="flex items-center justify-between mb-2">
-                          <label className="text-[10px] font-bold text-fortress-silver/40 uppercase tracking-widest">Meta Description</label>
+                          <label className="text-[10px] font-bold text-fortress-silver/40 uppercase tracking-widest">Mô Tả SEO</label>
                           <span className={`text-[10px] font-medium ${seoDescription.length > 160 ? "text-red-400" : "text-fortress-silver/30"}`}>{seoDescription.length}/160</span>
                         </div>
                         <textarea
                           value={seoDescription}
                           onChange={(e) => setSeoDescription(e.target.value)}
-                          placeholder={excerpt || "Enter meta description…"}
+                          placeholder={excerpt || "Nhập mô tả meta…"}
                           rows={3}
                           className="w-full bg-white/5 border border-white/10 text-fortress-ivory text-sm px-4 py-3 focus:outline-none focus:border-fortress-gold/40 transition-colors resize-none rounded-lg placeholder:text-fortress-silver/20"
                         />
                       </div>
                       {(seoTitle || title) && (
                         <div className="p-4 bg-white/5 border border-white/5 rounded-lg">
-                          <p className="text-[10px] font-bold text-fortress-silver/30 uppercase tracking-widest mb-3">Search Preview</p>
+                          <p className="text-[10px] font-bold text-fortress-silver/30 uppercase tracking-widest mb-3">Xem Trước Trên Google</p>
                           <p className="text-blue-400 text-base font-medium leading-snug truncate">{seoTitle || title}</p>
                           <p className="text-green-500/70 text-xs mt-0.5">fortressih.com › insights › {isNew ? generateSlug(title) : slug}</p>
-                          <p className="text-fortress-silver/50 text-xs mt-1 line-clamp-2 leading-relaxed">{seoDescription || excerpt || "No description provided."}</p>
+                          <p className="text-fortress-silver/50 text-xs mt-1 line-clamp-2 leading-relaxed">{seoDescription || excerpt || "Chưa có mô tả."}</p>
                         </div>
                       )}
                     </div>
@@ -444,7 +463,7 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                     <div className="space-y-5">
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                         <div>
-                          <label className="flex items-center gap-1.5 text-[10px] font-bold text-fortress-silver/40 uppercase tracking-widest mb-2"><Tag className="w-3 h-3" /> Category</label>
+                          <label className="flex items-center gap-1.5 text-[10px] font-bold text-fortress-silver/40 uppercase tracking-widest mb-2"><Tag className="w-3 h-3" /> Danh Mục</label>
                           <select
                             value={category}
                             onChange={(e) => setCategory(e.target.value)}
@@ -454,7 +473,7 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                           </select>
                         </div>
                         <div>
-                          <label className="flex items-center gap-1.5 text-[10px] font-bold text-fortress-silver/40 uppercase tracking-widest mb-2"><Clock className="w-3 h-3" /> Read Time</label>
+                          <label className="flex items-center gap-1.5 text-[10px] font-bold text-fortress-silver/40 uppercase tracking-widest mb-2"><Clock className="w-3 h-3" /> Thời Gian Đọc</label>
                           <input
                             type="text"
                             value={readTime}
@@ -464,7 +483,7 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                         </div>
                       </div>
                       <div>
-                        <label className="flex items-center gap-1.5 text-[10px] font-bold text-fortress-silver/40 uppercase tracking-widest mb-2"><Tag className="w-3 h-3" /> Tags</label>
+                        <label className="flex items-center gap-1.5 text-[10px] font-bold text-fortress-silver/40 uppercase tracking-widest mb-2"><Tag className="w-3 h-3" /> Thẻ Tags</label>
                         <div className="flex flex-wrap gap-1.5 mb-2">
                           {tags.map((tag, i) => (
                             <span key={i} className="flex items-center gap-1 text-[11px] bg-fortress-gold/10 text-fortress-gold border border-fortress-gold/20 px-2 py-1 rounded">
@@ -487,7 +506,7 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                                 setTagInput("");
                               }
                             }}
-                            placeholder="Type a tag and press Enter"
+                            placeholder="Nhập tag và nhấn Enter"
                             className="flex-1 bg-white/5 border border-white/10 text-fortress-ivory text-sm px-4 py-3 focus:outline-none focus:border-fortress-gold/40 transition-colors rounded-lg placeholder:text-fortress-silver/20"
                           />
                           <button
@@ -499,19 +518,19 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                             }}
                             className="px-4 py-3 bg-fortress-gold/20 text-fortress-gold text-sm font-semibold border border-fortress-gold/30 rounded-lg hover:bg-fortress-gold/30 transition-colors"
                           >
-                            Add
+                            Thêm
                           </button>
                         </div>
                       </div>
                       <div className="sm:hidden">
-                        <label className="block text-[10px] font-bold text-fortress-silver/40 uppercase tracking-widest mb-2">Publish Status</label>
+                        <label className="block text-[10px] font-bold text-fortress-silver/40 uppercase tracking-widest mb-2">Trạng Thái Xuất Bản</label>
                         <select
                           value={status}
                           onChange={(e) => setStatus(e.target.value as "draft" | "published")}
                           className="w-full bg-white/5 border border-white/10 text-fortress-ivory text-sm px-4 py-3 focus:outline-none focus:border-fortress-gold/40 transition-colors rounded-lg appearance-none"
                         >
-                          <option value="draft">Draft</option>
-                          <option value="published">Published</option>
+                          <option value="draft">Bản Nháp</option>
+                          <option value="published">Xuất Bản</option>
                         </select>
                       </div>
                     </div>
@@ -523,23 +542,61 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
             {/* Right sidebar */}
             <div className="hidden lg:flex flex-col gap-4 w-72 shrink-0">
 
+              {/* AI Assistant Panel */}
+              <AiAssistPanel
+                actions={BLOG_AI_ACTIONS}
+                formValues={{
+                  title,
+                  excerpt,
+                  content,
+                  category,
+                  topic: title,
+                  selected_text: "",
+                  word_count: String(wordCount),
+                }}
+                lang="vi"
+                onApply={(action, result) => {
+                  if (action === "blog_title") {
+                    // First line as title
+                    setTitle(result.split("\n")[0].replace(/^[-•*\d.]\s*/, "").trim());
+                  } else if (action === "blog_excerpt") {
+                    setExcerpt(result.slice(0, 200));
+                  } else if (action === "blog_content" || action === "blog_continue" || action === "blog_improve") {
+                    setContent((prev) => (action === "blog_continue" ? prev + "\n" + result : result));
+                  } else if (action === "blog_seo_title") {
+                    setSeoTitle(result.slice(0, 60));
+                  } else if (action === "blog_seo_desc") {
+                    setSeoDescription(result.slice(0, 160));
+                  } else if (action === "blog_tags") {
+                    const newTags = result.split(/[,\n]/).map((t) => t.trim()).filter(Boolean);
+                    setTags((prev) => [...new Set([...prev, ...newTags])]);
+                  } else if (action === "blog_readtime") {
+                    setReadTime(result.trim());
+                  } else {
+                    // Generic: copy to clipboard + show toast
+                    navigator.clipboard.writeText(result);
+                    toast.success("Kết quả AI đã được sao chép vào clipboard");
+                  }
+                }}
+              />
+
               {/* Publish */}
               <div className="bg-[#07111D]/60 backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden">
                 <div className="px-4 py-3 border-b border-white/5 flex items-center gap-2">
                   <Layers className="w-3.5 h-3.5 text-fortress-gold" />
-                  <h3 className="text-xs font-bold text-fortress-ivory uppercase tracking-widest">Publish</h3>
+                  <h3 className="text-xs font-bold text-fortress-ivory uppercase tracking-widest">Xuất Bản</h3>
                 </div>
                 <div className="p-4 space-y-4">
                   <div className="flex items-center gap-2">
                     <div className={`w-2 h-2 rounded-full ${status === "published" ? "bg-emerald-400" : "bg-amber-400"}`} />
-                    <span className="text-sm font-semibold text-fortress-ivory capitalize">{status}</span>
+                    <span className="text-sm font-semibold text-fortress-ivory">{status === "published" ? "Đã xuất bản" : "Bản nháp"}</span>
                   </div>
                   <div className="flex gap-2">
                     {(["draft", "published"] as const).map((s) => (
                       <button
                         key={s}
                         onClick={() => setStatus(s)}
-                        className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-all border capitalize ${
+                        className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-all border ${
                           status === s
                             ? s === "published"
                               ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/30"
@@ -547,7 +604,7 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                             : "border-white/10 text-fortress-silver/50 hover:border-white/20 hover:text-fortress-ivory"
                         }`}
                       >
-                        {s === "draft" ? "Draft" : "Publish"}
+                        {s === "draft" ? "Bản Nháp" : "Xuất Bản"}
                       </button>
                     ))}
                   </div>
@@ -557,14 +614,14 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                     className="w-full flex items-center justify-center gap-2 py-3 bg-fortress-gold text-fortress-navy text-sm font-bold hover:bg-fortress-champagne transition-all disabled:opacity-50 disabled:cursor-not-allowed rounded-lg"
                   >
                     <Save className="w-3.5 h-3.5" />
-                    {saving ? "Saving…" : "Save Article"}
+                    {saving ? "Đang lưu…" : "Lưu Bài Viết"}
                   </button>
                   {!isNew && (
                     <button
                       onClick={() => setShowDeleteModal(true)}
                       className="w-full flex items-center justify-center gap-2 py-2.5 border border-white/10 text-fortress-silver/50 text-xs font-medium hover:border-red-500/30 hover:text-red-400 hover:bg-red-500/5 transition-all rounded-lg"
                     >
-                      <Trash2 className="w-3.5 h-3.5" /> Delete Article
+                      <Trash2 className="w-3.5 h-3.5" /> Xóa Bài Viết
                     </button>
                   )}
                 </div>
@@ -574,7 +631,7 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
               <div className="bg-[#07111D]/60 backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden">
                 <div className="px-4 py-3 border-b border-white/5 flex items-center gap-2">
                   <ImageIcon className="w-3.5 h-3.5 text-fortress-gold" />
-                  <h3 className="text-xs font-bold text-fortress-ivory uppercase tracking-widest">Featured Image</h3>
+                  <h3 className="text-xs font-bold text-fortress-ivory uppercase tracking-widest">Ảnh Bìa</h3>
                 </div>
                 <div className="p-4">
                   {featuredImage ? (
@@ -602,8 +659,8 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                         <>
                           <Upload className="w-6 h-6 text-fortress-silver/30" />
                           <div className="text-center">
-                            <p className="text-xs text-fortress-silver/60 font-medium">Click to upload</p>
-                            <p className="text-[10px] text-fortress-silver/30">PNG, JPG, WebP up to 5MB</p>
+                            <p className="text-xs text-fortress-silver/60 font-medium">Nhấn để tải ảnh lên</p>
+                            <p className="text-[10px] text-fortress-silver/30">PNG, JPG, WebP tối đa 5MB</p>
                           </div>
                         </>
                       )}
@@ -623,7 +680,7 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
               <div className="bg-[#07111D]/60 backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden">
                 <div className="px-4 py-3 border-b border-white/5 flex items-center gap-2">
                   <Tag className="w-3.5 h-3.5 text-fortress-gold" />
-                  <h3 className="text-xs font-bold text-fortress-ivory uppercase tracking-widest">Category & Metadata</h3>
+                  <h3 className="text-xs font-bold text-fortress-ivory uppercase tracking-widest">Danh Mục & Thông Tin</h3>
                 </div>
                 <div className="p-4 space-y-3">
                   <div className="relative">
@@ -657,7 +714,7 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                   target="_blank"
                   className="flex items-center justify-center gap-2 py-2.5 border border-white/10 text-fortress-silver/50 text-xs font-medium hover:border-fortress-gold/30 hover:text-fortress-gold transition-all rounded-xl"
                 >
-                  <Eye className="w-3.5 h-3.5" /> Preview Live Article
+                  <Eye className="w-3.5 h-3.5" /> Xem Bài Viết Trực Tiếp
                 </Link>
               )}
             </div>

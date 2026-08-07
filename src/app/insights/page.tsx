@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function InsightsPage() {
   return (
-    <main className="min-h-screen bg-[#F8F9FB]">
+    <main className="min-h-screen bg-[#F8F9FB] pb-safe md:pb-0">
       <InsightsClient />
     </main>
   );

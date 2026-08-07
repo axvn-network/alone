@@ -3,12 +3,9 @@
 import { motion } from "framer-motion";
 import Stagger from "@/components/animations/Stagger";
 import StaggerItem from "@/components/animations/StaggerItem";
-
-const commitments = [
-  { title: "Nhận Diện Cơ Hội", desc: "Tìm kiếm và sàng lọc các cơ hội tiềm năng nhất thuộc các ngành trọng điểm.", number: "01" },
-  { title: "Thẩm Định Chuyên Sâu", desc: "Đánh giá chi tiết rủi ro, sức mạnh thị trường và tiềm năng tạo giá trị.", number: "02" },
-  { title: "Đột Phá Tăng Trưởng", desc: "Thúc đẩy giá trị vốn và dòng tiền dài hạn thông qua quản trị và nguồn lực.", number: "03" },
-];
+import { usePageContent } from "@/hooks/usePageContent";
+import { useLang } from "@/contexts/LangContext";
+import { t } from "@/lib/i18n";
 
 const cardVariants = {
   rest: { y: 0, borderColor: "rgba(201,162,74,0.10)" },
@@ -25,25 +22,31 @@ const sectionReveal = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const } },
 };
 
-import { usePageContent } from "@/hooks/usePageContent";
-import { useLang } from "@/contexts/LangContext";
-import { t } from "@/lib/i18n";
-
 const defaultPhilData: {
-  philTag: string; philTitle: string; philDesc: string; philQuote: string;
+  philTag: string;
+  philTitle: string;
+  philDesc: string;
+  philQuote: string;
   philCommitments: { title: string; desc: string; number: string }[];
 } = {
-  philTag: "", philTitle: "", philDesc: "", philQuote: "", philCommitments: commitments,
+  philTag: "", philTitle: "", philDesc: "", philQuote: "", philCommitments: [],
 };
 
 export default function Philosophy() {
   const { content } = usePageContent("home", defaultPhilData);
   const { lang } = useLang();
-  const philTag = content.philTag || t("philosophy.tag", lang);
+
+  const philTag   = content.philTag   || t("philosophy.tag",   lang);
   const philTitle = content.philTitle || t("philosophy.title", lang);
-  const philDesc = content.philDesc || t("philosophy.desc", lang);
+  const philDesc  = content.philDesc  || t("philosophy.desc",  lang);
   const philQuote = content.philQuote || t("philosophy.quote", lang);
-  const commitmentList = content.philCommitments && Array.isArray(content.philCommitments) ? content.philCommitments : commitments;
+
+  // Nguồn duy nhất: CMS → i18n commitments — không hardcode ở đây
+  const i18nCommitments = (t("philosophy.commitments", lang) as unknown as { title: string; desc: string; number: string }[] | string);
+  const fallbackCommitments = Array.isArray(i18nCommitments) ? i18nCommitments : [];
+  const commitmentList = (content.philCommitments && Array.isArray(content.philCommitments) && content.philCommitments.length > 0)
+    ? content.philCommitments
+    : fallbackCommitments;
 
   return (
     <motion.section
@@ -58,24 +61,23 @@ export default function Philosophy() {
         <div className="max-w-[900px] mx-auto">
           <Stagger>
             <StaggerItem>
-              <span
-                className="block text-center text-fortress-gold uppercase mb-6 font-semibold tracking-[6px]"
-                style={{ fontSize: "clamp(0.625rem, 0.5vw + 0.45rem, 0.75rem)" }}
-              >
-                {philTag}
-              </span>
+              <div className="flex items-center justify-center gap-3 mb-6">
+                <div className="w-6 h-px bg-fortress-gold/60" />
+                <span className="section-tag">{philTag}</span>
+                <div className="w-6 h-px bg-fortress-gold/60" />
+              </div>
             </StaggerItem>
             <StaggerItem>
               <h2
-                className="text-fortress-ivory text-center font-light mb-6 md:mb-8 uppercase tracking-tight leading-tight"
-                style={{ fontSize: "var(--text-h2)" }}
+                className="text-fortress-ivory text-center font-light mb-7 md:mb-9 uppercase leading-[1.28]"
+                style={{ fontSize: "var(--text-h2)", letterSpacing: "var(--tracking-heading)" }}
               >
                 {philTitle}
               </h2>
             </StaggerItem>
             <StaggerItem>
               <p
-                className="text-fortress-silver/80 leading-relaxed text-center max-w-[700px] mx-auto mb-10 md:mb-14"
+                className="text-fortress-silver/80 leading-[1.8] text-center max-w-[680px] mx-auto mb-12 md:mb-16"
                 style={{ fontSize: "var(--text-lead)" }}
               >
                 {philDesc}
@@ -83,9 +85,9 @@ export default function Philosophy() {
             </StaggerItem>
             <StaggerItem>
               <div className="grid md:grid-cols-3 gap-6 md:gap-8">
-                {commitmentList.map((item) => (
+                {commitmentList.map((item, i) => (
                   <motion.div
-                    key={item.title}
+                    key={i}
                     variants={cardVariants}
                     initial="rest"
                     whileHover="hover"
@@ -93,20 +95,20 @@ export default function Philosophy() {
                     style={{ padding: "clamp(1.25rem, 2vw + 0.5rem, 2rem)" }}
                   >
                     <motion.span
-                      className="text-fortress-gold/40 font-light block mb-5 leading-none"
-                      style={{ fontSize: "clamp(2.5rem, 3vw + 1rem, 3.5rem)" }}
-                      whileHover={{ color: "rgba(201,162,74,0.75)", scale: 1.05 }}
-                      transition={{ duration: 0.25 }}
+                      className="text-fortress-gold/30 font-thin block mb-5 leading-none tracking-tight"
+                      style={{ fontSize: "clamp(3rem, 4vw + 1rem, 4.5rem)" }}
+                      whileHover={{ color: "rgba(201,162,74,0.7)", scale: 1.04 }}
+                      transition={{ duration: 0.2 }}
                     >
                       {item.number}
                     </motion.span>
                     <h3
-                      className="font-semibold text-fortress-ivory mb-4"
+                      className="font-semibold text-fortress-ivory mb-4 leading-[1.4]"
                       style={{ fontSize: "var(--text-h3)" }}
                     >
                       {item.title}
                     </h3>
-                    <p className="text-fortress-silver/70 leading-relaxed" style={{ fontSize: "var(--text-body)" }}>
+                    <p className="text-fortress-silver/70 leading-[1.8]" style={{ fontSize: "var(--text-body)" }}>
                       {item.desc}
                     </p>
                   </motion.div>
@@ -114,12 +116,14 @@ export default function Philosophy() {
               </div>
             </StaggerItem>
             <StaggerItem>
-              <p
-                className="text-fortress-silver/50 leading-relaxed text-center max-w-[600px] mx-auto mt-8 md:mt-12 italic"
-                style={{ fontSize: "var(--text-body)" }}
-              >
-                {philQuote}
-              </p>
+              <div className="mt-10 md:mt-14 flex justify-center">
+                <p
+                  className="text-fortress-silver/45 leading-[1.8] text-center max-w-[560px] italic border-t border-fortress-gold/10 pt-8"
+                  style={{ fontSize: "var(--text-body)" }}
+                >
+                  {philQuote}
+                </p>
+              </div>
             </StaggerItem>
           </Stagger>
         </div>

@@ -1,13 +1,20 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Plus_Jakarta_Sans } from "next/font/google";
-import WhatsAppButton from "@/components/WhatsAppButton";
+import { Be_Vietnam_Pro, Plus_Jakarta_Sans } from "next/font/google";
+import FloatingChatButtons from "@/components/FloatingChatButtons";
 import CustomCursor from "@/components/CustomCursor";
 import AnimationProvider from "@/components/AnimationProvider";
 import GlobalNavbar from "@/components/GlobalNavbar";
 import GlobalFooter from "@/components/GlobalFooter";
 import { LangProvider } from "@/contexts/LangContext";
 import "./globals.css";
+
+const beVietnamPro = Be_Vietnam_Pro({
+  subsets: ["vietnamese", "latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-be-vietnam",
+  display: "swap",
+});
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["vietnamese", "latin"],
@@ -72,7 +79,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi" className={`dark ${plusJakartaSans.variable}`} suppressHydrationWarning>
+    <html lang="vi" className={`dark ${beVietnamPro.variable} ${plusJakartaSans.variable}`} suppressHydrationWarning>
       <head>
         {/* Google Analytics */}
         <Script
@@ -108,16 +115,20 @@ export default function RootLayout({
         />
       </head>
       <body
-        className="antialiased bg-fortress-navy text-fortress-silver cursor-none pb-[72px] md:pb-0"
+        className="antialiased bg-fortress-navy text-fortress-silver cursor-none"
+        style={{
+          paddingBottom: "calc(4.5rem + env(safe-area-inset-bottom, 0px))",
+        }}
         suppressHydrationWarning
       >
+        <style>{`@media (min-width: 768px) { body { padding-bottom: 0 !important; } }`}</style>
         <LangProvider>
           <AnimationProvider>
             <CustomCursor />
             <GlobalNavbar />
             {children}
             <GlobalFooter />
-            <WhatsAppButton />
+            <FloatingChatButtons />
           </AnimationProvider>
         </LangProvider>
       </body>
