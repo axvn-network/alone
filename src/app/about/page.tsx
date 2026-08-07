@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { Shield, Eye, Target, Award, Users, Scale, Lock, Hexagon, Heart } from "lucide-react";
+import Link from "next/link";
+import { Shield, Eye, Target, Award, Users, Scale, Lock, Hexagon, Heart, ArrowRight, CheckCircle2 } from "lucide-react";
 import Reveal from "@/components/animations/Reveal";
 import Stagger from "@/components/animations/Stagger";
 import StaggerItem from "@/components/animations/StaggerItem";
@@ -8,13 +9,13 @@ import SectionHeader from "@/components/SectionHeader";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Giới Thiệu",
+  title: "Về Chúng Tôi",
   description:
-    "Tìm hiểu về tầm nhìn, sứ mệnh, giá trị cốt lõi và đội ngũ lãnh đạo của Fortress Investment Holdings — tập đoàn đầu tư tiên phong trong FinTech, tài sản mã hóa hợp pháp và kinh tế số Việt Nam.",
+    "Fortress Investment Holdings — đội ngũ đang xây dựng nền tảng giao dịch tài sản mã hóa hợp pháp đầu tiên tại Việt Nam. Tìm hiểu về con người, lý tưởng và hành trình của chúng tôi.",
   openGraph: {
-    title: "Giới Thiệu | Fortress Investment Holdings",
+    title: "Về Chúng Tôi | Fortress Investment Holdings",
     description:
-      "Tầm nhìn, sứ mệnh, giá trị cốt lõi và đội ngũ lãnh đạo của Fortress Investment Holdings — tiên phong FinTech và tài sản mã hóa hợp pháp tại Việt Nam.",
+      "Chúng tôi không xây dựng thứ này để bán. Chúng tôi xây dựng vì tin rằng thị trường tài sản số hợp pháp là nền tảng tài chính thế hệ tiếp theo của Việt Nam.",
   },
 };
 
@@ -68,27 +69,27 @@ export default function AboutPage() {
         tag="Về Chúng Tôi"
         heading={
           <>
-            Vốn Toàn Cầu.{" "}
+            Con Người.{" "}
             <span className="font-bold bg-gradient-to-r from-fortress-gold to-fortress-champagne bg-clip-text text-transparent">
-              FinTech & Tài Sản Số.
+              Lý Tưởng.
             </span>
             <br />
-            Kinh Tế Số{" "}
+            Hành Trình{" "}
             <span className="font-bold bg-gradient-to-r from-fortress-gold to-fortress-champagne bg-clip-text text-transparent">
-              Việt Nam.
+              Xây Dựng.
             </span>
           </>
         }
-        description="Fortress Investment Holdings kết nối nguồn vốn quốc tế với cơ hội tại Việt Nam — tiên phong đầu tư vào FinTech, dịch vụ tài sản mã hóa hợp pháp, AI và EdTech, đón đầu Nghị quyết 5/2025/NQ-CP có hiệu lực từ 9/9/2025."
+        description="Fortress Investment Holdings được xây dựng bởi những người tin rằng thị trường tài sản số hợp pháp là nền tảng tài chính thế hệ tiếp theo của Việt Nam — và quyết định hành động thay vì chờ đợi."
       />
 
       {/* ── Giới thiệu công ty ── */}
       <Section dark id="about">
         <Reveal className="max-w-3xl mx-auto text-center">
           <SectionHeader
-            tag="Tổng Quan"
-            heading="Cầu Nối Giữa Vốn Quốc Tế Và Kinh Tế Số Việt Nam"
-            description="Fortress Investment Holdings là tập đoàn đầu tư công nghệ có trụ sở tại Dubai, UAE — đặt Việt Nam và hệ sinh thái tài sản mã hóa hợp pháp là trọng tâm chiến lược. Chúng tôi tiên phong đầu tư vào FinTech, dịch vụ tài sản mã hóa được cấp phép, AI và EdTech — bám sát Nghị quyết 5/2025/NQ-CP có hiệu lực từ 9/9/2025."
+            tag="Chúng Tôi Là Ai"
+            heading="Không Phải Công Ty Đầu Tư Truyền Thống — Là Nhóm Người Đang Xây Dựng"
+            description="Fortress Investment Holdings có trụ sở tại Dubai, UAE và hoạt động tại Việt Nam. Chúng tôi không tìm kiếm thương vụ — chúng tôi đang kiến tạo từ đầu sàn giao dịch tài sản mã hóa hợp pháp đầu tiên theo NQ 05/2025/NQ-CP. Đây là dự án dài hạn, được xây dựng bởi người có lý tưởng, không phải bởi người chỉ nhìn thấy lợi nhuận ngắn hạn."
             dark
           />
         </Reveal>
@@ -97,7 +98,7 @@ export default function AboutPage() {
       {/* ── Tầm nhìn & Sứ mệnh ── */}
       <Section id="mission">
         <Reveal className="text-center mb-10 md:mb-14">
-          <SectionHeader tag="Định Hướng Chiến Lược" heading="Tầm Nhìn & Sứ Mệnh" />
+          <SectionHeader tag="Tại Sao Chúng Tôi Ở Đây" heading="Lý Do Và Mục Đích" />
         </Reveal>
         <Stagger className="grid md:grid-cols-2 gap-5 md:gap-8">
           <StaggerItem className="bg-fortress-navy border border-fortress-gold/10 hover:border-fortress-gold/30 transition-all duration-300 rounded-2xl p-7 md:p-10">
@@ -109,10 +110,10 @@ export default function AboutPage() {
               className="font-semibold text-fortress-ivory mb-4 leading-snug"
               style={{ fontSize: "var(--text-h3)" }}
             >
-              Trở Thành Cổng Đầu Tư FinTech & Tài Sản Mã Hóa Hàng Đầu Kết Nối Việt Nam Với Thế Giới
+              Thị Trường Tài Sản Số Hợp Pháp Là Nền Tảng Tài Chính Thế Hệ Tiếp Theo Của Việt Nam
             </h3>
             <p className="text-fortress-silver/80 leading-[1.8]" style={{ fontSize: "var(--text-body)" }}>
-              Được công nhận là đối tác đầu tư tin cậy cho doanh nghiệp FinTech, dịch vụ tài sản mã hóa được cấp phép, EdTech và nhà đầu tư muốn tiếp cận hệ sinh thái tài sản số hợp pháp đầu tiên của Việt Nam — được xây dựng trên nền tảng minh bạch, tuân thủ pháp lý và giá trị thực sự đo lường được.
+              Không phải vì đây là xu hướng. Vì đây là tất yếu. Với 100 triệu dân, tỷ lệ sở hữu crypto cao nhất Đông Nam Á nhưng chưa có một sàn giao dịch hợp pháp — thị trường này cần được xây dựng đúng, bởi người có trách nhiệm. Fortress ở đây để làm điều đó.
             </p>
           </StaggerItem>
 
@@ -125,10 +126,10 @@ export default function AboutPage() {
               className="font-semibold text-fortress-ivory mb-4 leading-snug"
               style={{ fontSize: "var(--text-h3)" }}
             >
-              Đầu Tư Có Kỷ Luật. Tuân Thủ Pháp Lý. Tạo Giá Trị Bền Vững.
+              Xây Dựng Đúng. Kỷ Luật. Minh Bạch. Để Tồn Tại Lâu Dài.
             </h3>
             <p className="text-fortress-silver/80 leading-[1.8]" style={{ fontSize: "var(--text-body)" }}>
-              Kết nối nguồn vốn quốc tế với hệ sinh thái FinTech, tài sản mã hóa hợp pháp và kinh tế số tại Việt Nam. Đồng hành cùng nhà sáng lập, doanh nghiệp và nhà đầu tư để xây dựng những tổ chức thực sự bền vững trong thị trường tài sản mã hóa hợp pháp đầu tiên của Việt Nam theo Nghị quyết 5/2025/NQ-CP.
+              Tập hợp những người cùng lý tưởng — tổ chức tài chính, chuyên gia công nghệ, nhà đầu tư dài hạn — để cùng nhau xây dựng sàn giao dịch tài sản mã hóa đầu tiên được Bộ Tài chính Việt Nam cấp phép theo NQ 05/2025/NQ-CP. Đúng quy trình. Đúng pháp lý. Không đường tắt.
             </p>
           </StaggerItem>
         </Stagger>
@@ -150,9 +151,9 @@ export default function AboutPage() {
               name: "Azzam El-Khatib",
               role: "Nhà Sáng Lập & Tổng Giám Đốc Điều Hành (CEO)",
               bio: [
-                "Azzam El-Khatib lãnh đạo Fortress Investment Holdings với cam kết sâu sắc về tăng trưởng kỷ luật, dịch vụ khách hàng xuất sắc và quản lý đầu tư có trách nhiệm.",
-                "Với mạng lưới rộng khắp tại UAE, GCC và các thị trường quốc tế, Azzam đóng vai trò trung tâm trong việc kiến tạo quan hệ chiến lược và định hình tầm nhìn dài hạn của tập đoàn.",
-                "Phong cách lãnh đạo của ông được định hình bởi kỷ luật, trách nhiệm và triết lý lấy đối tác làm trung tâm — cam kết bảo vệ lợi ích đối tác và kiến tạo giá trị bền vững.",
+                "Azzam El-Khatib xây dựng Fortress từ một niềm tin đơn giản: thị trường tài sản mã hóa hợp pháp tại Việt Nam cần được xây dựng bởi người có trách nhiệm — không phải bởi người chỉ nhìn thấy lợi nhuận.",
+                "Với mạng lưới sâu rộng tại UAE, GCC và các thị trường quốc tế, Azzam mang đến cho Fortress khả năng kết nối vốn và chuyên môn quốc tế với cơ hội thực tế tại Việt Nam.",
+                "Phong cách lãnh đạo của ông được định hình bởi một nguyên tắc: người ta không đi cùng vì bị thuyết phục — họ đi cùng vì nhìn thấy điều tương tự và tin vào hành trình đó.",
               ],
             },
             {
@@ -160,9 +161,9 @@ export default function AboutPage() {
               name: "Serhii Pohrebniak",
               role: "Giám Đốc Chiến Lược Doanh Nghiệp",
               bio: [
-                "Serhii Pohrebniak là bộ óc chiến lược đằng sau tầm nhìn và định hướng phát triển của tập đoàn. Với nền tảng quân ngũ, ông mang đến kỷ luật, kiên cường và trách nhiệm cao trong mọi hoạt động kinh doanh.",
-                "Kinh nghiệm phong phú trong thương trường và cuộc sống giúp ông tiếp cận thách thức với sự rõ ràng, tư duy thực tế và góc nhìn chiến lược dài hạn.",
-                "Ông tin rằng mục tiêu có ý nghĩa chỉ đạt được thông qua kiên trì, kỷ luật và hành động tập trung — triết lý này là nền tảng cho mọi quyết định chiến lược của ông.",
+                "Serhii Pohrebniak là người định hình chiến lược và kiến trúc vận hành của Fortress. Nền tảng quân ngũ của ông không chỉ mang lại kỷ luật — mà còn là tư duy rõ ràng về mục tiêu, rủi ro và cái giá của việc làm sai.",
+                "Ông không tin vào đường tắt hay chiến lược mờ nhạt. Mỗi quyết định được đưa ra trên cơ sở phân tích thực tế, hiểu rõ ràng về những gì đang xây dựng và tại sao nó quan trọng.",
+                "Triết lý của ông: 'Mục tiêu có ý nghĩa thực sự chỉ đạt được bằng kiên trì, không phải bằng nhiệt tình.' Đây là nền tảng văn hóa của Fortress.",
               ],
             },
           ].map((person) => (
@@ -268,6 +269,116 @@ export default function AboutPage() {
             </StaggerItem>
           ))}
         </Stagger>
+      </Section>
+
+      {/* ── Tiến độ dự án ── */}
+      <Section id="progress">
+        <Reveal className="text-center mb-10 md:mb-14">
+          <SectionHeader
+            tag="Tiến Độ Thực Tế"
+            heading="Chúng Tôi Đang Ở Đâu Trên Hành Trình"
+            description="Không phải slide deck. Đây là trạng thái thực tế của dự án — những gì đã hoàn thành, đang thực hiện, và những bước tiếp theo."
+          />
+        </Reveal>
+        <Stagger className="max-w-3xl mx-auto space-y-4">
+          {[
+            {
+              status: "done",
+              phase: "Giai Đoạn 01",
+              title: "Thành Lập & Định Vị",
+              desc: "Fortress Investment Holdings được thành lập tại Dubai, UAE. Đội ngũ sáng lập được tập hợp. Chiến lược pháp lý theo NQ 05/2025/NQ-CP được xác định.",
+            },
+            {
+              status: "done",
+              phase: "Giai Đoạn 02",
+              title: "Nghiên Cứu Pháp Lý & Điều Kiện Cấp Phép",
+              desc: "Nghiên cứu chuyên sâu NQ 05/2025/NQ-CP và QĐ 96/QĐ-BTC. Xác định đầy đủ 12 điều kiện cấp phép. Lộ trình hồ sơ được phác thảo.",
+            },
+            {
+              status: "active",
+              phase: "Giai Đoạn 03",
+              title: "Xây Dựng Liên Minh Đối Tác",
+              desc: "Đang tìm kiếm và đánh giá các đối tác chiến lược — tổ chức tài chính, chuyên gia công nghệ, nhà đầu tư dài hạn — đủ điều kiện tham gia hồ sơ cấp phép.",
+            },
+            {
+              status: "upcoming",
+              phase: "Giai Đoạn 04",
+              title: "Nộp Hồ Sơ Xin Cấp Phép",
+              desc: "Hoàn thiện và nộp hồ sơ lên Bộ Tài chính sau khi đáp ứng đủ điều kiện về vốn điều lệ, đội ngũ và hệ thống kỹ thuật.",
+            },
+            {
+              status: "upcoming",
+              phase: "Giai Đoạn 05",
+              title: "Vận Hành Có Giám Sát",
+              desc: "Sau khi nhận giấy phép, vận hành thí điểm có kiểm soát trong giai đoạn NQ 05/2025 (5 năm) với báo cáo minh bạch định kỳ cho tất cả đối tác.",
+            },
+          ].map((item, i) => (
+            <StaggerItem key={i}>
+              <div className={`flex items-start gap-4 p-5 md:p-6 border rounded-sm transition-all duration-300 ${
+                item.status === "done"
+                  ? "bg-fortress-navy border-fortress-gold/25"
+                  : item.status === "active"
+                  ? "bg-fortress-gold/5 border-fortress-gold/50"
+                  : "bg-white border-fortress-gold/10"
+              }`}>
+                <div className="shrink-0 mt-0.5">
+                  {item.status === "done" ? (
+                    <CheckCircle2 className="w-5 h-5 text-fortress-gold" />
+                  ) : item.status === "active" ? (
+                    <div className="w-5 h-5 rounded-full border-2 border-fortress-gold flex items-center justify-center">
+                      <div className="w-2 h-2 rounded-full bg-fortress-gold animate-pulse" />
+                    </div>
+                  ) : (
+                    <div className="w-5 h-5 rounded-full border border-fortress-gold/30" />
+                  )}
+                </div>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2 mb-1 flex-wrap">
+                    <span className={`text-[10px] font-mono font-bold tracking-widest uppercase ${
+                      item.status === "done" ? "text-fortress-gold" : item.status === "active" ? "text-fortress-gold" : "text-fortress-gold/40"
+                    }`}>{item.phase}</span>
+                    {item.status === "active" && (
+                      <span className="text-[10px] font-bold tracking-wider text-fortress-gold bg-fortress-gold/10 border border-fortress-gold/30 px-2 py-0.5 uppercase">Đang Thực Hiện</span>
+                    )}
+                  </div>
+                  <p className={`font-semibold text-sm mb-1 ${
+                    item.status === "upcoming" ? "text-fortress-charcoal/60" : "text-fortress-ivory"
+                  }`}>{item.title}</p>
+                  <p className={`text-xs leading-relaxed ${
+                    item.status === "upcoming" ? "text-fortress-charcoal/50" : "text-fortress-silver/70"
+                  }`}>{item.desc}</p>
+                </div>
+              </div>
+            </StaggerItem>
+          ))}
+        </Stagger>
+      </Section>
+
+      {/* ── CTA ── */}
+      <Section dark>
+        <Reveal className="text-center max-w-2xl mx-auto">
+          <SectionHeader
+            tag="Cùng Chung Lý Tưởng"
+            heading="Bạn Muốn Đồng Hành?"
+            description="Nếu bạn đọc đến đây và thấy mình đang gật đầu — chúng tôi muốn nói chuyện với bạn. Không phải về tiền. Về hành trình và lý tưởng."
+            dark
+          />
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
+            <Link
+              href="/invest-with-fortress"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-fortress-gold to-fortress-champagne text-fortress-navy font-bold text-sm tracking-widest hover:shadow-2xl hover:shadow-fortress-gold/25 transition-all duration-300"
+            >
+              XEM HÀNH TRÌNH & KẾT NỐI
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 px-8 py-4 border border-fortress-gold/40 text-fortress-gold font-semibold text-sm tracking-widest hover:bg-fortress-gold/10 transition-all duration-300"
+            >
+              LIÊN HỆ TRỰC TIẾP
+            </Link>
+          </div>
+        </Reveal>
       </Section>
     </main>
   );

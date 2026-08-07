@@ -8,90 +8,85 @@ import {
   Building2,
   Send,
   CheckCircle2,
-  Upload,
 } from "lucide-react";
 
 const enquiryTypes = [
   {
-    id: "diversified",
-    label: "Đầu Tư Phân Bổ Đa Ngành",
+    id: "individual",
+    label: "Cá Nhân / Nhà Đầu Tư Dài Hạn",
     icon: PieChart,
-    description: "Xây dựng danh mục đầu tư cân bằng trên nhiều lĩnh vực thông qua một đối tác duy nhất.",
+    description: "Góp vốn, nhận cổ tức, dự ĐHCĐ.",
   },
   {
-    id: "sector-specific",
-    label: "Đầu Tư Vào Lĩnh Vực Cụ Thể",
-    icon: Target,
-    description: "Tập trung nguồn vốn vào lĩnh vực bạn hiểu rõ và tin tưởng nhất.",
-  },
-  {
-    id: "direct",
-    label: "Đầu Tư Trực Tiếp Vào Dự Án",
-    icon: Briefcase,
-    description: "Trực tiếp nắm giữ cổ phần hoặc vị thế trong doanh nghiệp, tài sản chọn lọc.",
-  },
-  {
-    id: "institutional",
-    label: "Đầu Tư Định Chế & Family Office",
+    id: "org-vn",
+    label: "Tổ Chức / Doanh Nghiệp Trong Nước",
     icon: Building2,
-    description: "Cấu trúc khoản đầu tư quy mô lớn với cơ chế quản trị và báo cáo chuyên biệt.",
+    description: "Cổ đông chiến lược, ngân hàng, quỹ, CTCK.",
+  },
+  {
+    id: "tech-legal",
+    label: "Đối Tác Công Nghệ / Pháp Lý",
+    icon: Target,
+    description: "Đóng góp năng lực kỹ thuật, pháp lý — không chỉ vốn.",
+  },
+  {
+    id: "foreign",
+    label: "Nhà Đầu Tư / Tổ Chức Nước Ngoài",
+    icon: Briefcase,
+    description: "Tham gia theo giới hạn 49% theo NQ 05/2025.",
   },
 ];
 
+const INVESTMENT_RANGES = [
+  { value: "duoi-3ty",    label: "< 3 tỷ" },
+  { value: "3ty-6ty",    label: "3 – 6 tỷ" },
+  { value: "6ty-30ty",   label: "6 – 30 tỷ" },
+  { value: "30ty-60ty",  label: "30 – 60 tỷ" },
+  { value: "60ty-150ty", label: "60 – 150 tỷ" },
+  { value: "tren-150ty", label: "> 150 tỷ" },
+];
+
 const PARTNERSHIP_PLANS = [
-  { value: "",                        label: "Chưa chọn — tôi muốn tìm hiểu thêm" },
-  { value: "Hạng Mục Hạt Giống",     label: "Hạng Mục Hạt Giống — từ 500 triệu VNĐ" },
-  { value: "Hạng Mục Tăng Trưởng",   label: "Hạng Mục Tăng Trưởng — từ 2 tỷ VNĐ" },
-  { value: "Hạng Mục Mở Rộng",       label: "Hạng Mục Mở Rộng — từ 5 tỷ VNĐ" },
-  { value: "Hạng Mục Chiến Lược",    label: "Hạng Mục Chiến Lược — từ 15 tỷ VNĐ" },
-  { value: "Hạng Mục Neo Chiến Lược",label: "Hạng Mục Neo Chiến Lược — từ 50 tỷ VNĐ" },
+  { value: "",                         label: "Chưa chọn — tôi muốn tìm hiểu thêm" },
+  { value: "Hạng Mục Hạt Giống",      label: "Hạt Giống — từ 500 triệu VNĐ" },
+  { value: "Hạng Mục Tăng Trưởng",    label: "Tăng Trưởng — từ 2 tỷ VNĐ" },
+  { value: "Hạng Mục Mở Rộng",        label: "Mở Rộng — từ 5 tỷ VNĐ" },
+  { value: "Hạng Mục Chiến Lược",     label: "Chiến Lược — từ 15 tỷ VNĐ" },
+  { value: "Hạng Mục Neo Chiến Lược", label: "Neo Chiến Lược — từ 50 tỷ VNĐ" },
 ];
 
 export default function InvestorForm({ defaultPlan = "" }: { defaultPlan?: string }) {
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    name: "",
     email: "",
     phone: "",
-    country: "",
-    company: "",
-    investorType: "",
-    investmentRange: "",
-    investmentPeriod: "",
-    riskProfile: "",
-    preferredSectors: "",
-    objectives: "",
-    fileName: "",
     enquiryType: "",
+    investmentRange: "",
     partnershipPlan: defaultPlan,
+    objectives: "",
   });
 
   const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setFormData({ ...formData, fileName: e.target.files[0].name });
-    }
-  };
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    // Append selected partnership plan into objectives message for visibility
     const enriched = {
       ...formData,
       subject: formData.partnershipPlan
         ? `Gói: ${formData.partnershipPlan}`
         : formData.enquiryType,
-      message: formData.partnershipPlan
-        ? `[Gói quan tâm: ${formData.partnershipPlan}]\n\n${formData.objectives}`
-        : formData.objectives,
+      message: [
+        formData.partnershipPlan && `[Gói quan tâm: ${formData.partnershipPlan}]`,
+        formData.investmentRange && `[Quy mô vốn: ${formData.investmentRange}]`,
+        formData.objectives,
+      ]
+        .filter(Boolean)
+        .join("\n\n"),
     };
     await fetch("/api/partner-submit", {
       method: "POST",
@@ -104,14 +99,14 @@ export default function InvestorForm({ defaultPlan = "" }: { defaultPlan?: strin
   if (submitted) {
     return (
       <div className="text-center py-16">
-        <div className="w-20 h-20 bg-fortress-gold/10 flex items-center justify-center mx-auto mb-6">
+        <div className="w-20 h-20 bg-fortress-gold/10 flex items-center justify-center mx-auto mb-6 rounded-full">
           <CheckCircle2 className="w-10 h-10 text-fortress-gold" />
         </div>
-        <h3 className="text-2xl font-bold text-fortress-ivory mb-3">
-          Cảm ơn bạn, {formData.firstName}
+        <h3 className="text-xl font-bold text-fortress-ivory mb-3">
+          Chúng tôi đã nhận được thông tin{formData.name ? `, ${formData.name}` : ""}.
         </h3>
-        <p className="text-fortress-silver max-w-md mx-auto">
-          Yêu cầu hợp tác đầu tư của bạn đã được ghi nhận. Đội ngũ chuyên gia đầu tư của chúng tôi sẽ thẩm định và phản hồi trong vòng 2-3 ngày làm việc — bảo mật tuyệt đối.
+        <p className="text-fortress-silver/75 max-w-md mx-auto text-sm leading-relaxed">
+          Đội ngũ Fortress sẽ phản hồi trong 2–3 ngày làm việc. Không có bot, không có mẫu tự động — người thật đọc và người thật trả lời.
         </p>
       </div>
     );
@@ -119,16 +114,17 @@ export default function InvestorForm({ defaultPlan = "" }: { defaultPlan?: strin
 
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
-      {/* Enquiry Type Selection */}
+
+      {/* Bước 1 — Bạn là ai? */}
       <div>
         <label className="block text-fortress-ivory font-medium mb-4 text-sm">
-          Loại Hình Yêu Cầu Đầu Tư *
+          Bạn tham gia với tư cách nào? *
         </label>
-        <div className="grid sm:grid-cols-2 gap-4">
+        <div className="grid sm:grid-cols-2 gap-3">
           {enquiryTypes.map((type) => (
             <label
               key={type.id}
-              className={`flex items-start gap-4 p-4 border cursor-pointer transition-all duration-300 ${
+              className={`flex items-start gap-3 p-4 border cursor-pointer transition-all duration-200 ${
                 formData.enquiryType === type.id
                   ? "border-fortress-gold/50 bg-fortress-gold/5"
                   : "border-fortress-gold/10 bg-fortress-deep/50 hover:border-fortress-gold/25"
@@ -144,209 +140,104 @@ export default function InvestorForm({ defaultPlan = "" }: { defaultPlan?: strin
                 className="sr-only"
               />
               <div
-                className={`w-10 h-10 flex items-center justify-center flex-shrink-0 ${
-                  formData.enquiryType === type.id
-                    ? "bg-fortress-gold/20"
-                    : "bg-white/5"
+                className={`w-9 h-9 flex items-center justify-center flex-shrink-0 mt-0.5 ${
+                  formData.enquiryType === type.id ? "bg-fortress-gold/20" : "bg-white/5"
                 }`}
               >
                 <type.icon
-                  className={`w-5 h-5 ${
-                    formData.enquiryType === type.id
-                      ? "text-fortress-gold"
-                      : "text-fortress-silver"
+                  className={`w-4 h-4 ${
+                    formData.enquiryType === type.id ? "text-fortress-gold" : "text-fortress-silver"
                   }`}
                 />
               </div>
               <div>
                 <p
                   className={`font-medium text-sm ${
-                    formData.enquiryType === type.id
-                      ? "text-fortress-gold"
-                      : "text-fortress-ivory"
+                    formData.enquiryType === type.id ? "text-fortress-gold" : "text-fortress-ivory"
                   }`}
                 >
                   {type.label}
                 </p>
-                <p className="text-fortress-silver text-xs mt-1">
-                  {type.description}
-                </p>
+                <p className="text-fortress-silver/70 text-xs mt-0.5">{type.description}</p>
               </div>
             </label>
           ))}
         </div>
       </div>
 
-      {/* Personal Info */}
-      <div className="grid sm:grid-cols-2 gap-6">
+      {/* Bước 2 — Liên hệ */}
+      <div className="grid sm:grid-cols-2 gap-5">
         <div>
-          <label className="block text-fortress-silver text-sm mb-2">
-            Họ *
-          </label>
+          <label className="block text-fortress-silver text-sm mb-2">Tên của bạn</label>
           <input
             type="text"
-            name="firstName"
-            value={formData.firstName}
+            name="name"
+            value={formData.name}
             onChange={handleChange}
-            required
-            className="w-full px-5 py-3.5 bg-fortress-navy border border-fortress-gold/20 text-fortress-ivory placeholder:text-fortress-silver/40 focus:outline-none focus:border-fortress-gold/50 transition-colors rounded-sm"
-            placeholder="Nguyễn"
+            autoComplete="name"
+            className="w-full px-4 py-3 bg-fortress-navy border border-fortress-gold/20 text-fortress-ivory placeholder:text-fortress-silver/40 focus:outline-none focus:border-fortress-gold/50 transition-colors rounded-sm"
+            placeholder="Nguyễn Văn A"
           />
         </div>
         <div>
-          <label className="block text-fortress-silver text-sm mb-2">
-            Tên *
-          </label>
-          <input
-            type="text"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-            required
-            className="w-full px-5 py-3.5 bg-fortress-navy border border-fortress-gold/20 text-fortress-ivory placeholder:text-fortress-silver/40 focus:outline-none focus:border-fortress-gold/50 transition-colors rounded-sm"
-            placeholder="Văn A"
-          />
-        </div>
-      </div>
-
-      <div className="grid sm:grid-cols-2 gap-6">
-        <div>
-          <label className="block text-fortress-silver text-sm mb-2">
-            Địa chỉ Email *
-          </label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            className="w-full px-5 py-3.5 bg-fortress-navy border border-fortress-gold/20 text-fortress-ivory placeholder:text-fortress-silver/40 focus:outline-none focus:border-fortress-gold/50 transition-colors rounded-sm"
-            placeholder="nguyenvana@company.com"
-          />
-        </div>
-        <div>
-          <label className="block text-fortress-silver text-sm mb-2">
-            Số điện thoại
-          </label>
+          <label className="block text-fortress-silver text-sm mb-2">Số điện thoại</label>
           <input
             type="tel"
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            className="w-full px-5 py-3.5 bg-fortress-navy border border-fortress-gold/20 text-fortress-ivory placeholder:text-fortress-silver/40 focus:outline-none focus:border-fortress-gold/50 transition-colors rounded-sm"
+            autoComplete="tel"
+            className="w-full px-4 py-3 bg-fortress-navy border border-fortress-gold/20 text-fortress-ivory placeholder:text-fortress-silver/40 focus:outline-none focus:border-fortress-gold/50 transition-colors rounded-sm"
             placeholder="+84 90 XXX XXXX"
           />
         </div>
       </div>
 
-      <div className="grid sm:grid-cols-2 gap-6">
-        <div>
-          <label className="block text-fortress-silver text-sm mb-2">
-            Quốc gia cư trú
-          </label>
-          <input
-            type="text"
-            name="country"
-            value={formData.country}
-            onChange={handleChange}
-            className="w-full px-5 py-3.5 bg-fortress-navy border border-fortress-gold/20 text-fortress-ivory placeholder:text-fortress-silver/40 focus:outline-none focus:border-fortress-gold/50 transition-colors rounded-sm"
-            placeholder="Việt Nam / UAE"
-          />
-        </div>
-        <div>
-          <label className="block text-fortress-silver text-sm mb-2">
-            Công ty / Tổ chức / Family Office
-          </label>
-          <input
-            type="text"
-            name="company"
-            value={formData.company}
-            onChange={handleChange}
-            className="w-full px-5 py-3.5 bg-fortress-navy border border-fortress-gold/20 text-fortress-ivory placeholder:text-fortress-silver/40 focus:outline-none focus:border-fortress-gold/50 transition-colors rounded-sm"
-            placeholder="Tên tổ chức / doanh nghiệp"
-          />
+      <div>
+        <label className="block text-fortress-silver text-sm mb-2">
+          Địa chỉ Email *
+        </label>
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+          autoComplete="email"
+          className="w-full px-4 py-3 bg-fortress-navy border border-fortress-gold/20 text-fortress-ivory placeholder:text-fortress-silver/40 focus:outline-none focus:border-fortress-gold/50 transition-colors rounded-sm"
+          placeholder="email@company.com"
+        />
+      </div>
+
+      {/* Bước 3 — Quy mô vốn (chips) */}
+      <div>
+        <label className="block text-fortress-silver text-sm mb-3">
+          Quy mô vốn dự kiến (VNĐ)
+        </label>
+        <div className="flex flex-wrap gap-2">
+          {INVESTMENT_RANGES.map((r) => (
+            <button
+              key={r.value}
+              type="button"
+              onClick={() =>
+                setFormData((prev) => ({
+                  ...prev,
+                  investmentRange: prev.investmentRange === r.value ? "" : r.value,
+                }))
+              }
+              className={`px-4 py-2 text-sm border transition-all duration-150 rounded-sm ${
+                formData.investmentRange === r.value
+                  ? "border-fortress-gold/60 bg-fortress-gold/10 text-fortress-gold"
+                  : "border-fortress-gold/15 bg-fortress-deep/40 text-fortress-silver hover:border-fortress-gold/35 hover:text-fortress-ivory"
+              }`}
+            >
+              {r.label}
+            </button>
+          ))}
         </div>
       </div>
 
-      <div className="grid sm:grid-cols-2 gap-6">
-        <div>
-          <label className="block text-fortress-silver text-sm mb-2">
-            Phân loại nhà đầu tư
-          </label>
-          <select
-            name="investorType"
-            value={formData.investorType}
-            onChange={handleChange}
-            className="w-full px-5 py-3.5 bg-fortress-navy border border-fortress-gold/20 text-fortress-ivory focus:outline-none focus:border-fortress-gold/50 transition-colors appearance-none rounded-sm"
-          >
-            <option value="">Chọn loại nhà đầu tư</option>
-            <option value="private">Nhà đầu tư cá nhân</option>
-            <option value="hnwi">Cá nhân có tài sản lớn (HNWI)</option>
-            <option value="family-office">Family Office</option>
-            <option value="corporate">Doanh nghiệp đầu tư</option>
-            <option value="financial-institution">Định chế tài chính</option>
-            <option value="institutional">Quỹ đầu tư định chế</option>
-          </select>
-        </div>
-        <div>
-          <label className="block text-fortress-silver text-sm mb-2">
-            Quy mô vốn đầu tư dự kiến
-          </label>
-          <select
-            name="investmentRange"
-            value={formData.investmentRange}
-            onChange={handleChange}
-            className="w-full px-5 py-3.5 bg-fortress-navy border border-fortress-gold/20 text-fortress-ivory focus:outline-none focus:border-fortress-gold/50 transition-colors appearance-none rounded-sm"
-          >
-            <option value="">Chọn quy mô vốn</option>
-            <option value="below-500k">Dưới 3 tỷ VNĐ (AED 500k)</option>
-            <option value="500k-1m">3 - 6 tỷ VNĐ</option>
-            <option value="1m-5m">6 - 30 tỷ VNĐ</option>
-            <option value="5m-10m">30 - 60 tỷ VNĐ</option>
-            <option value="10m-25m">60 - 150 tỷ VNĐ</option>
-            <option value="25m+">Trên 150 tỷ VNĐ</option>
-          </select>
-        </div>
-      </div>
-
-      <div className="grid sm:grid-cols-2 gap-6">
-        <div>
-          <label className="block text-fortress-silver text-sm mb-2">
-            Thời hạn đầu tư kỳ vọng
-          </label>
-          <select
-            name="investmentPeriod"
-            value={formData.investmentPeriod}
-            onChange={handleChange}
-            className="w-full px-5 py-3.5 bg-fortress-navy border border-fortress-gold/20 text-fortress-ivory focus:outline-none focus:border-fortress-gold/50 transition-colors appearance-none rounded-sm"
-          >
-            <option value="">Chọn thời hạn</option>
-            <option value="1-3">1 – 3 năm</option>
-            <option value="3-5">3 – 5 năm</option>
-            <option value="5-10">5 – 10 năm</option>
-            <option value="10+">Trên 10 năm</option>
-          </select>
-        </div>
-        <div>
-          <label className="block text-fortress-silver text-sm mb-2">
-            Khẩu vị rủi ro
-          </label>
-          <select
-            name="riskProfile"
-            value={formData.riskProfile}
-            onChange={handleChange}
-            className="w-full px-5 py-3.5 bg-fortress-navy border border-fortress-gold/20 text-fortress-ivory focus:outline-none focus:border-fortress-gold/50 transition-colors appearance-none rounded-sm"
-          >
-            <option value="">Chọn khẩu vị rủi ro</option>
-            <option value="conservative">Thận trọng (An toàn vốn)</option>
-            <option value="moderate">Cân bằng</option>
-            <option value="growth">Ưu tiên tăng trưởng</option>
-            <option value="higher-risk">Lợi nhuận cao / Rủi ro cao</option>
-          </select>
-        </div>
-      </div>
-
-      {/* Partnership Plan */}
+      {/* Bước 4 — Gói hợp tác */}
       <div>
         <label className="block text-fortress-silver text-sm mb-2">
           Hạng mục hợp tác quan tâm
@@ -355,84 +246,53 @@ export default function InvestorForm({ defaultPlan = "" }: { defaultPlan?: strin
           name="partnershipPlan"
           value={formData.partnershipPlan}
           onChange={handleChange}
-          className="w-full px-5 py-3.5 bg-fortress-navy border border-fortress-gold/20 text-fortress-ivory focus:outline-none focus:border-fortress-gold/50 transition-colors appearance-none rounded-sm"
+          className="w-full px-4 py-3 bg-fortress-navy border border-fortress-gold/20 text-fortress-ivory focus:outline-none focus:border-fortress-gold/50 transition-colors appearance-none rounded-sm"
         >
           {PARTNERSHIP_PLANS.map((p) => (
             <option key={p.value} value={p.value}>{p.label}</option>
           ))}
         </select>
         <p className="text-fortress-silver/40 text-xs mt-1.5">
-          Xem chi tiết các gói:{" "}
-          <a href="/invest-with-fortress/plans" target="_blank" className="text-fortress-gold/70 underline hover:text-fortress-gold transition-colors">
+          Xem chi tiết:{" "}
+          <a
+            href="/invest-with-fortress/plans"
+            target="_blank"
+            className="text-fortress-gold/70 underline hover:text-fortress-gold transition-colors"
+          >
             /invest-with-fortress/plans
           </a>
         </p>
       </div>
 
-      {/* Preferred Sectors */}
+      {/* Bước 5 — Lời nhắn */}
       <div>
         <label className="block text-fortress-silver text-sm mb-2">
-          Lĩnh vực đầu tư quan tâm
-        </label>
-        <input
-          type="text"
-          name="preferredSectors"
-          value={formData.preferredSectors}
-          onChange={handleChange}
-          className="w-full px-5 py-3.5 bg-fortress-navy border border-fortress-gold/20 text-fortress-ivory placeholder:text-fortress-silver/40 focus:outline-none focus:border-fortress-gold/50 transition-colors rounded-sm"
-          placeholder="FinTech, Tài sản mã hóa, AI, Blockchain, EdTech..."
-        />
-      </div>
-
-      {/* Investment Objectives */}
-      <div>
-        <label className="block text-fortress-silver text-sm mb-2">
-          Tóm tắt mục tiêu đầu tư *
+          Bạn muốn nói gì với chúng tôi? *
         </label>
         <textarea
           name="objectives"
           value={formData.objectives}
           onChange={handleChange}
           required
-          rows={5}
-          className="w-full px-5 py-3.5 bg-fortress-navy border border-fortress-gold/20 text-fortress-ivory placeholder:text-fortress-silver/40 focus:outline-none focus:border-fortress-gold/50 transition-colors resize-none rounded-sm"
-          placeholder="Mô tả tóm tắt về mục tiêu đầu tư, kỳ vọng lợi nhuận, thời hạn và các yêu cầu cụ thể khác."
+          rows={4}
+          className="w-full px-4 py-3 bg-fortress-navy border border-fortress-gold/20 text-fortress-ivory placeholder:text-fortress-silver/40 focus:outline-none focus:border-fortress-gold/50 transition-colors resize-none rounded-sm"
+          placeholder="Chia sẻ ngắn gọn: bạn thấy cơ hội gì, bạn muốn đóng góp gì, và bạn kỳ vọng gì trong dài hạn."
         />
       </div>
 
-      {/* File Upload */}
-      <div>
-        <label className="block text-fortress-silver text-sm mb-2">
-          Tài liệu kèm theo (Tùy chọn)
-        </label>
-        <label className="flex items-center gap-3 px-5 py-3.5 bg-fortress-navy border border-dashed border-fortress-gold/20 text-fortress-silver hover:border-fortress-gold/40 transition-colors cursor-pointer rounded-sm">
-          <Upload className="w-5 h-5 text-fortress-gold/60" />
-          <span className="text-sm">
-            {formData.fileName || "Tải lên hồ sơ năng lực, đề xuất dự án hoặc tài liệu liên quan (PDF, DOCX, PPTX)."}
-          </span>
-          <input
-            type="file"
-            accept=".pdf,.doc,.docx,.pptx,.xlsx"
-            onChange={handleFileChange}
-            className="hidden"
-          />
-        </label>
-      </div>
-
       {/* Submit */}
-      <div className="pt-4">
+      <div className="pt-2">
         <button
           type="submit"
           className="w-full sm:w-auto px-10 py-4 bg-gradient-to-r from-fortress-gold to-fortress-champagne text-fortress-navy font-bold text-sm hover:shadow-2xl hover:shadow-fortress-gold/25 transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2 rounded-sm"
         >
           <Send className="w-4 h-4" />
-          Gửi Đề Xuất Đầu Tư
+          Gửi Thông Tin Kết Nối
         </button>
         <p className="text-fortress-silver/40 text-xs mt-4">
-          Mọi thông tin đề xuất đầu tư đều được bảo mật nghiêm ngặt. Việc đánh giá cơ hội sẽ tuân thủ quy trình thẩm định độc lập và các quy định pháp luật hiện hành.
+          Mọi thông tin được bảo mật. Đây không phải cam kết hay hợp đồng — chỉ là bước đầu để chúng ta có thể nói chuyện với nhau.
         </p>
       </div>
     </form>
   );
 }
-

@@ -120,31 +120,31 @@ export default function OurApproachPage() {
       <main className="min-h-screen bg-white text-fortress-ivory relative pb-safe md:pb-0">
         {/* ── 1. Hero Section ── */}
         <PageHero
-          tag="Phương Pháp Tiếp Cận"
+          tag="Cách Chúng Tôi Xây Dựng"
           heading={
             <>
-              Kỷ Luật.{" "}
+              Không Có{" "}
               <span className="font-bold bg-gradient-to-r from-fortress-gold to-fortress-champagne bg-clip-text text-transparent">
-                Chiến Lược.
+                Đường Tắt.
               </span>{" "}
-              Dài Hạn.
+              Không Có Ảo Tưởng.
             </>
           }
-          description="Quy trình đầu tư của chúng tôi được thiết kế để xác định các cơ hội chất lượng, quản lý rủi ro và xây dựng giá trị bền vững thông qua đánh giá kỹ lưỡng và sự tham gia chiến lược chủ động."
+          description="Đây là cách Fortress tiếp cận mọi quyết định — từ lựa chọn đối tác, thẩm định cơ hội, đến xây dựng từng bước của hồ sơ cấp phép. Không vẽ bánh. Không hứa hẹn vô căn cứ."
         >
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
             <Link
               href="#process"
               className="inline-flex items-center justify-center gap-3 px-7 py-3.5 bg-gradient-to-r from-fortress-gold to-fortress-champagne text-fortress-navy font-bold text-xs tracking-[0.18em] uppercase hover:opacity-90 transition-all shadow-lg shadow-fortress-gold/15 group"
             >
-              Khám Phá Quy Trình
+              Xem Cách Chúng Tôi Làm Việc
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
               href="#principles"
               className="inline-flex items-center justify-center gap-3 px-7 py-3.5 border border-fortress-navy/30 text-fortress-navy font-semibold text-xs tracking-[0.18em] uppercase hover:bg-fortress-navy/5 hover:border-fortress-navy/50 transition-all"
             >
-              Nguyên Tắc Đánh Giá
+              Tiêu Chuẩn Đánh Giá
             </Link>
           </div>
         </PageHero>
@@ -161,20 +161,20 @@ export default function OurApproachPage() {
             <Reveal className="text-center max-w-3xl mx-auto mb-10 md:mb-20">
               <div className="flex items-center justify-center gap-3 mb-4">
                 <div className="w-8 h-px bg-fortress-gold/40" />
-                <span className="section-tag">Cách Chúng Tôi Đầu Tư</span>
+                <span className="section-tag">5 Bước Xây Dựng Thực Tế</span>
                 <div className="w-8 h-px bg-fortress-gold/40" />
               </div>
               <h2
                 className="font-light text-fortress-ivory uppercase leading-[1.28] mb-3 sm:mb-4"
                 style={{ fontSize: "var(--text-h2)", letterSpacing: "var(--tracking-heading)" }}
               >
-                Quy Trình <span className="font-semibold text-fortress-gold">Đầu Tư</span>
+                Quy Trình <span className="font-semibold text-fortress-gold">Thực Hiện</span>
               </h2>
               <p className="text-fortress-gold font-semibold mb-3 sm:mb-4" style={{ fontSize: "var(--text-lead)" }}>
                 Mỗi cơ hội là duy nhất. Tiêu chuẩn của chúng tôi thì không.
               </p>
               <p className="text-fortress-silver/80 leading-[1.8] font-light" style={{ fontSize: "var(--text-body)" }}>
-                Các quyết định của chúng tôi tuân theo một khung nhất quán được xây dựng trên nghiên cứu, kỷ luật, minh bạch và sự liên kết dài hạn. Chúng tôi đánh giá chất lượng cơ hội, năng lực của những người đứng sau, môi trường thị trường, yêu cầu tài chính, rủi ro liên quan và tiềm năng thực tế để tạo ra giá trị bền vững.
+                Không phải quy trình để trấn an nhà đầu tư trên PowerPoint — đây là cách Fortress thực sự vận hành. Từ nhận diện cơ hội đến quản lý giá trị dài hạn, mỗi bước đều có mục đích rõ ràng và có thể kiểm chứng được.
               </p>
             </Reveal>
 
@@ -309,17 +309,17 @@ export default function OurApproachPage() {
             <Reveal className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
               <div className="flex items-center justify-center gap-3 mb-4">
                 <div className="w-8 h-px bg-fortress-gold/40" />
-                <span className="section-tag">Chúng Tôi Tìm Gì</span>
+                <span className="section-tag">9 Tiêu Chí Không Thể Thỏa Hiệp</span>
                 <div className="w-8 h-px bg-fortress-gold/40" />
               </div>
               <h2
                 className="font-light text-fortress-ivory uppercase leading-[1.28] mb-3 sm:mb-4"
                 style={{ fontSize: "var(--text-h2)", letterSpacing: "var(--tracking-heading)" }}
               >
-                Nguyên Tắc <span className="font-semibold text-fortress-gold">Đánh Giá</span>
+                Tiêu Chuẩn <span className="font-semibold text-fortress-gold">Đánh Giá</span>
               </h2>
               <p className="text-fortress-silver/80 leading-[1.8] font-light" style={{ fontSize: "var(--text-body)" }}>
-                Chín tiêu chuẩn không thể thỏa hiệp được áp dụng cho mọi cơ hội chúng tôi đánh giá.
+                Đây không phải checklist marketing. Đây là 9 điều kiện thực sự mà Fortress dùng để quyết định có tiến tới hay không — áp dụng cho mọi cơ hội, không có ngoại lệ.
               </p>
             </Reveal>
 
@@ -358,7 +358,46 @@ export default function OurApproachPage() {
           </div>
         </section>
 
-        
+        {/* ── 4. CTA ─────────────────────────────────────────────────────── */}
+        <section
+          className="bg-fortress-navy rounded-2xl section-mx section-my"
+          style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}
+        >
+          <div className="max-w-[1400px] mx-auto section-px text-center">
+            <Reveal>
+              <div className="flex items-center justify-center gap-3 mb-5">
+                <div className="w-8 h-px bg-fortress-gold/40" />
+                <span className="section-tag">Đồng Hành Xây Dựng</span>
+                <div className="w-8 h-px bg-fortress-gold/40" />
+              </div>
+              <h2
+                className="font-light text-fortress-ivory mb-4 md:mb-6 uppercase leading-[1.28]"
+                style={{ fontSize: "var(--text-h2)", letterSpacing: "var(--tracking-heading)" }}
+              >
+                Bạn Thấy Cùng Một Lý Tưởng?
+              </h2>
+              <p className="text-fortress-silver/80 leading-[1.8] max-w-2xl mx-auto mb-8" style={{ fontSize: "var(--text-lead)" }}>
+                Fortress xây dựng theo đúng quy trình này — công khai, có thể kiểm chứng. Nếu bạn tin vào cách tiếp cận này và muốn là một phần của hành trình, chúng tôi muốn nói chuyện với bạn.
+              </p>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <Link
+                  href="/invest-with-fortress"
+                  className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-fortress-gold to-fortress-champagne text-fortress-navy font-bold text-sm tracking-widest hover:shadow-2xl hover:shadow-fortress-gold/25 transition-all duration-300"
+                >
+                  XEM LỘ TRÌNH & KẾT NỐI
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+                <Link
+                  href="/about"
+                  className="inline-flex items-center gap-2 px-8 py-4 border border-fortress-gold/40 text-fortress-gold font-semibold text-sm tracking-widest hover:bg-fortress-gold/10 transition-all duration-300"
+                >
+                  TÌM HIỂU VỀ CHÚNG TÔI
+                </Link>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
       </main>
     </PageTransition>
   );

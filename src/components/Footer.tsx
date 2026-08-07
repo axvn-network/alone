@@ -109,9 +109,9 @@ export default function Footer() {
       heading: t("footer.col1Heading", lang),
       links: [
         { label: t("footer.col1Link1", lang), href: "/about" },
-        { label: t("footer.col1Link2", lang), href: "/about#journey" },
+        { label: t("footer.col1Link2", lang), href: "/about#mission" },
         { label: t("footer.col1Link3", lang), href: "/about#leadership" },
-        { label: t("footer.col1Link4", lang), href: "/about#careers" },
+        { label: t("footer.col1Link4", lang), href: "/about#values" },
         { label: t("footer.col1Link5", lang), href: "/insights" },
       ],
     },
@@ -119,18 +119,18 @@ export default function Footer() {
       heading: t("footer.col2Heading", lang),
       links: [
         { label: t("footer.col2Link1", lang), href: "/investment-focus" },
-        { label: t("footer.col2Link2", lang), href: "/investment-focus#portfolio" },
-        { label: t("footer.col2Link3", lang), href: "/investment-focus#real-estate" },
-        { label: t("footer.col2Link4", lang), href: "/investment-focus#private-equity" },
-        { label: t("footer.col2Link5", lang), href: "/investment-focus#technology" },
-        { label: t("footer.col2Link6", lang), href: "/investment-focus#hospitality" },
+        { label: t("footer.col2Link2", lang), href: "/investment-focus#crypto-asset-services" },
+        { label: t("footer.col2Link3", lang), href: "/investment-focus#fintech-payments" },
+        { label: t("footer.col2Link4", lang), href: "/investment-focus#ai-technology" },
+        { label: t("footer.col2Link5", lang), href: "/investment-focus#edtech" },
+        { label: t("footer.col2Link6", lang), href: "/investment-focus#digital-economy" },
       ],
     },
     {
       heading: t("footer.col3Heading", lang),
       links: [
         { label: t("footer.col3Link1", lang), href: "/invest-with-fortress" },
-        { label: t("footer.col3Link2", lang), href: "/investment-focus" },
+        { label: t("footer.col3Link2", lang), href: "/invest-with-fortress/plans" },
       ],
     },
     {
@@ -205,7 +205,7 @@ export default function Footer() {
                   {footerDesc}
                 </p>
                 <motion.a
-                  href="#"
+                  href="/documents"
                   className="inline-flex items-center gap-2.5 border border-[#C9A24A]/50 text-[#C9A24A] text-xs font-semibold tracking-widest uppercase px-5 py-3 w-fit hover:bg-[#C9A24A]/10 transition-colors"
                   whileHover={{ borderColor: "rgba(201,162,74,0.9)" }}
                   transition={{ duration: 0.2 }}

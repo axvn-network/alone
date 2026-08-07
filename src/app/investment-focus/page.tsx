@@ -362,23 +362,23 @@ export default function InvestmentFocusPage() {
         <div className="max-w-[1400px] mx-auto section-px text-center">
           <div className="flex items-center justify-center gap-3 mb-5">
             <div className="w-8 h-px bg-fortress-gold/40" />
-            <span className="section-tag">Hợp Tác Đầu Tư</span>
+            <span className="section-tag">Đồng Hành Xây Dựng</span>
             <div className="w-8 h-px bg-fortress-gold/40" />
           </div>
           <h2
             className="font-light text-fortress-ivory mb-4 md:mb-6 uppercase leading-[1.28]"
             style={{ fontSize: "var(--text-h2)", letterSpacing: "var(--tracking-heading)" }}
           >
-            Gửi Đề Xuất Cơ Hội Tới Fortress
+            Bạn Thấy Cùng Một Cơ Hội?
           </h2>
           <p className="text-fortress-silver/80 leading-[1.8] max-w-2xl mx-auto mb-8" style={{ fontSize: "var(--text-lead)" }}>
-            Chúng tôi chào đón các đề xuất được chọn lọc từ startup FinTech, doanh nghiệp dịch vụ tài sản mã hóa, nền tảng EdTech, nhà phát triển blockchain và đối tác chiến lược trong lĩnh vực kinh tế số. Mọi đề xuất được xem xét chuyên nghiệp và xử lý với sự bảo mật tuyệt đối.
+            Nếu bạn làm việc trong FinTech, tài sản mã hóa, AI hoặc kinh tế số — và bạn tin vào những gì Fortress đang xây dựng — chúng tôi muốn nói chuyện. Không phải về vốn, mà về việc cùng nhau tạo ra điều gì đó có ý nghĩa lâu dài.
           </p>
           <Link
             href="/invest-with-fortress"
             className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-fortress-gold to-fortress-champagne text-fortress-navy font-bold text-sm tracking-widest hover:shadow-2xl hover:shadow-fortress-gold/25 transition-all duration-300"
           >
-            GỬI ĐỀ XUẤT ĐẦU TƯ
+            XEM HÀNH TRÌNH & KẾT NỐI
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>

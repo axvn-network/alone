@@ -4,6 +4,9 @@ import PageHero from "@/components/PageHero";
 import SectionHeader from "@/components/SectionHeader";
 import InvestmentPlansClient from "./InvestmentPlansClient";
 import RoleSelector from "./RoleSelector";
+import ProjectEcosystem from "@/components/ProjectEcosystem";
+import PartnerJourney from "@/components/PartnerJourney";
+import { PROJECT_TIMELINE, CURRENT_PHASE, CAPITAL_AMOUNT } from "@/constants/project";
 import {
   CheckCircle,
   AlertTriangle,
@@ -36,16 +39,7 @@ export const metadata: Metadata = {
   },
 };
 
-/* ─── Static data ─────────────────────────────────────────────────────────── */
-
-const PROJECT_STATUS = [
-  { phase: "01", label: "Khung Pháp Lý", detail: "NQ 05/2025/NQ-CP + QĐ 96/QĐ-BTC", status: "done", date: "09/09/2025" },
-  { phase: "02", label: "Tiếp Nhận Hồ Sơ", detail: "Bộ Tài chính mở cổng nộp hồ sơ", status: "done", date: "20/01/2026" },
-  { phase: "03", label: "Tích Lũy Vốn & Đối Tác", detail: "Đang tuyển cổ đông — mở đăng ký", status: "active", date: "Hiện tại" },
-  { phase: "04", label: "Xây Dựng Hệ Thống", detail: "CNTT cấp độ 4, 10 quy trình nghiệp vụ", status: "pending", date: "2026" },
-  { phase: "05", label: "Nộp Hồ Sơ Cấp Phép", detail: "1 bộ hồ sơ đầy đủ lên Bộ Tài chính", status: "pending", date: "2026" },
-  { phase: "06", label: "Nhận Giấy Phép & Vận Hành", detail: "30 ngày xét duyệt → hoạt động ngay", status: "pending", date: "2026–2027" },
-];
+/* ─── Static data (timeline sourced from @/constants/project) ────────────── */
 
 const CAPITAL_STRUCTURE = [
   { pct: 35, label: ">35% — Tổ chức tài chính/CN bắt buộc", color: "#C9A24A", detail: "≥2 ngân hàng, CTCK, quản lý quỹ, bảo hiểm, DN công nghệ" },
@@ -151,7 +145,7 @@ function CapitalDonut() {
           ))}
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <p className="text-fortress-gold font-black text-xl leading-none">10.000</p>
+          <p className="text-fortress-gold font-black text-xl leading-none">{CAPITAL_AMOUNT.short}</p>
           <p className="text-fortress-silver/60 text-[11px] font-mono mt-0.5">tỷ VNĐ</p>
           <p className="text-fortress-silver/40 text-[10px] mt-1">vốn điều lệ</p>
         </div>
@@ -210,7 +204,7 @@ export default function ShareholderPlansPage() {
         heading={
           <>
             Xây Dựng Sàn{" "}
-            <span className="font-bold bg-gradient-to-r from-fortress-gold to-fortress-champagne bg-clip-text text-transparent">
+            <span className="font-bold text-fortress-gold bg-gradient-to-r from-fortress-gold to-fortress-champagne bg-clip-text [color:transparent]">
               TSMH Hợp Pháp Đầu Tiên
             </span>{" "}
             Tại Việt Nam
@@ -234,12 +228,15 @@ export default function ShareholderPlansPage() {
           {/* Quick nav */}
           <div className="flex flex-wrap justify-center gap-2">
             {[
-              { label: "Dự án là gì?", href: "#what" },
-              { label: "Cơ cấu vốn",   href: "#capital" },
-              { label: "Vai trò",       href: "#roles" },
-              { label: "Hạng mục",     href: "#plans" },
-              { label: "Hồ sơ cần có", href: "#docs" },
-              { label: "FAQ",           href: "#faq" },
+              { label: "Sơ đồ tổng quan",  href: "#ecosystem" },
+              { label: "4 câu hỏi cốt lõi", href: "#journey" },
+              { label: "Dự án là gì?",     href: "#what" },
+              { label: "Cơ cấu vốn",       href: "#capital" },
+              { label: "Vai trò",           href: "#roles" },
+              { label: "Hạng mục",          href: "#plans" },
+              { label: "Hồ sơ cần có",     href: "#docs" },
+              { label: "FAQ",               href: "#faq" },
+              { label: "Điều lệ & Quyền",  href: "/invest-with-fortress/charter" },
             ].map((nav) => (
               <a key={nav.href} href={nav.href}
                 className="px-3 py-1.5 text-[11px] font-semibold text-fortress-silver/70 border border-fortress-silver/20 rounded-full hover:border-fortress-gold/50 hover:text-fortress-gold transition-all">
@@ -249,6 +246,31 @@ export default function ShareholderPlansPage() {
           </div>
         </div>
       </PageHero>
+
+      {/* ── 0b. SƠ ĐỒ HỆ SINH THÁI ── */}
+      <Section id="ecosystem" dark>
+        <div className="text-center mb-10">
+          <SectionHeader
+            tag="Nhìn Toàn Bộ Dự Án"
+            heading="Bạn Đang Bước Vào Hệ Sinh Thái Nào?"
+            description="Fortress ở trung tâm. Mỗi đối tác có một vai trò rõ ràng — góp gì, nhận gì, ở đâu trong sơ đồ."
+            dark
+          />
+        </div>
+        <ProjectEcosystem />
+      </Section>
+
+      {/* ── 0c. HÀNH TRÌNH ĐỐI TÁC ── */}
+      <Section id="journey">
+        <div className="text-center mb-10">
+          <SectionHeader
+            tag="4 Câu Hỏi Cốt Lõi"
+            heading="Tôi Là Ai — Góp Gì — Ở Đâu — Nhận Gì?"
+            description="Trả lời 4 câu hỏi này trước khi đọc bất kỳ điều khoản nào. Rõ ràng, trực quan, không vòng vo."
+          />
+        </div>
+        <PartnerJourney />
+      </Section>
 
       {/* ── 1. DỰ ÁN LÀ GÌ ── */}
       <Section id="what">
@@ -354,11 +376,11 @@ export default function ShareholderPlansPage() {
       {/* ── 2. TIẾN ĐỘ DỰ ÁN ── */}
       <Section dark>
         <div className="text-center mb-10">
-          <SectionHeader tag="Tiến Độ Dự Án" heading="Chúng Ta Đang Ở Giai Đoạn 03" dark
-            description="Fortress đang tích lũy vốn và tuyển đối tác. Đây là thời điểm tốt nhất để tham gia — trước khi hồ sơ được nộp." />
+          <SectionHeader tag="Tiến Độ Dự Án" heading={`Chúng Ta Đang Ở Giai Đoạn ${CURRENT_PHASE}`} dark
+            description="Fortress đang tích lũy vốn và xây dựng liên minh đối tác. Đây là thời điểm tốt nhất để tham gia — trước khi hồ sơ được nộp." />
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
-          {PROJECT_STATUS.map((p) => {
+          {PROJECT_TIMELINE.map((p) => {
             const StatusIcon =
               p.status === "done"   ? CheckCheck  :
               p.status === "active" ? CircleDot   : Clock;
@@ -484,7 +506,7 @@ export default function ShareholderPlansPage() {
       {/* ── 7. ĐIỀU KIỆN CẤP PHÉP ── */}
       <Section dark>
         <div className="text-center mb-10">
-          <SectionHeader tag="Điều 8 — NQ 05/2025/NQ-CP" heading="7 Điều Kiện Để Được Cấp Phép"
+          <SectionHeader tag="Điều 8 — NQ 05/2025/NQ-CP" heading="8 Điều Kiện Để Được Cấp Phép"
             description="Đây là những gì dự án phải đáp ứng trước khi nộp hồ sơ. Mỗi cổ đông đóng góp vào một hoặc nhiều điều kiện." dark />
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
@@ -519,19 +541,41 @@ export default function ShareholderPlansPage() {
         <FAQ_Section />
       </Section>
 
-      {/* ── 9. CTA ── */}
+      {/* ── 9. RỦI RO — đồng bộ với trang chính ── */}
+      <Section altDark>
+        <div className="max-w-3xl mx-auto text-center">
+          <SectionHeader
+            tag="Sự Thật Về Rủi Ro"
+            heading="Đây Là Đầu Tư Dài Hạn, Không Phải Sản Phẩm Tài Chính"
+            description="Thị trường tài sản mã hóa hợp pháp tại Việt Nam vẫn đang trong giai đoạn hình thành. Không ai có thể đảm bảo kết quả. Chúng tôi cam kết minh bạch — không phải cam kết lợi nhuận."
+            dark
+          />
+          <div className="mt-6 flex flex-wrap justify-center gap-4">
+            <Link href="/investment-disclaimer"
+              className="inline-flex items-center gap-2 text-fortress-gold/60 hover:text-fortress-gold text-xs font-semibold tracking-wide transition-colors">
+              Tuyên Bố Miễn Trừ Trách Nhiệm <ArrowRight className="w-3 h-3" />
+            </Link>
+            <Link href="/invest-with-fortress/charter"
+              className="inline-flex items-center gap-2 text-fortress-silver/40 hover:text-fortress-silver text-xs font-semibold tracking-wide transition-colors">
+              Quyền & Nghĩa Vụ Hợp Tác <ArrowRight className="w-3 h-3" />
+            </Link>
+          </div>
+        </div>
+      </Section>
+
+      {/* ── 10. CTA ── */}
       <Section dark>
         <div className="max-w-2xl mx-auto text-center">
           <SectionHeader
-            tag="Bắt Đầu Ngay"
-            heading="Sẵn Sàng? Hãy Bắt Đầu Từ Đây."
-            description="Gửi đề xuất — đội ngũ sẽ phản hồi trong 2–3 ngày làm việc với lộ trình cụ thể phù hợp với vai trò và nguồn lực của bạn."
+            tag="Bước Tiếp Theo"
+            heading="Bạn Đã Thấy Lộ Trình. Điều Gì Tiếp Theo?"
+            description="Nếu bạn thấy cơ hội ở đây — không phải vì được thuyết phục, mà vì bạn thực sự hiểu và chia sẻ lý tưởng — chúng tôi muốn nghe từ bạn. Không cần chuẩn bị gì phức tạp."
             dark
           />
           <div className="flex flex-col sm:flex-row gap-3 justify-center mt-8">
-            <Link href="/invest-with-fortress#enquiry"
+            <Link href="/invest-with-fortress#connect"
               className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-fortress-gold to-fortress-champagne text-fortress-navy font-bold text-xs tracking-[0.18em] uppercase hover:opacity-90 transition-opacity shadow-lg shadow-fortress-gold/20 rounded-sm">
-              Đăng Ký Góp Vốn <ArrowRight className="w-3.5 h-3.5" />
+              Kết Nối Với Chúng Tôi <ArrowRight className="w-3.5 h-3.5" />
             </Link>
             <Link href="/contact"
               className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-fortress-gold/35 text-fortress-gold font-semibold text-xs tracking-[0.18em] uppercase hover:bg-fortress-gold/8 transition-all rounded-sm">
@@ -540,9 +584,9 @@ export default function ShareholderPlansPage() {
           </div>
           <div className="mt-8 grid sm:grid-cols-3 gap-4 text-center">
             {[
-              { Icon: Lock,     label: "Bảo mật tuyệt đối",  sub: "Mọi thông tin được bảo mật theo NDA" },
-              { Icon: Zap,      label: "Phản hồi 2–3 ngày",  sub: "Thẩm định nhanh, lộ trình cụ thể" },
-              { Icon: FileText, label: "Không ràng buộc",     sub: "Bước tư vấn ban đầu không phát sinh nghĩa vụ" },
+              { Icon: Lock,     label: "Bảo mật tuyệt đối",  sub: "Mọi thông tin được bảo mật hoàn toàn" },
+              { Icon: Zap,      label: "Phản hồi 2–3 ngày",  sub: "Đội ngũ phản hồi trực tiếp, không qua bot" },
+              { Icon: FileText, label: "Không áp lực",        sub: "Bước kết nối đầu tiên không có nghĩa vụ gì" },
             ].map(({ Icon, label, sub }) => (
               <div key={label} className="p-5 bg-fortress-deep border border-fortress-gold/10 rounded-xl">
                 <Icon className="w-5 h-5 mx-auto mb-2 text-fortress-gold/60" />

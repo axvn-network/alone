@@ -21,14 +21,14 @@
   },
   "nav": {
     "home": "Trang chủ",
-    "about": "Giới thiệu",
+    "about": "Về Chúng Tôi",
     "investmentFocus": "Lĩnh vực đầu tư",
-    "approach": "Phương pháp",
-    "investWithUs": "Hợp tác đầu tư",
-    "partnershipPlans": "Hạng Mục Hợp Tác",
+    "approach": "Cách Chúng Tôi Làm",
+    "investWithUs": "Đồng Hành Xây Dựng",
+    "partnershipPlans": "Vai Trò Tham Gia",
     "insights": "Góc nhìn",
     "documents": "Công bố thông tin",
-    "contact": "Liên hệ ngay"
+    "contact": "Kết Nối Ngay"
   },
   "plans": {
     "pageTag": "Hạng Mục Hợp Tác Đầu Tư",
@@ -87,21 +87,21 @@
     "docBtn": "Tải Tài Liệu Giới Thiệu",
     "desc": "Tập đoàn đầu tư công nghệ có trụ sở tại Dubai, UAE — tiên phong đầu tư vào FinTech, dịch vụ tài sản mã hóa hợp pháp, AI và kinh tế số tại Việt Nam và Đông Nam Á.",
     "col1Heading": "Về Fortress",
-    "col1Link1": "Tổng quan công ty",
-    "col1Link2": "Hành trình phát triển",
+    "col1Link1": "Giới thiệu công ty",
+    "col1Link2": "Tầm nhìn & Sứ mệnh",
     "col1Link3": "Ban lãnh đạo",
-    "col1Link4": "Cơ hội nghề nghiệp",
-    "col1Link5": "Tin tức & Truyền thông",
+    "col1Link4": "Giá trị cốt lõi",
+    "col1Link5": "Góc nhìn & Bài viết",
     "col2Heading": "Lĩnh Vực Đầu Tư",
-    "col2Link1": "Tổng quan đầu tư",
-    "col2Link2": "Danh mục tài sản",
-    "col2Link3": "FinTech & Tài Sản Mã Hóa",
-    "col2Link4": "Công nghệ AI",
-    "col2Link5": "Công nghệ Giáo dục",
-    "col2Link6": "Kinh tế Số",
-    "col3Heading": "Dành Cho Nhà Đầu Tư",
-    "col3Link1": "Hợp tác đầu tư",
-    "col3Link2": "Lĩnh vực ưu tiên",
+    "col2Link1": "Tổng quan lĩnh vực",
+    "col2Link2": "Tài Sản Mã Hóa (Có Cấp Phép)",
+    "col2Link3": "FinTech & Thanh Toán Số",
+    "col2Link4": "Công Nghệ AI & Đột Phá",
+    "col2Link5": "Công Nghệ Giáo Dục",
+    "col2Link6": "Kinh Tế Số & Thương Mại Điện Tử",
+    "col3Heading": "Đồng Hành Xây Dựng",
+    "col3Link1": "Tham Gia Hành Trình",
+    "col3Link2": "Các Vai Trò Tham Gia",
     "col4Heading": "Tài Nguyên & Pháp Lý",
     "col4Link1": "Góc nhìn chuyên sâu",
     "col4Link2": "Công bố thông tin",
@@ -112,24 +112,24 @@
     "pillar1Title": "XÂY DỰNG TRÊN NIỀM TIN",
     "pillar1Sub": "Liêm chính và minh bạch trong mọi hoạt động",
     "pillar2Title": "TẠO RA GIÁ TRỊ THỰC",
-    "pillar2Sub": "Mang lại lợi suất bền vững và đo lường được",
+    "pillar2Sub": "Xây dựng nền tảng có lộ trình rõ ràng và tiến độ minh bạch",
     "pillar3Title": "QUẢN TRỊ CÓ KỶ LUẬT",
     "pillar3Sub": "Thẩm định nghiêm ngặt và giám sát chặt chẽ mọi khoản đầu tư"
   },
   "hero": {
     "subtitle": "Fortress Investment Holdings",
-    "titleLine1": "Vững Chắc Nền Tảng.",
-    "titleLine2": "Đột Phá Tầm Nhìn.",
-    "description": "Tập đoàn đầu tư công nghệ tiên phong tại Việt Nam và Đông Nam Á — chuyên đầu tư vào FinTech, dịch vụ tài sản mã hóa hợp pháp, công nghệ AI và kinh tế số. Chúng tôi đồng hành cùng doanh nghiệp từ ý tưởng đến quy mô.",
-    "btn1": "Khám Phá Lĩnh Vực Đầu Tư",
-    "btn2": "Hợp Tác Cùng Chúng Tôi"
+    "titleLine1": "Xây Dựng Từ Nền Tảng.",
+    "titleLine2": "Tiên Phong Tầm Nhìn.",
+    "description": "Fortress đang xây dựng nền tảng giao dịch tài sản mã hóa hợp pháp đầu tiên tại Việt Nam — một hành trình dài hạn có lộ trình rõ ràng, pháp lý minh bạch và đội ngũ có lý tưởng. Chúng tôi không tìm người góp vốn — chúng tôi tìm người đồng hành.",
+    "btn1": "Xem Lộ Trình Dự Án",
+    "btn2": "Đồng Hành Cùng Chúng Tôi"
   },
   "intro": {
-    "tag": "01 — Về Fortress",
-    "title": "Cầu Nối Giữa Vốn Toàn Cầu Và Kinh Tế Số Việt Nam",
-    "p1": "Nghị quyết 5/2025/NQ-CP có hiệu lực từ 9/9/2025 khai mở thị trường tài sản mã hóa hợp pháp đầu tiên của Việt Nam — tạo ra cơ hội tiên phong chưa từng có. Fortress Investment Holdings định vị chiến lược để đón đầu làn sóng này.",
-    "p2": "Chúng tôi kết nối nguồn vốn quốc tế với các cơ hội tăng trưởng cao nhất tại Việt Nam: nền tảng tài sản mã hóa được cấp phép, hạ tầng FinTech, công nghệ AI và EdTech.",
-    "p3": "Không chỉ cung cấp vốn — Fortress đồng hành chiến lược, am hiểu pháp lý sâu sắc và hỗ trợ vận hành thực chất để cùng nhau xây dựng những doanh nghiệp bền vững trong kỷ nguyên kinh tế số."
+    "tag": "01 — Hành Trình Fortress",
+    "title": "Chúng Tôi Đang Xây Dựng Một Thứ Chưa Từng Tồn Tại",
+    "p1": "Nghị quyết 5/2025/NQ-CP có hiệu lực từ 9/9/2025 — lần đầu tiên trong lịch sử, Việt Nam chính thức mở thị trường tài sản mã hóa hợp pháp. Tính đến hôm nay, chưa có đơn vị nào được cấp phép. Fortress đang là một trong những đơn vị đầu tiên xây dựng hồ sơ.",
+    "p2": "Đây không phải là quảng cáo hay lời mời gọi đầu tư. Đây là bức tranh thực tế về những gì chúng tôi đang làm, tại sao chúng tôi làm, và ai là người chúng tôi muốn đồng hành cùng.",
+    "p3": "Lộ trình rõ ràng. Tiến độ minh bạch. Rủi ro được nói thẳng. Nếu bạn thấy cùng một cơ hội và chia sẻ cùng lý tưởng — chúng tôi muốn nói chuyện."
   },
   "whatWeDo": {
     "tag": "02 — Năng Lực Cốt Lõi",
@@ -176,35 +176,35 @@
     ]
   },
   "why": {
-    "tag": "04 — Lợi Thế Fortress",
-    "title": "Đối Tác Chiến Lược Cho Kinh Tế Số Việt Nam",
+    "tag": "04 — Tại Sao Đây Là Cơ Hội Có Một Không Hai",
+    "title": "Cửa Sổ 5 Năm. Chưa Ai Đi Trước. Khung Pháp Lý Vừa Mở.",
     "benefits": [
-      { "title": "Chuyên Sâu Thị Trường Tài Sản Mã Hóa Việt Nam", "desc": "Fortress am hiểu sâu sắc Nghị quyết 5/2025/NQ-CP — khung pháp lý thí điểm tài sản mã hóa có hiệu lực từ 9/9/2025 — và hỗ trợ nhà đầu tư tận dụng cửa sổ pháp lý lịch sử 5 năm này." },
-      { "title": "Trọng Tâm FinTech & Tài Sản Số", "desc": "Từ nền tảng tài sản mã hóa được cấp phép và hạ tầng FinTech đến AI và EdTech — chúng tôi ưu tiên doanh nghiệp công nghệ có mô hình mở rộng được và lộ trình tuân thủ pháp lý rõ ràng." },
-      { "title": "Quy Trình Đầu Tư Kỷ Luật", "desc": "Mọi cơ hội đều qua thẩm định chuyên sâu: thương mại, tài chính, pháp lý và rủi ro. Sự thận trọng trong đánh giá là lý do đối tác đặt trọn niềm tin vào Fortress." },
-      { "title": "Mạng Lưới Toàn Cầu, Hành Động Địa Phương", "desc": "Trụ sở tại Dubai, hoạt động tại Việt Nam và Đông Nam Á — chúng tôi kết nối dòng vốn quốc tế với cơ hội kinh tế số địa phương, mang lại lợi thế cạnh tranh thực sự." },
-      { "title": "Đồng Hành Chiến Lược Thực Chất", "desc": "Không chỉ dừng lại ở nguồn vốn — Fortress đóng góp hỗ trợ pháp lý, định hướng sản phẩm, chiến lược thị trường, kết nối đối tác và năng lực vận hành đầy đủ." },
-      { "title": "Minh Bạch & Tin Cậy Tuyệt Đối", "desc": "Mọi quan hệ đối tác được xây trên nền tảng minh bạch, bảo mật thông tin và nguyên tắc đôi bên cùng có lợi. Uy tín là tài sản quan trọng nhất của Fortress." }
+      { "title": "Chưa Có Ai Được Cấp Phép — Ở Việt Nam", "desc": "Tính đến hôm nay, chưa có đơn vị nào được Bộ Tài chính cấp phép dịch vụ tài sản mã hóa tại Việt Nam. Fortress đang trong số những đơn vị đầu tiên xây dựng hồ sơ theo NQ 05/2025/NQ-CP có hiệu lực từ 9/9/2025." },
+      { "title": "Pháp Lý Rõ Ràng — Không Phải Vùng Xám", "desc": "NQ 05/2025/NQ-CP và QĐ 96/QĐ-BTC ngày 20/1/2026 định nghĩa rõ ràng điều kiện cấp phép, cơ cấu cổ đông và quy trình hoạt động. Đây là nền tảng pháp lý, không phải khoảng trống." },
+      { "title": "Thị Trường 100 Triệu Người — Chưa Có Sàn Hợp Pháp", "desc": "Việt Nam có 100 triệu dân, tỷ lệ sở hữu crypto cao nhất Đông Nam Á — nhưng chưa có sàn giao dịch hợp pháp. Đây là khoảng trống thị trường hiếm gặp trong lịch sử tài chính số." },
+      { "title": "Vốn Điều Lệ 10.000 Tỷ — Cần Liên Minh, Không Ai Đơn Độc", "desc": "Không một tổ chức đơn lẻ nào có thể đáp ứng toàn bộ yêu cầu. Đây là lý do cần đối tác — và cũng là lý do mỗi đối tác tham gia sớm có vị thế thiết yếu không thể thay thế." },
+      { "title": "Đội Ngũ Xây Dựng Trên Kỷ Luật Và Lý Tưởng", "desc": "Fortress không được xây dựng để bán. Đây là dự án dài hạn — được lãnh đạo bởi những người tin tưởng sâu sắc vào thị trường tài sản số hợp pháp như nền tảng tài chính thế hệ tiếp theo." },
+      { "title": "Minh Bạch Hoàn Toàn — Kể Cả Rủi Ro", "desc": "Chúng tôi không che giấu rủi ro để thuyết phục bạn tham gia. Thị trường đang hình thành. Cấp phép không chắc chắn 100%. Nếu bạn chấp nhận điều đó và vẫn thấy tiềm năng — chúng ta cùng chí hướng." }
     ]
   },
   "philosophy": {
-    "tag": "05 — Triết Lý Đầu Tư",
-    "title": "Ba Trụ Cột Kiến Tạo Giá Trị",
-    "desc": "Fortress kiến tạo giá trị dài hạn thông qua chiến lược kỷ luật, mối quan hệ đối tác tin cậy và những quyết định đạt tiêu chuẩn định chế quốc tế.",
-    "quote": "\"Nếu không thể tạo ra giá trị thực tiễn vượt trên nguồn vốn, đó không phải là cơ hội dành cho Fortress.\"",
+    "tag": "05 — Triết Lý Xây Dựng",
+    "title": "Ba Điều Chúng Tôi Tin Vào",
+    "desc": "Không phải slogan. Đây là những nguyên tắc thực sự định hướng từng quyết định, từng cuộc trò chuyện và từng bước đi của Fortress.",
+    "quote": "\"Người ta không tham gia vì bị thuyết phục — họ tham gia vì họ thấy và tin vào điều tương tự.\"",
     "commitments": [
-      { "title": "Nhận Diện Cơ Hội", "desc": "Tìm kiếm và sàng lọc nghiêm ngặt các cơ hội tiềm năng nhất trong FinTech, tài sản mã hóa, AI và kinh tế số — chỉ theo đuổi những gì đáp ứng tiêu chuẩn chất lượng cao nhất.", "number": "01" },
-      { "title": "Thẩm Định Chuyên Sâu", "desc": "Đánh giá toàn diện rủi ro, tuân thủ pháp lý, sức mạnh thị trường và tiềm năng giá trị theo tiêu chuẩn định chế tài chính quốc tế — trước khi ra bất kỳ cam kết nào.", "number": "02" },
-      { "title": "Tăng Trưởng & Đột Phá", "desc": "Thúc đẩy tăng trưởng vốn và dòng tiền dài hạn thông qua quản trị tích cực, chuyên môn pháp lý, công nghệ và toàn bộ nguồn lực chiến lược của Fortress.", "number": "03" }
+      { "title": "Xây Dựng Đúng — Không Phải Nhanh", "desc": "Tiêu chuẩn pháp lý, kỹ thuật và quản trị không thể rút ngắn. Chúng tôi xây dựng để tồn tại lâu dài — không phải để ra mắt nhanh rồi sụp đổ.", "number": "01" },
+      { "title": "Minh Bạch Kể Cả Khi Khó", "desc": "Cập nhật tiến độ thực tế — kể cả khi tiến độ chậm. Nói thẳng về rủi ro — kể cả khi điều đó làm mất đi người chưa sẵn sàng. Chúng tôi ưu tiên đúng người hơn nhiều người.", "number": "02" },
+      { "title": "Đối Tác — Không Phải Khách Hàng", "desc": "Người tham gia vào dự án này là đồng hành — có quyền biết, có quyền nói và có trách nhiệm chung. Fortress không tìm người đứng ngoài góp tiền.", "number": "03" }
     ]
   },
   "cta": {
-    "tag": "06 — Hợp Tác Đầu Tư",
-    "title": "Cùng Xây Dựng Tương Lai Tài Chính Số Việt Nam",
-    "p1": "Chúng tôi tìm kiếm startup FinTech, doanh nghiệp dịch vụ tài sản mã hóa, nền tảng EdTech và công ty kinh tế số muốn mở rộng quy mô tại Việt Nam, Đông Nam Á và thị trường quốc tế.",
-    "p2": "Dù bạn đang xây dựng nền tảng tài sản mã hóa, sản phẩm FinTech, giải pháp AI hay nền tảng EdTech — đội ngũ chuyên gia của Fortress sẵn sàng đồng hành với bảo mật và chuyên nghiệp tuyệt đối.",
-    "btn1": "GỬI ĐỀ XUẤT ĐẦU TƯ",
-    "btn2": "LIÊN HỆ ĐỘI NGŨ CHUYÊN GIA"
+    "tag": "06 — Cùng Đồng Hành",
+    "title": "Nếu Bạn Thấy Điều Tương Tự — Chúng Tôi Muốn Nghe Từ Bạn",
+    "p1": "Chúng tôi không đang chạy chiến dịch huy động vốn. Chúng tôi đang tìm những người thực sự tin vào thị trường tài sản mã hóa hợp pháp Việt Nam — người muốn là một phần của hành trình xây dựng, không phải chỉ kết quả cuối.",
+    "p2": "Nếu bạn là tổ chức tài chính, doanh nghiệp công nghệ, chuyên gia pháp lý, hay cá nhân có tầm nhìn dài hạn — chia sẻ với chúng tôi bạn nhìn thấy gì. Không có áp lực, không có cam kết ngay lập tức.",
+    "btn1": "KẾT NỐI VỚI CHÚNG TÔI",
+    "btn2": "XEM LỘ TRÌNH DỰ ÁN"
   },
   "newsletter": {
     "title": "Cập Nhật FinTech & Tài Sản Mã Hóa",

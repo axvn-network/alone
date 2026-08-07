@@ -1,107 +1,127 @@
 import InvestorForm from "@/components/InvestorForm";
-import { CheckCircle, ArrowRight } from "lucide-react";
+import { CheckCircle, ArrowRight, CheckCheck, Clock } from "lucide-react";
 import PageHero from "@/components/PageHero";
 import SectionHeader from "@/components/SectionHeader";
 import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Hợp Tác Đầu Tư",
+  title: "Đồng Hành Xây Dựng",
   description:
-    "Hợp tác đầu tư cùng Fortress Investment Holdings. Phân bổ vốn kỷ luật vào FinTech, tài sản mã hóa hợp pháp, AI và kinh tế số tại Việt Nam — bám sát Nghị quyết 5/2025/NQ-CP có hiệu lực từ 9/9/2025.",
+    "Fortress Investment Holdings đang xây dựng nền tảng giao dịch tài sản mã hóa hợp pháp đầu tiên tại Việt Nam theo NQ 05/2025/NQ-CP. Đây là hành trình — không phải lời mời gọi đầu tư.",
   openGraph: {
-    title: "Hợp Tác Đầu Tư | Fortress Investment Holdings",
+    title: "Đồng Hành Xây Dựng | Fortress Investment Holdings",
     description:
-      "Nguồn vốn của bạn xứng đáng được quản trị bằng kỷ luật, am hiểu pháp lý và định vị đúng trong hệ sinh thái tài sản mã hóa hợp pháp Việt Nam.",
+      "Chúng tôi đang xây dựng một thứ có ý nghĩa. Nếu bạn thấy tiềm năng và chia sẻ lý tưởng, chúng tôi muốn nghe từ bạn.",
   },
 };
 
-const investmentBenefits = [
+/* ─── Lộ trình dự án — hiển thị nổi bật, minh bạch hoàn toàn ─────────────── */
+const PROJECT_TIMELINE = [
   {
-    label: "Tiên Phong Tài Sản Mã Hóa Hợp Pháp",
-    desc: "Đầu tư vào hệ sinh thái tài sản mã hóa hợp pháp đầu tiên của Việt Nam — theo Nghị quyết 5/2025/NQ-CP có hiệu lực từ 9/9/2025, cửa sổ 5 năm đang mở.",
+    phase: "01",
+    label: "Khung Pháp Lý Ban Hành",
+    detail: "NQ 05/2025/NQ-CP: Chính phủ chính thức mở thị trường tài sản mã hóa hợp pháp đầu tiên tại Việt Nam",
+    status: "done" as const,
+    date: "09/09/2025",
   },
   {
-    label: "Thẩm Định Pháp Lý Nghiêm Ngặt",
-    desc: "Mọi cơ hội đều trải qua đánh giá toàn diện: tài chính, tuân thủ pháp lý, quản trị rủi ro và năng lực thực thi — trước khi giải ngân.",
+    phase: "02",
+    label: "Bộ Tài Chính Mở Cổng Tiếp Nhận Hồ Sơ",
+    detail: "QĐ 96/QĐ-BTC — điều kiện cấp phép chính thức, bắt đầu tiếp nhận hồ sơ xin cấp phép",
+    status: "done" as const,
+    date: "20/01/2026",
   },
   {
-    label: "Phân Bổ Vốn Chiến Lược",
-    desc: "Cấu trúc đầu tư được thiết kế tối ưu theo mục tiêu, khẩu vị rủi ro, lộ trình tuân thủ và kỳ vọng lợi suất của bạn.",
+    phase: "03",
+    label: "Xây Dựng Liên Minh Đối Tác",
+    detail: "Fortress đang kiến tạo hệ thống cổ đông chiến lược, tích lũy vốn, hoàn thiện đội ngũ và cơ cấu quản trị",
+    status: "active" as const,
+    date: "Hiện tại",
   },
   {
-    label: "Quản Trị Đầu Tư Chủ Động",
-    desc: "Fortress đồng hành xuyên suốt vòng đời đầu tư — từ thẩm định pháp lý ban đầu đến giám sát vận hành và báo cáo minh bạch.",
+    phase: "04",
+    label: "Xây Dựng Hạ Tầng Kỹ Thuật",
+    detail: "Hệ thống CNTT cấp độ 4, 10 quy trình nghiệp vụ chuẩn hóa, thẩm định Bộ Công An",
+    status: "pending" as const,
+    date: "2026",
   },
   {
-    label: "Quản Lý Rủi Ro Kỷ Luật",
-    desc: "Mọi quyết định được neo chặt trong phân tích rủi ro thực tế, tuân thủ quy định hiện hành và kiểm soát danh mục chặt chẽ.",
+    phase: "05",
+    label: "Nộp Hồ Sơ Cấp Phép",
+    detail: "Một bộ hồ sơ đầy đủ đúng quy định lên Bộ Tài chính — minh bạch và tuân thủ tuyệt đối",
+    status: "pending" as const,
+    date: "2026",
   },
   {
-    label: "Kiến Tạo Giá Trị Bền Vững",
-    desc: "Tập trung vào lợi suất dài hạn có thể đo lường được — không đầu cơ, không hứa hẹn phi thực tế, không chạy theo xu hướng nhất thời.",
-  },
-];
-
-const sectors = [
-  "Dịch Vụ Tài Sản Mã Hóa (Có Cấp Phép)",
-  "FinTech & Thanh Toán Số",
-  "Công Nghệ AI & Ứng Dụng",
-  "Công Nghệ Giáo Dục (EdTech)",
-  "Hạ Tầng Blockchain",
-  "Kinh Tế Số & Thương Mại Điện Tử",
-  "Private Equity & Vốn Tăng Trưởng",
-  "Mã Hóa Tài Sản (Tokenisation)",
-  "Quản Lý Đầu Tư Chiến Lược",
-];
-
-const modelSteps = [
-  {
-    n: "01",
-    title: "Hiểu Rõ Mục Tiêu",
-    body: "Xác định ưu tiên, quy mô vốn, lĩnh vực quan tâm, thời hạn và khẩu vị rủi ro. Không có cam kết nào được thực hiện trước khi Fortress thực sự hiểu bạn.",
-  },
-  {
-    n: "02",
-    title: "Chiến Lược Đầu Tư",
-    body: "Chuyển hóa mục tiêu thành chiến lược rõ ràng — phù hợp khung pháp lý tài sản mã hóa Việt Nam, nhất quán và được thống nhất giữa hai bên.",
-  },
-  {
-    n: "03",
-    title: "Tìm Kiếm Cơ Hội",
-    body: "Sàng lọc startup FinTech, doanh nghiệp tài sản mã hóa và dự án kinh tế số qua mạng lưới uy tín — chỉ theo đuổi cơ hội đạt tiêu chuẩn nghiêm ngặt.",
-  },
-  {
-    n: "04",
-    title: "Thẩm Định Chuyên Sâu",
-    body: "Đánh giá chi tiết: tài chính, rủi ro, tuân thủ pháp lý NQ5/2025, năng lực đội ngũ và khả năng thực thi — trước khi bất kỳ đồng vốn nào được giải ngân.",
-  },
-  {
-    n: "05",
-    title: "Cấu Trúc & Giải Ngân",
-    body: "Khoản đầu tư được cấu trúc tối ưu: bảo vệ vị thế, đảm bảo tuân thủ, liên kết lợi ích các bên — giải ngân vào cơ hội đã phê duyệt chính thức.",
-  },
-  {
-    n: "06",
-    title: "Quản Lý & Báo Cáo",
-    body: "Giám sát liên tục, minh bạch hoàn toàn về hiệu quả, chủ động ứng phó với biến động thị trường — luôn hướng đến tăng trưởng bền vững dài hạn.",
+    phase: "06",
+    label: "Nhận Giấy Phép & Vận Hành Chính Thức",
+    detail: "30 ngày thẩm định → hoạt động ngay. Trở thành sàn giao dịch tài sản mã hóa hợp pháp đầu tiên tại Việt Nam",
+    status: "pending" as const,
+    date: "2026–2027",
   },
 ];
 
-const activeSupport = [
-  "Định Hướng Chiến Lược",
-  "Hỗ Trợ Quản Trị Doanh Nghiệp",
-  "Phát Triển Thương Mại & Mở Rộng",
-  "Giám Sát Vận Hành",
-  "Kết Nối Thị Trường Quốc Tế",
-  "Báo Cáo Hiệu Quả Đầu Tư",
+/* ─── Những gì đang được xây dựng — cụ thể, đo lường được ────────────────── */
+const WHAT_WE_ARE_BUILDING = [
+  {
+    label: "Nền Tảng Giao Dịch TSMH Được Cấp Phép",
+    desc: "Sàn giao dịch tài sản mã hóa đầu tiên được Bộ Tài chính Việt Nam cấp phép chính thức theo NQ 05/2025/NQ-CP — không phải thêm một sàn ngoài vòng pháp lý.",
+  },
+  {
+    label: "Hệ Sinh Thái Đối Tác Chiến Lược",
+    desc: "Liên minh gồm tổ chức tài chính, doanh nghiệp công nghệ, nhà đầu tư tổ chức — mỗi bên mang đến năng lực thiết yếu mà không một đơn vị đơn lẻ nào có thể tự đáp ứng.",
+  },
+  {
+    label: "Hạ Tầng CNTT Cấp Độ 4",
+    desc: "Tiêu chuẩn an toàn thông tin cao nhất, thẩm định bởi Bộ Công An — nền tảng vận hành đáp ứng đầy đủ 10 quy trình nghiệp vụ bắt buộc theo quy định.",
+  },
+  {
+    label: "Đội Ngũ Chuyên Gia Đủ Tiêu Chuẩn Pháp Lý",
+    desc: "Tổng giám đốc ≥2 năm kinh nghiệm tài chính/chứng khoán, CTO ≥5 năm CNTT chuyên ngành, ≥10 chuyên gia an toàn thông tin, ≥10 người hành nghề chứng khoán.",
+  },
+  {
+    label: "Quản Trị Minh Bạch & Tuân Thủ Pháp Luật",
+    desc: "Điều lệ công ty, quy chế nội bộ, báo cáo định kỳ — mọi cổ đông có quyền tiếp cận thông tin đầy đủ, được bảo vệ theo Luật Doanh nghiệp.",
+  },
+  {
+    label: "Thị Trường 100 Triệu Người — Chưa Ai Tiên Phong",
+    desc: "Tính đến ngày hôm nay, chưa có đơn vị nào được cấp phép tại Việt Nam. Cửa sổ cơ hội 5 năm đang mở — ai xây dựng đúng và nhanh sẽ định hình toàn bộ thị trường.",
+  },
 ];
 
-const guarantees = [
-  "Bảo mật tuyệt đối mọi thông tin bạn cung cấp",
-  "Thẩm định trực tiếp bởi đội ngũ chuyên gia Fortress",
-  "Không phát sinh nghĩa vụ ràng buộc ở bước tư vấn ban đầu",
-  "Phản hồi cá nhân hóa trong 2–3 ngày làm việc",
+/* ─── Ai chúng tôi tìm kiếm — không phải "nhà đầu tư góp vốn" ────────────── */
+const WHO_WE_SEEK = [
+  {
+    title: "Tổ Chức Tài Chính & Công Nghệ",
+    desc: "Ngân hàng, công ty chứng khoán, quản lý quỹ, doanh nghiệp công nghệ — những tổ chức đủ điều kiện pháp lý theo Khoản 4, Điều 8 và sẵn sàng đặt uy tín vào một dự án có tầm.",
+    min: "Tổ chức trong nhóm >35% bắt buộc",
+  },
+  {
+    title: "Chuyên Gia Công Nghệ & Pháp Lý",
+    desc: "Người có kiến thức sâu về blockchain, bảo mật thông tin, pháp lý tài chính — những người muốn đóng góp năng lực, không chỉ tiền bạc.",
+    min: "Năng lực > vốn",
+  },
+  {
+    title: "Nhà Đầu Tư Có Lý Tưởng Dài Hạn",
+    desc: "Người hiểu rằng thị trường tài sản mã hóa hợp pháp Việt Nam sẽ định hình lại tài chính số trong 10 năm tới — và muốn là một phần của lịch sử đó.",
+    min: "Từ 100 triệu VNĐ",
+  },
+  {
+    title: "Đối Tác Chiến Lược Quốc Tế",
+    desc: "Tổ chức nước ngoài hiểu thị trường Đông Nam Á, có quan hệ quốc tế và muốn thiết lập vị thế sớm trong một trong những thị trường tài sản số đang nổi nhanh nhất.",
+    min: "Giới hạn ≤49% tổng vốn",
+  },
+];
+
+/* ─── Các điều cam kết — không phải lời hứa hẹn lợi nhuận ───────────────── */
+const OUR_COMMITMENTS = [
+  "Minh bạch hoàn toàn về tiến độ thực tế — không tô vẽ, không phóng đại",
+  "Quyết định quan trọng được đưa ra với sự tham gia của đại hội đồng cổ đông",
+  "Bảo vệ quyền lợi cổ đông theo đúng Luật Doanh nghiệp Việt Nam",
+  "Cập nhật định kỳ về tiến độ xây dựng hồ sơ cấp phép",
+  "Không có cam kết lợi nhuận cụ thể — đây là đầu tư dài hạn, không phải sản phẩm tài chính",
+  "Nếu dự án không đạt được cấp phép, cổ đông được bảo vệ theo đúng quy định pháp luật",
 ];
 
 function Section({
@@ -127,63 +147,139 @@ function Section({
   );
 }
 
+const STATUS_STYLE = {
+  done:    { dot: "bg-emerald-400", bar: "bg-emerald-400", label: "Hoàn thành", text: "text-emerald-400" },
+  active:  { dot: "bg-fortress-gold animate-pulse", bar: "bg-fortress-gold", label: "Đang thực hiện", text: "text-fortress-gold" },
+  pending: { dot: "bg-fortress-silver/20", bar: "bg-fortress-silver/10", label: "Sắp tới", text: "text-fortress-silver/40" },
+};
+
 export default function InvestWithFortressPage() {
   return (
     <main className="min-h-screen bg-white pb-safe md:pb-0">
-      {/* ── Hero ── */}
+
+      {/* ── Hero — tầm nhìn, không phải lời mời gọi ── */}
       <PageHero
-        tag="Hợp Tác Đầu Tư"
+        tag="Đồng Hành Xây Dựng"
         heading={
           <>
-            Nguồn Vốn Xứng Đáng Được{" "}
+            Chúng Tôi Đang Xây Dựng{" "}
             <span className="font-bold bg-gradient-to-r from-fortress-gold to-fortress-champagne bg-clip-text text-transparent">
-              Quản Trị Kỷ Luật.
+              Một Thứ Có Ý Nghĩa.
             </span>
           </>
         }
-        description="Fortress Investment Holdings đồng hành phân bổ vốn vào FinTech, tài sản mã hóa hợp pháp và kinh tế số tại Việt Nam — tiên phong đón đầu Nghị quyết 5/2025/NQ-CP có hiệu lực từ 9/9/2025."
+        description="Fortress đang kiến tạo nền tảng giao dịch tài sản mã hóa hợp pháp đầu tiên của Việt Nam theo NQ 05/2025/NQ-CP. Đây là hành trình dài hạn — chúng tôi không tìm người góp vốn, chúng tôi tìm người đồng hành vì cùng nhìn thấy điều tương tự."
       >
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
           <Link
-            href="#enquiry"
+            href="#roadmap"
             className="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-gradient-to-r from-fortress-gold to-fortress-champagne text-fortress-navy font-bold text-xs tracking-[0.18em] uppercase hover:opacity-90 transition-opacity shadow-lg shadow-fortress-gold/15"
           >
-            Gửi Đề Xuất Đầu Tư
+            Xem Lộ Trình Thực Tế
           </Link>
           <Link
             href="/invest-with-fortress/plans"
             className="inline-flex items-center justify-center gap-2 px-7 py-3.5 border border-fortress-gold/60 text-fortress-navy font-semibold text-xs tracking-[0.18em] uppercase hover:bg-fortress-gold/8 hover:border-fortress-gold transition-all"
           >
-            Xem Hạng Mục Hợp Tác
+            Vai Trò Có Thể Tham Gia
           </Link>
           <Link
-            href="#sectors"
+            href="#connect"
             className="inline-flex items-center justify-center gap-2 px-7 py-3.5 border border-fortress-navy/30 text-fortress-navy font-semibold text-xs tracking-[0.18em] uppercase hover:bg-fortress-navy/5 transition-all"
           >
-            Khám Phá Lĩnh Vực
+            Kết Nối Với Chúng Tôi
           </Link>
         </div>
         <div className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 bg-fortress-gold/10 border border-fortress-gold/25 rounded-full text-fortress-gold text-[11px] font-semibold tracking-wide">
           <span className="w-1.5 h-1.5 rounded-full bg-fortress-gold animate-pulse" />
-          Từ 20/01/2026 — Bộ Tài chính chính thức tiếp nhận hồ sơ cấp phép
+          Giai đoạn 03/06 — Đang xây dựng liên minh đối tác
         </div>
       </PageHero>
 
-      {/* ── Lợi ích đầu tư ── */}
-      <Section dark id="invest">
+      {/* ── Lộ trình — minh bạch, cụ thể, không ẩn giấu ── */}
+      <Section dark id="roadmap">
         <div className="text-center mb-10 md:mb-14">
           <SectionHeader
-            tag="Tại Sao Chọn Fortress"
-            heading="Vốn Của Bạn. Kỷ Luật Của Chúng Tôi."
-            description="Nguồn vốn chỉ được giải ngân sau khi Fortress thấu hiểu rõ mục tiêu, khẩu vị rủi ro, yêu cầu tuân thủ và kỳ vọng của bạn — từ đó xây dựng chiến lược tối ưu nhất."
+            tag="Lộ Trình Thực Tế"
+            heading="Chúng Tôi Đang Ở Đây. Đây Là Hành Trình."
+            description="Không có vẽ bánh, không hứa hẹn mơ hồ. Đây là 6 giai đoạn cụ thể, với tiến độ thực tế và ngày tháng rõ ràng — để bạn tự đánh giá."
             dark
           />
         </div>
+        <div className="relative max-w-4xl mx-auto">
+          {/* Timeline connector line */}
+          <div className="absolute left-6 top-8 bottom-8 w-px bg-gradient-to-b from-emerald-400/40 via-fortress-gold/40 to-fortress-silver/10 hidden sm:block" />
+          <div className="space-y-4">
+            {PROJECT_TIMELINE.map((item, i) => {
+              const s = STATUS_STYLE[item.status];
+              return (
+                <div key={i} className="relative flex items-start gap-5 sm:gap-7">
+                  {/* Status dot */}
+                  <div className="relative z-10 flex flex-col items-center shrink-0 mt-1">
+                    <div className={`w-3 h-3 rounded-full border-2 border-fortress-navy ${s.dot}`} />
+                  </div>
+                  {/* Content */}
+                  <div className={`flex-1 p-5 rounded-xl border transition-all ${
+                    item.status === "active"
+                      ? "bg-fortress-deep border-fortress-gold/30 shadow-lg shadow-fortress-gold/5"
+                      : item.status === "done"
+                      ? "bg-fortress-deep border-emerald-400/15"
+                      : "bg-fortress-deep/40 border-fortress-silver/8"
+                  }`}>
+                    <div className="flex items-start justify-between gap-3 mb-1.5">
+                      <div className="flex items-center gap-2.5">
+                        <span className="text-fortress-silver/30 text-[10px] font-mono font-bold tracking-widest shrink-0">
+                          GIAI ĐOẠN {item.phase}
+                        </span>
+                        <span className={`text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-full ${
+                          item.status === "done"    ? "bg-emerald-400/10 text-emerald-400" :
+                          item.status === "active"  ? "bg-fortress-gold/10 text-fortress-gold" :
+                          "bg-fortress-silver/5 text-fortress-silver/30"
+                        }`}>
+                          {s.label}
+                        </span>
+                      </div>
+                      <span className={`text-[11px] font-mono shrink-0 ${s.text}`}>{item.date}</span>
+                    </div>
+                    <h3 className={`font-semibold text-sm mb-1.5 ${
+                      item.status === "pending" ? "text-fortress-ivory/40" : "text-fortress-ivory"
+                    }`}>{item.label}</h3>
+                    <p className={`text-xs leading-relaxed ${
+                      item.status === "pending" ? "text-fortress-silver/30" : "text-fortress-silver/65"
+                    }`}>{item.detail}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          {/* Current position callout */}
+          <div className="mt-8 p-5 bg-fortress-gold/8 border border-fortress-gold/25 rounded-xl">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="w-2 h-2 rounded-full bg-fortress-gold animate-pulse" />
+              <p className="text-fortress-gold font-bold text-sm">Fortress hiện đang ở Giai đoạn 03</p>
+            </div>
+            <p className="text-fortress-silver/70 text-xs leading-relaxed">
+              Đây là thời điểm tốt nhất để tham gia — trước khi hồ sơ được nộp, trước khi cơ cấu cổ đông khóa lại. 
+              Định giá thấp nhất, tiếng nói cao nhất, tầm ảnh hưởng thực sự nhất.
+            </p>
+          </div>
+        </div>
+      </Section>
+
+      {/* ── Những gì đang được xây dựng — cụ thể, đo lường được ── */}
+      <Section id="building">
+        <div className="text-center mb-10 md:mb-14">
+          <SectionHeader
+            tag="Chúng Tôi Đang Xây Gì"
+            heading="Không Phải Lời Hứa — Là Công Trình Đang Được Xây."
+            description="Mỗi hạng mục bên dưới là yêu cầu bắt buộc theo NQ 05/2025/NQ-CP để được cấp phép. Không có gì mơ hồ hay phóng đại — đây là những gì phải có."
+          />
+        </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
-          {investmentBenefits.map((item, i) => (
+          {WHAT_WE_ARE_BUILDING.map((item, i) => (
             <div
               key={i}
-              className="group p-6 bg-fortress-deep border border-fortress-gold/10 hover:border-fortress-gold/30 hover:-translate-y-0.5 transition-all duration-300 rounded-sm"
+              className="group p-6 bg-fortress-navy border border-fortress-gold/10 hover:border-fortress-gold/30 hover:-translate-y-0.5 transition-all duration-300 rounded-sm"
             >
               <div className="w-px h-4 bg-fortress-gold/40 mb-4 group-hover:bg-fortress-gold/70 transition-colors" />
               <p className="font-semibold text-fortress-ivory text-sm mb-1.5">{item.label}</p>
@@ -191,120 +287,104 @@ export default function InvestWithFortressPage() {
             </div>
           ))}
         </div>
-      </Section>
-
-      {/* ── Lĩnh vực đầu tư ── */}
-      <Section id="sectors">
-        <div className="text-center mb-10 md:mb-14">
-          <SectionHeader
-            tag="Lĩnh Vực Đầu Tư Trọng Tâm"
-            heading="Một Mối Quan Hệ. Tiếp Cận Toàn Bộ Hệ Sinh Thái Tài Sản Số."
-            description="Thông qua Fortress, bạn tiếp cận 9 lĩnh vực đầu tư trọng tâm trong hệ sinh thái FinTech, tài sản mã hóa hợp pháp và kinh tế số Việt Nam."
-          />
-        </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 max-w-5xl mx-auto">
-          {sectors.map((item, i) => (
-            <div
-              key={i}
-              className="flex items-center gap-3 p-4 md:p-5 bg-fortress-navy border border-fortress-gold/10 hover:border-fortress-gold/25 transition-all duration-300 rounded-sm"
-            >
-              <span className="text-fortress-gold/40 text-xs font-mono font-bold tracking-widest shrink-0">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <p className="font-medium text-fortress-silver text-sm">{item}</p>
-            </div>
-          ))}
-        </div>
         <div className="flex justify-center mt-8">
           <Link
-            href="/investment-focus"
+            href="/invest-with-fortress/plans"
             className="inline-flex items-center gap-2 px-6 py-3 border border-fortress-navy/25 text-fortress-charcoal text-xs font-semibold tracking-[0.15em] uppercase hover:bg-fortress-navy hover:text-fortress-ivory hover:border-fortress-navy transition-all duration-300 rounded-sm"
           >
-            Xem Chi Tiết Từng Lĩnh Vực
+            Xem Toàn Bộ Điều Kiện Pháp Lý
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
       </Section>
 
-      {/* ── Mô hình đầu tư ── */}
-      <Section altDark id="model">
+      {/* ── Ai chúng tôi tìm kiếm ── */}
+      <Section altDark id="who">
         <div className="text-center mb-10 md:mb-14">
           <SectionHeader
-            tag="Quy Trình Đầu Tư"
-            heading="Hành Trình Kỷ Luật Từ Cam Kết Đến Giá Trị"
-            description="Đầu tư thành công dựa trên quy trình chặt chẽ. Mọi quyết định tại Fortress đều trải qua 6 giai đoạn thẩm định và quản trị rủi ro nghiêm ngặt."
+            tag="Chúng Tôi Tìm Ai"
+            heading="Không Phải Người Góp Vốn — Là Người Đồng Hành."
+            description="Chúng tôi không tìm người đưa tiền rồi chờ kết quả. Chúng tôi tìm người nhìn thấy cùng một cơ hội, hiểu rõ rủi ro, và muốn là một phần của hành trình xây dựng."
             dark
           />
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 max-w-6xl mx-auto">
-          {modelSteps.map((step) => (
+        <div className="grid sm:grid-cols-2 gap-4 md:gap-5 max-w-5xl mx-auto">
+          {WHO_WE_SEEK.map((item, i) => (
             <div
-              key={step.n}
+              key={i}
               className="group p-6 md:p-7 bg-fortress-navy border border-fortress-gold/15 hover:border-fortress-gold/35 hover:-translate-y-0.5 transition-all duration-300 rounded-sm"
             >
-              <span className="text-fortress-gold/35 font-mono font-black text-3xl md:text-4xl block mb-4 leading-none group-hover:text-fortress-gold/55 transition-colors">
-                {step.n}
-              </span>
-              <h3 className="font-semibold text-fortress-ivory text-sm mb-2">{step.title}</h3>
-              <p className="text-fortress-silver/65 leading-relaxed" style={{ fontSize: "var(--text-body)" }}>{step.body}</p>
+              <p className="font-semibold text-fortress-ivory text-sm mb-2">{item.title}</p>
+              <p className="text-fortress-silver/65 leading-relaxed text-xs mb-4">{item.desc}</p>
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-fortress-gold/8 border border-fortress-gold/20 rounded-full">
+                <span className="w-1 h-1 rounded-full bg-fortress-gold" />
+                <span className="text-fortress-gold text-[10px] font-semibold">{item.min}</span>
+              </div>
             </div>
           ))}
         </div>
       </Section>
 
-      {/* ── Quản trị chủ động ── */}
-      <Section>
+      {/* ── Cam kết của chúng tôi — không phải lời hứa lợi nhuận ── */}
+      <Section id="commitments">
         <div className="grid lg:grid-cols-2 gap-10 md:gap-16 items-start">
           <div>
             <SectionHeader
-              tag="Đồng Hành Tích Cực"
-              heading="Chúng Tôi Không Chỉ Giải Ngân — Chúng Tôi Đồng Hành Trực Tiếp."
-              description="Khác với các đơn vị chỉ phân bổ vốn rồi đứng ngoài, Fortress trực tiếp tham gia hỗ trợ chiến lược, quản trị doanh nghiệp và mở rộng quy mô cùng bạn."
+              tag="Cam Kết Của Chúng Tôi"
+              heading="Minh Bạch Tuyệt Đối. Không Tô Vẽ. Không Phóng Đại."
+              description="Đây không phải là những gì chúng tôi hứa hẹn để thuyết phục bạn. Đây là những gì chúng tôi cam kết thực hiện — bất kể kết quả như thế nào."
               align="left"
             />
           </div>
           <div className="bg-fortress-navy rounded-2xl p-7 md:p-10">
-            <p className="section-tag mb-4">Fortress Gia Tăng Giá Trị Như Thế Nào</p>
-            <h3
-              className="font-semibold text-fortress-ivory mb-7 leading-snug"
-              style={{ fontSize: "var(--text-h3)" }}
-            >
-              Đồng Hành Xuyên Suốt Vòng Đời Đầu Tư
-            </h3>
-            <div className="grid sm:grid-cols-2 gap-3">
-              {activeSupport.map((item, i) => (
-                <div
-                  key={i}
-                  className="flex items-center gap-2.5 p-3.5 bg-fortress-deep border border-fortress-gold/10 rounded-sm"
-                >
-                  <div className="w-1 h-1 rounded-full bg-fortress-gold shrink-0" />
-                  <p className="text-fortress-ivory text-sm font-medium">{item}</p>
-                </div>
+            <p className="section-tag mb-5">Fortress Cam Kết Với Mọi Đối Tác</p>
+            <ul className="space-y-3">
+              {OUR_COMMITMENTS.map((item, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <CheckCircle className="w-4 h-4 text-fortress-gold shrink-0 mt-0.5" />
+                  <span className="text-fortress-silver/75 text-sm leading-relaxed">{item}</span>
+                </li>
               ))}
+            </ul>
+            <div className="mt-6 pt-5 border-t border-fortress-gold/10">
+              <p className="text-fortress-silver/40 text-xs leading-relaxed italic">
+                &ldquo;Nếu bạn cần được thuyết phục, đây có thể chưa phải thời điểm phù hợp.
+                Nếu bạn đã nhìn thấy cơ hội này — chúng tôi muốn nói chuyện.&rdquo;
+              </p>
             </div>
           </div>
         </div>
       </Section>
 
-      {/* ── Form yêu cầu ── */}
-      <Section dark id="enquiry">
+      {/* ── Form kết nối — không phải "gửi đề xuất đầu tư" ── */}
+      <Section dark id="connect">
         <div className="grid lg:grid-cols-5 gap-8 md:gap-14">
           <div className="lg:col-span-2">
             <SectionHeader
-              tag="Bắt Đầu Ngay Hôm Nay"
-              heading="Thảo Luận Cơ Hội Cùng Fortress"
-              description="Chia sẻ thông tin và kỳ vọng của bạn. Đội ngũ chuyên gia sẽ phản hồi trong 2–3 ngày làm việc với cam kết bảo mật cao nhất."
+              tag="Kết Nối Với Chúng Tôi"
+              heading="Nếu Bạn Thấy Điều Tương Tự"
+              description="Chia sẻ với chúng tôi bạn là ai, bạn nhìn thấy gì trong cơ hội này, và bạn muốn đóng góp điều gì. Không có mẫu câu nào đúng hay sai — chúng tôi chỉ muốn nghe từ người thật."
               align="left"
               dark
             />
-            <ul className="mt-8 space-y-3">
-              {guarantees.map((item) => (
-                <li key={item} className="flex items-start gap-3">
-                  <CheckCircle className="w-4 h-4 text-fortress-gold shrink-0 mt-0.5" />
-                  <span className="text-fortress-silver/70 text-sm">{item}</span>
-                </li>
-              ))}
-            </ul>
+            <div className="mt-8 space-y-4">
+              <div className="flex items-start gap-3">
+                <CheckCheck className="w-4 h-4 text-fortress-gold shrink-0 mt-0.5" />
+                <span className="text-fortress-silver/70 text-sm">Mọi thông tin được bảo mật tuyệt đối</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <CheckCheck className="w-4 h-4 text-fortress-gold shrink-0 mt-0.5" />
+                <span className="text-fortress-silver/70 text-sm">Phản hồi trực tiếp trong 2–3 ngày làm việc</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <CheckCheck className="w-4 h-4 text-fortress-gold shrink-0 mt-0.5" />
+                <span className="text-fortress-silver/70 text-sm">Không có ràng buộc hay nghĩa vụ ở bước này</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <Clock className="w-4 h-4 text-fortress-gold shrink-0 mt-0.5" />
+                <span className="text-fortress-silver/70 text-sm">Chúng tôi không rush bạn — quyết định đúng cần thời gian</span>
+              </div>
+            </div>
           </div>
           <div className="lg:col-span-3">
             <div className="bg-fortress-deep border border-fortress-gold/15 p-7 md:p-10 rounded-2xl">
@@ -314,15 +394,24 @@ export default function InvestWithFortressPage() {
         </div>
       </Section>
 
-      {/* ── Cam kết bảo mật ── */}
+      {/* ── Tuyên bố rõ ràng về rủi ro ── */}
       <Section altDark>
         <div className="max-w-3xl mx-auto text-center">
           <SectionHeader
-            tag="Cam Kết Bảo Mật"
-            heading="Thông Tin Của Bạn Được Bảo Vệ Tuyệt Đối"
-            description="Mọi dữ liệu gửi qua website chỉ được sử dụng cho mục đích đánh giá cơ hội đầu tư. Fortress tuân thủ nghiêm ngặt nguyên tắc bảo mật và quyền riêng tư của khách hàng — không chia sẻ với bên thứ ba."
+            tag="Sự Thật Về Rủi Ro"
+            heading="Đây Là Đầu Tư Dài Hạn, Không Phải Sản Phẩm Tài Chính"
+            description="Thị trường tài sản mã hóa hợp pháp tại Việt Nam vẫn đang trong giai đoạn hình thành. Không ai có thể đảm bảo kết quả. Chúng tôi cam kết minh bạch — không phải cam kết lợi nhuận. Nếu bạn chấp nhận sự không chắc chắn đó và vẫn thấy cơ hội — chúng tôi cùng chí hướng."
             dark
           />
+          <div className="mt-6">
+            <Link
+              href="/investment-disclaimer"
+              className="inline-flex items-center gap-2 text-fortress-gold/60 hover:text-fortress-gold text-xs font-semibold tracking-wide transition-colors"
+            >
+              Đọc Đầy Đủ Tuyên Bố Miễn Trừ Trách Nhiệm
+              <ArrowRight className="w-3 h-3" />
+            </Link>
+          </div>
         </div>
       </Section>
     </main>
