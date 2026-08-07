@@ -1,10 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import Admin from "@/models/Admin";
-import { getSupabase, getSupabaseAdmin } from "./supabase";
-import { queryPostgres } from "./postgres";
-
-const getMongoUri = () => process.env.MONGODB_URI;
 
 interface MongooseCache {
   conn: typeof mongoose | null;
@@ -12,61 +8,37 @@ interface MongooseCache {
   seeded: boolean;
 }
 
-const globalWithMongoose = globalThis as typeof globalThis & {
-  mongoose?: MongooseCache;
-};
-
-const cached: MongooseCache = globalWithMongoose.mongoose ?? { conn: null, promise: null, seeded: false };
-
-if (!globalWithMongoose.mongoose) {
-  globalWithMongoose.mongoose = cached;
-}
+const g = globalThis as typeof globalThis & { _mongoose?: MongooseCache };
+const cached: MongooseCache = g._mongoose ?? { conn: null, promise: null, seeded: false };
+if (!g._mongoose) g._mongoose = cached;
 
 async function seedAdmin() {
   if (cached.seeded) return;
-
   try {
     const count = await Admin.countDocuments();
-    if (count > 0) {
-      cached.seeded = true;
-      return;
-    }
+    if (count > 0) { cached.seeded = true; return; }
 
-    const email = process.env.ADMIN_EMAIL || "admin@fortressih.com";
-    const password = process.env.ADMIN_PASSWORD || "admin123";
-    const name = process.env.ADMIN_NAME || "Admin";
+    const email    = process.env.ADMIN_EMAIL    || "admin@fortressih.com";
+    const password = process.env.ADMIN_PASSWORD;
+    const name     = process.env.ADMIN_NAME     || "Admin";
 
-    const hashedPassword = await bcrypt.hash(password, 12);
-    await Admin.create({ name, email, password: hashedPassword, role: "superadmin" });
+    if (!password) return; // No password set — skip seeding
 
-    console.log(`[Seed] Admin user created: ${email}`);
+    await Admin.create({ name, email, password: await bcrypt.hash(password, 12), role: "superadmin" });
     cached.seeded = true;
-  } catch (e) {
-    console.warn("[Seed] Admin seed warning:", e);
+  } catch {
+    // Seed errors are non-fatal — primary DB may handle auth separately
   }
 }
 
 export async function connectDB(): Promise<typeof mongoose | null> {
-  // If Supabase environment is set, Supabase is active
-  if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-    console.log("[DB] Using Supabase Database");
-    return null;
-  }
+  const uri = process.env.MONGODB_URI;
+  if (!uri) return null;
 
-  const uri = getMongoUri();
-  if (!uri) {
-    console.warn("[DB] MONGODB_URI not defined. Operating with Supabase / Mock DB.");
-    return null;
-  }
-
-  if (cached.conn) {
-    return cached.conn;
-  }
+  if (cached.conn) return cached.conn;
 
   if (!cached.promise) {
-    cached.promise = mongoose.connect(uri, {
-      bufferCommands: false,
-    });
+    cached.promise = mongoose.connect(uri, { bufferCommands: false });
   }
 
   try {
@@ -74,10 +46,8 @@ export async function connectDB(): Promise<typeof mongoose | null> {
     await seedAdmin();
   } catch (e) {
     cached.promise = null;
-    console.warn("[DB] MongoDB connection failed, falling back to Supabase/Postgres:", e);
+    throw e;
   }
 
   return cached.conn;
 }
-
-export { getSupabase, getSupabaseAdmin, queryPostgres };

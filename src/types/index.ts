@@ -1,3 +1,5 @@
+// ─── Shared primitives ────────────────────────────────────────────────────────
+
 export interface SocialLink {
   platform: string;
   url: string;
@@ -17,6 +19,8 @@ export interface SiteSettings {
   metaPixelId: string;
   footer: string;
 }
+
+// ─── Page / SEO ───────────────────────────────────────────────────────────────
 
 export interface PageSEO {
   title: string;
@@ -44,6 +48,8 @@ export interface PageData {
   updatedAt: Date;
 }
 
+// ─── Blog ─────────────────────────────────────────────────────────────────────
+
 export interface BlogPost {
   title: string;
   slug: string;
@@ -58,6 +64,20 @@ export interface BlogPost {
   createdAt: Date;
   updatedAt: Date;
 }
+
+/** Lightweight shape for admin article list cards — no content/seo */
+export interface AdminArticleItem {
+  slug: string;
+  title: string;
+  excerpt: string;
+  category: string;
+  tags: string[];
+  featuredImage: string;
+  status: "draft" | "published";
+  updatedAt: string;
+}
+
+// ─── Enquiry ──────────────────────────────────────────────────────────────────
 
 export type EnquiryType =
   | "Contact"
@@ -79,6 +99,49 @@ export interface Enquiry {
   createdAt: Date;
 }
 
+/** Shaped enquiry for admin list page */
+export interface AdminEnquiryItem {
+  id: string;
+  type: "contact" | "submission";
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+  read: boolean;
+  createdAt: string;
+  details: {
+    phone: string;
+    company: string;
+    document: string;
+    enquiryType: string;
+  };
+}
+
+// ─── Dashboard ────────────────────────────────────────────────────────────────
+
+/** Activity feed item for the admin dashboard */
+export interface ActivityItem {
+  id: string;
+  type: "contact" | "submission";
+  title: string;
+  description: string;
+  time: string;
+}
+
+/**
+ * Shape returned by /api/admin/stats and dashboardService.getDashboardStats()
+ * — matches exactly what admin/page.tsx Stats interface expects.
+ */
+export interface DashboardStats {
+  blogPosts: number;
+  totalContacts: number;
+  totalSubmissions: number;
+  newEnquiries: number;
+  activities: ActivityItem[];
+}
+
+// ─── Media / Upload ───────────────────────────────────────────────────────────
+
 export interface UploadRecord {
   publicId: string;
   secureUrl: string;
@@ -89,14 +152,7 @@ export interface UploadRecord {
   createdAt: Date;
 }
 
-export interface DashboardStats {
-  blogCount: number;
-  draftCount: number;
-  publishedCount: number;
-  enquiryCount: number;
-  recentEnquiries: Enquiry[];
-  recentPosts: BlogPost[];
-}
+// ─── API wrapper ──────────────────────────────────────────────────────────────
 
 export interface ApiResponse<T = unknown> {
   success: boolean;
@@ -104,6 +160,8 @@ export interface ApiResponse<T = unknown> {
   data?: T;
   errors?: Record<string, string[]>;
 }
+
+// ─── Admin user ───────────────────────────────────────────────────────────────
 
 export interface AdminUser {
   name: string;

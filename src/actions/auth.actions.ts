@@ -1,34 +1,16 @@
 "use server";
 
-import { getAuth } from "@/lib/auth";
-import { headers } from "next/headers";
+import { getCurrentUser, logoutAdmin } from "@/lib/auth-utils";
 
-export async function signIn(email: string, password: string) {
-  try {
-    const auth = await getAuth();
-    const headersList = await headers();
-
-    const response = await auth.api.signInEmail({
-      body: { email, password },
-      headers: headersList,
-    });
-
-    return { success: true, data: response };
-  } catch (error) {
-    console.error("Sign in error:", error);
-    return { success: false, message: "Invalid email or password" };
-  }
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function signIn(_email: string, _password: string) {
+  // Sign-in is handled directly by /api/admin-login route
+  return { success: false, message: "Use /api/admin-login" };
 }
 
 export async function signOut() {
   try {
-    const auth = await getAuth();
-    const headersList = await headers();
-
-    await auth.api.signOut({
-      headers: headersList,
-    });
-
+    await logoutAdmin();
     return { success: true };
   } catch (error) {
     console.error("Sign out error:", error);
@@ -38,14 +20,7 @@ export async function signOut() {
 
 export async function getSession() {
   try {
-    const auth = await getAuth();
-    const headersList = await headers();
-
-    const session = await auth.api.getSession({
-      headers: headersList,
-    });
-
-    return session;
+    return await getCurrentUser();
   } catch (error) {
     console.error("Get session error:", error);
     return null;

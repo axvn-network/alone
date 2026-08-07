@@ -1,5 +1,3 @@
-
-
 import ContactForm from "@/components/ContactForm";
 import { Phone, Mail, MapPin, Clock, MessageCircle } from "lucide-react";
 import type { Metadata } from "next";
@@ -65,24 +63,24 @@ export default async function ContactPage() {
       
 
       {/* Banner */}
-      <section className="bg-white pt-24 md:pt-32 pb-12 md:pb-20 text-center">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
+      <section className="bg-white text-center" style={{ paddingTop: "clamp(5.5rem, 8vw + 1rem, 8rem)", paddingBottom: "clamp(2.5rem, 4vw + 0.5rem, 5rem)" }}>
+        <div className="max-w-[1400px] mx-auto" style={{ paddingLeft: "var(--section-px)", paddingRight: "var(--section-px)" }}>
           <p className="text-fortress-gold text-sm font-medium tracking-[2px] md:tracking-[4px] uppercase mb-4">
             Liên Hệ Với Chúng Tôi
           </p>
-          <h1 className="text-3xl md:text-6xl font-bold text-fortress-navy">
+          <h1 className="font-bold text-fortress-navy" style={{ fontSize: "var(--text-display)" }}>
             Khởi Đầu Sự Hợp Tác Dài Lâu
           </h1>
-          <p className="text-fortress-navy/60 text-lg leading-relaxed max-w-2xl mx-auto mt-6">
+          <p className="text-fortress-navy/60 leading-relaxed max-w-2xl mx-auto mt-6" style={{ fontSize: "var(--text-lead)" }}>
             Cho dù bạn có thắc mắc, đề xuất dự án đầu tư hay muốn tìm hiểu thêm về Fortress – chúng tôi luôn sẵn sàng hỗ trợ bạn.
           </p>
         </div>
       </section>
 
       {/* Contact Info Cards */}
-      <section className="bg-fortress-navy my-8 md:my-12 mx-2 sm:mx-4 rounded-2xl py-12 md:py-20">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
-          <h2 className="text-center text-fortress-ivory text-2xl md:text-3xl font-bold mb-12">
+      <section className="bg-fortress-navy rounded-2xl section-mx section-my" style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}>
+        <div className="max-w-[1400px] mx-auto section-px">
+          <h2 className="text-center text-fortress-ivory font-bold mb-12" style={{ fontSize: "var(--text-h2)" }}>
             Thông Tin Kết Nối Trực Tiếp
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
@@ -108,8 +106,8 @@ export default async function ContactPage() {
       </section>
 
       {/* Form + Map */}
-      <section className="my-8 md:my-12 mx-2 sm:mx-4">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
+      <section className="section-mx section-my">
+        <div className="max-w-[1400px] mx-auto section-px">
           <div className="grid lg:grid-cols-5 gap-8">
             {/* Form */}
             <div className="lg:col-span-2 bg-white rounded-2xl p-6 md:p-10">

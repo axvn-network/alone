@@ -40,25 +40,44 @@ const heroButtonVariants = {
 };
 
 import { usePageContent } from "@/hooks/usePageContent";
+import { useLang } from "@/contexts/LangContext";
+import { t } from "@/lib/i18n";
 
 const defaultHeroData = {
-  heroSubtitle: "Fortress Investment Holdings",
-  heroTitleLine1: "Vững Chắc Nền Tảng.",
-  heroTitleLine2: "Đột Phá Tầm Nhìn.",
-  heroDescription: "Tập đoàn đầu tư đa ngành hàng đầu tập trung tìm kiếm, thâu tóm và phát triển các cơ hội đầu tư tiềm năng cao trong các lĩnh vực bất động sản, đầu tư tư nhân (Private Equity), công nghệ AI, năng lượng, hàng hóa và dịch vụ khách sạn nghỉ dưỡng.",
-  heroBtn1Text: "Khám Phá Lĩnh Vực Đầu Tư",
-  heroBtn2Text: "Hợp Tác Đầu Tư Cùng Chúng Tôi",
+  heroSubtitle: "",
+  heroTitleLine1: "",
+  heroTitleLine2: "",
+  heroDescription: "",
+  heroBtn1Text: "",
+  heroBtn2Text: "",
 };
 
 export default function Hero() {
   const { content } = usePageContent("home", defaultHeroData);
+  const { lang } = useLang();
+  const heroSubtitle = content.heroSubtitle || t("hero.subtitle", lang);
+  const heroTitleLine1 = content.heroTitleLine1 || t("hero.titleLine1", lang);
+  const heroTitleLine2 = content.heroTitleLine2 || t("hero.titleLine2", lang);
+  const heroDescription = content.heroDescription || t("hero.description", lang);
+  const heroBtn1Text = content.heroBtn1Text || t("hero.btn1", lang);
+  const heroBtn2Text = content.heroBtn2Text || t("hero.btn2", lang);
 
   return (
     <motion.section
       variants={heroContainerVariants}
       initial="hidden"
       animate="visible"
-      className="relative min-h-[85vh] md:min-h-screen pt-20 pb-12 md:pt-28 md:pb-16 px-5 sm:px-6 lg:px-12 flex flex-col items-center justify-center overflow-hidden bg-fortress-navy"
+      className="relative flex flex-col items-center justify-center overflow-hidden bg-fortress-navy"
+      style={{
+        /* Fluid min-height: 85vh mobile → 100vh desktop */
+        minHeight: "clamp(85vh, 92vw, 100vh)",
+        /* Fluid vertical padding: 80px top → 112px; 48px bottom → 64px */
+        paddingTop: "clamp(5rem, 8vw + 1rem, 7rem)",
+        paddingBottom: "clamp(3rem, 4vw + 0.5rem, 4rem)",
+        /* Fluid horizontal padding */
+        paddingLeft: "var(--section-px)",
+        paddingRight: "var(--section-px)",
+      }}
     >
       {/* Background image with layered gradient overlay */}
       <div className="absolute inset-0 z-0">
@@ -92,26 +111,32 @@ export default function Hero() {
       >
         <motion.span
           variants={heroItemVariants}
-          className="block text-fortress-gold text-[10px] sm:text-xs md:text-sm tracking-[4px] md:tracking-[6px] uppercase font-semibold mb-4 md:mb-6"
+          className="block text-fortress-gold uppercase font-semibold mb-4 md:mb-6"
+          style={{
+            fontSize: "clamp(0.625rem, 0.5vw + 0.45rem, 0.875rem)",
+            letterSpacing: "clamp(0.2em, 0.4vw + 0.1em, 0.45em)",
+          }}
         >
-          {content.heroSubtitle}
+          {heroSubtitle}
         </motion.span>
 
         <motion.h1
           variants={heroItemVariants}
-          className="text-white text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-light leading-[1.2] uppercase tracking-tight mb-4 md:mb-8 w-full sm:max-w-lg md:max-w-4xl"
+          className="text-white font-light leading-[1.18] uppercase tracking-tight mb-4 md:mb-8 w-full md:max-w-4xl"
+          style={{ fontSize: "var(--text-display)" }}
         >
-          {content.heroTitleLine1}<br />
+          {heroTitleLine1}<br />
           <span className="font-semibold bg-gradient-to-r from-fortress-gold to-fortress-champagne bg-clip-text text-transparent">
-            {content.heroTitleLine2}
+            {heroTitleLine2}
           </span>
         </motion.h1>
 
         <motion.p
           variants={heroItemVariants}
-          className="text-fortress-silver/90 text-sm sm:text-base md:text-lg lg:text-xl w-full sm:max-w-xl md:max-w-3xl leading-relaxed mb-6 md:mb-10 font-light px-1 sm:px-0"
+          className="text-fortress-silver/90 w-full md:max-w-3xl leading-relaxed mb-6 md:mb-10 font-light"
+          style={{ fontSize: "var(--text-lead)" }}
         >
-          {content.heroDescription}
+          {heroDescription}
         </motion.p>
 
         <motion.div variants={heroButtonVariants} className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
@@ -125,7 +150,7 @@ export default function Hero() {
               href="/investment-focus"
               className="block w-full sm:w-auto px-6 sm:px-8 py-3.5 md:py-4 bg-gradient-to-r from-fortress-gold to-fortress-champagne text-fortress-navy font-bold text-xs sm:text-sm tracking-widest uppercase hover:opacity-90 transition-opacity rounded-sm shadow-lg text-center"
             >
-              {content.heroBtn1Text}
+              {heroBtn1Text}
             </Link>
           </motion.div>
           <motion.div
@@ -138,7 +163,7 @@ export default function Hero() {
               href="/invest-with-fortress"
               className="block w-full sm:w-auto px-6 sm:px-8 py-3.5 md:py-4 border border-fortress-silver/40 text-white font-bold text-xs sm:text-sm tracking-widest uppercase hover:bg-white/10 hover:border-white transition-all rounded-sm backdrop-blur-sm text-center"
             >
-              {content.heroBtn2Text}
+              {heroBtn2Text}
             </Link>
           </motion.div>
         </motion.div>

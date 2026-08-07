@@ -1,5 +1,3 @@
-
-
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -11,8 +9,6 @@ export const metadata: Metadata = {
 export default function TermsOfUsePage() {
   return (
     <main className="min-h-screen bg-white">
-      
-
       <section className="bg-white pt-24 md:pt-32 pb-12 md:pb-20 text-center">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
           <p className="text-fortress-gold text-xs md:text-sm font-medium tracking-[2px] md:tracking-[4px] uppercase mb-4">
@@ -62,56 +58,54 @@ export default function TermsOfUsePage() {
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-fortress-navy mb-4">Opportunity Submissions</h2>
+              <h2 className="text-xl font-bold text-fortress-navy mb-4">Gửi Đề Xuất Đầu Tư</h2>
               <p>
-                Submitting an opportunity through this website does not guarantee review or acceptance, and does not create an investment commitment, partnership, advisory relationship, confidential relationship, agency relationship, or contractual obligation.
+                Việc gửi đề xuất qua website này không đảm bảo rằng đề xuất sẽ được xem xét hay chấp nhận, và không tạo ra bất kỳ cam kết đầu tư, quan hệ đối tác, tư vấn, bảo mật, đại lý hay nghĩa vụ hợp đồng nào.
               </p>
               <p className="mt-4">
-                Fortress Investment Holdings may accept, reject, or decline to respond to any submission at its sole discretion.
+                Fortress Investment Holdings có toàn quyền chấp nhận, từ chối hoặc không phản hồi bất kỳ đề xuất nào.
               </p>
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-fortress-navy mb-4">Intellectual Property</h2>
+              <h2 className="text-xl font-bold text-fortress-navy mb-4">Sở Hữu Trí Tuệ</h2>
               <p>
-                Unless otherwise stated, all website content, branding, logos, designs, text, graphics, and materials are owned by or licensed to Fortress Investment Holdings. Content may not be copied, modified, reproduced, distributed, republished, or used commercially without written permission.
+                Trừ khi có quy định khác, toàn bộ nội dung website bao gồm thương hiệu, logo, thiết kế, văn bản, đồ họa và tài liệu đều thuộc sở hữu hoặc được cấp phép cho Fortress Investment Holdings. Nội dung không được sao chép, chỉnh sửa, tái bản, phân phối hay sử dụng cho mục đích thương mại khi chưa có sự cho phép bằng văn bản.
               </p>
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-fortress-navy mb-4">Third-Party Links</h2>
+              <h2 className="text-xl font-bold text-fortress-navy mb-4">Liên Kết Bên Thứ Ba</h2>
               <p>
-                The website may include links to third-party websites. Fortress Investment Holdings is not responsible for their content, privacy practices, availability, or accuracy. Accessing third-party websites is at your own risk.
+                Website có thể chứa liên kết đến các website bên thứ ba. Fortress Investment Holdings không chịu trách nhiệm về nội dung, chính sách bảo mật, tính khả dụng hay độ chính xác của các trang đó. Việc truy cập các website bên thứ ba hoàn toàn theo quyết định của bạn.
               </p>
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-fortress-navy mb-4">Limitation of Liability</h2>
+              <h2 className="text-xl font-bold text-fortress-navy mb-4">Giới Hạn Trách Nhiệm</h2>
               <p>
-                To the maximum extent permitted by applicable law, Fortress Investment Holdings shall not be responsible for losses, damages, costs, or liabilities arising from use of the website, reliance on its content, interruptions, technical errors, security incidents outside our reasonable control, third-party links, or investment or business decisions made by users.
+                Trong phạm vi tối đa được pháp luật cho phép, Fortress Investment Holdings không chịu trách nhiệm về các tổn thất, thiệt hại, chi phí hoặc nghĩa vụ phát sinh từ việc sử dụng website, việc phụ thuộc vào nội dung, gián đoạn, lỗi kỹ thuật, sự cố bảo mật ngoài tầm kiểm soát, liên kết bên thứ ba, hoặc các quyết định đầu tư, kinh doanh của người dùng.
               </p>
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-fortress-navy mb-4">Governing Law</h2>
+              <h2 className="text-xl font-bold text-fortress-navy mb-4">Luật Điều Chỉnh</h2>
               <p>
-                These Terms of Use are governed by the applicable laws of the United Arab Emirates and the relevant laws and regulations of the Emirate in which Fortress Investment Holdings is registered.
+                Các Điều khoản sử dụng này được điều chỉnh bởi pháp luật hiện hành của Các Tiểu Vương Quốc Ả Rập Thống Nhất và các quy định của tiểu vương quốc nơi Fortress Investment Holdings đăng ký hoạt động.
               </p>
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-fortress-navy mb-4">Contact</h2>
-              <p>Questions regarding these terms:</p>
+              <h2 className="text-xl font-bold text-fortress-navy mb-4">Liên Hệ</h2>
+              <p>Mọi thắc mắc về các điều khoản này, vui lòng liên hệ:</p>
               <div className="mt-3 space-y-1">
-                <p>Email: [INSERT LEGAL EMAIL]</p>
-                <p>Address: [INSERT OFFICE ADDRESS]</p>
+                <p>Email: <a href="mailto:legal@fortressih.com" className="text-fortress-gold hover:underline">legal@fortressih.com</a></p>
+                <p>Địa chỉ: Dubai, United Arab Emirates</p>
               </div>
             </div>
           </div>
         </div>
       </section>
-
-      
     </main>
   );
 }

@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import InsightsClient from "./InsightsClient";
 
-
-
 export const metadata: Metadata = {
   title: "Góc Nhìn & Báo Cáo Chuyên Sâu | Fortress Investment Holdings",
   description:
@@ -18,9 +16,7 @@ export const metadata: Metadata = {
 export default function InsightsPage() {
   return (
     <main className="min-h-screen bg-[#F8F9FB]">
-      
       <InsightsClient />
-      
     </main>
   );
 }

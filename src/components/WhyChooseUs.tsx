@@ -19,15 +19,18 @@ const sectionReveal = {
 };
 
 import { usePageContent } from "@/hooks/usePageContent";
+import { useLang } from "@/contexts/LangContext";
+import { t } from "@/lib/i18n";
 
-const defaultWhyData = {
-  whyTag: "04 - Tại Sao Chọn Fortress",
-  whyTitle: "Nền Tảng Vững Chắc Cho Sự Tăng Trưởng",
-  whyBenefits: benefits,
+const defaultWhyData: { whyTag: string; whyTitle: string; whyBenefits: { title: string; desc: string }[] } = {
+  whyTag: "", whyTitle: "", whyBenefits: benefits,
 };
 
 export default function WhyChooseUs() {
   const { content } = usePageContent("home", defaultWhyData);
+  const { lang } = useLang();
+  const whyTag = content.whyTag || t("why.tag", lang);
+  const whyTitle = content.whyTitle || t("why.title", lang);
   const benefitList = content.whyBenefits && Array.isArray(content.whyBenefits) ? content.whyBenefits : benefits;
 
   return (
@@ -36,23 +39,30 @@ export default function WhyChooseUs() {
       whileInView="visible"
       viewport={{ once: true, margin: "-80px" }}
       variants={sectionReveal}
-      className="relative py-16 md:py-28 overflow-hidden rounded-2xl mx-2 sm:mx-4 my-8 md:my-12"
+      className="relative overflow-hidden rounded-2xl section-mx section-my"
+      style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}
     >
       <div className="absolute inset-0 bg-fortress-deep" />
-      <div className="relative max-w-[1280px] mx-auto px-6 lg:px-12">
+      <div className="relative max-w-[1280px] mx-auto section-px">
         <Stagger>
           <StaggerItem>
-            <span className="block text-fortress-gold/50 text-xs tracking-[6px] uppercase mb-6 font-medium">
-              {content.whyTag}
+            <span
+              className="block text-fortress-gold/50 uppercase mb-6 font-medium tracking-[6px]"
+              style={{ fontSize: "clamp(0.625rem, 0.5vw + 0.45rem, 0.75rem)" }}
+            >
+              {whyTag}
             </span>
           </StaggerItem>
           <StaggerItem>
-            <h2 className="text-2xl md:text-4xl font-bold text-fortress-ivory mb-8 md:mb-12 leading-tight">
-              {content.whyTitle}
+            <h2
+              className="font-bold text-fortress-ivory mb-8 md:mb-12 leading-tight"
+              style={{ fontSize: "var(--text-h2)" }}
+            >
+              {whyTitle}
             </h2>
           </StaggerItem>
           <StaggerItem>
-            <div className="grid md:grid-cols-2 gap-x-16 gap-y-10">
+            <div className="grid md:grid-cols-2 gap-x-16 gap-y-8 md:gap-y-10">
               {benefitList.map((item) => (
                 <motion.div
                   key={item.title}
@@ -65,10 +75,16 @@ export default function WhyChooseUs() {
                     whileHover={{ width: "3rem", backgroundColor: "rgba(201,162,74,0.7)" }}
                     transition={{ duration: 0.3, ease: "easeOut" }}
                   />
-                  <h3 className="text-lg font-bold text-fortress-gold mb-3 transition-colors duration-300 group-hover:text-fortress-champagne">
+                  <h3
+                    className="font-bold text-fortress-gold mb-3 transition-colors duration-300 group-hover:text-fortress-champagne"
+                    style={{ fontSize: "var(--text-h3)" }}
+                  >
                     {item.title}
                   </h3>
-                  <p className="text-fortress-silver/60 text-sm leading-relaxed transition-colors duration-300 group-hover:text-fortress-silver/80">
+                  <p
+                    className="text-fortress-silver/60 leading-relaxed transition-colors duration-300 group-hover:text-fortress-silver/80"
+                    style={{ fontSize: "var(--text-body)" }}
+                  >
                     {item.desc}
                   </p>
                 </motion.div>

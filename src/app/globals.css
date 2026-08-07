@@ -13,6 +13,54 @@
   --font-heading: var(--font-plus-jakarta), "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
 }
 
+/* ─── Fluid typography scale ────────────────────────────────────────────────
+   Sử dụng clamp() để scale mượt mà giữa các breakpoint
+   min: 375px viewport  │  max: 1400px viewport
+────────────────────────────────────────────────────────────────────────────── */
+:root {
+  /* Display / Hero heading: 32px → 72px */
+  --text-display: clamp(2rem, 4.5vw + 0.5rem, 4.5rem);
+  /* Section heading: 22px → 48px */
+  --text-h2: clamp(1.375rem, 2.8vw + 0.4rem, 3rem);
+  /* Sub-section heading: 18px → 36px */
+  --text-h3: clamp(1.125rem, 1.8vw + 0.35rem, 2.25rem);
+  /* Body lead: 15px → 20px */
+  --text-lead: clamp(0.9375rem, 0.8vw + 0.7rem, 1.25rem);
+  /* Body base: 14px → 17px */
+  --text-body: clamp(0.875rem, 0.4vw + 0.75rem, 1.0625rem);
+
+  /* ── Section vertical spacing ─────────────────────────────────────
+     Thay thế py-16 md:py-28 bằng --section-py
+     375px → 1400px: 48px → 112px
+  ───────────────────────────────────────────────────────────────── */
+  --section-py: clamp(3rem, 5vw + 1rem, 7rem);
+
+  /* ── Section horizontal gutter ───────────────────────────────────
+     375px → 1400px: 16px → 48px
+  ───────────────────────────────────────────────────────────────── */
+  --section-px: clamp(1rem, 3vw + 0.25rem, 3rem);
+
+  /* ── Section side margin (mx) ────────────────────────────────────
+     375px → 1400px: 12px → 16px
+  ───────────────────────────────────────────────────────────────── */
+  --section-mx: clamp(0.75rem, 1.2vw + 0.2rem, 1rem);
+}
+
+/* ─── Utility classes derived from CSS vars ────────────────────────────────── */
+.section-py   { padding-top: var(--section-py); padding-bottom: var(--section-py); }
+.section-px   { padding-left: var(--section-px); padding-right: var(--section-px); }
+.section-mx   { margin-left: var(--section-mx); margin-right: var(--section-mx); }
+.section-my   { margin-top: 2rem; margin-bottom: 2rem; }
+@media (min-width: 768px) {
+  .section-my { margin-top: 3rem; margin-bottom: 3rem; }
+}
+
+.text-display { font-size: var(--text-display); }
+.text-h2      { font-size: var(--text-h2); }
+.text-h3      { font-size: var(--text-h3); }
+.text-lead    { font-size: var(--text-lead); }
+.text-body    { font-size: var(--text-body); }
+
 html {
   scroll-behavior: smooth;
   font-family: var(--font-sans);

@@ -6,6 +6,7 @@ import CustomCursor from "@/components/CustomCursor";
 import AnimationProvider from "@/components/AnimationProvider";
 import GlobalNavbar from "@/components/GlobalNavbar";
 import GlobalFooter from "@/components/GlobalFooter";
+import { LangProvider } from "@/contexts/LangContext";
 import "./globals.css";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -110,13 +111,15 @@ export default function RootLayout({
         className="antialiased bg-fortress-navy text-fortress-silver cursor-none pb-[72px] md:pb-0"
         suppressHydrationWarning
       >
-        <AnimationProvider>
-          <CustomCursor />
-          <GlobalNavbar />
-          {children}
-          <GlobalFooter />
-          <WhatsAppButton />
-        </AnimationProvider>
+        <LangProvider>
+          <AnimationProvider>
+            <CustomCursor />
+            <GlobalNavbar />
+            {children}
+            <GlobalFooter />
+            <WhatsAppButton />
+          </AnimationProvider>
+        </LangProvider>
       </body>
     </html>
   );

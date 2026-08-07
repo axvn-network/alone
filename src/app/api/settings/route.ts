@@ -1,36 +1,35 @@
 import { NextRequest } from "next/server";
+import { getCurrentUser } from "@/lib/auth-utils";
 import { settingsService } from "@/services";
 import { settingsSchema, formatZodErrors } from "@/validators";
 import {
   successResponse,
   validationErrorResponse,
   serverErrorResponse,
+  unauthorizedResponse,
 } from "@/utils/api-response";
 import { handleError } from "@/utils/errors";
 
+// GET — public: read site settings (used by frontend)
 export async function GET() {
   try {
-    const settings = await settingsService.getSettings();
-    return successResponse(settings);
+    return successResponse(await settingsService.getSettings());
   } catch (error) {
-    const { message } = handleError(error);
-    return serverErrorResponse(message);
+    return serverErrorResponse(handleError(error).message);
   }
 }
 
+// PUT — admin only: update site settings
 export async function PUT(request: NextRequest) {
+  if (!await getCurrentUser()) return unauthorizedResponse();
   try {
-    const body = await request.json();
-    const parsed = settingsSchema.safeParse(body);
-
-    if (!parsed.success) {
-      return validationErrorResponse(formatZodErrors(parsed.error));
-    }
-
-    const settings = await settingsService.updateSettings(parsed.data);
-    return successResponse(settings, "Settings updated successfully");
+    const parsed = settingsSchema.safeParse(await request.json());
+    if (!parsed.success) return validationErrorResponse(formatZodErrors(parsed.error));
+    return successResponse(
+      await settingsService.updateSettings(parsed.data),
+      "Settings updated successfully"
+    );
   } catch (error) {
-    const { message } = handleError(error);
-    return serverErrorResponse(message);
+    return serverErrorResponse(handleError(error).message);
   }
 }

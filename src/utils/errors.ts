@@ -31,7 +31,29 @@ export class ValidationError extends AppError {
   }
 }
 
-export function handleError(error: unknown) {
+/** Safe messages that may be sent to clients for known error types */
+const SAFE_STATUS_MESSAGES: Record<number, string> = {
+  400: "Bad request",
+  401: "Unauthorized",
+  403: "Forbidden",
+  404: "Not found",
+  422: "Validation failed",
+  429: "Too many requests",
+  500: "Internal server error",
+};
+
+/**
+ * Normalise any thrown value into a safe { message, statusCode, errors } shape.
+ *
+ * - AppError subclasses: message is already intentional, pass through.
+ * - Mongoose ValidationError: extract field messages, return 422.
+ * - Unknown errors: log server-side, return generic 500 (no leak of stack traces).
+ */
+export function handleError(error: unknown): {
+  message: string;
+  statusCode: number;
+  errors?: Record<string, string[]>;
+} {
   if (error instanceof AppError) {
     return {
       message: error.message,
@@ -40,9 +62,33 @@ export function handleError(error: unknown) {
     };
   }
 
-  console.error("Unhandled error:", error);
+  // Mongoose validation errors
+  if (
+    error instanceof Error &&
+    error.name === "ValidationError" &&
+    "errors" in error
+  ) {
+    const mongoErrors = (error as { errors: Record<string, { message: string }> }).errors;
+    const fields: Record<string, string[]> = {};
+    for (const [field, err] of Object.entries(mongoErrors)) {
+      fields[field] = [err.message];
+    }
+    return { message: "Validation failed", statusCode: 422, errors: fields };
+  }
+
+  // Mongoose duplicate key (e.g. duplicate email)
+  if (
+    error instanceof Error &&
+    "code" in error &&
+    (error as NodeJS.ErrnoException).code === "11000"
+  ) {
+    return { message: "Duplicate entry — record already exists", statusCode: 409 };
+  }
+
+  // Unknown — log internally, return generic message (no stack trace to client)
+  console.error("[handleError] Unhandled error:", error);
   return {
-    message: "Internal server error",
+    message: SAFE_STATUS_MESSAGES[500],
     statusCode: 500,
   };
 }

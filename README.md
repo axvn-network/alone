@@ -1,157 +1,300 @@
-# 🏰 Fortress Investment Holdings System (Hệ Thống Quản Lý & Đầu Tư Fortress)
+# Fortress Investment Holdings — Website
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/7af0e4e0-6000-4c25-9cb1-ddf9d5d17cf5/deploy-status)](https://app.netlify.com/projects/fortress88/deploys)
-
-| Môi trường / Nhánh (Branch) | Badge Trạng Thái Deploy |
-| :--- | :--- |
-| **Production (`main`)** | [![Netlify Status](https://api.netlify.com/api/v1/badges/7af0e4e0-6000-4c25-9cb1-ddf9d5d17cf5/deploy-status?branch=main)](https://app.netlify.com/projects/fortress88/deploys) |
-| **Development (`dev`)** | [![Netlify Status (dev)](https://api.netlify.com/api/v1/badges/7af0e4e0-6000-4c25-9cb1-ddf9d5d17cf5/deploy-status?branch=dev)](https://app.netlify.com/projects/fortress88/deploys) |
-
-> System Status: **Production Ready** | Full Vietnamese Localization (100%) | Next.js 15 App Router | Supabase PostgreSQL Engine
+Production-grade Next.js 15 website for Fortress Investment Holdings.
+MongoDB database · Cloudinary media · Nodemailer email · Admin panel with signed-cookie auth.
 
 ---
 
-## 📌 TỔNG QUAN HỆ THỐNG (SYSTEM OVERVIEW)
+## Quick Start (Local Development)
 
-Hệ thống **Fortress Investment Holdings** là nền tảng quản lý tài chính và đầu tư doanh nghiệp cao cấp được thiết kế theo tiêu chuẩn hệ thống hiện đại, tối ưu hóa giao diện (UI/UX), hỗ trợ toàn bộ giao diện và dữ liệu bằng **Tiếng Việt 100%**, sẵn sàng cho môi trường production với khả năng mở rộng cao.
-
-### 🎯 Các Tính Năng Cốt Lõi:
-1. **Việt Hóa 100% (Full Vietnamese Localization):** Chuẩn hóa toàn bộ thuật ngữ hệ thống (`Người dùng`, `Số dư`, `Nạp tiền`, `Rút tiền`, `Đơn hàng`, `Tài sản`, `Nhật ký hệ thống`).
-2. **Giao Diện Chuẩn Stripe / Notion (UI/UX Redesign):**
-   - Thiết kế tối giản, sang trọng (Glassmorphism, Dark/Light Mode).
-   - Hệ thống thẻ KPI, biểu đồ thống kê thời gian thực.
-   - Bảng dữ liệu lọc không cần reload (Real-time Filter).
-3. **Phân Quyền Chi Tiết (Role-Based Access Control - RBAC):**
-   - `Superadmin`: Toàn quyền quản trị hệ thống, cấu hình cổng thanh toán và logs.
-   - `Admin`: Quản lý người dùng, duyệt giao dịch nạp/rút.
-   - `Agent` (Đại lý): Theo dõi mạng lưới và hoa hồng đầu tư.
-   - `Support` (Hỗ trợ): Xử lý yêu cầu và chăm sóc khách hàng.
-4. **Cổng Thanh Toán Đa Kênh (Payment Integration Gateway):**
-   - Ví điện tử MoMo (`PAYMENT_MOMO_KEY`)
-   - Ngân hàng nội địa VietQR (`PAYMENT_BANK_KEY`)
-   - Tiền điện tử USDT BEP20 (`PAYMENT_USDT_WALLET`)
-   - Thẻ cào viễn thông Telco (`PAYMENT_TELCO_KEY`)
-
----
-
-## 🏗️ CÔNG NGHỆ SỬ DỤNG (TECH STACK)
-
-- **Frontend:** Next.js 15.5 (App Router, Turbopack), React 19, TailwindCSS v4, Lucide Icons, Framer Motion.
-- **Backend & Database:** Node.js API Routes, Supabase PostgreSQL, Mongoose/MongoDB (Fallback), JWT Auth.
-- **Biểu đồ & Hiệu ứng:** GSAP, Lenis Smooth Scroll, Sonner Toast Notifications.
-- **Hosting & CI/CD:** Netlify, PM2, Nginx, Docker.
-
----
-
-## 🚀 HƯỚNG DẪN CÀI ĐẶT & PHÁT TRIỂN (LOCAL SETUP)
-
-### 1. Yêu Cầu Môi Trường:
-- Node.js >= 20.x
-- npm >= 10.x
-
-### 2. Cài Đặt Mã Nguồn:
 ```bash
-# Clone dự án về máy
-git clone https://github.com/hoangbom98/alone.git fortress-website
-cd fortress-website
-
-# Cài đặt thư viện dependencies
+# 1. Clone and install
+git clone <repo-url>
+cd fortress-main
 npm install
-```
 
-### 3. Cấu Hình Biến Môi Trường (.env):
-Tạo file `.env` hoặc `.env.local` từ mẫu `.env.example`:
-```bash
-cp .env.example .env
-```
+# 2. Configure environment
+cp .env.example .env.local
+# Edit .env.local — set MONGODB_URI, ADMIN_EMAIL, ADMIN_PASSWORD, SESSION_SECRET
 
-Cập nhật các thông số Supabase và Payment Keys:
-```env
-NEXT_PUBLIC_APP_URL=https://taxi379.online
-NEXT_PUBLIC_SUPABASE_URL=https://qawgducimlnketpfitjb.supabase.co
-NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your_supabase_publishable_key
-SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+# 3. Seed data
+node scripts/seed-mongo.js   # Creates admin user in MongoDB
+node scripts/seed.js         # Seeds flat-file demo data
 
-# Payment Gateways
-PAYMENT_MOMO_KEY=momo_api_secret_key
-PAYMENT_BANK_KEY=vietqr_bank_api_key
-PAYMENT_USDT_WALLET=0x1234567890abcdef1234567890abcdef12345678
-```
-
-### 4. Chạy Môi Trường Local Development:
-```bash
+# 4. Start dev server
 npm run dev
-```
-Truy cập ứng dụng tại: `http://localhost:3000`
-
----
-
-## 📦 CHUẨN HÓA QUY TRÌNH TRIỂN KHAI (PRODUCTION DEPLOYMENT GUIDE)
-
-### CÁCH 1: Triển Khai Tự Động Trên Netlify (Khuyên Dùng Cho Cloud)
-
-Dự án đã được tích hợp sẵn cấu hình Netlify trong [`netlify.toml`](file:///d:/Fortress/Fortress-main/netlify.toml).
-
-1. Kết nối Repository GitHub với Netlify: [Netlify Dashboard](https://app.netlify.com/projects/fortress88/deploys)
-2. Cấu hình Build Settings trên Netlify:
-   - **Build Command:** `npm run build`
-   - **Publish Directory:** `.next`
-   - **Node Version:** `20`
-3. Thêm các Biến Môi Trường (Environment Variables) trong tab **Site configuration > Environment variables**.
-4. Trạng thái Deploy được cập nhật tự động qua Badge:
-   [![Netlify Status](https://api.netlify.com/api/v1/badges/7af0e4e0-6000-4c25-9cb1-ddf9d5d17cf5/deploy-status)](https://app.netlify.com/projects/fortress88/deploys)
-
----
-
-### CÁCH 2: Triển Khai Trên Máy Chủ Ubuntu VPS (Nginx + PM2 + SSL Certbot)
-
-Đối với máy chủ Linux (Ubuntu Server 22.04 / 24.04 LTS):
-
-#### Bước 1: Cài Đặt Node.js & PM2
-```bash
-# Cài đặt Node.js 20 LTS
-curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-sudo apt-get install -y nodejs nginx certbot python3-certbot-nginx
-
-# Cài đặt PM2 toàn cục
-sudo npm install -g pm2
-```
-
-#### Bước 2: Build & Khởi Chạy Ứng Dụng Với PM2
-```bash
-# Build dự án
-npm run build
-
-# Khởi chạy ứng dụng bằng PM2 Ecosystem Config
-pm2 start ecosystem.config.js --env production
-
-# Lưu trạng thái PM2 và bật tự khởi động cùng OS
-pm2 save
-pm2 startup
-```
-
-#### Bước 3: Cấu Hình Nginx Reverse Proxy & SSL Let's Encrypt
-1. Tạo file cấu hình Nginx: `/etc/nginx/sites-available/fortress.conf` (sử dụng mẫu [`nginx.conf.example`](file:///d:/Fortress/Fortress-main/nginx.conf.example)).
-2. Kích hoạt domain và nạp lại Nginx:
-```bash
-sudo ln -s /etc/nginx/sites-available/fortress.conf /etc/nginx/sites-enabled/
-sudo nginx -t
-sudo systemctl reload nginx
-```
-3. Cấp chỉ SSL miễn phí qua Certbot:
-```bash
-sudo certbot --nginx -d fortressih.com -d www.fortressih.com
+# → http://localhost:3000
+# → Admin: http://localhost:3000/admin-login
 ```
 
 ---
 
-## 🛠️ KIỂM TRA & XÁC NHẬN TRIỂN KHAI (VERIFICATION)
+## Deploy to Ubuntu VPS
 
-- [x] Giao diện người dùng & Admin hoạt động mượt mà (100% Tiếng Việt).
-- [x] Khởi tạo build thành công không lỗi TypeScript / ESLint.
-- [x] Kết nối Supabase PostgreSQL và API endpoints chính xác.
-- [x] Cấu hình Netlify Status Badge & webhook triển khai tự động.
+### Prerequisites
+- Ubuntu 22.04 LTS (or 24.04)
+- Root SSH access
+- Domain A record pointing to VPS IP
+
+### Step 1 — VPS Setup (run once as root)
+
+```bash
+ssh root@YOUR_VPS_IP
+git clone <repo-url> /var/www/fortress/app
+cd /var/www/fortress/app
+
+# Installs Node.js 20, MongoDB 7, Nginx, Certbot, UFW, Fail2Ban, PM2
+sudo bash scripts/setup.sh
+```
+
+### Step 2 — Configure Environment
+
+```bash
+cd /var/www/fortress/app
+cp .env.example .env.local
+nano .env.local
+
+# Required values:
+#   MONGODB_URI=mongodb://127.0.0.1:27017/fortress_db
+#   ADMIN_EMAIL=admin@yourdomain.com
+#   ADMIN_PASSWORD=<strong_password_min_12_chars>
+#   SESSION_SECRET=$(openssl rand -hex 32)
+#   NEXT_PUBLIC_APP_URL=https://yourdomain.com
+```
+
+### Step 3 — Validate & First Deploy
+
+```bash
+bash scripts/check-env.sh          # Validate all required vars
+
+export DOMAIN=yourdomain.com
+bash scripts/first-deploy.sh       # Build → seed → Nginx → PM2
+```
+
+### Step 4 — SSL Certificate
+
+```bash
+bash scripts/ssl-setup.sh yourdomain.com
+```
+
+### Step 5 — Verify
+
+```bash
+pm2 status
+curl -I https://yourdomain.com     # HTTP 200
+```
 
 ---
 
-© 2026 **Fortress Investment Holdings**. All Rights Reserved.
+## Rolling Updates (Zero-Downtime)
+
+```bash
+cd /var/www/fortress/app
+git pull
+bash scripts/deploy.sh            # npm ci → build → pm2 reload
+```
+
+---
+
+## Backup & Restore
+
+```bash
+# Manual backup
+bash scripts/backup.sh
+# → /var/backups/fortress/fortress_YYYYMMDD_HHMMSS.gz
+
+# Install automatic daily backup at 02:00
+(crontab -l; echo "0 2 * * * /var/www/fortress/app/scripts/backup.sh >> /var/log/fortress-backup.log 2>&1") | crontab -
+
+# Restore
+mongorestore --uri="mongodb://127.0.0.1:27017" \
+  --archive=/var/backups/fortress/fortress_YYYYMMDD_HHMMSS.gz --gzip
+```
+
+---
+
+## PM2 Commands
+
+```bash
+pm2 status
+pm2 logs fortress-website --lines 100
+pm2 monit
+pm2 reload fortress-website --update-env   # zero-downtime reload
+pm2 restart fortress-website               # hard restart
+pm2 save && pm2 startup                    # persist across reboots
+```
+
+---
+
+## Security Architecture
+
+### Session Cookies
+- **Format:** `base64url(JSON{id,email,exp})` + `.` + `HMAC-SHA256(payload, SESSION_SECRET)`
+- **httpOnly** + **secure** + **sameSite=strict** (production)
+- **8-hour expiry** embedded in signed payload — cannot be forged
+- **Constant-time comparison** prevents timing attacks
+- **On logout:** cookie is explicitly expired (maxAge=0, expires=epoch)
+
+### CSRF Protection
+All admin API mutations (`POST/PUT/PATCH/DELETE` on `/api/admin/*`) require:
+1. A `csrf_token` cookie (set by `GET /api/csrf`)
+2. A matching `x-csrf-token` request header
+
+The double-submit pattern means a cross-origin attacker cannot forge the header even if they can trigger the cookie.
+
+The admin frontend must:
+```js
+// 1. On mount — fetch and store CSRF token
+const { token } = await fetch('/api/csrf').then(r => r.json());
+
+// 2. Include on all mutating requests
+fetch('/api/admin/...', {
+  method: 'POST',
+  headers: { 'x-csrf-token': token, 'Content-Type': 'application/json' },
+  body: JSON.stringify(data),
+});
+```
+
+### Rate Limiting
+| Endpoint | Limit | Window | Lockout |
+|----------|-------|--------|---------|
+| `/api/admin-login` | 5 attempts | 1 min | Progressive (doubles each violation, max 24h) |
+| `/api/contact` | 5 submissions | 5 min | Progressive |
+| `/api/partner-submit` | 3 submissions | 10 min | Progressive |
+| `/api/enquiries` (POST) | 5 submissions | 1 min | Progressive |
+
+Rate-limit keys are cleared on successful login to avoid locking out legitimate users.
+
+### Input Sanitization
+All user-submitted strings are sanitized before Zod validation and DB writes:
+- `sanitizeText()` — strips HTML tags, null bytes, control characters
+- `sanitizeEmail()` — lowercases, removes non-email characters
+- `sanitizeMessage()` — strips `<script>` blocks, null bytes
+
+### Response Headers (every route)
+Set by Next.js config and middleware:
+
+| Header | Value |
+|--------|-------|
+| `Content-Security-Policy` | Strict CSP; no inline eval; external scripts allowlisted |
+| `X-Frame-Options` | `SAMEORIGIN` |
+| `X-Content-Type-Options` | `nosniff` |
+| `X-XSS-Protection` | `1; mode=block` |
+| `Referrer-Policy` | `strict-origin-when-cross-origin` |
+| `Permissions-Policy` | `camera=(), microphone=(), geolocation=()` |
+| `Strict-Transport-Security` | Set by Nginx (`max-age=63072000; includeSubDomains; preload`) |
+
+### Error Messages
+`handleError()` in [`src/utils/errors.ts`](src/utils/errors.ts) normalises all thrown errors:
+- `AppError` subclasses: intentional messages pass through
+- Mongoose `ValidationError`: field-level messages extracted, returned as 422
+- Mongoose duplicate key: safe "Duplicate entry" message
+- Unknown errors: logged server-side, client receives generic 500 (no stack trace leak)
+
+---
+
+## Admin Panel
+
+| URL | Description |
+|-----|-------------|
+| `/admin-login` | Login page |
+| `/admin` | Dashboard |
+| `/admin/blog` | Blog post management |
+| `/admin/content` | Page content management |
+| `/admin/enquiries` | Contact & submission inbox |
+| `/admin/settings` | Site settings, social links |
+
+Admin credentials are set via `ADMIN_EMAIL` / `ADMIN_PASSWORD` in `.env.local`.
+The admin user is auto-created on first DB connection if no admin exists.
+
+---
+
+## Environment Variables
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `NODE_ENV` | ✅ | `production` or `development` |
+| `NEXT_PUBLIC_APP_URL` | ✅ | Full URL e.g. `https://fortressih.com` |
+| `MONGODB_URI` | ✅ | MongoDB connection string |
+| `ADMIN_EMAIL` | ✅ | Admin email (seed + fallback auth) |
+| `ADMIN_PASSWORD` | ✅ | Admin password (min 12 chars) |
+| `SESSION_SECRET` | ✅ | 32+ char hex for signing cookies — `openssl rand -hex 32` |
+| `SMTP_HOST` | ⭕ | SMTP host e.g. `smtp.gmail.com` |
+| `SMTP_USER` | ⭕ | SMTP username |
+| `SMTP_PASS` | ⭕ | SMTP password / app password |
+| `SMTP_FROM` | ⭕ | From address for outgoing emails |
+| `CLOUDINARY_CLOUD_NAME` | ⭕ | Cloudinary cloud name |
+| `CLOUDINARY_API_KEY` | ⭕ | Cloudinary API key |
+| `CLOUDINARY_API_SECRET` | ⭕ | Cloudinary API secret |
+| `BACKUP_RETENTION_DAYS` | ⭕ | Days to retain backups (default: 30) |
+
+---
+
+## Project Structure
+
+```
+.
+├── src/
+│   ├── app/
+│   │   ├── api/
+│   │   │   ├── admin-login/      POST  — login with rate-limit + lockout
+│   │   │   ├── admin-logout/     POST  — clears session cookie
+│   │   │   ├── admin-session/    GET   — check current session
+│   │   │   ├── csrf/             GET   — issue CSRF token
+│   │   │   ├── admin/            Admin CRUD routes (CSRF-protected)
+│   │   │   ├── contact/          POST  — public contact form (sanitized)
+│   │   │   ├── partner-submit/   POST  — investment proposal form
+│   │   │   └── ...
+│   │   ├── admin/                Admin panel pages (session-protected)
+│   │   └── admin-login/          Login page
+│   ├── lib/
+│   │   ├── session.ts            HMAC-signed cookie session
+│   │   ├── csrf.ts               CSRF double-submit token
+│   │   ├── auth-utils.ts         getCurrentUser, requireAuth
+│   │   ├── db.ts                 MongoDB connection + admin seed
+│   │   └── email.ts              Nodemailer wrapper
+│   ├── utils/
+│   │   ├── rate-limit.ts         Progressive lockout rate limiter
+│   │   ├── sanitize.ts           Input sanitization (HTML strip)
+│   │   ├── errors.ts             Safe error normalisation
+│   │   ├── api-response.ts       Typed response helpers
+│   │   └── cloudinary.ts         Upload/delete helpers
+│   ├── models/                   Mongoose models
+│   ├── services/                 Business logic
+│   └── validators/               Zod schemas
+├── middleware.ts                 Edge: session guard + CSRF check + security headers
+├── scripts/
+│   ├── setup.sh                  Ubuntu VPS one-time setup (as root)
+│   ├── first-deploy.sh           First deploy: build + seed + Nginx + PM2
+│   ├── deploy.sh                 Rolling update (zero-downtime)
+│   ├── backup.sh                 mongodump with rotation
+│   ├── ssl-setup.sh              certbot SSL + auto-renewal cron
+│   ├── check-env.sh              Validate env vars before deploy
+│   ├── seed-mongo.js             MongoDB admin seed
+│   └── seed.js                   Flat-file demo seed
+├── ecosystem.config.js           PM2 cluster config
+├── nginx.conf.example            Nginx reverse-proxy + SSL template
+├── next.config.ts                Output: standalone; CSP; security headers
+└── middleware.ts                 Edge: auth guard + CSRF + response headers
+```
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Framework | Next.js 15 (App Router, standalone output) |
+| Language | TypeScript |
+| Database | MongoDB 7 + Mongoose |
+| Styling | Tailwind CSS 4 + Framer Motion + GSAP |
+| Auth | HMAC-SHA256 signed httpOnly cookies |
+| CSRF | Double-submit signed token |
+| Rate Limiting | In-process progressive lockout |
+| Input Safety | Custom HTML/script sanitizer (defence-in-depth) |
+| Media | Cloudinary |
+| Email | Nodemailer (Gmail SMTP) |
+| Validation | Zod |
+| Process Mgr | PM2 (cluster mode) |
+| Web Server | Nginx (TLS 1.3, OCSP stapling, HSTS) |
+| SSL | Let's Encrypt / Certbot |

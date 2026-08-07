@@ -46,17 +46,17 @@ export default function AboutPage() {
       
 
       {/* Banner */}
-      <section className="relative pt-24 md:pt-32 pb-12 md:pb-20 overflow-hidden bg-white text-center">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
+      <section className="relative overflow-hidden bg-white text-center" style={{ paddingTop: "clamp(5.5rem, 8vw + 1rem, 8rem)", paddingBottom: "clamp(2.5rem, 4vw + 0.5rem, 5rem)" }}>
+        <div className="max-w-[1400px] mx-auto" style={{ paddingLeft: "var(--section-px)", paddingRight: "var(--section-px)" }}>
           <Reveal className="max-w-3xl mx-auto">
             <p className="text-fortress-gold text-sm font-medium tracking-[2px] md:tracking-[4px] uppercase mb-4">Về Chúng Tôi</p>
-            <h1 className="text-3xl md:text-6xl font-bold mb-4 md:mb-6 leading-tight">
+            <h1 className="font-bold mb-4 md:mb-6 leading-tight" style={{ fontSize: "var(--text-display)" }}>
               <span className="text-fortress-navy">Xây Dựng Để Bảo Vệ. </span>
               <span className="bg-gradient-to-r from-fortress-gold to-fortress-champagne bg-clip-text text-transparent">
                 Định Vị Để Tăng Trưởng.
               </span>
             </h1>
-            <p className="text-fortress-charcoal/70 text-sm md:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-fortress-charcoal/70 leading-relaxed max-w-2xl mx-auto" style={{ fontSize: "var(--text-body)" }}>
               Fortress Investment Holdings kết hợp vốn kỷ luật, tư duy chiến lược và tầm nhìn dài hạn để xây dựng giá trị bền vững trong các doanh nghiệp, tài sản và thị trường được lựa chọn.
             </p>
           </Reveal>
@@ -64,14 +64,14 @@ export default function AboutPage() {
       </section>
 
       {/* Company Introduction */}
-      <section className="py-12 md:py-20 bg-fortress-navy my-8 md:my-12 mx-2 sm:mx-4 rounded-2xl">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
+      <section className="bg-fortress-navy rounded-2xl section-mx section-my" style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}>
+        <div className="max-w-[1400px] mx-auto section-px">
           <Reveal className="max-w-3xl mx-auto text-center">
             <p className="text-fortress-gold text-sm font-medium tracking-[2px] md:tracking-[4px] uppercase mb-4">Về Fortress Investment Holdings</p>
-            <h2 className="text-xl md:text-4xl font-bold text-fortress-ivory mb-4 md:mb-6">
+            <h2 className="font-bold text-fortress-ivory mb-4 md:mb-6" style={{ fontSize: "var(--text-h2)" }}>
               Nền Tảng Được Xây Dựng Vì Giá Trị Dài Hạn
             </h2>
-            <p className="text-fortress-silver text-sm md:text-lg leading-relaxed">
+            <p className="text-fortress-silver leading-relaxed" style={{ fontSize: "var(--text-body)" }}>
               Fortress Investment Holdings là tập đoàn đầu tư đa ngành có trụ sở tại Dubai, UAE. Chúng tôi xác định các cơ hội đầu tư giá trị, đầu tư có trách nhiệm và hỗ trợ các doanh nghiệp có tiềm năng tăng trưởng bền vững thực sự.
             </p>
           </Reveal>
@@ -79,8 +79,8 @@ export default function AboutPage() {
       </section>
 
       {/* Vision & Mission */}
-      <section className="py-12 md:py-20 my-8 md:my-12 mx-2 sm:mx-4 rounded-2xl bg-white">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
+      <section className="rounded-2xl section-mx section-my bg-white" style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}>
+        <div className="max-w-[1400px] mx-auto section-px">
           <Stagger className="grid md:grid-cols-2 gap-6 md:gap-12">
             <StaggerItem className="bg-fortress-navy border border-fortress-gold/10 p-6 md:p-10 rounded-2xl">
               <div className="w-12 h-12 md:w-14 md:h-14 bg-fortress-gold/10 flex items-center justify-center mb-4 md:mb-6 rounded-sm">
@@ -107,11 +107,11 @@ export default function AboutPage() {
       </section>
 
       {/* Leadership */}
-      <section className="py-12 md:py-20 bg-fortress-deep my-8 md:my-12 mx-2 sm:mx-4 rounded-2xl">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
+      <section className="bg-fortress-deep rounded-2xl section-mx section-my" style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}>
+        <div className="max-w-[1400px] mx-auto section-px">
           <Reveal className="text-center mb-8 md:mb-12">
             <p className="text-fortress-gold text-sm font-medium tracking-[2px] md:tracking-[4px] uppercase mb-4">Ban Lãnh Đạo</p>
-            <h2 className="text-xl md:text-4xl font-bold text-fortress-ivory">Lãnh Đạo Xây Dựng Trên Tầm Nhìn Và Trách Nhiệm</h2>
+            <h2 className="font-bold text-fortress-ivory" style={{ fontSize: "var(--text-h2)" }}>Lãnh Đạo Xây Dựng Trên Tầm Nhìn Và Trách Nhiệm</h2>
           </Reveal>
           <Stagger className="grid lg:grid-cols-2 gap-6 md:gap-12">
             <StaggerItem className="group bg-gradient-to-br from-fortress-navy to-fortress-charcoal border border-fortress-gold/10 p-6 md:p-10 rounded-2xl transition-all duration-500 hover:border-fortress-gold/40 hover:shadow-2xl hover:shadow-fortress-gold/10 hover:-translate-y-1">
@@ -143,11 +143,11 @@ export default function AboutPage() {
       </section>
 
       {/* Values */}
-      <section className="py-12 md:py-20 my-8 md:my-12 mx-2 sm:mx-4 rounded-2xl bg-white">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
+      <section className="rounded-2xl section-mx section-my bg-white" style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}>
+        <div className="max-w-[1400px] mx-auto section-px">
           <Reveal className="text-center mb-10 md:mb-16">
             <p className="text-fortress-gold text-sm font-medium tracking-[2px] md:tracking-[4px] uppercase mb-4">Giá Trị Cốt Lõi</p>
-            <h2 className="text-xl md:text-4xl font-bold text-fortress-navy">Nguyên Tắc Đằng Sau Mọi Quyết Định</h2>
+            <h2 className="font-bold text-fortress-navy" style={{ fontSize: "var(--text-h2)" }}>Nguyên Tắc Đằng Sau Mọi Quyết Định</h2>
           </Reveal>
           <Stagger className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
             {values.map((v) => (
@@ -164,12 +164,12 @@ export default function AboutPage() {
       </section>
 
       {/* Investment Philosophy */}
-      <section className="py-12 md:py-20 bg-fortress-navy my-8 md:my-12 mx-2 sm:mx-4 rounded-2xl">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
+      <section className="bg-fortress-navy rounded-2xl section-mx section-my" style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}>
+        <div className="max-w-[1400px] mx-auto section-px">
           <Reveal className="text-center mb-8 md:mb-12">
             <p className="text-fortress-gold text-sm font-medium tracking-[2px] md:tracking-[4px] uppercase mb-4">Triết Lý Đầu Tư</p>
-            <h2 className="text-xl md:text-4xl font-bold text-fortress-ivory mb-3 md:mb-4">Vốn Kỷ Luật. Tăng Trưởng Chiến Lược.</h2>
-            <p className="text-fortress-ivory/80 text-sm md:text-lg leading-relaxed max-w-2xl mx-auto">
+            <h2 className="font-bold text-fortress-ivory mb-3 md:mb-4" style={{ fontSize: "var(--text-h2)" }}>Vốn Kỷ Luật. Tăng Trưởng Chiến Lược.</h2>
+            <p className="text-fortress-ivory/80 leading-relaxed max-w-2xl mx-auto" style={{ fontSize: "var(--text-body)" }}>
               Giá trị bền vững bắt đầu từ nền tảng cơ bản vững chắc. Tất cả những thứ khác chỉ là những ảo ảnh nhất thời.
             </p>
           </Reveal>

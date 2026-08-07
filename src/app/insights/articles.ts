@@ -33,5 +33,3 @@ export const categories = [
   { label: "Tin Tức Tập Đoàn" },
   { label: "Quản Lý Đầu Tư Chiến Lược" },
 ];
-
-export const allArticles: Article[] = [];

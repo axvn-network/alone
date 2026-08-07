@@ -1,37 +1,49 @@
-import { NextResponse } from "next/server";
-import { connectDB } from "@/lib/db";
-import Enquiry from "@/models/Enquiry";
+import { NextRequest } from "next/server";
 import { getCurrentUser } from "@/lib/auth-utils";
+import { enquiryService } from "@/services";
+import {
+  successResponse,
+  errorResponse,
+  notFoundResponse,
+  serverErrorResponse,
+  unauthorizedResponse,
+} from "@/utils/api-response";
+import { handleError, NotFoundError } from "@/utils/errors";
 
-async function checkAuth() {
-  const user = await getCurrentUser();
-  if (!user) return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
-  return null;
-}
-
-export async function PATCH(_request: Request, { params }: { params: Promise<{ id: string }> }) {
-  const authError = await checkAuth();
-  if (authError) return authError;
+// PATCH — admin only: update enquiry status
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  if (!await getCurrentUser()) return unauthorizedResponse();
   try {
-    await connectDB();
     const { id } = await params;
-    const result = await Enquiry.findByIdAndUpdate(id, { $set: { status: "read" } });
-    if (!result) return NextResponse.json({ error: "Not found" }, { status: 404 });
-    return NextResponse.json({ success: true });
-  } catch {
-    return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+    const { status } = await request.json();
+    if (!status || !["new", "read", "archived"].includes(status)) {
+      return errorResponse("Invalid status. Must be: new, read, or archived");
+    }
+    return successResponse(
+      await enquiryService.updateEnquiryStatus(id, status),
+      "Enquiry updated successfully"
+    );
+  } catch (error) {
+    if (error instanceof NotFoundError) return notFoundResponse(error.message);
+    return serverErrorResponse(handleError(error).message);
   }
 }
 
-export async function DELETE(_request: Request, { params }: { params: Promise<{ id: string }> }) {
-  const authError = await checkAuth();
-  if (authError) return authError;
+// DELETE — admin only: delete enquiry
+export async function DELETE(
+  _request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  if (!await getCurrentUser()) return unauthorizedResponse();
   try {
-    await connectDB();
     const { id } = await params;
-    await Enquiry.findByIdAndDelete(id);
-    return NextResponse.json({ success: true });
-  } catch {
-    return NextResponse.json({ error: "Delete failed" }, { status: 500 });
+    await enquiryService.deleteEnquiry(id);
+    return successResponse(null, "Enquiry deleted successfully");
+  } catch (error) {
+    if (error instanceof NotFoundError) return notFoundResponse(error.message);
+    return serverErrorResponse(handleError(error).message);
   }
 }

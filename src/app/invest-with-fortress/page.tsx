@@ -1,5 +1,3 @@
-
-
 import InvestorForm from "@/components/InvestorForm";
 import { CheckCircle } from "lucide-react";
 import type { Metadata } from "next";

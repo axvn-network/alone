@@ -1,4 +1,3 @@
-
 import Hero from "@/components/Hero";
 import Introduction from "@/components/Introduction";
 import WhatWeDo from "@/components/WhatWeDo";

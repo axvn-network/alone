@@ -16,6 +16,7 @@ import {
   FileText,
   BarChart3,
 } from "lucide-react";
+import { timeAgo } from "@/utils/time";
 
 interface Activity {
   id: string;
@@ -44,16 +45,6 @@ const quickActions = [
   { label: "Xem Yêu Cầu", icon: MessageCircle, href: "/admin/enquiries" },
   { label: "Quản Lý Nội Dung", icon: FileText, href: "/admin/content" },
 ];
-
-function timeAgo(dateStr: string) {
-  const diff = Date.now() - new Date(dateStr).getTime();
-  const mins = Math.floor(diff / 60000);
-  if (mins < 60) return `${mins} phút trước`;
-  const hrs = Math.floor(mins / 60);
-  if (hrs < 24) return `${hrs} giờ trước`;
-  const days = Math.floor(hrs / 24);
-  return `${days} ngày trước`;
-}
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState<Stats | null>(null);

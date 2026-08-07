@@ -12,18 +12,22 @@ const sectionReveal = {
 };
 
 import { usePageContent } from "@/hooks/usePageContent";
+import { useLang } from "@/contexts/LangContext";
+import { t } from "@/lib/i18n";
 
 const defaultCTAData = {
-  ctaTag: "06 - Hợp Tác Đầu Tư",
-  ctaTitle: "Cùng Nhau Kiến Tạo Giá Trị Bền Vững",
-  ctaParagraph1: "Chúng tôi luôn chào đón các cơ hội hợp tác từ các chủ doanh nghiệp, nhà khởi nghiệp, nhà đầu tư, nhà phát triển dự án và đối tác chiến lược.",
-  ctaParagraph2: "Dù bạn đang tìm kiếm nguồn vốn đầu tư, đề xuất cơ hội M&A thâu tóm doanh nghiệp, hay mong muốn hợp tác liên doanh dài hạn – đội ngũ chuyên gia của chúng tôi sẵn sàng thẩm định với sự bảo mật và chuyên nghiệp tuyệt đối.",
-  ctaBtn1Text: "GỬI ĐỀ XUẤT ĐẦU TƯ",
-  ctaBtn2Text: "LIÊN HỆ ĐỘI NGŨ CHUYÊN GIA",
+  ctaTag: "", ctaTitle: "", ctaParagraph1: "", ctaParagraph2: "", ctaBtn1Text: "", ctaBtn2Text: "",
 };
 
 export default function PartnershipCTA() {
   const { content } = usePageContent("home", defaultCTAData);
+  const { lang } = useLang();
+  const ctaTag = content.ctaTag || t("cta.tag", lang);
+  const ctaTitle = content.ctaTitle || t("cta.title", lang);
+  const ctaParagraph1 = content.ctaParagraph1 || t("cta.p1", lang);
+  const ctaParagraph2 = content.ctaParagraph2 || t("cta.p2", lang);
+  const ctaBtn1Text = content.ctaBtn1Text || t("cta.btn1", lang);
+  const ctaBtn2Text = content.ctaBtn2Text || t("cta.btn2", lang);
 
   return (
     <motion.section
@@ -31,38 +35,51 @@ export default function PartnershipCTA() {
       whileInView="visible"
       viewport={{ once: true, margin: "-80px" }}
       variants={sectionReveal}
-      className="relative py-20 md:py-32 overflow-hidden bg-fortress-navy border-t border-fortress-gold/10 rounded-2xl mx-2 sm:mx-4 my-8 md:my-12"
+      className="relative overflow-hidden bg-fortress-navy border-t border-fortress-gold/10 rounded-2xl section-mx section-my"
+      style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}
     >
       <div className="absolute inset-0 z-0">
         <Image src="/strategy-ideas.jpg" alt="" fill className="object-cover" loading="lazy" sizes="100vw" />
       </div>
       <div className="absolute inset-0 z-10 bg-gradient-to-b from-fortress-navy/95 via-fortress-navy/90 to-fortress-navy/95" />
 
-      <div className="relative z-20 max-w-[1400px] mx-auto px-6 lg:px-12">
+      <div className="relative z-20 max-w-[1400px] mx-auto section-px">
         <div className="max-w-[900px] mx-auto text-center">
           <Stagger>
             <StaggerItem>
-              <span className="block text-fortress-gold text-xs tracking-[6px] uppercase mb-6 font-semibold">
-                {content.ctaTag}
+              <span
+                className="block text-fortress-gold uppercase mb-6 font-semibold tracking-[6px]"
+                style={{ fontSize: "clamp(0.625rem, 0.5vw + 0.45rem, 0.75rem)" }}
+              >
+                {ctaTag}
               </span>
             </StaggerItem>
             <StaggerItem>
-              <h2 className="text-2xl md:text-5xl font-light text-fortress-ivory mb-6 uppercase tracking-tight leading-tight">
-                {content.ctaTitle}
+              <h2
+                className="text-fortress-ivory font-light mb-6 uppercase tracking-tight leading-tight"
+                style={{ fontSize: "var(--text-h2)" }}
+              >
+                {ctaTitle}
               </h2>
             </StaggerItem>
             <StaggerItem>
-              <p className="text-fortress-silver/90 text-lg leading-relaxed mb-4 max-w-[700px] mx-auto">
-                {content.ctaParagraph1}
+              <p
+                className="text-fortress-silver/90 leading-relaxed mb-4 max-w-[700px] mx-auto"
+                style={{ fontSize: "var(--text-lead)" }}
+              >
+                {ctaParagraph1}
               </p>
             </StaggerItem>
             <StaggerItem>
-              <p className="text-fortress-silver/70 text-sm leading-relaxed mb-8 md:mb-12 max-w-[600px] mx-auto">
-                {content.ctaParagraph2}
+              <p
+                className="text-fortress-silver/70 leading-relaxed mb-8 md:mb-12 max-w-[600px] mx-auto"
+                style={{ fontSize: "var(--text-body)" }}
+              >
+                {ctaParagraph2}
               </p>
             </StaggerItem>
             <StaggerItem>
-              <div className="flex flex-col sm:flex-row gap-5 justify-center">
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center">
                 <motion.div
                   whileHover={{ scale: 1.04, y: -3 }}
                   whileTap={{ scale: 0.97 }}
@@ -72,7 +89,7 @@ export default function PartnershipCTA() {
                     href="/invest-with-fortress"
                     className="block px-8 py-3.5 bg-gradient-to-r from-fortress-gold to-fortress-champagne text-fortress-navy font-bold text-sm tracking-widest shadow-lg rounded-sm hover:opacity-90 transition-opacity"
                   >
-                    {content.ctaBtn1Text}
+                    {ctaBtn1Text}
                   </Link>
                 </motion.div>
                 <motion.div
@@ -84,7 +101,7 @@ export default function PartnershipCTA() {
                     href="/contact"
                     className="block px-8 py-3.5 border border-fortress-gold text-fortress-gold text-sm tracking-widest font-semibold hover:bg-fortress-gold/10 transition-all duration-300 rounded-sm"
                   >
-                    {content.ctaBtn2Text}
+                    {ctaBtn2Text}
                   </Link>
                 </motion.div>
               </div>

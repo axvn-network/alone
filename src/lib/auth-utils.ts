@@ -1,5 +1,5 @@
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { getSessionEmail, clearSessionCookie } from "./session";
 import { connectDB } from "./db";
 import Admin from "@/models/Admin";
 
@@ -12,12 +12,11 @@ export interface SessionUser {
 
 export async function getCurrentUser(): Promise<SessionUser | null> {
   try {
-    const cookieStore = await cookies();
-    const sessionEmail = cookieStore.get("admin_email")?.value;
-    if (!sessionEmail) return null;
+    const email = await getSessionEmail();
+    if (!email) return null;
 
     await connectDB();
-    const admin = await Admin.findOne({ email: sessionEmail }).lean();
+    const admin = await Admin.findOne({ email }).lean();
     if (!admin) return null;
 
     return {
@@ -55,7 +54,5 @@ export function unauthorizedResponse() {
 }
 
 export async function logoutAdmin(): Promise<void> {
-  const cookieStore = await cookies();
-  cookieStore.delete("admin_email");
+  await clearSessionCookie();
 }
-

@@ -1,9 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useLang } from "@/contexts/LangContext";
+
+const WHATSAPP_MESSAGES = {
+  vi: "Xin chào, tôi muốn tìm hiểu thêm về Fortress Investment Holdings.",
+  en: "Hello, I would like to enquire about Fortress Investment Holdings.",
+};
 
 export default function WhatsAppButton() {
   const [phone, setPhone] = useState("971500000000");
+  const { lang } = useLang();
 
   useEffect(() => {
     fetch("/api/settings")
@@ -14,9 +21,7 @@ export default function WhatsAppButton() {
       .catch(() => {});
   }, []);
 
-  const message = encodeURIComponent(
-    "Hello, I would like to enquire about Fortress Investment Holdings."
-  );
+  const message = encodeURIComponent(WHATSAPP_MESSAGES[lang]);
 
   return (
     <a
@@ -27,11 +32,8 @@ export default function WhatsAppButton() {
       aria-label="Chat on WhatsApp"
     >
       <div className="relative">
-        {/* Ping animation ring */}
         <div className="absolute inset-0 bg-green-500 animate-ping opacity-20 rounded-full" />
-        {/* Button */}
         <div className="relative w-14 h-14 bg-[#25D366] hover:bg-[#1ebe5d] flex items-center justify-center shadow-lg shadow-green-500/30 transition-all duration-300 hover:scale-110 rounded-full">
-          {/* Official WhatsApp SVG logo */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 32 32"

@@ -1,69 +1,41 @@
-import { NextResponse } from "next/server";
-import { connectDB } from "@/lib/db";
-import Page from "@/models/Page";
+import { NextRequest } from "next/server";
 import { getCurrentUser } from "@/lib/auth-utils";
+import { contentService } from "@/services";
+import { pageContentSchema, formatZodErrors } from "@/validators";
+import {
+  successResponse,
+  validationErrorResponse,
+  notFoundResponse,
+  serverErrorResponse,
+  unauthorizedResponse,
+} from "@/utils/api-response";
+import { handleError, NotFoundError } from "@/utils/errors";
 
-const DEFAULT_PAGES = [
-  "home", "about", "investment-focus", "our-approach",
-  "partner-with-us", "contact", "privacy-policy",
-  "terms-of-use", "investment-disclaimer",
-];
-
-async function checkAuth() {
-  const user = await getCurrentUser();
-  if (!user) return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
-  return null;
-}
-
-export async function GET(request: Request) {
-  const authError = await checkAuth();
-  if (authError) return authError;
+// GET — admin only: list all pages or fetch single by ?slug=
+export async function GET(request: NextRequest) {
+  if (!await getCurrentUser()) return unauthorizedResponse();
   try {
-    await connectDB();
-    const { searchParams } = new URL(request.url);
-    const slug = searchParams.get("slug");
-
-    if (slug) {
-      let page = await Page.findOne({ slug }).lean();
-      if (!page) {
-        page = await Page.create({ slug, title: slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()) });
-        page = page.toObject();
-      }
-      return NextResponse.json(page);
-    }
-
-    const pages = await Page.find().sort({ slug: 1 }).lean();
-    const result = DEFAULT_PAGES.map((s) => {
-      const existing = pages.find((p) => p.slug === s);
-      return existing || { slug: s, title: s.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()) };
-    });
-    return NextResponse.json(result);
-  } catch {
-    return NextResponse.json([], { status: 200 });
+    const slug = request.nextUrl.searchParams.get("slug");
+    if (slug) return successResponse(await contentService.getPage(slug));
+    return successResponse(await contentService.getAllPages());
+  } catch (error) {
+    if (error instanceof NotFoundError) return notFoundResponse(error.message);
+    return serverErrorResponse(handleError(error).message);
   }
 }
 
-export async function PUT(request: Request) {
-  const authError = await checkAuth();
-  if (authError) return authError;
+// PUT — admin only: update page content
+export async function PUT(request: NextRequest) {
+  if (!await getCurrentUser()) return unauthorizedResponse();
   try {
-    await connectDB();
-    const { slug, title, content, data } = await request.json();
-    if (!slug) {
-      return NextResponse.json({ error: "Missing slug" }, { status: 400 });
-    }
-    const updateObj: Record<string, unknown> = { updatedAt: new Date() };
-    if (title !== undefined) updateObj.title = title;
-    if (content !== undefined) updateObj.content = content;
-    if (data !== undefined) updateObj.data = data;
-
-    await Page.findOneAndUpdate(
-      { slug },
-      { $set: updateObj },
-      { upsert: true }
+    const parsed = pageContentSchema.safeParse(await request.json());
+    if (!parsed.success) return validationErrorResponse(formatZodErrors(parsed.error));
+    return successResponse(
+      await contentService.updatePage(parsed.data.slug, parsed.data),
+      "Page updated successfully"
     );
-    return NextResponse.json({ success: true });
-  } catch {
-    return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+  } catch (error) {
+    if (error instanceof NotFoundError) return notFoundResponse(error.message);
+    return serverErrorResponse(handleError(error).message);
   }
 }

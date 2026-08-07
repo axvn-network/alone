@@ -1,5 +1,3 @@
-
-
 import Image from "next/image";
 import {
   Building2,
@@ -208,13 +206,13 @@ export default function InvestmentFocusPage() {
       
 
       {/* Banner */}
-      <section className="relative pt-24 md:pt-32 pb-12 md:pb-24 overflow-hidden bg-white">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 text-center">
+      <section className="relative overflow-hidden bg-white" style={{ paddingTop: "clamp(5.5rem, 8vw + 1rem, 8rem)", paddingBottom: "clamp(2.5rem, 4vw + 0.5rem, 5rem)" }}>
+        <div className="max-w-[1400px] mx-auto section-px text-center">
           <div className="max-w-3xl mx-auto">
             <p className="text-fortress-gold text-sm font-medium tracking-[2px] md:tracking-[4px] uppercase mb-4">
               Lĩnh Vực Đầu Tư
             </p>
-            <h1 className="text-3xl md:text-6xl font-bold mb-4 md:mb-6">
+            <h1 className="font-bold mb-4 md:mb-6" style={{ fontSize: "var(--text-display)" }}>
               <span className="text-fortress-navy">Đầu Tư Vào </span>
               <span className="bg-gradient-to-r from-fortress-gold to-fortress-champagne bg-clip-text text-transparent">
                 Cơ Hội
@@ -228,8 +226,8 @@ export default function InvestmentFocusPage() {
       </section>
 
       {/* Introduction */}
-      <section className="py-12 md:py-20 bg-fortress-navy my-8 md:my-12 mx-2 sm:mx-4 rounded-2xl">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+      <section className="bg-fortress-navy rounded-2xl section-mx section-my" style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}>
+        <div className="max-w-[1400px] mx-auto section-px">
           <div className="max-w-3xl">
             <p className="text-fortress-gold text-sm font-medium tracking-[2px] md:tracking-[4px] uppercase mb-4">
               Danh Mục Đầu Tư Đa Dạng
@@ -255,9 +253,10 @@ export default function InvestmentFocusPage() {
         <section
           key={sector.title}
           id={sector.id}
-          className={`py-12 md:py-28 my-8 md:my-12 mx-2 sm:mx-4 rounded-2xl ${index % 2 === 1 ? "bg-fortress-deep" : "bg-white"}`}
+          className={`rounded-2xl section-mx section-my ${index % 2 === 1 ? "bg-fortress-deep" : "bg-white"}`}
+          style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}
         >
-          <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+          <div className="max-w-[1400px] mx-auto section-px">
             {/* Header */}
             <div className="flex items-start gap-4 md:gap-5 mb-8 md:mb-10">
               <div className="w-12 h-12 md:w-14 md:h-14 bg-fortress-gold/10 flex items-center justify-center flex-shrink-0 rounded-sm">
@@ -382,12 +381,12 @@ export default function InvestmentFocusPage() {
       ))}
 
       {/* CTA */}
-      <section className="py-12 md:py-28 bg-fortress-navy my-8 md:my-12 mx-2 sm:mx-4 rounded-2xl">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 text-center">
+      <section className="bg-fortress-navy rounded-2xl section-mx section-my" style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}>
+        <div className="max-w-[1400px] mx-auto section-px text-center">
           <p className="text-fortress-gold text-sm font-medium tracking-[2px] md:tracking-[4px] uppercase mb-4">
             Hợp Tác Đầu Tư
           </p>
-          <h2 className="text-xl md:text-4xl font-bold text-fortress-ivory mb-4 md:mb-6">
+          <h2 className="font-bold text-fortress-ivory mb-4 md:mb-6" style={{ fontSize: "var(--text-h2)" }}>
             Gửi Đề Xuất Cơ Hội Tới Fortress
           </h2>
           <p className="text-fortress-silver/80 text-sm md:text-lg leading-relaxed max-w-2xl mx-auto mb-6 md:mb-8">

@@ -16,17 +16,21 @@ const imageVariant = {
 };
 
 import { usePageContent } from "@/hooks/usePageContent";
+import { useLang } from "@/contexts/LangContext";
+import { t } from "@/lib/i18n";
 
 const defaultIntroData = {
-  introTag: "01 - Giới thiệu",
-  introTitle: "Nền Tảng Vững Chắc Cho Mọi Khoản Đầu Tư",
-  introParagraph1: "Một doanh nghiệp vĩ đại hiếm khi được xây dựng chỉ bằng nguồn vốn đơn thuần. Nó được kiến tạo bởi những con người biết kết hợp nguồn lực với sự nhạy bén, kiên nhẫn và cam kết dài lâu.",
-  introParagraph2: "Đó chính là triết lý cốt lõi của Fortress Investment Holdings.",
-  introParagraph3: "Chúng tôi được thành lập nhằm tạo dựng một nền tảng đầu tư, thâu tóm và tăng trưởng bền vững tại UAE và các thị trường quốc tế chiến lược. Mỗi khoản đầu tư của chúng tôi không chỉ nhận được nguồn vốn dồi dào mà còn là sự đồng hành chiến lược cùng mạng lưới đối tác toàn cầu.",
+  introTag: "", introTitle: "", introParagraph1: "", introParagraph2: "", introParagraph3: "",
 };
 
 export default function Introduction() {
   const { content } = usePageContent("home", defaultIntroData);
+  const { lang } = useLang();
+  const introTag = content.introTag || t("intro.tag", lang);
+  const introTitle = content.introTitle || t("intro.title", lang);
+  const introParagraph1 = content.introParagraph1 || t("intro.p1", lang);
+  const introParagraph2 = content.introParagraph2 || t("intro.p2", lang);
+  const introParagraph3 = content.introParagraph3 || t("intro.p3", lang);
 
   return (
     <motion.section
@@ -34,37 +38,44 @@ export default function Introduction() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      className="relative py-16 md:py-28 overflow-hidden bg-fortress-navy border-t border-fortress-gold/10 mx-2 sm:mx-4 my-8 md:my-12 rounded-2xl"
+      className="relative overflow-hidden bg-fortress-navy border-t border-fortress-gold/10 rounded-2xl section-mx section-my"
+      style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}
     >
-      <div className="relative max-w-[1400px] mx-auto px-6 lg:px-12">
+      <div className="relative max-w-[1400px] mx-auto section-px">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <Stagger>
             <StaggerItem>
-              <span className="block text-fortress-gold text-xs tracking-[6px] uppercase font-semibold">
-                {content.introTag}
+              <span
+                className="block text-fortress-gold uppercase font-semibold tracking-[6px]"
+                style={{ fontSize: "clamp(0.625rem, 0.5vw + 0.45rem, 0.75rem)" }}
+              >
+                {introTag}
               </span>
             </StaggerItem>
             <StaggerItem>
-              <h2 className="text-2xl md:text-5xl font-light text-fortress-ivory leading-tight uppercase tracking-tight mt-4">
-                {content.introTitle}
+              <h2
+                className="text-fortress-ivory font-light leading-tight uppercase tracking-tight mt-4"
+                style={{ fontSize: "var(--text-h2)" }}
+              >
+                {introTitle}
               </h2>
             </StaggerItem>
             <StaggerItem>
               <motion.div variants={goldenDivider} initial="hidden" whileInView="visible" viewport={{ once: true }} className="h-0.5 w-12 bg-fortress-gold/30 my-6" />
             </StaggerItem>
             <StaggerItem>
-              <p className="text-fortress-silver/90 text-base md:text-lg leading-relaxed mb-4">
-                {content.introParagraph1}
+              <p className="text-fortress-silver/90 leading-relaxed mb-4" style={{ fontSize: "var(--text-body)" }}>
+                {introParagraph1}
               </p>
             </StaggerItem>
             <StaggerItem>
-              <p className="text-fortress-silver/90 text-base md:text-lg leading-relaxed mb-4">
-                {content.introParagraph2}
+              <p className="text-fortress-silver/90 leading-relaxed mb-4" style={{ fontSize: "var(--text-body)" }}>
+                {introParagraph2}
               </p>
             </StaggerItem>
             <StaggerItem>
-              <p className="text-fortress-silver/80 text-base leading-relaxed">
-                {content.introParagraph3}
+              <p className="text-fortress-silver/80 leading-relaxed" style={{ fontSize: "var(--text-body)" }}>
+                {introParagraph3}
               </p>
             </StaggerItem>
           </Stagger>

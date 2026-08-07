@@ -5,21 +5,12 @@ import Link from "next/link";
 import AdminSidebar from "@/components/AdminSidebar";
 import AdminNavbar from "@/components/AdminNavbar";
 import { FileText, ChevronRight } from "lucide-react";
+import { timeAgo } from "@/utils/time";
 
 interface PageItem {
   slug: string;
   title: string;
   updatedAt: string;
-}
-
-function timeAgo(dateStr: string) {
-  const diff = Date.now() - new Date(dateStr).getTime();
-  const mins = Math.floor(diff / 60000);
-  if (mins < 60) return `${mins} phút trước`;
-  const hrs = Math.floor(mins / 60);
-  if (hrs < 24) return `${hrs} giờ trước`;
-  const days = Math.floor(hrs / 24);
-  return `${days} ngày trước`;
 }
 
 export default function ContentList() {

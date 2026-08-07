@@ -1,67 +1,64 @@
 import { NextRequest } from "next/server";
+import { getCurrentUser } from "@/lib/auth-utils";
 import { enquiryService } from "@/services";
 import {
   successResponse,
   errorResponse,
   serverErrorResponse,
   notFoundResponse,
+  unauthorizedResponse,
 } from "@/utils/api-response";
 import { handleError, NotFoundError } from "@/utils/errors";
 
+// GET — admin only: fetch single enquiry by id
 export async function GET(
   _request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  if (!await getCurrentUser()) return unauthorizedResponse();
   try {
     const { id } = await params;
-    const enquiry = await enquiryService.getEnquiryById(id);
-    return successResponse(enquiry);
+    return successResponse(await enquiryService.getEnquiryById(id));
   } catch (error) {
-    if (error instanceof NotFoundError) {
-      return notFoundResponse(error.message);
-    }
-    const { message } = handleError(error);
-    return serverErrorResponse(message);
+    if (error instanceof NotFoundError) return notFoundResponse(error.message);
+    return serverErrorResponse(handleError(error).message);
   }
 }
 
+// PATCH — admin only: update enquiry status
 export async function PATCH(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  if (!await getCurrentUser()) return unauthorizedResponse();
   try {
     const { id } = await params;
-    const body = await request.json();
-    const { status } = body;
-
+    const { status } = await request.json();
     if (!status || !["new", "read", "archived"].includes(status)) {
       return errorResponse("Invalid status. Must be: new, read, or archived");
     }
-
-    const enquiry = await enquiryService.updateEnquiryStatus(id, status);
-    return successResponse(enquiry, "Enquiry updated successfully");
+    return successResponse(
+      await enquiryService.updateEnquiryStatus(id, status),
+      "Enquiry updated successfully"
+    );
   } catch (error) {
-    if (error instanceof NotFoundError) {
-      return notFoundResponse(error.message);
-    }
-    const { message } = handleError(error);
-    return serverErrorResponse(message);
+    if (error instanceof NotFoundError) return notFoundResponse(error.message);
+    return serverErrorResponse(handleError(error).message);
   }
 }
 
+// DELETE — admin only: delete enquiry
 export async function DELETE(
   _request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  if (!await getCurrentUser()) return unauthorizedResponse();
   try {
     const { id } = await params;
     await enquiryService.deleteEnquiry(id);
     return successResponse(null, "Enquiry deleted successfully");
   } catch (error) {
-    if (error instanceof NotFoundError) {
-      return notFoundResponse(error.message);
-    }
-    const { message } = handleError(error);
-    return serverErrorResponse(message);
+    if (error instanceof NotFoundError) return notFoundResponse(error.message);
+    return serverErrorResponse(handleError(error).message);
   }
 }

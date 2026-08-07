@@ -5,86 +5,33 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import Stagger from "@/components/animations/Stagger";
 import StaggerItem from "@/components/animations/StaggerItem";
+import { usePageContent } from "@/hooks/usePageContent";
+import { useLang } from "@/contexts/LangContext";
+import { t } from "@/lib/i18n";
 
-const columns = [
-  {
-    heading: "Về Fortress",
-    links: [
-      { label: "Giới thiệu chung", href: "/about" },
-      { label: "Hành trình phát triển", href: "/about#journey" },
-      { label: "Ban lãnh đạo", href: "/about#leadership" },
-      { label: "Cơ hội nghề nghiệp", href: "/about#careers" },
-      { label: "Tin tức & Truyền thông", href: "/insights" },
-    ],
-  },
-  {
-    heading: "Lĩnh Vực Đầu Tư",
-    links: [
-      { label: "Tổng quan đầu tư", href: "/investment-focus" },
-      { label: "Danh mục tài sản", href: "/investment-focus#portfolio" },
-      { label: "Bất động sản", href: "/investment-focus#real-estate" },
-      { label: "Private Equity", href: "/investment-focus#private-equity" },
-      { label: "Công nghệ AI", href: "/investment-focus#technology" },
-      { label: "Khách sạn & Nghỉ dưỡng", href: "/investment-focus#hospitality" },
-    ],
-  },
-  {
-    heading: "Dành Cho Nhà Đầu Tư",
-    links: [
-      { label: "Hợp tác đầu tư", href: "/invest-with-fortress" },
-      { label: "Lĩnh vực ưu tiên", href: "/investment-focus" },
-    ],
-  },
-  {
-    heading: "Tài Nguyên & Pháp Lý",
-    links: [
-      { label: "Góc nhìn chuyên sâu", href: "/insights" },
-      { label: "Báo cáo phân tích", href: "/insights#reports" },
-      { label: "Điều khoản sử dụng", href: "/terms-of-use" },
-      { label: "Chính sách bảo mật", href: "/privacy-policy" },
-      { label: "Miễn trừ trách nhiệm", href: "/investment-disclaimer" },
-      { label: "Liên hệ trực tiếp", href: "/contact" },
-    ],
-  },
-];
-
-const pillars = [
-  {
-    title: "XÂY DỰNG TRÊN NIỀM TIN",
-    sub: "Liêm chính và minh bạch trong mọi hoạt động",
-    icon: (
-      <svg viewBox="0 0 32 32" className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <path d="M16 3 L28 8 V17 C28 23.627 22.627 29 16 29 C9.373 29 4 23.627 4 17 V8 Z" strokeLinejoin="round" />
-        <path d="M11 16.5 L14.5 20 L21 13" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
-  },
-  {
-    title: "TÁC ĐỘNG ĐỘT PHÁ",
-    sub: "Mang lại giá trị bền vững dài lâu",
-    icon: (
-      <svg viewBox="0 0 32 32" className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <rect x="4" y="18" width="5" height="10" rx="1" />
-        <rect x="13" y="12" width="5" height="16" rx="1" />
-        <rect x="22" y="6" width="5" height="22" rx="1" />
-        <path d="M6 14 L14 9 L21 13 L28 5" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M24 5 L28 5 L28 9" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
-  },
-  {
-    title: "QUẢN TRỊ KỶ LUẬT",
-    sub: "Thẩm định tỉ mỉ, giám sát chặt chẽ mọi khoản đầu tư",
-    icon: (
-      <svg viewBox="0 0 32 32" className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <path d="M4 18 C4 18 7 14 11 15 L16 16 C18 16.5 20 15.5 20 14 C20 12.5 18.5 12 17 12.5 L14 13.5" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M20 14 L26 10 C27.5 9 28.5 10.5 27.5 12 L21 17 C19.5 18.5 17 19 15 18.5 L10 17 C8 16.5 6 17.5 4 18" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M3 22 L7 18" strokeLinecap="round" />
-        <path d="M9 9 C9 9 11 6 14 8 C17 10 14 13 16 14" strokeLinecap="round" />
-      </svg>
-    ),
-  },
-];
+const PillarIcon0 = () => (
+  <svg viewBox="0 0 32 32" className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="1.5">
+    <path d="M16 3 L28 8 V17 C28 23.627 22.627 29 16 29 C9.373 29 4 23.627 4 17 V8 Z" strokeLinejoin="round" />
+    <path d="M11 16.5 L14.5 20 L21 13" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+const PillarIcon1 = () => (
+  <svg viewBox="0 0 32 32" className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="1.5">
+    <rect x="4" y="18" width="5" height="10" rx="1" />
+    <rect x="13" y="12" width="5" height="16" rx="1" />
+    <rect x="22" y="6" width="5" height="22" rx="1" />
+    <path d="M6 14 L14 9 L21 13 L28 5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M24 5 L28 5 L28 9" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+const PillarIcon2 = () => (
+  <svg viewBox="0 0 32 32" className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="1.5">
+    <path d="M4 18 C4 18 7 14 11 15 L16 16 C18 16.5 20 15.5 20 14 C20 12.5 18.5 12 17 12.5 L14 13.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M20 14 L26 10 C27.5 9 28.5 10.5 27.5 12 L21 17 C19.5 18.5 17 19 15 18.5 L10 17 C8 16.5 6 17.5 4 18" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M3 22 L7 18" strokeLinecap="round" />
+    <path d="M9 9 C9 9 11 6 14 8 C17 10 14 13 16 14" strokeLinecap="round" />
+  </svg>
+);
 
 const socialLinks = [
   {
@@ -149,12 +96,64 @@ const sectionReveal = {
 };
 
 const defaultFooterData = {
-  footerDesc: "Tập đoàn đầu tư đa ngành có trụ sở tại Dubai, UAE – tập trung xác định, thâu tóm và phát triển các cơ hội tiềm năng cao trong bất động sản, private equity, công nghệ, tài sản số, năng lượng, hàng hóa và dịch vụ nghỉ dưỡng.",
-  footerDocBtn: "Tải Tài Liệu Giới Thiệu",
+  footerDesc: "",
+  footerDocBtn: "",
 };
 
 export default function Footer() {
   const { content } = usePageContent("home", defaultFooterData);
+  const { lang } = useLang();
+
+  const columns = [
+    {
+      heading: t("footer.col1Heading", lang),
+      links: [
+        { label: t("footer.col1Link1", lang), href: "/about" },
+        { label: t("footer.col1Link2", lang), href: "/about#journey" },
+        { label: t("footer.col1Link3", lang), href: "/about#leadership" },
+        { label: t("footer.col1Link4", lang), href: "/about#careers" },
+        { label: t("footer.col1Link5", lang), href: "/insights" },
+      ],
+    },
+    {
+      heading: t("footer.col2Heading", lang),
+      links: [
+        { label: t("footer.col2Link1", lang), href: "/investment-focus" },
+        { label: t("footer.col2Link2", lang), href: "/investment-focus#portfolio" },
+        { label: t("footer.col2Link3", lang), href: "/investment-focus#real-estate" },
+        { label: t("footer.col2Link4", lang), href: "/investment-focus#private-equity" },
+        { label: t("footer.col2Link5", lang), href: "/investment-focus#technology" },
+        { label: t("footer.col2Link6", lang), href: "/investment-focus#hospitality" },
+      ],
+    },
+    {
+      heading: t("footer.col3Heading", lang),
+      links: [
+        { label: t("footer.col3Link1", lang), href: "/invest-with-fortress" },
+        { label: t("footer.col3Link2", lang), href: "/investment-focus" },
+      ],
+    },
+    {
+      heading: t("footer.col4Heading", lang),
+      links: [
+        { label: t("footer.col4Link1", lang), href: "/insights" },
+        { label: t("footer.col4Link2", lang), href: "/insights#reports" },
+        { label: t("footer.col4Link3", lang), href: "/terms-of-use" },
+        { label: t("footer.col4Link4", lang), href: "/privacy-policy" },
+        { label: t("footer.col4Link5", lang), href: "/investment-disclaimer" },
+        { label: t("footer.col4Link6", lang), href: "/contact" },
+      ],
+    },
+  ];
+
+  const pillars = [
+    { title: t("footer.pillar1Title", lang), sub: t("footer.pillar1Sub", lang), Icon: PillarIcon0 },
+    { title: t("footer.pillar2Title", lang), sub: t("footer.pillar2Sub", lang), Icon: PillarIcon1 },
+    { title: t("footer.pillar3Title", lang), sub: t("footer.pillar3Sub", lang), Icon: PillarIcon2 },
+  ];
+
+  const footerDesc = content.footerDesc || t("footer.desc", lang);
+  const footerDocBtn = content.footerDocBtn || t("footer.docBtn", lang);
 
   return (
     <motion.footer
@@ -182,7 +181,16 @@ export default function Footer() {
 
         <Stagger>
           <StaggerItem>
-            <div className="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-16 pt-16 pb-14 grid grid-cols-1 md:grid-cols-[260px_1fr] gap-12">
+            {/* Main footer grid: fluid padding via CSS vars */}
+            <div
+              className="relative z-10 max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-[240px_1fr] gap-10 md:gap-12"
+              style={{
+                paddingTop: "var(--section-py)",
+                paddingBottom: "3.5rem",
+                paddingLeft: "var(--section-px)",
+                paddingRight: "var(--section-px)",
+              }}
+            >
               <div className="flex flex-col gap-6">
                 <Link href="/" className="inline-block">
                   <Image
@@ -194,7 +202,7 @@ export default function Footer() {
                   />
                 </Link>
                 <p className="text-[#8fa0b8] text-sm leading-relaxed max-w-[230px]">
-                  {content.footerDesc}
+                  {footerDesc}
                 </p>
                 <motion.a
                   href="#"
@@ -208,7 +216,7 @@ export default function Footer() {
                     <line x1="9" y1="13" x2="15" y2="13" />
                     <line x1="9" y1="17" x2="12" y2="17" />
                   </svg>
-                  {content.footerDocBtn}
+                  {footerDocBtn}
                 </motion.a>
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
@@ -222,7 +230,7 @@ export default function Footer() {
                     </div>
                     <ul className="flex flex-col gap-2.5">
                       {col.links.map((l) => (
-                        <li key={l.label}>
+                        <li key={l.href}>
                           <Link
                             href={l.href}
                             className="group flex items-center gap-1.5 text-[13px] text-[#8fa0b8] hover:text-[#C9A24A] transition-colors"
@@ -257,7 +265,10 @@ export default function Footer() {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="relative z-10 bg-[#060c17] border-t border-[#C9A24A]/15"
             >
-              <div className="max-w-[1400px] mx-auto px-6 lg:px-16 py-6 flex flex-col lg:flex-row items-start lg:items-center gap-6 lg:gap-0 justify-between">
+              <div
+                className="max-w-[1400px] mx-auto py-5 flex flex-col lg:flex-row items-start lg:items-center gap-5 lg:gap-0 justify-between"
+                style={{ paddingLeft: "var(--section-px)", paddingRight: "var(--section-px)" }}
+              >
                 <div className="flex flex-col gap-1 shrink-0">
                   <Link href="/" className="flex items-baseline gap-1.5">
                     <span className="text-white text-sm font-bold tracking-[5px] uppercase">FORTRESS</span>
@@ -266,7 +277,7 @@ export default function Footer() {
                   <p className="text-[#8fa0b8]/50 text-[11px] leading-snug">
                     &copy; {new Date().getFullYear()} Fortress Investment Holdings.
                     <br />
-                    Bản quyền thuộc về Fortress IH.
+                    {t("footer.copyright", lang)}
                   </p>
                 </div>
 
@@ -293,7 +304,7 @@ export default function Footer() {
                             strokeWidth="1"
                           />
                         </svg>
-                        <span className="text-[#C9A24A]/80">{p.icon}</span>
+                        <span className="text-[#C9A24A]/80"><p.Icon /></span>
                       </div>
                     </div>
                   ))}
@@ -301,7 +312,7 @@ export default function Footer() {
 
                 <div className="flex flex-col gap-2.5 shrink-0">
                   <p className="text-white text-[11px] font-bold tracking-[3px] uppercase">
-                    THEO DÕI CHÚNG TÔI
+                    {t("footer.followUs", lang)}
                   </p>
                   <div className="flex items-center gap-2">
                     {socialLinks.map((s) => (

@@ -8,14 +8,8 @@ import { motion } from "framer-motion";
 import { navVariants } from "@/lib/animation";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { usePathname } from "next/navigation";
-
-const navItems = [
-  { label: "Giới thiệu", href: "/about", icon: User },
-  { label: "Lĩnh vực đầu tư", href: "/investment-focus", icon: Target },
-  { label: "Phương pháp", href: "/our-approach", icon: Handshake },
-  { label: "Hợp tác đầu tư", href: "/invest-with-fortress", icon: TrendingUp },
-  { label: "Góc nhìn", href: "/insights", icon: Newspaper },
-];
+import { useLang } from "@/contexts/LangContext";
+import { t } from "@/lib/i18n";
 
 const linkVariants = {
   rest: { color: "rgba(255,255,255,0.8)" },
@@ -43,19 +37,19 @@ const NavLink = ({ href, icon: Icon, label }: { href: string; icon: React.Compon
   </motion.div>
 );
 
-const mobileItemVariants = {
-  hidden: { opacity: 0, x: -20 },
-  visible: (i: number) => ({
-    opacity: 1,
-    x: 0,
-    transition: { delay: i * 0.06, duration: 0.35, ease: [0.22, 1, 0.36, 1] as const },
-  }),
-};
-
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
+  const { lang } = useLang();
+
+  const navItems = [
+    { label: t("nav.about", lang), href: "/about", icon: User },
+    { label: t("nav.investmentFocus", lang), href: "/investment-focus", icon: Target },
+    { label: t("nav.approach", lang), href: "/our-approach", icon: Handshake },
+    { label: t("nav.investWithUs", lang), href: "/invest-with-fortress", icon: TrendingUp },
+    { label: t("nav.insights", lang), href: "/insights", icon: Newspaper },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -101,7 +95,7 @@ export default function Navbar() {
             <div className="relative w-full h-full flex items-center justify-between px-4 md:px-8">
               <nav className="hidden md:flex gap-8 shrink-0">
                 {navItems.slice(0, 3).map(item => (
-                  <NavLink key={item.label} {...item} />
+                  <NavLink key={item.href} {...item} />
                 ))}
               </nav>
 
@@ -134,7 +128,7 @@ export default function Navbar() {
 
               <nav className="hidden md:flex gap-6 items-center shrink-0">
                 {navItems.slice(3).map(item => (
-                  <NavLink key={item.label} {...item} />
+                  <NavLink key={item.href} {...item} />
                 ))}
                 <div className={`flex gap-4 pl-4 shrink-0 items-center border-l ${
                   scrolled ? "border-fortress-gold/20" : "border-white/10"
@@ -149,7 +143,7 @@ export default function Navbar() {
                       href="/contact"
                       className="block px-4 py-1.5 text-sm font-medium text-fortress-navy bg-fortress-gold hover:bg-fortress-champagne transition-colors whitespace-nowrap shadow-sm"
                     >
-                      Liên hệ ngay
+                      {t("nav.contact", lang)}
                     </Link>
                   </motion.div>
                 </div>
@@ -188,7 +182,7 @@ export default function Navbar() {
             const isActive = pathname === item.href || (pathname.startsWith(item.href) && item.href !== "/");
             return (
               <Link
-                key={item.label}
+                key={item.href}
                 href={item.href}
                 className="flex flex-col items-center justify-center w-full h-full gap-1.5 active:scale-95 transition-transform"
               >

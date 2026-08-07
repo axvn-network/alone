@@ -23,10 +23,10 @@
     "home": "Trang chủ",
     "about": "Giới thiệu",
     "investmentFocus": "Lĩnh vực đầu tư",
-    "approach": "Phương pháp tiếp cận",
+    "approach": "Phương pháp",
     "investWithUs": "Hợp tác đầu tư",
-    "insights": "Góc nhìn chuyên sâu",
-    "contact": "Liên hệ"
+    "insights": "Góc nhìn",
+    "contact": "Liên hệ ngay"
   },
   "roles": {
     "superadmin": "Quản trị viên tối cao",
@@ -39,5 +39,139 @@
     "bank": "Chuyển khoản Ngân hàng (VietQR)",
     "usdt": "Tiền điện tử USDT (BEP20)",
     "telco": "Thẻ cào điện thoại"
+  },
+  "footer": {
+    "followUs": "THEO DÕI CHÚNG TÔI",
+    "copyright": "Bản quyền thuộc về Fortress IH.",
+    "docBtn": "Tải Tài Liệu Giới Thiệu",
+    "desc": "Tập đoàn đầu tư đa ngành có trụ sở tại Dubai, UAE – tập trung xác định, thâu tóm và phát triển các cơ hội tiềm năng cao trong bất động sản, private equity, công nghệ, tài sản số, năng lượng, hàng hóa và dịch vụ nghỉ dưỡng.",
+    "col1Heading": "Về Fortress",
+    "col1Link1": "Giới thiệu chung",
+    "col1Link2": "Hành trình phát triển",
+    "col1Link3": "Ban lãnh đạo",
+    "col1Link4": "Cơ hội nghề nghiệp",
+    "col1Link5": "Tin tức & Truyền thông",
+    "col2Heading": "Lĩnh Vực Đầu Tư",
+    "col2Link1": "Tổng quan đầu tư",
+    "col2Link2": "Danh mục tài sản",
+    "col2Link3": "Bất động sản",
+    "col2Link4": "Private Equity",
+    "col2Link5": "Công nghệ AI",
+    "col2Link6": "Khách sạn & Nghỉ dưỡng",
+    "col3Heading": "Dành Cho Nhà Đầu Tư",
+    "col3Link1": "Hợp tác đầu tư",
+    "col3Link2": "Lĩnh vực ưu tiên",
+    "col4Heading": "Tài Nguyên & Pháp Lý",
+    "col4Link1": "Góc nhìn chuyên sâu",
+    "col4Link2": "Báo cáo phân tích",
+    "col4Link3": "Điều khoản sử dụng",
+    "col4Link4": "Chính sách bảo mật",
+    "col4Link5": "Miễn trừ trách nhiệm",
+    "col4Link6": "Liên hệ trực tiếp",
+    "pillar1Title": "XÂY DỰNG TRÊN NIỀM TIN",
+    "pillar1Sub": "Liêm chính và minh bạch trong mọi hoạt động",
+    "pillar2Title": "TÁC ĐỘNG ĐỘT PHÁ",
+    "pillar2Sub": "Mang lại giá trị bền vững dài lâu",
+    "pillar3Title": "QUẢN TRỊ KỶ LUẬT",
+    "pillar3Sub": "Thẩm định tỉ mỉ, giám sát chặt chẽ mọi khoản đầu tư"
+  },
+  "hero": {
+    "subtitle": "Fortress Investment Holdings",
+    "titleLine1": "Vững Chắc Nền Tảng.",
+    "titleLine2": "Đột Phá Tầm Nhìn.",
+    "description": "Tập đoàn đầu tư đa ngành hàng đầu tập trung tìm kiếm, thâu tóm và phát triển các cơ hội đầu tư tiềm năng cao trong các lĩnh vực bất động sản, đầu tư tư nhân (Private Equity), công nghệ AI, năng lượng, hàng hóa và dịch vụ khách sạn nghỉ dưỡng.",
+    "btn1": "Khám Phá Lĩnh Vực Đầu Tư",
+    "btn2": "Hợp Tác Đầu Tư Cùng Chúng Tôi"
+  },
+  "intro": {
+    "tag": "01 - Giới thiệu",
+    "title": "Nền Tảng Vững Chắc Cho Mọi Khoản Đầu Tư",
+    "p1": "Một doanh nghiệp vĩ đại hiếm khi được xây dựng chỉ bằng nguồn vốn đơn thuần. Nó được kiến tạo bởi những con người biết kết hợp nguồn lực với sự nhạy bén, kiên nhẫn và cam kết dài lâu.",
+    "p2": "Đó chính là triết lý cốt lõi của Fortress Investment Holdings.",
+    "p3": "Chúng tôi được thành lập nhằm tạo dựng một nền tảng đầu tư, thâu tóm và tăng trưởng bền vững tại UAE và các thị trường quốc tế chiến lược. Mỗi khoản đầu tư của chúng tôi không chỉ nhận được nguồn vốn dồi dào mà còn là sự đồng hành chiến lược cùng mạng lưới đối tác toàn cầu."
+  },
+  "whatWeDo": {
+    "tag": "02 - Năng Lực Cốt Lõi",
+    "title": "Quản Lý Đầu Tư Chiến Lược",
+    "subtitle": "Kỷ Luật Phân Bổ Vốn. Kiến Tạo Giá Trị Bền Vững.",
+    "desc1": "Chúng tôi xác định và quản lý các cơ hội đầu tư được lựa chọn kỹ lưỡng trên nhiều lĩnh vực, chú trọng kiểm soát rủi ro, tối ưu hóa dòng tiền và tăng trưởng vốn dài hạn.",
+    "desc2": "Phương pháp tiếp cận được thiết kế dành cho các nhà đầu tư tìm kiếm sự tham gia chuyên nghiệp vào các doanh nghiệp, dự án và tài sản cao cấp tại UAE và toàn cầu.",
+    "focusPrefix": "Trọng Tâm",
+    "cards": [
+      {
+        "title": "Phân Bổ Đầu Tư Đa Dạng",
+        "desc": "Phân bổ nguồn vốn tối ưu trên nhiều lĩnh vực tiềm năng nhằm kiến tạo một danh mục đầu tư cân bằng và bền vững."
+      },
+      {
+        "title": "Cơ Hội Tạo Dòng Tiền Đều Đặn",
+        "desc": "Tập trung tìm kiếm các cơ hội đầu tư mang lại nguồn thu nhập định kỳ và phân phối lợi nhuận cấu trúc minh bạch."
+      },
+      {
+        "title": "Đầu Tư Tăng Trưởng Vốn",
+        "desc": "Đầu tư vào các doanh nghiệp, dự án và tài sản có nền tảng thương mại vững chắc với tiềm năng tăng giá trị lâu dài."
+      },
+      {
+        "title": "Cơ Hội Thị Trường Tư Nhân",
+        "desc": "Mở ra quyền truy cập vào các cơ hội đầu tư độc quyền trên thị trường tư nhân đã qua thẩm định kỹ lưỡng."
+      }
+    ]
+  },
+  "sectors": {
+    "tag": "03 - Lĩnh Vực Đầu Tư",
+    "title": "Tầm Nhìn Đầu Tư Đa Ngành",
+    "desc": "Fortress Investment Holdings tập trung vào các lĩnh vực mà nguồn vốn, kinh nghiệm và sự tham gia chiến lược của chúng tôi có thể mang lại những giá trị đo lường được.",
+    "btnText": "XEM TẤT CẢ LĨNH VỰC ĐẦU TƯ",
+    "sectorPrefix": "Lĩnh vực",
+    "list": [
+      { "title": "Bất Động Sản", "desc": "Đầu tư bất động sản nhà ở, thương mại, nghỉ dưỡng và tài sản tạo dòng tiền tại Dubai, UAE và quốc tế." },
+      { "title": "Thâu Tóm Doanh Nghiệp (M&A)", "desc": "Doanh nghiệp lâu năm có vận hành ổn định, nhu cầu thị trường cao và cơ hội mở rộng quy mô rõ ràng." },
+      { "title": "Đầu Tư Tư Nhân (Private Equity)", "desc": "Đầu tư chiến lược vào các công ty tư nhân có ban lãnh đạo năng lực và mô hình kinh doanh mở rộng." },
+      { "title": "Công Nghệ AI & Đột Phá", "desc": "Doanh nghiệp công nghệ, nền tảng số và các giải pháp đổi mới sáng tạo giải quyết bài toán thị trường." },
+      { "title": "Khách Sạn & Nghỉ Dưỡng", "desc": "Khách sạn, căn hộ dịch vụ, du lịch, ẩm thực F&B và dịch vụ phong cách sống cao cấp." },
+      { "title": "Tài Sản Số & Blockchain", "desc": "Hạ tầng blockchain, nền tảng tài sản số, mã hóa tài sản (tokenization) và công nghệ tài chính Fintech." },
+      { "title": "Năng Lượng & Hàng Hóa", "desc": "Đầu tư vào sản phẩm năng lượng, hàng hóa vật chất và mạng lưới cung ứng phân phối toàn cầu." },
+      { "title": "Tài Sản Sang Trọng & Bất Động Sản Hạng Sang", "desc": "Bất động sản siêu sang, du thuyền, phi cơ, xe cao cấp và sản phẩm dịch vụ xa xỉ." },
+      { "title": "Quản Lý Đầu Tư Chiến Lược", "desc": "Liên doanh, đồng đầu tư và liên minh chiến lược với các đối tác định chế tài chính uy tín." }
+    ]
+  },
+  "why": {
+    "tag": "04 - Tại Sao Chọn Fortress",
+    "title": "Nền Tảng Vững Chắc Cho Sự Tăng Trưởng",
+    "benefits": [
+      { "title": "Quy Trình Đầu Tư Kỷ Luật", "desc": "Mọi cơ hội đều được phân tích thương mại, tài chính, vận hành và quản trị rủi ro chuyên sâu. Sự thận trọng chính là lý do các đối tác đặt trọn niềm tin vào chúng tôi." },
+      { "title": "Tầm Nhìn Dài Hạn Bền Vững", "desc": "Chúng tôi không chạy theo lợi nhuận ngắn hạn mà ưu tiên tối đa giá trị tăng trưởng bền vững qua các chu kỳ kinh tế." },
+      { "title": "Chuyên Môn Đa Ngành Đa Lĩnh Vực", "desc": "Cách tiếp cận đa ngành giúp chúng tôi hiểu rõ đặc thù, dòng tiền và cơ hội của từng ngành công nghiệp để tối ưu danh mục đầu tư." },
+      { "title": "Đồng Hành Chiến Lược Sâu Rộng", "desc": "Không chỉ dừng lại ở nguồn vốn, chúng tôi đóng góp định hướng chiến lược, phát triển kinh doanh, quản trị và mạng lưới đối tác toàn cầu." },
+      { "title": "Đối Tác Tin Cậy & Minh Bạch", "desc": "Chúng tôi xây dựng mối quan hệ dựa trên sự minh bạch, bảo mật thông tin và đôi bên cùng có lợi. Uy tín là tài sản vô giá của Fortress." },
+      { "title": "Thị Trường Đầy Tiềm Năng", "desc": "Đặt trụ sở tại Dubai và mở rộng quốc tế, chúng tôi nằm ở trung tâm giao thoa của dòng vốn thế giới, kết nối các dự án tài sản giá trị cao." }
+    ]
+  },
+  "philosophy": {
+    "tag": "05 - Phương Pháp Tiếp Cận",
+    "title": "Trụ Cột Kiến Tạo Giá Trị",
+    "desc": "Chúng tôi kiến tạo giá trị dài hạn thông qua chiến lược kỷ luật, mối quan hệ đối tác tin cậy và quyết định mang tầm vóc định chế.",
+    "quote": "\"Nếu không thể tạo thêm giá trị thực tiễn vượt trên nguồn vốn, đó không phải là cơ hội dành cho Fortress.\"",
+    "commitments": [
+      { "title": "Nhận Diện Cơ Hội", "desc": "Tìm kiếm và sàng lọc các cơ hội tiềm năng nhất thuộc các ngành trọng điểm.", "number": "01" },
+      { "title": "Thẩm Định Chuyên Sâu", "desc": "Đánh giá chi tiết rủi ro, sức mạnh thị trường và tiềm năng tạo giá trị.", "number": "02" },
+      { "title": "Đột Phá Tăng Trưởng", "desc": "Thúc đẩy giá trị vốn và dòng tiền dài hạn thông qua quản trị và nguồn lực.", "number": "03" }
+    ]
+  },
+  "cta": {
+    "tag": "06 - Hợp Tác Đầu Tư",
+    "title": "Cùng Nhau Kiến Tạo Giá Trị Bền Vững",
+    "p1": "Chúng tôi luôn chào đón các cơ hội hợp tác từ các chủ doanh nghiệp, nhà khởi nghiệp, nhà đầu tư, nhà phát triển dự án và đối tác chiến lược.",
+    "p2": "Dù bạn đang tìm kiếm nguồn vốn đầu tư, đề xuất cơ hội M&A thâu tóm doanh nghiệp, hay mong muốn hợp tác liên doanh dài hạn – đội ngũ chuyên gia của chúng tôi sẵn sàng thẩm định với sự bảo mật và chuyên nghiệp tuyệt đối.",
+    "btn1": "GỬI ĐỀ XUẤT ĐẦU TƯ",
+    "btn2": "LIÊN HỆ ĐỘI NGŨ CHUYÊN GIA"
+  },
+  "newsletter": {
+    "title": "Đăng Ký Nhận Bản Tin Chuyên Sâu",
+    "desc": "Cập nhật góc nhìn thị trường, phân tích xu hướng đầu tư và tin tức mới nhất từ Fortress – gửi tới bạn khi có giá trị thực sự.",
+    "btn": "ĐĂNG KÝ",
+    "disclaimer": "Bằng cách đăng ký, bạn đồng ý nhận các thông tin từ Fortress Investment Holdings. Bạn có thể hủy đăng ký bất kỳ lúc nào.",
+    "successTitle": "Cảm ơn bạn đã đăng ký thành công.",
+    "successDesc": "Chúng tôi sẽ gửi thông tin chuyên sâu quan trọng nhất tới bạn.",
+    "placeholder": "Địa chỉ Email của bạn"
   }
 }

@@ -1,31 +1,27 @@
-import { NextResponse } from "next/server";
-import { connectDB } from "@/lib/db";
-import Enquiry from "@/models/Enquiry";
+import { NextRequest } from "next/server";
 import { getCurrentUser } from "@/lib/auth-utils";
+import { enquiryService } from "@/services";
+import {
+  successResponse,
+  serverErrorResponse,
+  unauthorizedResponse,
+} from "@/utils/api-response";
+import { handleError } from "@/utils/errors";
 
-export async function GET() {
-  const user = await getCurrentUser();
-  if (!user) return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
+// GET — admin only: shaped list for the admin Enquiries page
+// Supports optional ?type=contact|submission&status=new|read|archived
+export async function GET(request: NextRequest) {
+  if (!await getCurrentUser()) return unauthorizedResponse();
   try {
-    await connectDB();
-    const enquiries = await Enquiry.find().sort({ createdAt: -1 }).lean();
-    const result = enquiries.map((e) => ({
-      id: e._id.toString(),
-      type: (e.type === "Contact" ? "contact" : "submission") as "contact" | "submission",
-      name: e.name,
-      email: e.email,
-      subject: e.subject || e.type,
-      message: e.message,
-      read: e.status !== "new",
-      createdAt: e.createdAt,
-      details: {
-        phone: e.phone,
-        company: e.company,
-        type: e.type,
-      },
-    }));
-    return NextResponse.json(result);
-  } catch {
-    return NextResponse.json([], { status: 200 });
+    const typeParam = request.nextUrl.searchParams.get("type") || undefined;
+    const status    = request.nextUrl.searchParams.get("status") || undefined;
+
+    const type = (typeParam === "contact" || typeParam === "submission")
+      ? typeParam
+      : undefined;
+
+    return successResponse(await enquiryService.listForAdmin({ type, status }));
+  } catch (error) {
+    return serverErrorResponse(handleError(error).message);
   }
 }

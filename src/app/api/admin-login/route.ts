@@ -2,67 +2,100 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import Admin from "@/models/Admin";
 import bcrypt from "bcryptjs";
-import { cookies } from "next/headers";
+import { setSessionCookie } from "@/lib/session";
+import { rateLimit, clearRateLimit } from "@/utils/rate-limit";
 
 const FALLBACK_USERNAME = process.env.ADMIN_USERNAME || "admin";
-const FALLBACK_PASSWORD = process.env.ADMIN_PASSWORD || "admin123";
+const FALLBACK_PASSWORD = process.env.ADMIN_PASSWORD || "";
 
+/**
+ * POST /api/admin-login
+ *
+ * Security:
+ *   - Rate-limited per IP: 5 attempts per minute, progressive lockout
+ *   - Generic error message (no username/password enumeration)
+ *   - Clears rate-limit key on successful login
+ *   - Updates lastLogin timestamp in DB
+ *   - Issues HMAC-signed session cookie on success
+ */
 export async function POST(request: Request) {
-  try {
-    const { username, password } = await request.json();
+  const ip =
+    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    request.headers.get("x-real-ip") ||
+    "unknown";
 
-    if (!username || !password) {
-      return NextResponse.json(
-        { success: false, message: "Username and password are required" },
-        { status: 400 }
-      );
-    }
+  const rateLimitKey = `admin-login:${ip}`;
+  const limit = rateLimit(rateLimitKey, 5, 60_000);
 
-    try {
-      await connectDB();
-      const admin = await Admin.findOne({
-        $or: [{ email: username.toLowerCase() }, { name: username }],
-      });
-
-      if (admin) {
-        const valid = await bcrypt.compare(password, admin.password);
-        if (valid) {
-          await Admin.findByIdAndUpdate(admin._id, { lastLogin: new Date() });
-          const cookieStore = await cookies();
-          cookieStore.set("admin_email", admin.email, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "lax",
-            path: "/",
-            maxAge: 60 * 60 * 24,
-          });
-          return NextResponse.json({ success: true });
-        }
-      }
-    } catch {
-      // DB not available, fall through to fallback
-    }
-
-    if (username === FALLBACK_USERNAME && password === FALLBACK_PASSWORD) {
-      const cookieStore = await cookies();
-      cookieStore.set("admin_email", FALLBACK_USERNAME, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
-        path: "/",
-        maxAge: 60 * 60 * 24,
-      });
-      return NextResponse.json({ success: true });
-    }
-
+  if (!limit.allowed) {
+    const retryAfter = Math.ceil((limit.resetAt - Date.now()) / 1000);
     return NextResponse.json(
-      { success: false, message: "Invalid credentials" },
-      { status: 401 }
+      { success: false, message: "Too many login attempts. Try again later." },
+      {
+        status: 429,
+        headers: {
+          "Retry-After": String(retryAfter),
+          "X-RateLimit-Reset": String(limit.resetAt),
+        },
+      }
     );
+  }
+
+  // ── Generic bad-request guard ──────────────────────────────────────────────
+  let username: string;
+  let password: string;
+  try {
+    const body = await request.json();
+    username = typeof body.username === "string" ? body.username.trim() : "";
+    password = typeof body.password === "string" ? body.password : "";
   } catch {
     return NextResponse.json(
       { success: false, message: "Invalid request" },
       { status: 400 }
     );
   }
+
+  if (!username || !password) {
+    return NextResponse.json(
+      { success: false, message: "Credentials required" },
+      { status: 400 }
+    );
+  }
+
+  // ── MongoDB auth ───────────────────────────────────────────────────────────
+  try {
+    await connectDB();
+    const admin = await Admin.findOne({
+      $or: [{ email: username.toLowerCase() }, { name: username }],
+    }).select("+password");
+
+    if (admin) {
+      const valid = await bcrypt.compare(password, admin.password);
+      if (valid) {
+        await Admin.findByIdAndUpdate(admin._id, { lastLogin: new Date() });
+        await setSessionCookie(admin.email);
+        clearRateLimit(rateLimitKey); // reset failed-attempt counter
+        return NextResponse.json({ success: true });
+      }
+    }
+  } catch {
+    // DB unavailable — fall through to env fallback
+  }
+
+  // ── Env-based emergency fallback ──────────────────────────────────────────
+  if (
+    FALLBACK_PASSWORD.length >= 8 &&
+    username === FALLBACK_USERNAME &&
+    password === FALLBACK_PASSWORD
+  ) {
+    await setSessionCookie(FALLBACK_USERNAME);
+    clearRateLimit(rateLimitKey);
+    return NextResponse.json({ success: true });
+  }
+
+  // ── Generic failure — do not reveal whether user exists ───────────────────
+  return NextResponse.json(
+    { success: false, message: "Invalid credentials" },
+    { status: 401 }
+  );
 }

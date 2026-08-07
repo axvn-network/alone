@@ -26,7 +26,7 @@
     "approach": "Our Approach",
     "investWithUs": "Invest With Us",
     "insights": "Insights",
-    "contact": "Contact"
+    "contact": "Contact Now"
   },
   "roles": {
     "superadmin": "Super Admin",
@@ -39,5 +39,139 @@
     "bank": "Bank Transfer (VietQR)",
     "usdt": "USDT Crypto (BEP20)",
     "telco": "Telco Cards"
+  },
+  "footer": {
+    "followUs": "FOLLOW US",
+    "copyright": "All rights reserved by Fortress IH.",
+    "docBtn": "Download Brochure",
+    "desc": "A multi-sector investment group headquartered in Dubai, UAE — focused on identifying, acquiring and growing high-potential opportunities across real estate, private equity, technology, digital assets, energy, commodities and hospitality.",
+    "col1Heading": "About Fortress",
+    "col1Link1": "Overview",
+    "col1Link2": "Our Journey",
+    "col1Link3": "Leadership",
+    "col1Link4": "Career Opportunities",
+    "col1Link5": "News & Media",
+    "col2Heading": "Investment Focus",
+    "col2Link1": "Investment Overview",
+    "col2Link2": "Asset Portfolio",
+    "col2Link3": "Real Estate",
+    "col2Link4": "Private Equity",
+    "col2Link5": "AI Technology",
+    "col2Link6": "Hospitality & Resorts",
+    "col3Heading": "For Investors",
+    "col3Link1": "Invest With Fortress",
+    "col3Link2": "Priority Sectors",
+    "col4Heading": "Resources & Legal",
+    "col4Link1": "Expert Insights",
+    "col4Link2": "Research Reports",
+    "col4Link3": "Terms of Use",
+    "col4Link4": "Privacy Policy",
+    "col4Link5": "Investment Disclaimer",
+    "col4Link6": "Contact Us",
+    "pillar1Title": "BUILT ON TRUST",
+    "pillar1Sub": "Integrity and transparency in every operation",
+    "pillar2Title": "BREAKTHROUGH IMPACT",
+    "pillar2Sub": "Delivering lasting and sustainable value",
+    "pillar3Title": "DISCIPLINED GOVERNANCE",
+    "pillar3Sub": "Rigorous due diligence and oversight of every investment"
+  },
+  "hero": {
+    "subtitle": "Fortress Investment Holdings",
+    "titleLine1": "Solid Foundation.",
+    "titleLine2": "Breakthrough Vision.",
+    "description": "A leading multi-sector investment group focused on identifying, acquiring and growing high-potential investment opportunities across real estate, private equity (PE), AI technology, energy, commodities and hospitality.",
+    "btn1": "Explore Investment Focus",
+    "btn2": "Invest With Us"
+  },
+  "intro": {
+    "tag": "01 - Introduction",
+    "title": "A Solid Foundation For Every Investment",
+    "p1": "A great business is rarely built by capital alone. It is built by people who combine resources with insight, patience and long-term commitment.",
+    "p2": "That is the core philosophy of Fortress Investment Holdings.",
+    "p3": "We were established to create a sustainable investment, acquisition and growth platform across the UAE and key international markets. Each investment receives not only substantial capital but also strategic partnership and a global network."
+  },
+  "whatWeDo": {
+    "tag": "02 - Core Capabilities",
+    "title": "Strategic Investment Management",
+    "subtitle": "Disciplined Capital Allocation. Sustainable Value Creation.",
+    "desc1": "We identify and manage carefully selected investment opportunities across multiple sectors, with a focus on risk management, cash-flow optimisation and long-term capital growth.",
+    "desc2": "Our approach is designed for investors seeking professional participation in high-quality businesses, projects and assets across the UAE and globally.",
+    "focusPrefix": "Focus",
+    "cards": [
+      {
+        "title": "Diversified Investment Allocation",
+        "desc": "Optimally allocating capital across multiple high-potential sectors to build a balanced and sustainable portfolio."
+      },
+      {
+        "title": "Regular Cash-Flow Opportunities",
+        "desc": "Focused on investment opportunities that generate recurring income and transparently structured profit distributions."
+      },
+      {
+        "title": "Capital Growth Investments",
+        "desc": "Investing in businesses, projects and assets with solid commercial foundations and long-term value appreciation potential."
+      },
+      {
+        "title": "Private Market Opportunities",
+        "desc": "Accessing exclusive, rigorously vetted private-market investment opportunities unavailable to the public."
+      }
+    ]
+  },
+  "sectors": {
+    "tag": "03 - Investment Sectors",
+    "title": "Multi-Sector Investment Vision",
+    "desc": "Fortress Investment Holdings focuses on sectors where our capital, expertise and strategic involvement can deliver measurable value.",
+    "btnText": "VIEW ALL INVESTMENT SECTORS",
+    "sectorPrefix": "Sector",
+    "list": [
+      { "title": "Real Estate", "desc": "Residential, commercial, resort and income-producing real estate investments in Dubai, UAE and globally." },
+      { "title": "Business Acquisitions (M&A)", "desc": "Established businesses with stable operations, strong market demand and clear scaling potential." },
+      { "title": "Private Equity", "desc": "Strategic investments in private companies with capable leadership and scalable business models." },
+      { "title": "AI & Disruptive Technology", "desc": "Technology companies, digital platforms and innovative solutions addressing real market problems." },
+      { "title": "Hospitality & Resorts", "desc": "Hotels, serviced residences, tourism, F&B and high-end lifestyle services." },
+      { "title": "Digital Assets & Blockchain", "desc": "Blockchain infrastructure, digital asset platforms, tokenisation of assets and Fintech technology." },
+      { "title": "Energy & Commodities", "desc": "Investment in energy products, physical commodities and global distribution supply chains." },
+      { "title": "Luxury Assets & Premium Real Estate", "desc": "Ultra-luxury real estate, yachts, private jets, premium vehicles and luxury lifestyle products." },
+      { "title": "Strategic Investment Management", "desc": "Joint ventures, co-investments and strategic alliances with reputable institutional financial partners." }
+    ]
+  },
+  "why": {
+    "tag": "04 - Why Choose Fortress",
+    "title": "A Solid Foundation For Growth",
+    "benefits": [
+      { "title": "Disciplined Investment Process", "desc": "Every opportunity is subject to in-depth commercial, financial, operational and risk-management analysis. Our diligence is the reason partners place their complete trust in us." },
+      { "title": "Sustainable Long-Term Vision", "desc": "We do not chase short-term gains — we prioritise maximising sustainable growth value across economic cycles." },
+      { "title": "Multi-Sector Expertise", "desc": "Our cross-sector approach allows us to deeply understand the dynamics, cash flows and opportunities in each industry to optimise our portfolio." },
+      { "title": "Deep Strategic Partnership", "desc": "Beyond capital, we contribute strategic direction, business development, governance and a global partner network." },
+      { "title": "Trusted & Transparent Partner", "desc": "We build relationships on transparency, information security and mutual benefit. Reputation is Fortress's most valuable asset." },
+      { "title": "High-Potential Market Access", "desc": "Headquartered in Dubai and expanding internationally, we sit at the crossroads of global capital flows, connecting high-value asset projects." }
+    ]
+  },
+  "philosophy": {
+    "tag": "05 - Our Approach",
+    "title": "The Pillars of Value Creation",
+    "desc": "We create long-term value through disciplined strategy, trusted partnerships and decisions made with institutional-grade rigour.",
+    "quote": "\"If we cannot add real practical value beyond capital, it is not an opportunity for Fortress.\"",
+    "commitments": [
+      { "title": "Opportunity Identification", "desc": "Sourcing and screening the highest-potential opportunities across priority sectors.", "number": "01" },
+      { "title": "In-Depth Due Diligence", "desc": "Detailed assessment of risks, market strength and value-creation potential.", "number": "02" },
+      { "title": "Growth & Breakthrough", "desc": "Driving capital value and long-term cash flow through governance and resources.", "number": "03" }
+    ]
+  },
+  "cta": {
+    "tag": "06 - Partnership",
+    "title": "Building Lasting Value Together",
+    "p1": "We welcome collaboration from business owners, entrepreneurs, investors, project developers and strategic partners.",
+    "p2": "Whether you are seeking investment capital, proposing an M&A acquisition, or looking for a long-term joint venture — our expert team is ready to evaluate with complete confidentiality and professionalism.",
+    "btn1": "SUBMIT AN INVESTMENT PROPOSAL",
+    "btn2": "CONTACT OUR EXPERT TEAM"
+  },
+  "newsletter": {
+    "title": "Subscribe to Our Expert Insights",
+    "desc": "Stay updated with market perspectives, investment trend analysis and the latest news from Fortress — delivered when it truly adds value.",
+    "btn": "SUBSCRIBE",
+    "disclaimer": "By subscribing, you agree to receive communications from Fortress Investment Holdings. You may unsubscribe at any time.",
+    "successTitle": "Thank you for subscribing.",
+    "successDesc": "We will send you only the most important expert insights.",
+    "placeholder": "Your Email Address"
   }
 }

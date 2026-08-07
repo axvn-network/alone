@@ -1,5 +1,3 @@
-
-
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -11,8 +9,6 @@ export const metadata: Metadata = {
 export default function InvestmentDisclaimerPage() {
   return (
     <main className="min-h-screen bg-white">
-      
-
       <section className="bg-white pt-24 md:pt-32 pb-12 md:pb-20 text-center">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
           <p className="text-fortress-gold text-xs md:text-sm font-medium tracking-[2px] md:tracking-[4px] uppercase mb-4">
@@ -54,47 +50,42 @@ export default function InvestmentDisclaimerPage() {
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-fortress-navy mb-4">Digital Asset Risk</h2>
+              <h2 className="text-xl font-bold text-fortress-navy mb-4">Rủi Ro Tài Sản Số</h2>
               <p>
-                Digital asset-related investments may involve significant volatility, regulatory uncertainty, cybersecurity risk, technology risk, liquidity risk, custody risk, and the possibility of complete loss.
+                Các khoản đầu tư liên quan đến tài sản số có thể chịu biến động mạnh, bất ổn pháp lý, rủi ro an ninh mạng, rủi ro công nghệ, rủi ro thanh khoản, rủi ro lưu ký và khả năng mất toàn bộ vốn.
               </p>
               <p className="mt-4">
-                References to blockchain or digital assets on this website should not be interpreted as a recommendation to purchase, sell, or hold any digital asset.
+                Việc đề cập đến blockchain hoặc tài sản số trên website này không được hiểu là khuyến nghị mua, bán hay nắm giữ bất kỳ tài sản số nào.
               </p>
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-fortress-navy mb-4">Independent Advice</h2>
+              <h2 className="text-xl font-bold text-fortress-navy mb-4">Tư Vấn Độc Lập</h2>
               <p>
-                Any person considering an investment, acquisition, partnership, or transaction should conduct independent due diligence and obtain advice from qualified financial, legal, tax, accounting, and regulatory professionals.
+                Bất kỳ cá nhân nào cân nhắc đầu tư, mua lại, hợp tác hay giao dịch đều nên tự thực hiện thẩm định độc lập và tham khảo ý kiến từ các chuyên gia tài chính, pháp lý, thuế, kế toán và pháp lý có chuyên môn.
               </p>
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-fortress-navy mb-4">No Guarantee</h2>
+              <h2 className="text-xl font-bold text-fortress-navy mb-4">Không Bảo Đảm Lợi Nhuận</h2>
               <p>
-                Fortress Investment Holdings does not guarantee investment returns, capital protection, income, profitability, business performance, asset appreciation, successful completion of any transaction, or availability of an exit.
+                Fortress Investment Holdings không bảo đảm lợi nhuận đầu tư, bảo vệ vốn, thu nhập, khả năng sinh lợi, hiệu quả kinh doanh, tăng giá trị tài sản, hoàn thành thành công bất kỳ giao dịch nào hay khả năng thoái vốn.
               </p>
               <p className="mt-4">
-                Any forecasts, projections, targets, or expectations are subject to uncertainty and may not be achieved.
+                Mọi dự báo, kế hoạch, mục tiêu hay kỳ vọng đều chịu ảnh hưởng của sự không chắc chắn và có thể không đạt được.
               </p>
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-fortress-navy mb-4">Regulatory Status</h2>
+              <h2 className="text-xl font-bold text-fortress-navy mb-4">Tình Trạng Pháp Lý</h2>
               <p>
-                The inclusion of investment-related information on this website does not imply that Fortress Investment Holdings provides regulated financial services unless such services are specifically authorised by the relevant regulatory authority.
-              </p>
-              <p className="mt-4 text-fortress-charcoal/50 text-xs">
-                The final legal wording should accurately reflect the company&apos;s incorporation, licensing, activities, and regulatory permissions, and be reviewed by qualified UAE legal counsel.
+                Việc đăng tải thông tin liên quan đến đầu tư trên website này không có nghĩa là Fortress Investment Holdings cung cấp các dịch vụ tài chính được quản lý trừ khi các dịch vụ đó được cơ quan quản lý có thẩm quyền cấp phép cụ thể.
               </p>
             </div>
 
           </div>
         </div>
       </section>
-
-      
     </main>
   );
 }
