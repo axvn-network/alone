@@ -1,97 +1,95 @@
 # Fortress Investment Holdings — Website
 
-Production-grade Next.js 15 website for Fortress Investment Holdings.
-MongoDB database · Cloudinary media · Nodemailer email · Admin panel with signed-cookie auth.
+Next.js website cho Fortress Investment Holdings.  
+MongoDB · Cloudinary · Nodemailer · Admin panel với HMAC-signed cookie auth · SSE realtime · AI content assistant.
+
+> **Lưu ý trước khi public:** Chủ sở hữu cần xác minh toàn bộ thông tin pháp lý, giấy phép, số liệu tài chính, địa chỉ và kênh liên hệ trong CMS/Settings trước khi go-live.
 
 ---
 
-## Quick Start (Local Development)
+## Quick Start (Development)
 
 ```bash
-# 1. Clone and install
+# 1. Clone & cài đặt
 git clone <repo-url>
-cd fortress-main
+cd langding
 npm install
 
-# 2. Configure environment
+# 2. Cấu hình môi trường
 cp .env.example .env.local
-# Edit .env.local — set MONGODB_URI, ADMIN_EMAIL, ADMIN_PASSWORD, SESSION_SECRET
+# Chỉnh .env.local — bắt buộc: MONGODB_URI, ADMIN_EMAIL, ADMIN_PASSWORD, SESSION_SECRET
 
-# 3. Seed data
-node scripts/seed-mongo.js   # Creates admin user in MongoDB
-node scripts/seed.js         # Seeds flat-file demo data
-
-# 4. Start dev server
+# 3. Khởi động dev server
 npm run dev
 # → http://localhost:3000
 # → Admin: http://localhost:3000/admin-login
+
+# 4. Seed dữ liệu ban đầu (chỉ dùng lần đầu với DB trống)
+node scripts/seed-mongo.js        # Tạo tài khoản admin trong MongoDB
+npx tsx scripts/seed-investment-plans.ts  # Seed các gói đầu tư mẫu
 ```
 
 ---
 
-## Deploy to Ubuntu VPS
+## Database Migration
 
-### Prerequisites
-- Ubuntu 22.04 LTS (or 24.04)
-- Root SSH access
-- Domain A record pointing to VPS IP
-
-### Step 1 — VPS Setup (run once as root)
+Script migration idempotent — tạo MongoDB indexes và backfill giá trị mặc định cho documents cũ.
 
 ```bash
-ssh root@YOUR_VPS_IP
-git clone <repo-url> /var/www/fortress/app
-cd /var/www/fortress/app
-
-# Installs Node.js 20, MongoDB 7, Nginx, Certbot, UFW, Fail2Ban, PM2
-sudo bash scripts/setup.sh
+# Yêu cầu .env.local với MONGODB_URI
+npm run migrate
 ```
 
-### Step 2 — Configure Environment
+| Collection | Indexes | Fields backfill |
+|---|---|---|
+| `shareholders` | `email` (unique), `status` | — |
+| `shareholdermessages` | `channel`, `createdAt` | `isAdminSender`, `readBy`, `senderName` |
+| `shareholdertasks` | `assignedTo`, `status` | `status`, `priority`, `assignedRoles` |
+| `shareholdermeetings` | `scheduledAt` | `invitedRoles`, `attendees`, `roomUrl` |
+| `auditlogs` | `actor.id`, `createdAt` (TTL 90d) | — |
+
+---
+
+## Deploy (Ubuntu VPS)
 
 ```bash
+# Rolling update (zero-downtime)
 cd /var/www/fortress/app
+git pull
+bash scripts/deploy.sh     # npm ci → build → pm2 reload
+```
+
+### Cấu hình môi trường production
+
+```bash
 cp .env.example .env.local
 nano .env.local
-
-# Required values:
-#   MONGODB_URI=mongodb://127.0.0.1:27017/fortress_db
-#   ADMIN_EMAIL=admin@yourdomain.com
-#   ADMIN_PASSWORD=<strong_password_min_12_chars>
-#   SESSION_SECRET=$(openssl rand -hex 32)
-#   NEXT_PUBLIC_APP_URL=https://yourdomain.com
+# MONGODB_URI=mongodb://127.0.0.1:27017/fortress_db
+# ADMIN_EMAIL=admin@yourdomain.com
+# ADMIN_PASSWORD=<strong_min_12_chars>
+# SESSION_SECRET=$(openssl rand -hex 32)
+# NEXT_PUBLIC_APP_URL=https://yourdomain.com
+# GEMINI_API_KEY=AIza...
 ```
 
-### Step 3 — Validate & First Deploy
-
-```bash
-bash scripts/check-env.sh          # Validate all required vars
-
-export DOMAIN=yourdomain.com
-bash scripts/first-deploy.sh       # Build → seed → Nginx → PM2
-```
-
-### Step 4 — SSL Certificate
-
-```bash
-bash scripts/ssl-setup.sh yourdomain.com
-```
-
-### Step 5 — Verify
+### Xác minh sau deploy
 
 ```bash
 pm2 status
-curl -I https://yourdomain.com     # HTTP 200
+curl -I https://yourdomain.com   # HTTP 200
+bash scripts/check-env.sh        # Kiểm tra tất cả env vars
 ```
 
 ---
 
-## Rolling Updates (Zero-Downtime)
+## PM2
 
 ```bash
-cd /var/www/fortress/app
-git pull
-bash scripts/deploy.sh            # npm ci → build → pm2 reload
+pm2 status
+pm2 logs fortress-website --lines 100
+pm2 reload fortress-website --update-env   # zero-downtime reload
+pm2 restart fortress-website               # hard restart
+pm2 save && pm2 startup                    # persist across reboots
 ```
 
 ---
@@ -99,11 +97,11 @@ bash scripts/deploy.sh            # npm ci → build → pm2 reload
 ## Backup & Restore
 
 ```bash
-# Manual backup
+# Backup thủ công
 bash scripts/backup.sh
 # → /var/backups/fortress/fortress_YYYYMMDD_HHMMSS.gz
 
-# Install automatic daily backup at 02:00
+# Backup tự động hằng ngày lúc 02:00
 (crontab -l; echo "0 2 * * * /var/www/fortress/app/scripts/backup.sh >> /var/log/fortress-backup.log 2>&1") | crontab -
 
 # Restore
@@ -113,188 +111,177 @@ mongorestore --uri="mongodb://127.0.0.1:27017" \
 
 ---
 
-## PM2 Commands
-
-```bash
-pm2 status
-pm2 logs fortress-website --lines 100
-pm2 monit
-pm2 reload fortress-website --update-env   # zero-downtime reload
-pm2 restart fortress-website               # hard restart
-pm2 save && pm2 startup                    # persist across reboots
-```
-
----
-
-## Security Architecture
-
-### Session Cookies
-- **Format:** `base64url(JSON{id,email,exp})` + `.` + `HMAC-SHA256(payload, SESSION_SECRET)`
-- **httpOnly** + **secure** + **sameSite=strict** (production)
-- **8-hour expiry** embedded in signed payload — cannot be forged
-- **Constant-time comparison** prevents timing attacks
-- **On logout:** cookie is explicitly expired (maxAge=0, expires=epoch)
-
-### CSRF Protection
-All admin API mutations (`POST/PUT/PATCH/DELETE` on `/api/admin/*`) require:
-1. A `csrf_token` cookie (set by `GET /api/csrf`)
-2. A matching `x-csrf-token` request header
-
-The double-submit pattern means a cross-origin attacker cannot forge the header even if they can trigger the cookie.
-
-The admin frontend must:
-```js
-// 1. On mount — fetch and store CSRF token
-const { token } = await fetch('/api/csrf').then(r => r.json());
-
-// 2. Include on all mutating requests
-fetch('/api/admin/...', {
-  method: 'POST',
-  headers: { 'x-csrf-token': token, 'Content-Type': 'application/json' },
-  body: JSON.stringify(data),
-});
-```
-
-### Rate Limiting
-| Endpoint | Limit | Window | Lockout |
-|----------|-------|--------|---------|
-| `/api/admin-login` | 5 attempts | 1 min | Progressive (doubles each violation, max 24h) |
-| `/api/contact` | 5 submissions | 5 min | Progressive |
-| `/api/partner-submit` | 3 submissions | 10 min | Progressive |
-| `/api/enquiries` (POST) | 5 submissions | 1 min | Progressive |
-
-Rate-limit keys are cleared on successful login to avoid locking out legitimate users.
-
-### Input Sanitization
-All user-submitted strings are sanitized before Zod validation and DB writes:
-- `sanitizeText()` — strips HTML tags, null bytes, control characters
-- `sanitizeEmail()` — lowercases, removes non-email characters
-- `sanitizeMessage()` — strips `<script>` blocks, null bytes
-
-### Response Headers (every route)
-Set by Next.js config and middleware:
-
-| Header | Value |
-|--------|-------|
-| `Content-Security-Policy` | Strict CSP; no inline eval; external scripts allowlisted |
-| `X-Frame-Options` | `SAMEORIGIN` |
-| `X-Content-Type-Options` | `nosniff` |
-| `X-XSS-Protection` | `1; mode=block` |
-| `Referrer-Policy` | `strict-origin-when-cross-origin` |
-| `Permissions-Policy` | `camera=(), microphone=(), geolocation=()` |
-| `Strict-Transport-Security` | Set by Nginx (`max-age=63072000; includeSubDomains; preload`) |
-
-### Error Messages
-`handleError()` in [`src/utils/errors.ts`](src/utils/errors.ts) normalises all thrown errors:
-- `AppError` subclasses: intentional messages pass through
-- Mongoose `ValidationError`: field-level messages extracted, returned as 422
-- Mongoose duplicate key: safe "Duplicate entry" message
-- Unknown errors: logged server-side, client receives generic 500 (no stack trace leak)
-
----
-
 ## Admin Panel
 
-| URL | Description |
-|-----|-------------|
-| `/admin-login` | Login page |
-| `/admin` | Dashboard |
-| `/admin/blog` | Blog post management |
-| `/admin/content` | Page content management |
-| `/admin/enquiries` | Contact & submission inbox |
-| `/admin/settings` | Site settings, social links |
+| URL | Quyền | Mô tả |
+|-----|-------|-------|
+| `/admin-login` | Public | Đăng nhập admin |
+| `/admin` | Admin | Dashboard — stats & activity |
+| `/admin/blog` | Admin | Quản lý bài viết (AI assist) |
+| `/admin/content` | Admin | Quản lý nội dung trang (AI assist) |
+| `/admin/documents` | Admin | Tài liệu quản trị (AI assist) |
+| `/admin/investment-plans` | Admin | Gói đầu tư (AI điền nội dung VI/EN) |
+| `/admin/shareholders` | Admin | Cổ đông + nhiệm vụ + họp + tin nhắn (AI assist) |
+| `/admin/enquiries` | Admin | Hộp thư liên hệ & đề xuất |
+| `/admin/calls` | Admin | Quản lý URL phòng họp |
+| `/admin/settings` | **Superadmin** | Cài đặt hệ thống, footer, newsletter (AI assist) |
+| `/admin/admins` | **Superadmin** | Quản lý tài khoản admin |
+| `/admin/audit-log` | **Superadmin** | Nhật ký hoạt động hệ thống |
 
-Admin credentials are set via `ADMIN_EMAIL` / `ADMIN_PASSWORD` in `.env.local`.
-The admin user is auto-created on first DB connection if no admin exists.
+### Shareholder Portal
+
+| URL | Mô tả |
+|-----|-------|
+| `/shareholders/login` | Đăng nhập cổ đông |
+| `/shareholders/dashboard` | Portal: nhiệm vụ, họp, nhắn tin realtime (SSE) |
 
 ---
 
 ## Environment Variables
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `NODE_ENV` | ✅ | `production` or `development` |
-| `NEXT_PUBLIC_APP_URL` | ✅ | Full URL e.g. `https://fortressih.com` |
+| Biến | Bắt buộc | Mô tả |
+|------|----------|-------|
+| `NODE_ENV` | ✅ | `production` hoặc `development` |
+| `NEXT_PUBLIC_APP_URL` | ✅ | URL đầy đủ e.g. `https://fortressih.com` |
 | `MONGODB_URI` | ✅ | MongoDB connection string |
-| `ADMIN_EMAIL` | ✅ | Admin email (seed + fallback auth) |
-| `ADMIN_PASSWORD` | ✅ | Admin password (min 12 chars) |
-| `SESSION_SECRET` | ✅ | 32+ char hex for signing cookies — `openssl rand -hex 32` |
+| `ADMIN_EMAIL` | ✅ | Email admin (seed + fallback auth) |
+| `ADMIN_PASSWORD` | ✅ | Mật khẩu admin (tối thiểu 12 ký tự) |
+| `SESSION_SECRET` | ✅ | 32+ hex chars — `openssl rand -hex 32` |
+| `GEMINI_API_KEY` | ✅ | Google AI Studio API key (AI assistant) |
 | `SMTP_HOST` | ⭕ | SMTP host e.g. `smtp.gmail.com` |
 | `SMTP_USER` | ⭕ | SMTP username |
 | `SMTP_PASS` | ⭕ | SMTP password / app password |
-| `SMTP_FROM` | ⭕ | From address for outgoing emails |
+| `SMTP_FROM` | ⭕ | From address cho email gửi đi |
 | `CLOUDINARY_CLOUD_NAME` | ⭕ | Cloudinary cloud name |
 | `CLOUDINARY_API_KEY` | ⭕ | Cloudinary API key |
 | `CLOUDINARY_API_SECRET` | ⭕ | Cloudinary API secret |
-| `BACKUP_RETENTION_DAYS` | ⭕ | Days to retain backups (default: 30) |
+| `WHATSAPP_VERIFY_TOKEN` | ⭕ | Webhook verify token (WhatsApp Business) |
+| `WHATSAPP_ACCESS_TOKEN` | ⭕ | Meta permanent access token |
+| `WHATSAPP_PHONE_NUMBER_ID` | ⭕ | Phone Number ID từ Meta dashboard |
+| `NEXT_PUBLIC_GOOGLE_ANALYTICS_ID` | ⭕ | GA4 measurement ID |
+| `NEXT_PUBLIC_META_PIXEL_ID` | ⭕ | Meta Pixel ID |
+| `BACKUP_RETENTION_DAYS` | ⭕ | Số ngày giữ backup (mặc định: 30) |
 
 ---
 
-## Project Structure
+## Security
+
+### Session
+- **Format:** `base64url(JSON{id,email,exp})` + `.` + `HMAC-SHA256(payload, SESSION_SECRET)`
+- `httpOnly` + `secure` + `sameSite=strict` (production)
+- Hết hạn 8 giờ, nhúng trong payload đã ký — không thể giả mạo
+- So sánh constant-time chống timing attack
+
+### CSRF
+Tất cả mutation admin (`POST/PUT/PATCH/DELETE /api/admin/*`) yêu cầu:
+1. Cookie `csrf_token` (set bởi `GET /api/csrf`)
+2. Header `x-csrf-token` khớp
+
+Double-submit pattern: kẻ tấn công cross-origin không thể giả mạo header dù trigger được cookie.
+
+### Rate Limiting
+| Endpoint | Giới hạn | Cửa sổ |
+|----------|---------|--------|
+| `/api/admin-login` | 5 lần | 1 phút (per IP + per user) |
+| `/api/contact` | 5 lần | 5 phút |
+| `/api/partner-submit` | 3 lần | 10 phút |
+| `/api/shareholders/messages/sse` | 20 kết nối | 60 giây |
+
+### Security Headers (mọi route)
+`X-Frame-Options: SAMEORIGIN` · `X-Content-Type-Options: nosniff` · `X-XSS-Protection: 1; mode=block` · `Referrer-Policy: strict-origin-when-cross-origin` · `Permissions-Policy: camera=(), microphone=(), geolocation=()` · `HSTS` (qua Nginx)
+
+---
+
+## Cấu Trúc Dự Án
 
 ```
 .
 ├── src/
 │   ├── app/
 │   │   ├── api/
-│   │   │   ├── admin-login/      POST  — login with rate-limit + lockout
-│   │   │   ├── admin-logout/     POST  — clears session cookie
-│   │   │   ├── admin-session/    GET   — check current session
-│   │   │   ├── csrf/             GET   — issue CSRF token
-│   │   │   ├── admin/            Admin CRUD routes (CSRF-protected)
-│   │   │   ├── contact/          POST  — public contact form (sanitized)
-│   │   │   ├── partner-submit/   POST  — investment proposal form
-│   │   │   └── ...
-│   │   ├── admin/                Admin panel pages (session-protected)
-│   │   └── admin-login/          Login page
+│   │   │   ├── admin-login/          POST — đăng nhập + rate limit
+│   │   │   ├── admin-logout/         POST — xóa session cookie
+│   │   │   ├── csrf/                 GET  — cấp CSRF token
+│   │   │   ├── admin/                CRUD routes (CSRF-protected)
+│   │   │   │   ├── admins/           Quản lý tài khoản admin (superadmin)
+│   │   │   │   ├── audit-log/        Nhật ký hệ thống (superadmin)
+│   │   │   │   ├── ai/               AI content generation (Gemini)
+│   │   │   │   ├── shareholders/     CRUD cổ đông
+│   │   │   │   ├── shareholder-ops/  Tasks, meetings, messages
+│   │   │   │   ├── events/sse/       SSE push cho admin
+│   │   │   │   ├── investment-plans/ Gói đầu tư
+│   │   │   │   ├── articles/         Blog
+│   │   │   │   ├── documents/        Tài liệu quản trị
+│   │   │   │   ├── enquiries/        Hộp thư
+│   │   │   │   ├── settings/         Cài đặt site (superadmin)
+│   │   │   │   ├── content/          CMS pages
+│   │   │   │   └── upload/           Cloudinary upload
+│   │   │   ├── shareholders/
+│   │   │   │   ├── auth/             Đăng nhập / session cổ đông
+│   │   │   │   ├── messages/         Chat (GET + POST + SSE)
+│   │   │   │   ├── tasks/            Nhiệm vụ
+│   │   │   │   └── meetings/         Lịch họp
+│   │   │   └── ...                   Public routes (contact, blog, plans…)
+│   │   ├── admin/                    Trang admin (session-protected)
+│   │   └── shareholders/             Shareholder portal
+│   ├── components/
+│   │   └── AiAssistPanel.tsx         AI content assistant (Gemini)
 │   ├── lib/
-│   │   ├── session.ts            HMAC-signed cookie session
-│   │   ├── csrf.ts               CSRF double-submit token
-│   │   ├── auth-utils.ts         getCurrentUser, requireAuth
-│   │   ├── db.ts                 MongoDB connection + admin seed
-│   │   └── email.ts              Nodemailer wrapper
+│   │   ├── session.ts                HMAC-signed cookie session
+│   │   ├── sh-session.ts             Shareholder session token
+│   │   ├── csrf.ts                   CSRF double-submit token
+│   │   ├── auth-utils.ts             getCurrentUser, requireAuth
+│   │   ├── sse-broker.ts             In-memory SSE pub/sub
+│   │   ├── channel-roles.ts          Phân quyền SSE channels
+│   │   └── db.ts                     MongoDB connection
+│   ├── models/                       Mongoose models
+│   ├── services/                     Business logic layer
+│   ├── types/                        TypeScript interfaces dùng chung
 │   ├── utils/
-│   │   ├── rate-limit.ts         Progressive lockout rate limiter
-│   │   ├── sanitize.ts           Input sanitization (HTML strip)
-│   │   ├── errors.ts             Safe error normalisation
-│   │   ├── api-response.ts       Typed response helpers
-│   │   └── cloudinary.ts         Upload/delete helpers
-│   ├── models/                   Mongoose models
-│   ├── services/                 Business logic
-│   └── validators/               Zod schemas
-├── middleware.ts                 Edge: session guard + CSRF check + security headers
+│   │   ├── api-response.ts           Typed response helpers
+│   │   ├── errors.ts                 Safe error normalisation
+│   │   ├── sanitize.ts               HTML sanitizer + escapeRegex
+│   │   ├── paginate.ts               Cursor-based pagination
+│   │   └── rate-limit.ts             Progressive lockout
+│   └── validators/                   Zod schemas (tiếng Việt messages)
+├── middleware.ts                     Edge: auth guard + CSRF + security headers
 ├── scripts/
-│   ├── setup.sh                  Ubuntu VPS one-time setup (as root)
-│   ├── first-deploy.sh           First deploy: build + seed + Nginx + PM2
-│   ├── deploy.sh                 Rolling update (zero-downtime)
-│   ├── backup.sh                 mongodump with rotation
-│   ├── ssl-setup.sh              certbot SSL + auto-renewal cron
-│   ├── check-env.sh              Validate env vars before deploy
-│   ├── seed-mongo.js             MongoDB admin seed
-│   └── seed.js                   Flat-file demo seed
-├── ecosystem.config.js           PM2 cluster config
-├── nginx.conf.example            Nginx reverse-proxy + SSL template
-├── next.config.ts                Output: standalone; CSP; security headers
-└── middleware.ts                 Edge: auth guard + CSRF + response headers
+│   ├── deploy.sh                     Rolling update (npm ci → build → pm2 reload)
+│   ├── deploy-langding.sh            Full deploy script
+│   ├── backup.sh                     mongodump với rotation
+│   ├── check-env.sh                  Kiểm tra env vars trước deploy
+│   ├── migrate.ts                    MongoDB indexes + backfill
+│   ├── seed-mongo.js                 Seed tài khoản admin ban đầu
+│   └── seed-investment-plans.ts      Seed gói đầu tư mẫu
+├── ecosystem.config.js               PM2 cluster config
+├── nginx.conf.langding               Nginx reverse-proxy + SSL template
+└── next.config.ts                    Standalone output; CSP; security headers
 ```
-
----
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Framework | Next.js 15 (App Router, standalone output) |
-| Language | TypeScript |
-| Database | MongoDB 7 + Mongoose |
+| Lớp | Công nghệ |
+|-----|----------|
+| Framework | Next.js 16 (App Router, standalone) |
+| Ngôn ngữ | TypeScript 7 |
+| Database | MongoDB 9 + Mongoose |
 | Styling | Tailwind CSS 4 + Framer Motion + GSAP |
 | Auth | HMAC-SHA256 signed httpOnly cookies |
 | CSRF | Double-submit signed token |
+| Realtime | Server-Sent Events (SSE) — in-memory pub/sub |
+| AI | Google Gemini 2.0-flash (content generation) |
 | Rate Limiting | In-process progressive lockout |
-| Input Safety | Custom HTML/script sanitizer (defence-in-depth) |
+| Input Safety | Custom HTML sanitizer + Zod validation |
 | Media | Cloudinary |
-| Email | Nodemailer (Gmail SMTP) |
-| Validation | Zod |
+| Email | Nodemailer (SMTP) |
+| Validation | Zod 4 (messages tiếng Việt) |
 | Process Mgr | PM2 (cluster mode) |
-| Web Server | Nginx (TLS 1.3, OCSP stapling, HSTS) |
-| SSL | Let's Encrypt / Certbot |
+| Web Server | Nginx (TLS 1.3, HSTS) |
+
+---
+
+## License
+
+This project is proprietary and confidential. Unauthorized copying, distribution, or use is strictly prohibited.
+
+
