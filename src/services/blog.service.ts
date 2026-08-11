@@ -106,6 +106,14 @@ export async function getBlogBySlug(slug: string) {
   return post;
 }
 
+/** Public endpoint — only returns published posts */
+export async function getPublicBySlug(slug: string) {
+  await connectDB();
+  const post = await Blog.findOne({ slug, status: "published" }).lean();
+  if (!post) throw new NotFoundError("Blog post not found");
+  return post;
+}
+
 export async function createBlog(data: BlogInput) {
   await connectDB();
   const post = await Blog.create(data);
@@ -155,4 +163,16 @@ export async function unpublishBlog(slug: string) {
 export async function getBlogCategories() {
   await connectDB();
   return Blog.distinct("category");
+}
+
+/** Related posts — same category, excluding current slug, max 3 */
+export async function getRelated(slug: string, category: string, limit = 3) {
+  await connectDB();
+  return Blog.find(
+    { status: "published", category, slug: { $ne: slug } },
+    { slug: 1, title: 1, excerpt: 1, featuredImage: 1, createdAt: 1 }
+  )
+    .sort({ createdAt: -1 })
+    .limit(limit)
+    .lean();
 }

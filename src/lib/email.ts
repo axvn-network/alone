@@ -22,7 +22,7 @@ export async function sendEmail(options: {
   }
 
   await transporter.sendMail({
-    from: options.from || process.env.SMTP_FROM || "noreply@fortressih.com",
+    from: options.from || process.env.SMTP_FROM || "noreply@gvitech.vn",
     to: options.to,
     subject: options.subject,
     html: options.html,
@@ -38,7 +38,7 @@ export async function sendEnquiryNotification(data: {
   subject: string;
   message: string;
 }) {
-  const adminEmail = process.env.ADMIN_EMAIL || "admin@fortressih.com";
+  const adminEmail = process.env.ADMIN_EMAIL || "admin@gvitech.vn";
 
   await sendEmail({
     to: adminEmail,

@@ -151,7 +151,7 @@ export default function AiAssistPanel({
           <p className="text-[10px] font-semibold text-purple-400/70 uppercase tracking-wider mb-1.5">Chọn tác vụ</p>
           <button
             onClick={() => setShowActions(!showActions)}
-            className="w-full flex items-center justify-between gap-2 px-3 py-2.5 bg-white/5 border border-white/10 hover:border-purple-500/40 rounded-xl text-sm text-fortress-ivory transition-colors"
+            className="w-full flex items-center justify-between gap-2 px-3 py-2.5 bg-white/5 border border-white/10 hover:border-purple-500/40 rounded-xl text-sm text-gvi-ivory transition-colors"
           >
             <span className="flex items-center gap-2">
               <span>{selectedAction.icon}</span>
@@ -166,7 +166,7 @@ export default function AiAssistPanel({
                   key={a.key}
                   onClick={() => { setSelectedAction(a); setShowActions(false); setResult(""); }}
                   className={`w-full flex items-center gap-2.5 px-3 py-2.5 text-sm transition-colors hover:bg-white/5 ${
-                    selectedAction.key === a.key ? "bg-purple-500/10 text-purple-300" : "text-fortress-silver/80"
+                    selectedAction.key === a.key ? "bg-purple-500/10 text-purple-300" : "text-gvi-silver/80"
                   }`}
                 >
                   <span className="text-base">{a.icon}</span>
@@ -186,7 +186,7 @@ export default function AiAssistPanel({
               onChange={(e) => setCustomPrompt(e.target.value)}
               placeholder="Nhập yêu cầu của bạn..."
               rows={3}
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-fortress-ivory placeholder:text-fortress-silver/30 focus:outline-none focus:border-purple-500/50 resize-none"
+              className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-gvi-ivory placeholder:text-gvi-silver/30 focus:outline-none focus:border-purple-500/50 resize-none"
             />
           </div>
         )}
@@ -233,7 +233,7 @@ export default function AiAssistPanel({
               </div>
             </div>
             <div className="bg-white/5 border border-purple-500/20 rounded-xl p-3 max-h-48 overflow-y-auto">
-              <p className="text-xs text-fortress-silver/90 leading-relaxed whitespace-pre-wrap">{result}</p>
+              <p className="text-xs text-gvi-silver/90 leading-relaxed whitespace-pre-wrap">{result}</p>
             </div>
             <button
               onClick={handleApply}

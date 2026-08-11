@@ -3,6 +3,8 @@ import Blog from "@/models/Blog";
 import Enquiry from "@/models/Enquiry";
 import Shareholder from "@/models/Shareholder";
 import InvestmentPlan from "@/models/InvestmentPlan";
+import ShareholderTask from "@/models/ShareholderTask";
+import ShareholderMeeting from "@/models/ShareholderMeeting";
 
 export interface ActivityItem {
   id: string;
@@ -103,4 +105,49 @@ export async function getBlogStats(): Promise<BlogStatsResult> {
   ]);
 
   return { total, published, drafts, categories };
+}
+
+/** Stats cho cổ đông portal dashboard */
+export interface ShareholderDashboardStats {
+  totalTasks: number;
+  doneTasks: number;
+  inProgressTasks: number;
+  blockedTasks: number;
+  upcomingMeetings: number;
+  unreadMessages: number;
+}
+
+export async function getShareholderDashboardStats(
+  shareholderId: string,
+  role: string
+): Promise<ShareholderDashboardStats> {
+  await connectDB();
+  const { Types } = await import("mongoose");
+  const shId = new Types.ObjectId(shareholderId);
+
+  const taskFilter = {
+    $or: [
+      { assignedTo: shId },
+      { assignedRoles: role },
+      { assignedRoles: { $size: 0 } },
+    ],
+  };
+
+  const [totalTasks, doneTasks, inProgressTasks, blockedTasks, upcomingMeetings, unreadMessages] =
+    await Promise.all([
+      ShareholderTask.countDocuments(taskFilter),
+      ShareholderTask.countDocuments({ ...taskFilter, status: "done" }),
+      ShareholderTask.countDocuments({ ...taskFilter, status: "in_progress" }),
+      ShareholderTask.countDocuments({ ...taskFilter, status: "blocked" }),
+      ShareholderMeeting.countDocuments({
+        $or: [{ invitedRoles: role }, { invitedRoles: { $size: 0 } }, { attendees: shId }],
+        status: "scheduled",
+      }),
+      // Đếm tin nhắn chưa đọc
+      (await import("@/models/ShareholderMessage")).default.countDocuments({
+        readBy: { $ne: shId },
+      }),
+    ]);
+
+  return { totalTasks, doneTasks, inProgressTasks, blockedTasks, upcomingMeetings, unreadMessages };
 }

@@ -27,22 +27,22 @@ export default function LanguageSwitcher({ variant = "pills" }: LanguageSwitcher
         <span
           className={`relative inline-grid grid-cols-2 h-[26px] w-[54px] rounded-full border overflow-hidden transition-colors duration-300 ${
             isVI
-              ? "bg-fortress-gold/15 border-fortress-gold/50"
+              ? "bg-gvi-gold/15 border-gvi-gold/50"
               : "bg-white/10 border-white/20"
           }`}
         >
           {/* Thumb — trượt trái/phải */}
           <span
             className={`absolute inset-y-[2px] w-[25px] rounded-full shadow-sm transition-all duration-300 z-10 ${
-              isVI ? "left-[2px] bg-fortress-gold" : "left-[27px] bg-white/80"
+              isVI ? "left-[2px] bg-gvi-gold" : "left-[27px] bg-white/80"
             }`}
           />
           {/* Chữ VI — ô trái */}
-          <span className={`relative z-20 flex items-center justify-center text-[9px] font-bold tracking-wide transition-colors duration-200 ${isVI ? "text-fortress-navy" : "text-white/35"}`}>
+          <span className={`relative z-20 flex items-center justify-center text-[9px] font-bold tracking-wide transition-colors duration-200 ${isVI ? "text-gvi-navy" : "text-white/35"}`}>
             VI
           </span>
           {/* Chữ EN — ô phải */}
-          <span className={`relative z-20 flex items-center justify-center text-[9px] font-bold tracking-wide transition-colors duration-200 ${!isVI ? "text-fortress-navy" : "text-white/35"}`}>
+          <span className={`relative z-20 flex items-center justify-center text-[9px] font-bold tracking-wide transition-colors duration-200 ${!isVI ? "text-gvi-navy" : "text-white/35"}`}>
             EN
           </span>
         </span>
@@ -57,7 +57,7 @@ export default function LanguageSwitcher({ variant = "pills" }: LanguageSwitcher
         onClick={() => setLang("vi")}
         className={`px-2.5 py-0.5 rounded-full text-[11px] font-bold tracking-wide transition-colors ${
           isVI
-            ? "bg-fortress-gold text-fortress-navy"
+            ? "bg-gvi-gold text-gvi-navy"
             : "text-white/50 hover:text-white"
         }`}
       >
@@ -67,7 +67,7 @@ export default function LanguageSwitcher({ variant = "pills" }: LanguageSwitcher
         onClick={() => setLang("en")}
         className={`px-2.5 py-0.5 rounded-full text-[11px] font-bold tracking-wide transition-colors ${
           !isVI
-            ? "bg-fortress-gold text-fortress-navy"
+            ? "bg-gvi-gold text-gvi-navy"
             : "text-white/50 hover:text-white"
         }`}
       >

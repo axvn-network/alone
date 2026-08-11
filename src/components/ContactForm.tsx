@@ -34,30 +34,30 @@ export default function ContactForm() {
   if (submitted) {
     return (
       <div className="text-center py-16 px-4">
-        <div className="w-20 h-20 bg-fortress-gold/10 border border-fortress-gold/20 flex items-center justify-center mx-auto mb-6 rounded-full">
-          <CheckCircle2 className="w-10 h-10 text-fortress-gold" />
+        <div className="w-20 h-20 bg-gvi-gold/10 border border-gvi-gold/20 flex items-center justify-center mx-auto mb-6 rounded-full">
+          <CheckCircle2 className="w-10 h-10 text-gvi-gold" />
         </div>
         <h3
-          className="font-semibold text-fortress-navy mb-3 uppercase tracking-[0.06em]"
+          className="font-semibold text-gvi-navy mb-3 uppercase tracking-[0.06em]"
           style={{ fontSize: "var(--text-h3)" }}
         >
           Yêu Cầu Đã Được Gửi Thành Công
         </h3>
-        <p className="text-fortress-navy/60 max-w-md mx-auto leading-[1.8]" style={{ fontSize: "var(--text-body)" }}>
-          Cảm ơn quý vị đã liên hệ với Fortress. Đội ngũ chuyên gia của chúng tôi sẽ phản hồi trong vòng 1–2 ngày làm việc.
+        <p className="text-gvi-navy/60 max-w-md mx-auto leading-[1.8]" style={{ fontSize: "var(--text-body)" }}>
+          Cảm ơn quý vị đã liên hệ với GVI Tech Holding. Đội ngũ chuyên gia của chúng tôi sẽ phản hồi trong vòng 1–2 ngày làm việc.
         </p>
       </div>
     );
   }
 
-  const inputCls = "w-full px-4 md:px-5 py-3 md:py-3.5 bg-white border border-fortress-navy/15 text-fortress-navy placeholder:text-fortress-navy/25 focus:outline-none focus-visible:outline-none focus:border-fortress-gold/60 focus:ring-1 focus:ring-fortress-gold/20 transition-colors";
-  const labelCls = "block text-fortress-navy/55 text-[11px] font-semibold uppercase tracking-[0.18em] mb-2";
+  const inputCls = "w-full px-4 md:px-5 py-3 md:py-3.5 bg-white border border-gvi-navy/15 text-gvi-navy placeholder:text-gvi-navy/25 focus:outline-none focus-visible:outline-none focus:border-gvi-gold/60 focus:ring-1 focus:ring-gvi-gold/20 transition-colors";
+  const labelCls = "block text-gvi-navy/55 text-[11px] font-semibold uppercase tracking-[0.18em] mb-2";
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5 md:space-y-6">
       <div className="grid sm:grid-cols-2 gap-4 md:gap-5">
         <div>
-          <label className={labelCls}>Họ và Tên <span className="text-fortress-gold">*</span></label>
+          <label className={labelCls}>Họ và Tên <span className="text-gvi-gold">*</span></label>
           <input
             type="text"
             name="name"
@@ -69,7 +69,7 @@ export default function ContactForm() {
           />
         </div>
         <div>
-          <label className={labelCls}>Địa Chỉ Email <span className="text-fortress-gold">*</span></label>
+          <label className={labelCls}>Địa Chỉ Email <span className="text-gvi-gold">*</span></label>
           <input
             type="email"
             name="email"
@@ -95,7 +95,7 @@ export default function ContactForm() {
           />
         </div>
         <div>
-          <label className={labelCls}>Chủ Đề Liên Hệ <span className="text-fortress-gold">*</span></label>
+          <label className={labelCls}>Chủ Đề Liên Hệ <span className="text-gvi-gold">*</span></label>
           <select
             name="subject"
             value={formData.subject}
@@ -114,7 +114,7 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label className={labelCls}>Nội Dung <span className="text-fortress-gold">*</span></label>
+        <label className={labelCls}>Nội Dung <span className="text-gvi-gold">*</span></label>
         <textarea
           name="message"
           value={formData.message}
@@ -128,7 +128,7 @@ export default function ContactForm() {
 
       <button
         type="submit"
-        className="w-full sm:w-auto px-9 md:px-11 py-3.5 md:py-4 bg-fortress-gold hover:bg-fortress-champagne active:scale-[0.98] text-fortress-navy font-bold text-xs tracking-[0.18em] uppercase transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-fortress-gold/15 focus-visible:outline-2 focus-visible:outline-fortress-gold focus-visible:outline-offset-2"
+        className="w-full sm:w-auto px-9 md:px-11 py-3.5 md:py-4 bg-gvi-gold hover:bg-gvi-champagne active:scale-[0.98] text-gvi-navy font-bold text-xs tracking-[0.18em] uppercase transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-gvi-gold/15 focus-visible:outline-2 focus-visible:outline-gvi-gold focus-visible:outline-offset-2"
       >
         <Send className="w-4 h-4" />
         Gửi Yêu Cầu Liên Hệ

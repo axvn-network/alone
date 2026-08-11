@@ -157,12 +157,12 @@ export default function InvestmentPlansAdmin() {
     setTab("basic");
   }
 
-  const inputCls = "w-full px-3 py-2.5 bg-fortress-navy border border-fortress-gold/20 text-fortress-ivory text-sm rounded-lg focus:outline-none focus:border-fortress-gold/50";
-  const labelCls = "block text-fortress-silver/70 text-xs mb-1.5";
+  const inputCls = "w-full px-3 py-2.5 bg-gvi-navy border border-gvi-gold/20 text-gvi-ivory text-sm rounded-lg focus:outline-none focus:border-gvi-gold/50";
+  const labelCls = "block text-gvi-silver/70 text-xs mb-1.5";
   const areaCls = `${inputCls} resize-none`;
 
   return (
-    <div className="min-h-screen bg-[#03080e] flex selection:bg-fortress-gold/20 font-sans">
+    <div className="min-h-screen bg-[#03080e] flex selection:bg-gvi-gold/20 font-sans">
       <AdminSidebar active="Investment Plans" />
       <main className="flex-1 overflow-y-auto min-h-screen">
         <AdminNavbar title="Hạng Mục Hợp Tác Đầu Tư" />
@@ -171,14 +171,14 @@ export default function InvestmentPlansAdmin() {
           {/* Header */}
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-fortress-ivory font-bold text-xl">Quản Lý Hạng Mục Hợp Tác</h1>
-              <p className="text-fortress-silver/60 text-xs mt-1">
+              <h1 className="text-gvi-ivory font-bold text-xl">Quản Lý Hạng Mục Hợp Tác</h1>
+              <p className="text-gvi-silver/60 text-xs mt-1">
                 {plans.filter((p) => p.status === "active").length} gói đang hoạt động · {plans.length} tổng cộng
               </p>
             </div>
             <button
               onClick={openNew}
-              className="flex items-center gap-2 px-4 py-2.5 bg-fortress-gold text-fortress-navy text-sm font-bold rounded-xl hover:bg-fortress-champagne transition-colors"
+              className="flex items-center gap-2 px-4 py-2.5 bg-gvi-gold text-gvi-navy text-sm font-bold rounded-xl hover:bg-gvi-champagne transition-colors"
             >
               <Plus className="w-4 h-4" />
               Thêm Gói Mới
@@ -187,12 +187,12 @@ export default function InvestmentPlansAdmin() {
 
           {/* Plans table */}
           {loading ? (
-            <div className="text-fortress-silver text-center py-20">Đang tải...</div>
+            <div className="text-gvi-silver text-center py-20">Đang tải...</div>
           ) : (
-            <div className="bg-fortress-navy border border-fortress-gold/10 rounded-2xl overflow-hidden">
+            <div className="bg-gvi-navy border border-gvi-gold/10 rounded-2xl overflow-hidden">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-fortress-gold/10 text-fortress-silver/60 text-[11px] uppercase tracking-widest">
+                  <tr className="border-b border-gvi-gold/10 text-gvi-silver/60 text-[11px] uppercase tracking-widest">
                     <th className="text-left p-4">Gói</th>
                     <th className="text-left p-4 hidden md:table-cell">Tối thiểu</th>
                     <th className="text-left p-4 hidden lg:table-cell">Cổ phần</th>
@@ -202,18 +202,18 @@ export default function InvestmentPlansAdmin() {
                 </thead>
                 <tbody>
                   {plans.map((plan) => (
-                    <tr key={plan._id} className="border-b border-fortress-gold/5 hover:bg-fortress-deep/30 transition-colors">
+                    <tr key={plan._id} className="border-b border-gvi-gold/5 hover:bg-gvi-deep/30 transition-colors">
                       <td className="p-4">
                         <div className="flex items-center gap-2">
-                          {plan.highlighted && <Star className="w-3 h-3 text-fortress-gold shrink-0" />}
+                          {plan.highlighted && <Star className="w-3 h-3 text-gvi-gold shrink-0" />}
                           <div>
-                            <p className="font-medium text-fortress-ivory text-sm">{plan.name}</p>
-                            <p className="text-fortress-silver/50 text-[11px] font-mono">{TIER_LABELS[plan.tier] || plan.tier}</p>
+                            <p className="font-medium text-gvi-ivory text-sm">{plan.name}</p>
+                            <p className="text-gvi-silver/50 text-[11px] font-mono">{TIER_LABELS[plan.tier] || plan.tier}</p>
                           </div>
                         </div>
                       </td>
-                      <td className="p-4 hidden md:table-cell text-fortress-silver text-xs">{formatVND(plan.minCommitment)} VNĐ</td>
-                      <td className="p-4 hidden lg:table-cell text-fortress-silver text-xs">{plan.equityRange}</td>
+                      <td className="p-4 hidden md:table-cell text-gvi-silver text-xs">{formatVND(plan.minCommitment)} VNĐ</td>
+                      <td className="p-4 hidden lg:table-cell text-gvi-silver text-xs">{plan.equityRange}</td>
                       <td className="p-4">
                         <span className={`px-2 py-1 text-[10px] font-semibold rounded-full border ${STATUS_STYLES[plan.status]}`}>
                           {plan.status === "active" ? "Hoạt động" : plan.status === "draft" ? "Nháp" : "Đóng"}
@@ -223,21 +223,21 @@ export default function InvestmentPlansAdmin() {
                         <div className="flex items-center justify-end gap-1">
                           <button
                             onClick={() => toggleStatus(plan)}
-                            className="p-2 text-fortress-silver/60 hover:text-fortress-champagne transition-colors rounded-lg hover:bg-fortress-charcoal"
+                            className="p-2 text-gvi-silver/60 hover:text-gvi-champagne transition-colors rounded-lg hover:bg-gvi-charcoal"
                             title={plan.status === "active" ? "Ẩn gói" : "Kích hoạt"}
                           >
                             {plan.status === "active" ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                           </button>
                           <button
                             onClick={() => openEdit(plan)}
-                            className="p-2 text-fortress-silver/60 hover:text-fortress-champagne transition-colors rounded-lg hover:bg-fortress-charcoal"
+                            className="p-2 text-gvi-silver/60 hover:text-gvi-champagne transition-colors rounded-lg hover:bg-gvi-charcoal"
                             title="Chỉnh sửa"
                           >
                             <Pencil className="w-4 h-4" />
                           </button>
                           <button
                             onClick={() => handleDelete(plan._id, plan.name)}
-                            className="p-2 text-fortress-silver/60 hover:text-red-400 transition-colors rounded-lg hover:bg-fortress-charcoal"
+                            className="p-2 text-gvi-silver/60 hover:text-red-400 transition-colors rounded-lg hover:bg-gvi-charcoal"
                             title="Xóa"
                           >
                             <Trash2 className="w-4 h-4" />
@@ -247,7 +247,7 @@ export default function InvestmentPlansAdmin() {
                     </tr>
                   ))}
                   {plans.length === 0 && (
-                    <tr><td colSpan={5} className="text-center py-16 text-fortress-silver/40">Chưa có gói nào. Nhấn &quot;Thêm Gói Mới&quot; để bắt đầu.</td></tr>
+                    <tr><td colSpan={5} className="text-center py-16 text-gvi-silver/40">Chưa có gói nào. Nhấn &quot;Thêm Gói Mới&quot; để bắt đầu.</td></tr>
                   )}
                 </tbody>
               </table>
@@ -259,15 +259,15 @@ export default function InvestmentPlansAdmin() {
       {/* Edit / Create modal */}
       {editing && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
-          <div className="w-full max-w-3xl max-h-[95vh] overflow-hidden flex flex-col bg-[#07111D] border border-fortress-gold/20 rounded-2xl shadow-2xl">
+          <div className="w-full max-w-3xl max-h-[95vh] overflow-hidden flex flex-col bg-[#07111D] border border-gvi-gold/20 rounded-2xl shadow-2xl">
             {/* Modal header */}
-            <div className="flex items-center justify-between p-6 border-b border-fortress-gold/10 shrink-0">
-              <h2 className="text-fortress-ivory font-bold">{isNew ? "Thêm Gói Mới" : `Chỉnh sửa: ${editing.name}`}</h2>
-              <button onClick={() => setEditing(null)} className="w-8 h-8 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-fortress-silver hover:text-white transition-colors">✕</button>
+            <div className="flex items-center justify-between p-6 border-b border-gvi-gold/10 shrink-0">
+              <h2 className="text-gvi-ivory font-bold">{isNew ? "Thêm Gói Mới" : `Chỉnh sửa: ${editing.name}`}</h2>
+              <button onClick={() => setEditing(null)} className="w-8 h-8 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-gvi-silver hover:text-white transition-colors">✕</button>
             </div>
 
             {/* Tabs */}
-            <div className="flex border-b border-fortress-gold/10 shrink-0">
+            <div className="flex border-b border-gvi-gold/10 shrink-0">
               {([
                 { key: "basic", label: "Thông tin cơ bản" },
                 { key: "content", label: "Nội dung (VI)" },
@@ -276,8 +276,8 @@ export default function InvestmentPlansAdmin() {
                 <button key={t.key} onClick={() => setTab(t.key)}
                   className={`px-5 py-3 text-sm font-medium border-b-2 transition-colors ${
                     tab === t.key
-                      ? "border-fortress-gold text-fortress-gold"
-                      : "border-transparent text-fortress-silver/60 hover:text-fortress-ivory"
+                      ? "border-gvi-gold text-gvi-gold"
+                      : "border-transparent text-gvi-silver/60 hover:text-gvi-ivory"
                   }`}>
                   {t.label}
                 </button>
@@ -362,8 +362,8 @@ export default function InvestmentPlansAdmin() {
                     </div>
                     <div className="flex flex-col justify-end pb-1">
                       <label className="flex items-center gap-2 cursor-pointer">
-                        <input type="checkbox" checked={editing.highlighted || false} onChange={(e) => set("highlighted", e.target.checked)} className="w-4 h-4 accent-fortress-gold" />
-                        <span className="text-fortress-silver/70 text-xs">Nổi bật (highlighted)</span>
+                        <input type="checkbox" checked={editing.highlighted || false} onChange={(e) => set("highlighted", e.target.checked)} className="w-4 h-4 accent-gvi-gold" />
+                        <span className="text-gvi-silver/70 text-xs">Nổi bật (highlighted)</span>
                       </label>
                     </div>
                   </div>
@@ -443,13 +443,13 @@ export default function InvestmentPlansAdmin() {
             </div>
 
             {/* Actions */}
-            <div className="p-6 border-t border-fortress-gold/10 flex gap-3 shrink-0">
+            <div className="p-6 border-t border-gvi-gold/10 flex gap-3 shrink-0">
               <button onClick={handleSave} disabled={saving}
-                className="flex-1 py-3 bg-fortress-gold text-fortress-navy font-bold text-sm rounded-xl hover:bg-fortress-champagne transition-colors disabled:opacity-50">
+                className="flex-1 py-3 bg-gvi-gold text-gvi-navy font-bold text-sm rounded-xl hover:bg-gvi-champagne transition-colors disabled:opacity-50">
                 {saving ? "Đang lưu..." : isNew ? "Tạo Gói" : "Lưu Thay Đổi"}
               </button>
               <button onClick={() => setEditing(null)}
-                className="px-5 py-3 border border-fortress-gold/20 text-fortress-silver text-sm rounded-xl hover:bg-fortress-deep transition-colors">
+                className="px-5 py-3 border border-gvi-gold/20 text-gvi-silver text-sm rounded-xl hover:bg-gvi-deep transition-colors">
                 Hủy
               </button>
             </div>

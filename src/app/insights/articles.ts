@@ -9,7 +9,7 @@ export interface Article {
 }
 
 export const categoryColors: Record<string, string> = {
-  "Bất Động Sản": "border-l-fortress-gold",
+  "Bất Động Sản": "border-l-gvi-gold",
   "Thâu Tóm Doanh Nghiệp (M&A)": "border-l-blue-400",
   "Đầu Tư Tư Nhân (Private Equity)": "border-l-green-400",
   "Công Nghệ AI": "border-l-purple-400",

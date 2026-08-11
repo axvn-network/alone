@@ -38,7 +38,7 @@ export default function Introduction() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      className="relative overflow-hidden bg-fortress-navy border-t border-fortress-gold/10 rounded-2xl section-mx section-my"
+      className="relative overflow-hidden bg-gvi-navy border-t border-gvi-gold/10 rounded-2xl section-mx section-my"
       style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}
     >
       <div className="relative max-w-[1400px] mx-auto section-px">
@@ -46,33 +46,33 @@ export default function Introduction() {
           <Stagger>
             <StaggerItem>
                 <div className="flex items-center gap-3">
-                  <div className="w-6 h-px bg-fortress-gold/60" />
+                  <div className="w-6 h-px bg-gvi-gold/60" />
                   <span className="section-tag">{introTag}</span>
                 </div>
               </StaggerItem>
               <StaggerItem>
                 <h2
-                  className="text-fortress-ivory font-light leading-[1.28] uppercase mt-5"
+                  className="text-gvi-ivory font-light leading-[1.28] uppercase mt-5"
                   style={{ fontSize: "var(--text-h2)", letterSpacing: "var(--tracking-heading)" }}
                 >
                   {introTitle}
                 </h2>
               </StaggerItem>
               <StaggerItem>
-                <motion.div variants={goldenDivider} initial="hidden" whileInView="visible" viewport={{ once: true }} className="h-px w-10 bg-fortress-gold/40 my-7" />
+                <motion.div variants={goldenDivider} initial="hidden" whileInView="visible" viewport={{ once: true }} className="h-px w-10 bg-gvi-gold/40 my-7" />
               </StaggerItem>
               <StaggerItem>
-                <p className="text-fortress-silver/85 leading-[1.8] mb-5" style={{ fontSize: "var(--text-body)" }}>
+                <p className="text-gvi-silver/85 leading-[1.8] mb-5" style={{ fontSize: "var(--text-body)" }}>
                   {introParagraph1}
                 </p>
               </StaggerItem>
               <StaggerItem>
-                <p className="text-fortress-silver/85 leading-[1.8] mb-5" style={{ fontSize: "var(--text-body)" }}>
+                <p className="text-gvi-silver/85 leading-[1.8] mb-5" style={{ fontSize: "var(--text-body)" }}>
                   {introParagraph2}
                 </p>
               </StaggerItem>
               <StaggerItem>
-                <p className="text-fortress-silver/70 leading-[1.8]" style={{ fontSize: "var(--text-body)" }}>
+                <p className="text-gvi-silver/70 leading-[1.8]" style={{ fontSize: "var(--text-body)" }}>
                   {introParagraph3}
                 </p>
               </StaggerItem>
@@ -85,21 +85,21 @@ export default function Introduction() {
             viewport={{ once: true }}
           >
             <motion.div
-              className="relative aspect-[4/5] w-full overflow-hidden rounded-sm border border-fortress-gold/10"
+              className="relative aspect-[4/5] w-full overflow-hidden rounded-sm border border-gvi-gold/10"
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 200, damping: 25 }}
             >
               <Image
                 src="/website image.png"
-                alt="Fortress Investment Holdings leadership"
+                alt="GVI Tech Holding leadership"
                 fill
                 className="object-cover"
                 loading="lazy"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
-              <div className="absolute inset-0 bg-fortress-navy/20" />
-              <div className="absolute top-0 left-0 w-12 h-12 border-t-2 border-l-2 border-fortress-gold/60" />
-              <div className="absolute bottom-0 right-0 w-12 h-12 border-b-2 border-r-2 border-fortress-gold/60" />
+              <div className="absolute inset-0 bg-gvi-navy/20" />
+              <div className="absolute top-0 left-0 w-12 h-12 border-t-2 border-l-2 border-gvi-gold/60" />
+              <div className="absolute bottom-0 right-0 w-12 h-12 border-b-2 border-r-2 border-gvi-gold/60" />
             </motion.div>
           </motion.div>
         </div>

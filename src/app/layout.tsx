@@ -25,36 +25,36 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: "Fortress Investment Holdings | Tập Đoàn Đầu Tư Hàng Đầu",
-    template: "%s | Fortress Investment Holdings",
+    default: "GVI Tech Holding | Tập Đoàn Đầu Tư Hàng Đầu",
+    template: "%s | GVI Tech Holding",
   },
   description:
-    "Fortress Investment Holdings là tập đoàn đầu tư đa ngành hàng đầu tại Dubai và quốc tế, chuyên về bất động sản, mua bán doanh nghiệp, private equity, công nghệ AI và dịch vụ khách sạn nghỉ dưỡng.",
+    "GVI Tech Holding là tập đoàn đầu tư đa ngành hàng đầu tại Dubai và quốc tế, chuyên về bất động sản, mua bán doanh nghiệp, private equity, công nghệ AI và dịch vụ khách sạn nghỉ dưỡng.",
   keywords: [
     "tập đoàn đầu tư Dubai",
     "đầu tư bất động sản",
     "quỹ đầu tư tư nhân",
     "mua bán doanh nghiệp M&A",
-    "Fortress Investment Holdings",
+    "GVI Tech Holding",
     "đầu tư công nghệ AI",
     "hợp tác chiến lược đầu tư",
     "quản lý tài sản cao cấp",
   ],
-  authors: [{ name: "Fortress Investment Holdings" }],
-  creator: "Fortress Investment Holdings",
-  publisher: "Fortress Investment Holdings",
-  metadataBase: new URL("https://fortressih.com"),
+  authors: [{ name: "GVI Tech Holding" }],
+  creator: "GVI Tech Holding",
+  publisher: "GVI Tech Holding",
+  metadataBase: new URL("https://langding.tc-gaming.live"),
   openGraph: {
-    title: "Fortress Investment Holdings - Vững Chắc Nền Tảng. Đột Phá Tầm Nhìn.",
+    title: "GVI Tech Holding - Vững Chắc Nền Tảng. Đột Phá Tầm Nhìn.",
     description: "Tập đoàn đầu tư chiến lược đa ngành với tầm nhìn bền vững và tiềm lực vững chắc.",
     type: "website",
     locale: "vi_VN",
-    siteName: "Fortress Investment Holdings",
-    url: "https://fortressih.com",
+    siteName: "GVI Tech Holding",
+    url: "https://langding.tc-gaming.live",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Fortress Investment Holdings",
+    title: "GVI Tech Holding",
     description: "Vững Chắc Nền Tảng. Đột Phá Tầm Nhìn.",
   },
   robots: {
@@ -69,7 +69,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://fortressih.com",
+    canonical: "https://langding.tc-gaming.live",
   },
 };
 
@@ -115,7 +115,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className="antialiased bg-fortress-navy text-fortress-silver cursor-none"
+        className="antialiased bg-gvi-navy text-gvi-silver cursor-none"
         style={{
           paddingBottom: "calc(4.5rem + env(safe-area-inset-bottom, 0px))",
         }}

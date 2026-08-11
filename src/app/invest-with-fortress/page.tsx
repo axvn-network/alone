@@ -8,9 +8,9 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Đồng Hành Xây Dựng",
   description:
-    "Fortress Investment Holdings đang xây dựng nền tảng giao dịch tài sản mã hóa hợp pháp đầu tiên tại Việt Nam theo NQ 05/2025/NQ-CP. Đây là hành trình — không phải lời mời gọi đầu tư.",
+    "GVI Tech Holding đang xây dựng nền tảng giao dịch tài sản mã hóa hợp pháp đầu tiên tại Việt Nam theo NQ 05/2025/NQ-CP. Đây là hành trình — không phải lời mời gọi đầu tư.",
   openGraph: {
-    title: "Đồng Hành Xây Dựng | Fortress Investment Holdings",
+    title: "Đồng Hành Xây Dựng | GVI Tech Holding",
     description:
       "Chúng tôi đang xây dựng một thứ có ý nghĩa. Nếu bạn thấy tiềm năng và chia sẻ lý tưởng, chúng tôi muốn nghe từ bạn.",
   },
@@ -35,7 +35,7 @@ const PROJECT_TIMELINE = [
   {
     phase: "03",
     label: "Xây Dựng Liên Minh Đối Tác",
-    detail: "Fortress đang kiến tạo hệ thống cổ đông chiến lược, tích lũy vốn, hoàn thiện đội ngũ và cơ cấu quản trị",
+    detail: "GVI Tech Holding đang kiến tạo hệ thống cổ đông chiến lược, tích lũy vốn, hoàn thiện đội ngũ và cơ cấu quản trị",
     status: "active" as const,
     date: "Hiện tại",
   },
@@ -135,7 +135,7 @@ function Section({
   altDark?: boolean;
   children: React.ReactNode;
 }) {
-  const bg = dark ? "bg-fortress-navy" : altDark ? "bg-fortress-deep" : "bg-white";
+  const bg = dark ? "bg-gvi-navy" : altDark ? "bg-gvi-deep" : "bg-white";
   return (
     <section
       id={id}
@@ -149,8 +149,8 @@ function Section({
 
 const STATUS_STYLE = {
   done:    { dot: "bg-emerald-400", bar: "bg-emerald-400", label: "Hoàn thành", text: "text-emerald-400" },
-  active:  { dot: "bg-fortress-gold animate-pulse", bar: "bg-fortress-gold", label: "Đang thực hiện", text: "text-fortress-gold" },
-  pending: { dot: "bg-fortress-silver/20", bar: "bg-fortress-silver/10", label: "Sắp tới", text: "text-fortress-silver/40" },
+  active:  { dot: "bg-gvi-gold animate-pulse", bar: "bg-gvi-gold", label: "Đang thực hiện", text: "text-gvi-gold" },
+  pending: { dot: "bg-gvi-silver/20", bar: "bg-gvi-silver/10", label: "Sắp tới", text: "text-gvi-silver/40" },
 };
 
 export default function InvestWithFortressPage() {
@@ -163,35 +163,35 @@ export default function InvestWithFortressPage() {
         heading={
           <>
             Chúng Tôi Đang Xây Dựng{" "}
-            <span className="font-bold bg-gradient-to-r from-fortress-gold to-fortress-champagne bg-clip-text text-transparent">
+            <span className="font-bold bg-gradient-to-r from-gvi-gold to-gvi-champagne bg-clip-text text-transparent">
               Một Thứ Có Ý Nghĩa.
             </span>
           </>
         }
-        description="Fortress đang kiến tạo nền tảng giao dịch tài sản mã hóa hợp pháp đầu tiên của Việt Nam theo NQ 05/2025/NQ-CP. Đây là hành trình dài hạn — chúng tôi không tìm người góp vốn, chúng tôi tìm người đồng hành vì cùng nhìn thấy điều tương tự."
+        description="GVI Tech Holding đang kiến tạo nền tảng giao dịch tài sản mã hóa hợp pháp đầu tiên của Việt Nam theo NQ 05/2025/NQ-CP. Đây là hành trình dài hạn — chúng tôi không tìm người góp vốn, chúng tôi tìm người đồng hành vì cùng nhìn thấy điều tương tự."
       >
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
           <Link
             href="#roadmap"
-            className="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-gradient-to-r from-fortress-gold to-fortress-champagne text-fortress-navy font-bold text-xs tracking-[0.18em] uppercase hover:opacity-90 transition-opacity shadow-lg shadow-fortress-gold/15"
+            className="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-gradient-to-r from-gvi-gold to-gvi-champagne text-gvi-navy font-bold text-xs tracking-[0.18em] uppercase hover:opacity-90 transition-opacity shadow-lg shadow-gvi-gold/15"
           >
             Xem Lộ Trình Thực Tế
           </Link>
           <Link
             href="/invest-with-fortress/plans"
-            className="inline-flex items-center justify-center gap-2 px-7 py-3.5 border border-fortress-gold/60 text-fortress-navy font-semibold text-xs tracking-[0.18em] uppercase hover:bg-fortress-gold/8 hover:border-fortress-gold transition-all"
+            className="inline-flex items-center justify-center gap-2 px-7 py-3.5 border border-gvi-gold/60 text-gvi-navy font-semibold text-xs tracking-[0.18em] uppercase hover:bg-gvi-gold/8 hover:border-gvi-gold transition-all"
           >
             Vai Trò Có Thể Tham Gia
           </Link>
           <Link
             href="#connect"
-            className="inline-flex items-center justify-center gap-2 px-7 py-3.5 border border-fortress-navy/30 text-fortress-navy font-semibold text-xs tracking-[0.18em] uppercase hover:bg-fortress-navy/5 transition-all"
+            className="inline-flex items-center justify-center gap-2 px-7 py-3.5 border border-gvi-navy/30 text-gvi-navy font-semibold text-xs tracking-[0.18em] uppercase hover:bg-gvi-navy/5 transition-all"
           >
             Kết Nối Với Chúng Tôi
           </Link>
         </div>
-        <div className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 bg-fortress-gold/10 border border-fortress-gold/25 rounded-full text-fortress-gold text-[11px] font-semibold tracking-wide">
-          <span className="w-1.5 h-1.5 rounded-full bg-fortress-gold animate-pulse" />
+        <div className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 bg-gvi-gold/10 border border-gvi-gold/25 rounded-full text-gvi-gold text-[11px] font-semibold tracking-wide">
+          <span className="w-1.5 h-1.5 rounded-full bg-gvi-gold animate-pulse" />
           Giai đoạn 03/06 — Đang xây dựng liên minh đối tác
         </div>
       </PageHero>
@@ -208,7 +208,7 @@ export default function InvestWithFortressPage() {
         </div>
         <div className="relative max-w-4xl mx-auto">
           {/* Timeline connector line */}
-          <div className="absolute left-6 top-8 bottom-8 w-px bg-gradient-to-b from-emerald-400/40 via-fortress-gold/40 to-fortress-silver/10 hidden sm:block" />
+          <div className="absolute left-6 top-8 bottom-8 w-px bg-gradient-to-b from-emerald-400/40 via-gvi-gold/40 to-gvi-silver/10 hidden sm:block" />
           <div className="space-y-4">
             {PROJECT_TIMELINE.map((item, i) => {
               const s = STATUS_STYLE[item.status];
@@ -216,25 +216,25 @@ export default function InvestWithFortressPage() {
                 <div key={i} className="relative flex items-start gap-5 sm:gap-7">
                   {/* Status dot */}
                   <div className="relative z-10 flex flex-col items-center shrink-0 mt-1">
-                    <div className={`w-3 h-3 rounded-full border-2 border-fortress-navy ${s.dot}`} />
+                    <div className={`w-3 h-3 rounded-full border-2 border-gvi-navy ${s.dot}`} />
                   </div>
                   {/* Content */}
                   <div className={`flex-1 p-5 rounded-xl border transition-all ${
                     item.status === "active"
-                      ? "bg-fortress-deep border-fortress-gold/30 shadow-lg shadow-fortress-gold/5"
+                      ? "bg-gvi-deep border-gvi-gold/30 shadow-lg shadow-gvi-gold/5"
                       : item.status === "done"
-                      ? "bg-fortress-deep border-emerald-400/15"
-                      : "bg-fortress-deep/40 border-fortress-silver/8"
+                      ? "bg-gvi-deep border-emerald-400/15"
+                      : "bg-gvi-deep/40 border-gvi-silver/8"
                   }`}>
                     <div className="flex items-start justify-between gap-3 mb-1.5">
                       <div className="flex items-center gap-2.5">
-                        <span className="text-fortress-silver/30 text-[10px] font-mono font-bold tracking-widest shrink-0">
+                        <span className="text-gvi-silver/30 text-[10px] font-mono font-bold tracking-widest shrink-0">
                           GIAI ĐOẠN {item.phase}
                         </span>
                         <span className={`text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-full ${
                           item.status === "done"    ? "bg-emerald-400/10 text-emerald-400" :
-                          item.status === "active"  ? "bg-fortress-gold/10 text-fortress-gold" :
-                          "bg-fortress-silver/5 text-fortress-silver/30"
+                          item.status === "active"  ? "bg-gvi-gold/10 text-gvi-gold" :
+                          "bg-gvi-silver/5 text-gvi-silver/30"
                         }`}>
                           {s.label}
                         </span>
@@ -242,10 +242,10 @@ export default function InvestWithFortressPage() {
                       <span className={`text-[11px] font-mono shrink-0 ${s.text}`}>{item.date}</span>
                     </div>
                     <h3 className={`font-semibold text-sm mb-1.5 ${
-                      item.status === "pending" ? "text-fortress-ivory/40" : "text-fortress-ivory"
+                      item.status === "pending" ? "text-gvi-ivory/40" : "text-gvi-ivory"
                     }`}>{item.label}</h3>
                     <p className={`text-xs leading-relaxed ${
-                      item.status === "pending" ? "text-fortress-silver/30" : "text-fortress-silver/65"
+                      item.status === "pending" ? "text-gvi-silver/30" : "text-gvi-silver/65"
                     }`}>{item.detail}</p>
                   </div>
                 </div>
@@ -253,12 +253,12 @@ export default function InvestWithFortressPage() {
             })}
           </div>
           {/* Current position callout */}
-          <div className="mt-8 p-5 bg-fortress-gold/8 border border-fortress-gold/25 rounded-xl">
+          <div className="mt-8 p-5 bg-gvi-gold/8 border border-gvi-gold/25 rounded-xl">
             <div className="flex items-center gap-2 mb-2">
-              <span className="w-2 h-2 rounded-full bg-fortress-gold animate-pulse" />
-              <p className="text-fortress-gold font-bold text-sm">Fortress hiện đang ở Giai đoạn 03</p>
+              <span className="w-2 h-2 rounded-full bg-gvi-gold animate-pulse" />
+              <p className="text-gvi-gold font-bold text-sm">GVI Tech Holding hiện đang ở Giai đoạn 03</p>
             </div>
-            <p className="text-fortress-silver/70 text-xs leading-relaxed">
+            <p className="text-gvi-silver/70 text-xs leading-relaxed">
               Đây là thời điểm tốt nhất để tham gia — trước khi hồ sơ được nộp, trước khi cơ cấu cổ đông khóa lại. 
               Định giá thấp nhất, tiếng nói cao nhất, tầm ảnh hưởng thực sự nhất.
             </p>
@@ -279,18 +279,18 @@ export default function InvestWithFortressPage() {
           {WHAT_WE_ARE_BUILDING.map((item, i) => (
             <div
               key={i}
-              className="group p-6 bg-fortress-navy border border-fortress-gold/10 hover:border-fortress-gold/30 hover:-translate-y-0.5 transition-all duration-300 rounded-sm"
+              className="group p-6 bg-gvi-navy border border-gvi-gold/10 hover:border-gvi-gold/30 hover:-translate-y-0.5 transition-all duration-300 rounded-sm"
             >
-              <div className="w-px h-4 bg-fortress-gold/40 mb-4 group-hover:bg-fortress-gold/70 transition-colors" />
-              <p className="font-semibold text-fortress-ivory text-sm mb-1.5">{item.label}</p>
-              <p className="text-fortress-silver/65 leading-relaxed" style={{ fontSize: "var(--text-body)" }}>{item.desc}</p>
+              <div className="w-px h-4 bg-gvi-gold/40 mb-4 group-hover:bg-gvi-gold/70 transition-colors" />
+              <p className="font-semibold text-gvi-ivory text-sm mb-1.5">{item.label}</p>
+              <p className="text-gvi-silver/65 leading-relaxed" style={{ fontSize: "var(--text-body)" }}>{item.desc}</p>
             </div>
           ))}
         </div>
         <div className="flex justify-center mt-8">
           <Link
             href="/invest-with-fortress/plans"
-            className="inline-flex items-center gap-2 px-6 py-3 border border-fortress-navy/25 text-fortress-charcoal text-xs font-semibold tracking-[0.15em] uppercase hover:bg-fortress-navy hover:text-fortress-ivory hover:border-fortress-navy transition-all duration-300 rounded-sm"
+            className="inline-flex items-center gap-2 px-6 py-3 border border-gvi-navy/25 text-gvi-charcoal text-xs font-semibold tracking-[0.15em] uppercase hover:bg-gvi-navy hover:text-gvi-ivory hover:border-gvi-navy transition-all duration-300 rounded-sm"
           >
             Xem Toàn Bộ Điều Kiện Pháp Lý
             <ArrowRight className="w-3.5 h-3.5" />
@@ -312,13 +312,13 @@ export default function InvestWithFortressPage() {
           {WHO_WE_SEEK.map((item, i) => (
             <div
               key={i}
-              className="group p-6 md:p-7 bg-fortress-navy border border-fortress-gold/15 hover:border-fortress-gold/35 hover:-translate-y-0.5 transition-all duration-300 rounded-sm"
+              className="group p-6 md:p-7 bg-gvi-navy border border-gvi-gold/15 hover:border-gvi-gold/35 hover:-translate-y-0.5 transition-all duration-300 rounded-sm"
             >
-              <p className="font-semibold text-fortress-ivory text-sm mb-2">{item.title}</p>
-              <p className="text-fortress-silver/65 leading-relaxed text-xs mb-4">{item.desc}</p>
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-fortress-gold/8 border border-fortress-gold/20 rounded-full">
-                <span className="w-1 h-1 rounded-full bg-fortress-gold" />
-                <span className="text-fortress-gold text-[10px] font-semibold">{item.min}</span>
+              <p className="font-semibold text-gvi-ivory text-sm mb-2">{item.title}</p>
+              <p className="text-gvi-silver/65 leading-relaxed text-xs mb-4">{item.desc}</p>
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-gvi-gold/8 border border-gvi-gold/20 rounded-full">
+                <span className="w-1 h-1 rounded-full bg-gvi-gold" />
+                <span className="text-gvi-gold text-[10px] font-semibold">{item.min}</span>
               </div>
             </div>
           ))}
@@ -336,18 +336,18 @@ export default function InvestWithFortressPage() {
               align="left"
             />
           </div>
-          <div className="bg-fortress-navy rounded-2xl p-7 md:p-10">
-            <p className="section-tag mb-5">Fortress Cam Kết Với Mọi Đối Tác</p>
+          <div className="bg-gvi-navy rounded-2xl p-7 md:p-10">
+            <p className="section-tag mb-5">GVI Tech Holding Cam Kết Với Mọi Đối Tác</p>
             <ul className="space-y-3">
               {OUR_COMMITMENTS.map((item, i) => (
                 <li key={i} className="flex items-start gap-3">
-                  <CheckCircle className="w-4 h-4 text-fortress-gold shrink-0 mt-0.5" />
-                  <span className="text-fortress-silver/75 text-sm leading-relaxed">{item}</span>
+                  <CheckCircle className="w-4 h-4 text-gvi-gold shrink-0 mt-0.5" />
+                  <span className="text-gvi-silver/75 text-sm leading-relaxed">{item}</span>
                 </li>
               ))}
             </ul>
-            <div className="mt-6 pt-5 border-t border-fortress-gold/10">
-              <p className="text-fortress-silver/40 text-xs leading-relaxed italic">
+            <div className="mt-6 pt-5 border-t border-gvi-gold/10">
+              <p className="text-gvi-silver/40 text-xs leading-relaxed italic">
                 &ldquo;Nếu bạn cần được thuyết phục, đây có thể chưa phải thời điểm phù hợp.
                 Nếu bạn đã nhìn thấy cơ hội này — chúng tôi muốn nói chuyện.&rdquo;
               </p>
@@ -369,25 +369,25 @@ export default function InvestWithFortressPage() {
             />
             <div className="mt-8 space-y-4">
               <div className="flex items-start gap-3">
-                <CheckCheck className="w-4 h-4 text-fortress-gold shrink-0 mt-0.5" />
-                <span className="text-fortress-silver/70 text-sm">Mọi thông tin được bảo mật tuyệt đối</span>
+                <CheckCheck className="w-4 h-4 text-gvi-gold shrink-0 mt-0.5" />
+                <span className="text-gvi-silver/70 text-sm">Mọi thông tin được bảo mật tuyệt đối</span>
               </div>
               <div className="flex items-start gap-3">
-                <CheckCheck className="w-4 h-4 text-fortress-gold shrink-0 mt-0.5" />
-                <span className="text-fortress-silver/70 text-sm">Phản hồi trực tiếp trong 2–3 ngày làm việc</span>
+                <CheckCheck className="w-4 h-4 text-gvi-gold shrink-0 mt-0.5" />
+                <span className="text-gvi-silver/70 text-sm">Phản hồi trực tiếp trong 2–3 ngày làm việc</span>
               </div>
               <div className="flex items-start gap-3">
-                <CheckCheck className="w-4 h-4 text-fortress-gold shrink-0 mt-0.5" />
-                <span className="text-fortress-silver/70 text-sm">Không có ràng buộc hay nghĩa vụ ở bước này</span>
+                <CheckCheck className="w-4 h-4 text-gvi-gold shrink-0 mt-0.5" />
+                <span className="text-gvi-silver/70 text-sm">Không có ràng buộc hay nghĩa vụ ở bước này</span>
               </div>
               <div className="flex items-start gap-3">
-                <Clock className="w-4 h-4 text-fortress-gold shrink-0 mt-0.5" />
-                <span className="text-fortress-silver/70 text-sm">Chúng tôi không rush bạn — quyết định đúng cần thời gian</span>
+                <Clock className="w-4 h-4 text-gvi-gold shrink-0 mt-0.5" />
+                <span className="text-gvi-silver/70 text-sm">Chúng tôi không rush bạn — quyết định đúng cần thời gian</span>
               </div>
             </div>
           </div>
           <div className="lg:col-span-3">
-            <div className="bg-fortress-deep border border-fortress-gold/15 p-7 md:p-10 rounded-2xl">
+            <div className="bg-gvi-deep border border-gvi-gold/15 p-7 md:p-10 rounded-2xl">
               <InvestorForm />
             </div>
           </div>
@@ -406,7 +406,7 @@ export default function InvestWithFortressPage() {
           <div className="mt-6">
             <Link
               href="/investment-disclaimer"
-              className="inline-flex items-center gap-2 text-fortress-gold/60 hover:text-fortress-gold text-xs font-semibold tracking-wide transition-colors"
+              className="inline-flex items-center gap-2 text-gvi-gold/60 hover:text-gvi-gold text-xs font-semibold tracking-wide transition-colors"
             >
               Đọc Đầy Đủ Tuyên Bố Miễn Trừ Trách Nhiệm
               <ArrowRight className="w-3 h-3" />

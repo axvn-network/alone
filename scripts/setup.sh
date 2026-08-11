@@ -6,7 +6,7 @@
 set -euo pipefail
 
 NODEJS_VERSION="20"
-APP_DIR="/var/www/fortress/app"
+APP_DIR="/var/lkvip/langding"
 LOG_DIR="/var/log/pm2"
 SWAP_SIZE="2G"
 
@@ -104,7 +104,7 @@ print_ok "Fail2Ban running"
 print_step "Creating application directories"
 mkdir -p "$APP_DIR"
 mkdir -p "$LOG_DIR"
-mkdir -p /var/backups/fortress
+mkdir -p /var/backups/gvi
 print_ok "Directories created: $APP_DIR, $LOG_DIR"
 
 # ── PM2 startup ──────────────────────────────────────────────

@@ -65,7 +65,7 @@ export default function InvestmentSectors() {
       whileInView="visible"
       viewport={{ once: true, margin: "-80px" }}
       variants={sectionReveal}
-      className="relative overflow-hidden bg-fortress-navy rounded-2xl section-mx section-my"
+      className="relative overflow-hidden bg-gvi-navy rounded-2xl section-mx section-my"
       style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}
     >
       <div className="relative max-w-[1400px] mx-auto section-px">
@@ -74,18 +74,18 @@ export default function InvestmentSectors() {
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 md:mb-14 gap-4 md:gap-6">
               <div>
                 <div className="flex items-center gap-3 mb-5">
-                  <div className="w-6 h-px bg-fortress-gold/60" />
+                  <div className="w-6 h-px bg-gvi-gold/60" />
                   <span className="section-tag">{tag}</span>
                 </div>
                 <h2
-                  className="text-fortress-ivory font-light leading-[1.28] uppercase"
+                  className="text-gvi-ivory font-light leading-[1.28] uppercase"
                   style={{ fontSize: "var(--text-h2)", letterSpacing: "var(--tracking-heading)" }}
                 >
                   {title}
                 </h2>
               </div>
               <p
-                className="text-fortress-silver/78 leading-[1.8] max-w-[480px]"
+                className="text-gvi-silver/78 leading-[1.8] max-w-[480px]"
                 style={{ fontSize: "var(--text-body)" }}
               >
                 {desc}
@@ -101,7 +101,7 @@ export default function InvestmentSectors() {
                   variants={cardHoverVariants}
                   initial="rest"
                   whileHover="hover"
-                  className={`group relative overflow-hidden bg-fortress-deep border border-fortress-gold/5 flex flex-col justify-end rounded-sm cursor-default ${COL_SPANS[index] ?? ""}`}
+                  className={`group relative overflow-hidden bg-gvi-deep border border-gvi-gold/5 flex flex-col justify-end rounded-sm cursor-default ${COL_SPANS[index] ?? ""}`}
                   style={{
                     padding: "clamp(1.25rem, 2vw + 0.5rem, 2.5rem)",
                     minHeight: "clamp(13.75rem, 18vw + 4rem, 23.75rem)",
@@ -121,7 +121,7 @@ export default function InvestmentSectors() {
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                   </motion.div>
-                  <div className="absolute inset-0 z-10 bg-gradient-to-t from-fortress-navy via-fortress-navy/80 to-transparent opacity-95 transition-opacity duration-300 group-hover:opacity-90" />
+                  <div className="absolute inset-0 z-10 bg-gradient-to-t from-gvi-navy via-gvi-navy/80 to-transparent opacity-95 transition-opacity duration-300 group-hover:opacity-90" />
 
                   <motion.div
                     className="relative z-20"
@@ -129,19 +129,19 @@ export default function InvestmentSectors() {
                     transition={{ type: "spring", stiffness: 350, damping: 25 }}
                   >
                     <span
-                      className="text-fortress-gold uppercase font-semibold block mb-2"
+                      className="text-gvi-gold uppercase font-semibold block mb-2"
                       style={{ fontSize: "var(--text-caption)", letterSpacing: "var(--tracking-tag)" }}
                     >
                       {t("sectors.sectorPrefix", lang)} {String(index + 1).padStart(2, "0")}
                     </span>
                     <h3
-                      className="font-semibold text-fortress-ivory mb-3 leading-[1.4]"
+                      className="font-semibold text-gvi-ivory mb-3 leading-[1.4]"
                       style={{ fontSize: "var(--text-h3)" }}
                     >
                       {sector.title}
                     </h3>
                     <p
-                      className="text-fortress-silver/70 leading-[1.8] max-w-md transition-colors duration-300 group-hover:text-fortress-silver"
+                      className="text-gvi-silver/70 leading-[1.8] max-w-md transition-colors duration-300 group-hover:text-gvi-silver"
                       style={{ fontSize: "var(--text-body)" }}
                     >
                       {sector.desc}
@@ -162,7 +162,7 @@ export default function InvestmentSectors() {
               >
                 <Link
                   href="/investment-focus"
-                  className="inline-flex items-center justify-center w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-3.5 border border-fortress-gold text-fortress-gold hover:bg-fortress-gold hover:text-fortress-navy text-xs sm:text-sm font-semibold transition-colors duration-300 rounded-sm"
+                  className="inline-flex items-center justify-center w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-3.5 border border-gvi-gold text-gvi-gold hover:bg-gvi-gold hover:text-gvi-navy text-xs sm:text-sm font-semibold transition-colors duration-300 rounded-sm"
                   style={{ letterSpacing: "var(--tracking-btn)" }}
                 >
                   {btnText}

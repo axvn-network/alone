@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
 /**
- * MongoDB Seed Script — Fortress Investment Holdings
+ * MongoDB Seed Script — GVI Tech Holding
  *
  * Seeds:
  *   - Admin user (from ADMIN_EMAIL / ADMIN_PASSWORD)
@@ -21,7 +21,7 @@ const bcrypt = require("bcryptjs");
 require("dotenv").config({ path: ".env.local" });
 
 const MONGODB_URI = process.env.MONGODB_URI;
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "admin@fortressih.com";
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "admin@vnkr.vn";
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 const ADMIN_NAME = process.env.ADMIN_NAME || "SuperAdmin";
 const NODE_ENV = process.env.NODE_ENV || "development";
@@ -153,11 +153,11 @@ const demoEnquiries = [
 // ── Default settings ─────────────────────────────────────────────
 
 const defaultSettings = [
-  { key: "siteName", value: "Fortress Investment Holdings" },
-  { key: "siteNameEn", value: "Fortress Investment Holdings" },
+  { key: "siteName", value: "GVI Tech Holding" },
+  { key: "siteNameEn", value: "GVI Tech Holding" },
   { key: "tagline", value: "Đầu tư bền vững — Tăng trưởng vượt trội" },
   { key: "taglineEn", value: "Sustainable Investment — Superior Growth" },
-  { key: "contactEmail", value: "contact@fortressih.com" },
+  { key: "contactEmail", value: "contact@vnkr.vn" },
   { key: "contactPhone", value: "+971 4 000 0000" },
   { key: "address", value: "Dubai, United Arab Emirates" },
   { key: "socialFacebook", value: "" },
@@ -166,8 +166,8 @@ const defaultSettings = [
   { key: "newsletter_enabled", value: true },
   { key: "newsletter_title", value: "Đăng ký nhận bản tin đầu tư" },
   { key: "newsletter_titleEn", value: "Subscribe to Investment Newsletter" },
-  { key: "newsletter_description", value: "Nhận cập nhật thị trường và cơ hội đầu tư mới nhất từ Fortress." },
-  { key: "newsletter_descriptionEn", value: "Receive market updates and the latest investment opportunities from Fortress." },
+  { key: "newsletter_description", value: "Nhận cập nhật thị trường và cơ hội đầu tư mới nhất từ GVI." },
+  { key: "newsletter_descriptionEn", value: "Receive market updates and the latest investment opportunities from GVI." },
 ];
 
 // ── Investment Plans ─────────────────────────────────────────────
@@ -400,8 +400,8 @@ const investmentPlans = [
       "Absolute pre-emptive right on new shares",
       "Right to receive monthly dividend",
     ],
-    obligations: ["Không rút vốn trong kỳ hạn 60 tháng", "Cam kết đồng hành dài hạn với Fortress", "Cam kết không cạnh tranh toàn diện", "Thông báo trước 120 ngày khi chuyển nhượng"],
-    obligationsEn: ["No capital withdrawal within 60-month term", "Long-term commitment with Fortress", "Comprehensive non-compete commitment", "120-day notice for share transfer"],
+    obligations: ["Không rút vốn trong kỳ hạn 60 tháng", "Cam kết đồng hành dài hạn với GVI", "Cam kết không cạnh tranh toàn diện", "Thông báo trước 120 ngày khi chuyển nhượng"],
+    obligationsEn: ["No capital withdrawal within 60-month term", "Long-term commitment with GVI", "Comprehensive non-compete commitment", "120-day notice for share transfer"],
     documents: ["Hợp đồng neo đậu (Anchor Agreement)", "Thỏa thuận HĐQT (nếu có)", "NCA toàn diện", "Điều lệ cổ đông neo đậu"],
     isFeatured: true,
     status: "active",

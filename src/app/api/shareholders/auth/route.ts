@@ -31,6 +31,8 @@ export async function POST(req: NextRequest) {
     return successResponse({
       id: sh._id.toString(), name: sh.name, email: sh.email,
       role: sh.role, equityPercent: sh.equityPercent,
+      capitalCommitted: sh.capitalCommitted, capitalPaid: sh.capitalPaid,
+      kycStatus: sh.kycStatus ?? "not_started",
     });
   } catch (e) {
     return serverErrorResponse(e instanceof Error ? e.message : "Login failed");
@@ -59,7 +61,9 @@ export async function GET() {
 
     return successResponse({
       id: sh._id.toString(), name: sh.name, email: sh.email,
-      role: sh.role, equityPercent: sh.equityPercent, capitalCommitted: sh.capitalCommitted, capitalPaid: sh.capitalPaid,
+      role: sh.role, equityPercent: sh.equityPercent,
+      capitalCommitted: sh.capitalCommitted, capitalPaid: sh.capitalPaid,
+      kycStatus: sh.kycStatus ?? "not_started",
     });
   } catch (e) {
     return serverErrorResponse(e instanceof Error ? e.message : "Session error");

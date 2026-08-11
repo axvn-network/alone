@@ -19,7 +19,7 @@ const VERIFY_TOKEN   = process.env.WHATSAPP_VERIFY_TOKEN   || "fortress_webhook_
 const ACCESS_TOKEN   = process.env.WHATSAPP_ACCESS_TOKEN   || "";
 const PHONE_NUMBER_ID = process.env.WHATSAPP_PHONE_NUMBER_ID || "";
 const WA_API_VERSION  = process.env.WHATSAPP_API_VERSION    || "v20.0";
-const SITE_URL        = process.env.NEXT_PUBLIC_SITE_URL    || "https://fortressih.com";
+const SITE_URL        = process.env.NEXT_PUBLIC_SITE_URL    || "https://gvitech.vn";
 
 // ── In-memory conversation state (resets on server restart — acceptable for webhook bot) ──
 type ConvState = {
@@ -187,9 +187,9 @@ function buildMainMenu(): WAMessage {
     interactive: {
       type: "button",
       body: {
-        text: `👋 *Chào mừng đến với Fortress Investment Holdings!*\n\nChúng tôi đang xây dựng nền tảng *Tài Sản Mã Hóa (TSMH)* đầu tiên được nhà nước cấp phép tại Việt Nam theo *Nghị quyết 05/2025/NQ-CP*.\n\nHiện chúng tôi đang tuyển *cổ đông chiến lược* để cùng xây dựng dự án. Chọn thông tin bạn quan tâm:`,
+        text: `👋 *Chào mừng đến với GVI Tech Holding!*\n\nChúng tôi đang xây dựng nền tảng *Tài Sản Mã Hóa (TSMH)* đầu tiên được nhà nước cấp phép tại Việt Nam theo *Nghị quyết 05/2025/NQ-CP*.\n\nHiện chúng tôi đang tuyển *cổ đông chiến lược* để cùng xây dựng dự án. Chọn thông tin bạn quan tâm:`,
       },
-      footer: { text: "Fortress Investment Holdings · fortressih.com" },
+      footer: { text: "GVI Tech Holding · fortressih.com" },
       action: {
         buttons: [
           { type: "reply", reply: { id: "btn_plans",   title: "💼 Hạng Mục Hợp Tác" } },
@@ -370,7 +370,7 @@ function buildNQ5Message(): WAMessage {
     interactive: {
       type: "button",
       body: {
-        text: `📜 *Nghị Quyết 05/2025/NQ-CP — Thí Điểm Tài Sản Mã Hóa Việt Nam*\n\n*Hiệu lực:* 09/09/2025\n*Cơ quan cấp phép:* Bộ Tài Chính (BTC)\n*Nhận hồ sơ từ:* 20/01/2026\n\n*Điều kiện cốt lõi (Điều 8):*\n  📌 Vốn điều lệ tối thiểu: *10.000 tỷ VNĐ*\n  📌 ≥65% từ tổ chức (bắt buộc)\n  📌 >35% từ ≥2 tổ chức TC/CN được cấp phép\n  📌 ≤49% nhà đầu tư nước ngoài\n  📌 Đạt tiêu chuẩn CNTT cấp độ 4\n\n*Cơ hội:* Chưa có tổ chức nào được cấp phép. Fortress đang ở giai đoạn *tích lũy vốn & tuyển cổ đông* — đây là thời điểm tốt nhất để tham gia với định giá tốt nhất.`,
+        text: `📜 *Nghị Quyết 05/2025/NQ-CP — Thí Điểm Tài Sản Mã Hóa Việt Nam*\n\n*Hiệu lực:* 09/09/2025\n*Cơ quan cấp phép:* Bộ Tài Chính (BTC)\n*Nhận hồ sơ từ:* 20/01/2026\n\n*Điều kiện cốt lõi (Điều 8):*\n  📌 Vốn điều lệ tối thiểu: *10.000 tỷ VNĐ*\n  📌 ≥65% từ tổ chức (bắt buộc)\n  📌 >35% từ ≥2 tổ chức TC/CN được cấp phép\n  📌 ≤49% nhà đầu tư nước ngoài\n  📌 Đạt tiêu chuẩn CNTT cấp độ 4\n\n*Cơ hội:* Chưa có tổ chức nào được cấp phép. GVI Tech Holding đang ở giai đoạn *tích lũy vốn & tuyển cổ đông* — đây là thời điểm tốt nhất để tham gia với định giá tốt nhất.`,
       },
       footer: { text: "Nguồn: Nghị quyết 05/2025/NQ-CP chính thức" },
       action: {
@@ -390,9 +390,9 @@ function buildContactMessage(): WAMessage {
     interactive: {
       type: "button",
       body: {
-        text: `📞 *Liên Hệ Fortress Investment Holdings*\n\n🌐 Website: ${SITE_URL}/contact\n📋 Đăng ký hợp tác: ${SITE_URL}/invest-with-fortress\n📧 Email: info@fortressih.com\n\nĐội ngũ chuyên gia sẽ phản hồi trong *2–3 ngày làm việc*.\n🔒 Mọi thông tin được bảo mật tuyệt đối.\n\nHoặc gửi trực tiếp *số điện thoại* và *tên* của bạn, chúng tôi sẽ liên hệ lại ngay!`,
+        text: `📞 *Liên Hệ GVI Tech Holding*\n\n🌐 Website: ${SITE_URL}/contact\n📋 Đăng ký hợp tác: ${SITE_URL}/invest-with-fortress\n📧 Email: info@fortressih.com\n\nĐội ngũ chuyên gia sẽ phản hồi trong *2–3 ngày làm việc*.\n🔒 Mọi thông tin được bảo mật tuyệt đối.\n\nHoặc gửi trực tiếp *số điện thoại* và *tên* của bạn, chúng tôi sẽ liên hệ lại ngay!`,
       },
-      footer: { text: "Fortress Investment Holdings · Dubai, UAE" },
+      footer: { text: "GVI Tech Holding · Dubai, UAE" },
       action: {
         buttons: [
           { type: "reply", reply: { id: "btn_plans", title: "💼 Xem Hạng Mục Hợp Tác" } },
@@ -410,7 +410,7 @@ function buildAboutMessage(): WAMessage {
     interactive: {
       type: "button",
       body: {
-        text: `🏰 *Fortress Investment Holdings*\n\nTập đoàn đầu tư công nghệ có trụ sở tại *Dubai, UAE* — chuyên đầu tư vào FinTech, tài sản mã hóa hợp pháp, AI và kinh tế số tại Việt Nam & Đông Nam Á.\n\n*Sứ mệnh:* Hiện đại hóa nền tài chính Việt Nam, xây dựng hạ tầng số tương đương eCNY của Trung Quốc — nhưng phù hợp đặc thù VN.\n\n*Trọng tâm dự án:*\n  🔑 Nền tảng giao dịch tài sản mã hóa (TSMH) được cấp phép\n  🔑 Hạ tầng FinTech & thanh toán số\n  🔑 Công nghệ AI & blockchain\n  🔑 EdTech & kinh tế số\n\n🌐 ${SITE_URL}/about`,
+        text: `🏰 *GVI Tech Holding*\n\nTập đoàn đầu tư công nghệ có trụ sở tại *Dubai, UAE* — chuyên đầu tư vào FinTech, tài sản mã hóa hợp pháp, AI và kinh tế số tại Việt Nam & Đông Nam Á.\n\n*Sứ mệnh:* Hiện đại hóa nền tài chính Việt Nam, xây dựng hạ tầng số tương đương eCNY của Trung Quốc — nhưng phù hợp đặc thù VN.\n\n*Trọng tâm dự án:*\n  🔑 Nền tảng giao dịch tài sản mã hóa (TSMH) được cấp phép\n  🔑 Hạ tầng FinTech & thanh toán số\n  🔑 Công nghệ AI & blockchain\n  🔑 EdTech & kinh tế số\n\n🌐 ${SITE_URL}/about`,
       },
       footer: { text: "fortressih.com" },
       action: {

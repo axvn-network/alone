@@ -31,23 +31,23 @@ function Field({
 }) {
   return (
     <div className="mb-4">
-      <label className="block text-fortress-silver text-xs font-medium mb-1.5 tracking-wide">
+      <label className="block text-gvi-silver text-xs font-medium mb-1.5 tracking-wide">
         {label}
-        {hint && <span className="ml-2 text-fortress-silver/40 font-normal normal-case">{hint}</span>}
+        {hint && <span className="ml-2 text-gvi-silver/40 font-normal normal-case">{hint}</span>}
       </label>
       {multiline ? (
         <textarea
           rows={rows}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full bg-[#070e1a] border border-white/10 text-fortress-ivory text-sm px-3 py-2.5 focus:outline-none focus:border-fortress-gold/50 transition-colors rounded-lg font-sans leading-relaxed resize-y"
+          className="w-full bg-[#070e1a] border border-white/10 text-gvi-ivory text-sm px-3 py-2.5 focus:outline-none focus:border-gvi-gold/50 transition-colors rounded-lg font-sans leading-relaxed resize-y"
         />
       ) : (
         <input
           type="text"
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full bg-[#070e1a] border border-white/10 text-fortress-ivory text-sm px-3 py-2.5 focus:outline-none focus:border-fortress-gold/50 transition-colors rounded-lg"
+          className="w-full bg-[#070e1a] border border-white/10 text-gvi-ivory text-sm px-3 py-2.5 focus:outline-none focus:border-gvi-gold/50 transition-colors rounded-lg"
         />
       )}
     </div>
@@ -79,10 +79,10 @@ function ListEditor({
   return (
     <div className="mb-4">
       <div className="flex items-center justify-between mb-2">
-        <span className="text-fortress-silver text-xs font-medium tracking-wide">{label}</span>
+        <span className="text-gvi-silver text-xs font-medium tracking-wide">{label}</span>
         <button
           onClick={add}
-          className="flex items-center gap-1 text-xs text-fortress-gold hover:text-fortress-champagne transition-colors border border-fortress-gold/30 hover:border-fortress-gold/60 px-2.5 py-1 rounded-md"
+          className="flex items-center gap-1 text-xs text-gvi-gold hover:text-gvi-champagne transition-colors border border-gvi-gold/30 hover:border-gvi-gold/60 px-2.5 py-1 rounded-md"
         >
           <Plus className="w-3 h-3" /> {addLabel}
         </button>
@@ -91,7 +91,7 @@ function ListEditor({
         {items.map((item, idx) => (
           <div key={idx} className="bg-[#070e1a] border border-white/8 rounded-lg p-3 relative group">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-fortress-gold/50 text-xs font-mono">#{String(idx + 1).padStart(2, "0")}</span>
+              <span className="text-gvi-gold/50 text-xs font-mono">#{String(idx + 1).padStart(2, "0")}</span>
               <button
                 onClick={() => remove(idx)}
                 className="text-red-400/50 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100"
@@ -102,22 +102,22 @@ function ListEditor({
             {fields.map((f) => (
               f.multiline ? (
                 <div key={f.key} className="mb-2 last:mb-0">
-                  <label className="block text-fortress-silver/60 text-xs mb-1">{f.label}</label>
+                  <label className="block text-gvi-silver/60 text-xs mb-1">{f.label}</label>
                   <textarea
                     rows={2}
                     value={item[f.key] || ""}
                     onChange={(e) => update(idx, f.key, e.target.value)}
-                    className="w-full bg-fortress-deep border border-white/8 text-fortress-ivory text-sm px-3 py-2 focus:outline-none focus:border-fortress-gold/40 transition-colors rounded-md font-sans leading-relaxed resize-y"
+                    className="w-full bg-gvi-deep border border-white/8 text-gvi-ivory text-sm px-3 py-2 focus:outline-none focus:border-gvi-gold/40 transition-colors rounded-md font-sans leading-relaxed resize-y"
                   />
                 </div>
               ) : (
                 <div key={f.key} className="mb-2 last:mb-0">
-                  <label className="block text-fortress-silver/60 text-xs mb-1">{f.label}</label>
+                  <label className="block text-gvi-silver/60 text-xs mb-1">{f.label}</label>
                   <input
                     type="text"
                     value={item[f.key] || ""}
                     onChange={(e) => update(idx, f.key, e.target.value)}
-                    className="w-full bg-fortress-deep border border-white/8 text-fortress-ivory text-sm px-3 py-2 focus:outline-none focus:border-fortress-gold/40 transition-colors rounded-md"
+                    className="w-full bg-gvi-deep border border-white/8 text-gvi-ivory text-sm px-3 py-2 focus:outline-none focus:border-gvi-gold/40 transition-colors rounded-md"
                   />
                 </div>
               )
@@ -125,7 +125,7 @@ function ListEditor({
           </div>
         ))}
         {items.length === 0 && (
-          <div className="text-center py-6 text-fortress-silver/30 text-xs border border-dashed border-white/10 rounded-lg">
+          <div className="text-center py-6 text-gvi-silver/30 text-xs border border-dashed border-white/10 rounded-lg">
             Chưa có mục nào — nhấn &ldquo;{addLabel}&rdquo; để thêm
           </div>
         )}
@@ -141,22 +141,22 @@ function SectionCard({
 }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
-    <div className="bg-fortress-navy border border-fortress-gold/10 rounded-xl overflow-hidden mb-4">
+    <div className="bg-gvi-navy border border-gvi-gold/10 rounded-xl overflow-hidden mb-4">
       <button
-        className="w-full flex items-center justify-between px-5 py-4 hover:bg-fortress-gold/5 transition-colors"
+        className="w-full flex items-center justify-between px-5 py-4 hover:bg-gvi-gold/5 transition-colors"
         onClick={() => setOpen((p) => !p)}
       >
         <div className="flex items-center gap-3">
           {badge && (
-            <span className="text-fortress-gold/60 text-xs font-mono tracking-widest border border-fortress-gold/20 px-2 py-0.5 rounded-sm">
+            <span className="text-gvi-gold/60 text-xs font-mono tracking-widest border border-gvi-gold/20 px-2 py-0.5 rounded-sm">
               {badge}
             </span>
           )}
-          <span className="text-fortress-ivory text-sm font-medium">{title}</span>
+          <span className="text-gvi-ivory text-sm font-medium">{title}</span>
         </div>
-        {open ? <ChevronUp className="w-4 h-4 text-fortress-silver/40" /> : <ChevronDown className="w-4 h-4 text-fortress-silver/40" />}
+        {open ? <ChevronUp className="w-4 h-4 text-gvi-silver/40" /> : <ChevronDown className="w-4 h-4 text-gvi-silver/40" />}
       </button>
-      {open && <div className="px-5 pb-5 pt-1 border-t border-fortress-gold/5">{children}</div>}
+      {open && <div className="px-5 pb-5 pt-1 border-t border-gvi-gold/5">{children}</div>}
     </div>
   );
 }
@@ -165,15 +165,15 @@ function SectionCard({
 
 function LangTabs({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => void }) {
   return (
-    <div className="flex gap-1 bg-fortress-deep border border-fortress-gold/10 p-1 rounded-lg w-fit">
+    <div className="flex gap-1 bg-gvi-deep border border-gvi-gold/10 p-1 rounded-lg w-fit">
       {(["vi", "en"] as Lang[]).map((l) => (
         <button
           key={l}
           onClick={() => setLang(l)}
           className={`flex items-center gap-1.5 px-4 py-1.5 text-xs font-semibold rounded-md transition-all duration-200 ${
             lang === l
-              ? "bg-fortress-gold text-fortress-navy shadow-sm"
-              : "text-fortress-silver/60 hover:text-fortress-ivory"
+              ? "bg-gvi-gold text-gvi-navy shadow-sm"
+              : "text-gvi-silver/60 hover:text-gvi-ivory"
           }`}
         >
           <Globe className="w-3 h-3" />
@@ -272,11 +272,11 @@ export default function VisualEditorPage() {
 
   // ─── Render ──────────────────────────────────────────────────────────────────
   return (
-    <div className="min-h-screen bg-[#03080e] flex selection:bg-fortress-gold/20 selection:text-fortress-champagne font-sans">
+    <div className="min-h-screen bg-[#03080e] flex selection:bg-gvi-gold/20 selection:text-gvi-champagne font-sans">
       <AdminSidebar active="Visual Editor" />
       <main className="flex-1 overflow-y-auto overflow-x-hidden min-h-screen relative">
         {/* Ambient glows */}
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-fortress-gold/4 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-gvi-gold/4 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-blue-900/10 rounded-full blur-[150px] pointer-events-none" />
 
         <AdminNavbar title="Visual Editor — Trang chủ" />
@@ -287,28 +287,28 @@ export default function VisualEditorPage() {
           <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
             <div className="flex items-center gap-3 flex-wrap">
               <LangTabs lang={lang} setLang={setLang} />
-              <span className="text-fortress-silver/30 text-xs hidden sm:block">
+              <span className="text-gvi-silver/30 text-xs hidden sm:block">
                 {lang === "vi" ? "Chỉnh sửa nội dung Tiếng Việt" : "Editing English content"}
               </span>
             </div>
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setShowPreview((p) => !p)}
-                className="flex items-center gap-1.5 px-3 py-2 border border-fortress-gold/20 text-fortress-silver/60 hover:text-fortress-ivory text-xs rounded-lg transition-colors"
+                className="flex items-center gap-1.5 px-3 py-2 border border-gvi-gold/20 text-gvi-silver/60 hover:text-gvi-ivory text-xs rounded-lg transition-colors"
               >
                 {showPreview ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
                 Xem trước
               </button>
               <button
                 onClick={load}
-                className="flex items-center gap-1.5 px-3 py-2 border border-fortress-gold/20 text-fortress-silver/60 hover:text-fortress-ivory text-xs rounded-lg transition-colors"
+                className="flex items-center gap-1.5 px-3 py-2 border border-gvi-gold/20 text-gvi-silver/60 hover:text-gvi-ivory text-xs rounded-lg transition-colors"
               >
                 <RefreshCw className="w-3.5 h-3.5" /> Tải lại
               </button>
               <button
                 onClick={handleSave}
                 disabled={saving || loading}
-                className="flex items-center gap-2 px-5 py-2 bg-fortress-gold text-fortress-navy text-sm font-bold hover:bg-fortress-champagne transition-colors disabled:opacity-50 rounded-lg shadow-lg cursor-pointer"
+                className="flex items-center gap-2 px-5 py-2 bg-gvi-gold text-gvi-navy text-sm font-bold hover:bg-gvi-champagne transition-colors disabled:opacity-50 rounded-lg shadow-lg cursor-pointer"
               >
                 <Save className="w-4 h-4" />
                 {saving ? "Đang lưu..." : "Lưu tất cả"}
@@ -318,14 +318,14 @@ export default function VisualEditorPage() {
 
           {/* Live preview banner */}
           {showPreview && (
-            <div className="mb-5 rounded-xl border border-fortress-gold/20 overflow-hidden">
-              <div className="bg-fortress-navy/60 px-4 py-2 flex items-center justify-between border-b border-fortress-gold/10">
-                <span className="text-fortress-silver/60 text-xs">Xem trước trang chủ (live)</span>
+            <div className="mb-5 rounded-xl border border-gvi-gold/20 overflow-hidden">
+              <div className="bg-gvi-navy/60 px-4 py-2 flex items-center justify-between border-b border-gvi-gold/10">
+                <span className="text-gvi-silver/60 text-xs">Xem trước trang chủ (live)</span>
                 <a
                   href="/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-fortress-gold text-xs hover:underline"
+                  className="text-gvi-gold text-xs hover:underline"
                 >
                   Mở tab mới ↗
                 </a>
@@ -335,7 +335,7 @@ export default function VisualEditorPage() {
           )}
 
           {loading ? (
-            <div className="flex items-center justify-center py-24 text-fortress-silver/40 text-sm">
+            <div className="flex items-center justify-center py-24 text-gvi-silver/40 text-sm">
               <RefreshCw className="w-5 h-5 animate-spin mr-2" /> Đang tải dữ liệu...
             </div>
           ) : (
@@ -513,7 +513,7 @@ export default function VisualEditorPage() {
                 <button
                   onClick={handleSave}
                   disabled={saving || loading}
-                  className="flex items-center gap-2 px-8 py-3 bg-fortress-gold text-fortress-navy text-sm font-bold hover:bg-fortress-champagne transition-colors disabled:opacity-50 rounded-xl shadow-lg cursor-pointer"
+                  className="flex items-center gap-2 px-8 py-3 bg-gvi-gold text-gvi-navy text-sm font-bold hover:bg-gvi-champagne transition-colors disabled:opacity-50 rounded-xl shadow-lg cursor-pointer"
                 >
                   <Save className="w-4 h-4" />
                   {saving ? "Đang lưu..." : "Lưu tất cả thay đổi"}

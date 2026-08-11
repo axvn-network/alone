@@ -28,7 +28,7 @@ const NavLink = ({ href, icon: Icon, label }: { href: string; icon: React.Compon
       <motion.span variants={linkVariants} transition={{ duration: 0.3 }}>{label}</motion.span>
     </Link>
     <motion.div
-      className="h-px bg-fortress-gold mt-0.5"
+      className="h-px bg-gvi-gold mt-0.5"
       initial={{ scaleX: 0 }}
       whileHover={{ scaleX: 1 }}
       transition={{ duration: 0.3, ease: "easeOut" }}
@@ -92,8 +92,8 @@ export default function Navbar() {
       >
         <div className={`flex-1 h-10 ${bgClass} z-20 relative min-w-0`}>
           <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
-            <line x1="0" y1="39.5" x2="100%" y2="39.5" stroke="currentColor" strokeOpacity={0.08} strokeWidth={0.5} className="text-fortress-silver" />
-            <line x1="0" y1="36.5" x2="100%" y2="36.5" stroke="currentColor" strokeOpacity={0.08} strokeWidth={0.5} className="text-fortress-silver" />
+            <line x1="0" y1="39.5" x2="100%" y2="39.5" stroke="currentColor" strokeOpacity={0.08} strokeWidth={0.5} className="text-gvi-silver" />
+            <line x1="0" y1="36.5" x2="100%" y2="36.5" stroke="currentColor" strokeOpacity={0.08} strokeWidth={0.5} className="text-gvi-silver" />
           </svg>
         </div>
 
@@ -101,16 +101,16 @@ export default function Navbar() {
           <div className="w-[50px] h-full relative shrink-0">
             <div className={`absolute inset-0 ${bgClass}`} style={{ clipPath: "path('M0 0 H50 V96 C25 96 25 40 0 40 Z')" }} />
             <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 50 96">
-              <path d="M0 39.5 C25 39.5 25 95.5 50 95.5" fill="none" stroke="currentColor" strokeOpacity={0.08} strokeWidth={0.5} className="text-fortress-silver" />
-              <path d="M0 36.5 C25 36.5 25 91 50 91" fill="none" stroke="currentColor" strokeOpacity={0.08} strokeWidth={0.5} className="text-fortress-silver" />
+              <path d="M0 39.5 C25 39.5 25 95.5 50 95.5" fill="none" stroke="currentColor" strokeOpacity={0.08} strokeWidth={0.5} className="text-gvi-silver" />
+              <path d="M0 36.5 C25 36.5 25 91 50 91" fill="none" stroke="currentColor" strokeOpacity={0.08} strokeWidth={0.5} className="text-gvi-silver" />
             </svg>
           </div>
 
           <div className="flex-1 h-full relative min-w-0 -ml-px">
             <div className={`absolute inset-0 ${bgClass}`}>
               <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 96" preserveAspectRatio="none">
-                <line x1="0" y1="95.5" x2="100%" y2="95.5" stroke="currentColor" strokeOpacity={0.08} strokeWidth={0.5} className="text-fortress-silver" />
-                <line x1="0" y1="91" x2="100%" y2="91" stroke="currentColor" strokeOpacity={0.08} strokeWidth={0.5} className="text-fortress-silver" />
+                <line x1="0" y1="95.5" x2="100%" y2="95.5" stroke="currentColor" strokeOpacity={0.08} strokeWidth={0.5} className="text-gvi-silver" />
+                <line x1="0" y1="91" x2="100%" y2="91" stroke="currentColor" strokeOpacity={0.08} strokeWidth={0.5} className="text-gvi-silver" />
               </svg>
             </div>
 
@@ -126,7 +126,7 @@ export default function Navbar() {
                 <Link href="/" className="flex items-center group">
                   <Image
                     src="/large-logo1.png"
-                    alt="Fortress Investment Holdings"
+                    alt="GVI Tech Holding"
                     width={320}
                     height={96}
                     className="h-24 w-auto object-contain"
@@ -140,7 +140,7 @@ export default function Navbar() {
                   <NavLink key={item.href} {...item} />
                 ))}
                 <div className={`flex gap-4 pl-4 shrink-0 items-center border-l ${
-                  scrolled ? "border-fortress-gold/20" : "border-white/10"
+                  scrolled ? "border-gvi-gold/20" : "border-white/10"
                 }`}>
                   <LanguageSwitcher variant="pills" />
                   <motion.div
@@ -150,7 +150,7 @@ export default function Navbar() {
                   >
                     <Link
                       href="/contact"
-                      className="block px-4 py-1.5 text-sm font-medium text-fortress-navy bg-fortress-gold hover:bg-fortress-champagne transition-colors whitespace-nowrap shadow-sm"
+                      className="block px-4 py-1.5 text-sm font-medium text-gvi-navy bg-gvi-gold hover:bg-gvi-champagne transition-colors whitespace-nowrap shadow-sm"
                     >
                       {t("nav.contact", lang)}
                     </Link>
@@ -171,7 +171,7 @@ export default function Navbar() {
                 <Link href="/" className="flex items-center active:scale-95 transition-transform duration-150">
                   <Image
                     src="/phone-logo.png"
-                    alt="Fortress Investment Holdings"
+                    alt="GVI Tech Holding"
                     width={240}
                     height={72}
                     className="h-16 w-auto object-contain"
@@ -188,7 +188,7 @@ export default function Navbar() {
               <div className="flex items-center justify-end">
                 <Link
                   href="/contact"
-                  className="text-fortress-gold p-2 bg-white/5 rounded-full hover:bg-white/10 transition-colors shadow-sm active:scale-95"
+                  className="text-gvi-gold p-2 bg-white/5 rounded-full hover:bg-white/10 transition-colors shadow-sm active:scale-95"
                   aria-label="Liên hệ"
                 >
                   <Phone className="w-5 h-5" />
@@ -200,16 +200,16 @@ export default function Navbar() {
           <div className="w-[50px] h-full relative shrink-0 -ml-px">
             <div className={`absolute inset-0 ${bgClass}`} style={{ clipPath: "path('M0 0 H50 V40 C25 40 25 96 0 96 Z')" }} />
             <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 50 96">
-              <path d="M0 95.5 C25 95.5 25 39.5 50 39.5" fill="none" stroke="currentColor" strokeOpacity={0.08} strokeWidth={0.5} className="text-fortress-silver" />
-              <path d="M0 91 C25 91 25 36.5 50 36.5" fill="none" stroke="currentColor" strokeOpacity={0.08} strokeWidth={0.5} className="text-fortress-silver" />
+              <path d="M0 95.5 C25 95.5 25 39.5 50 39.5" fill="none" stroke="currentColor" strokeOpacity={0.08} strokeWidth={0.5} className="text-gvi-silver" />
+              <path d="M0 91 C25 91 25 36.5 50 36.5" fill="none" stroke="currentColor" strokeOpacity={0.08} strokeWidth={0.5} className="text-gvi-silver" />
             </svg>
           </div>
         </div>
 
         <div className={`flex-1 h-10 ${bgClass} z-20 relative min-w-0 -ml-px`}>
           <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
-            <line x1="0" y1="39.5" x2="100%" y2="39.5" stroke="currentColor" strokeOpacity={0.08} strokeWidth={0.5} className="text-fortress-silver" />
-            <line x1="0" y1="36.5" x2="100%" y2="36.5" stroke="currentColor" strokeOpacity={0.08} strokeWidth={0.5} className="text-fortress-silver" />
+            <line x1="0" y1="39.5" x2="100%" y2="39.5" stroke="currentColor" strokeOpacity={0.08} strokeWidth={0.5} className="text-gvi-silver" />
+            <line x1="0" y1="36.5" x2="100%" y2="36.5" stroke="currentColor" strokeOpacity={0.08} strokeWidth={0.5} className="text-gvi-silver" />
           </svg>
         </div>
       </motion.header>
@@ -230,10 +230,10 @@ export default function Navbar() {
                 href={item.href}
                 className="flex flex-col items-center justify-center w-full h-full gap-1 active:scale-95 transition-transform"
               >
-                <div className={`flex items-center justify-center w-9 h-9 rounded-xl transition-all duration-200 ${isActive ? "bg-fortress-gold/15" : ""}`}>
-                  <Icon className={`w-5 h-5 transition-colors ${isActive ? "text-fortress-gold" : "text-fortress-silver/55"}`} />
+                <div className={`flex items-center justify-center w-9 h-9 rounded-xl transition-all duration-200 ${isActive ? "bg-gvi-gold/15" : ""}`}>
+                  <Icon className={`w-5 h-5 transition-colors ${isActive ? "text-gvi-gold" : "text-gvi-silver/55"}`} />
                 </div>
-                <span className={`text-[9.5px] font-medium transition-colors text-center leading-tight px-0.5 ${isActive ? "text-fortress-gold" : "text-white/45"}`}>
+                <span className={`text-[9.5px] font-medium transition-colors text-center leading-tight px-0.5 ${isActive ? "text-gvi-gold" : "text-white/45"}`}>
                   {item.label}
                 </span>
               </Link>
@@ -247,13 +247,13 @@ export default function Navbar() {
             aria-label="Mở menu"
             aria-expanded={menuOpen}
           >
-            <div className={`flex items-center justify-center w-9 h-9 rounded-xl transition-all duration-200 ${menuOpen ? "bg-fortress-gold/15" : ""}`}>
+            <div className={`flex items-center justify-center w-9 h-9 rounded-xl transition-all duration-200 ${menuOpen ? "bg-gvi-gold/15" : ""}`}>
               {menuOpen
-                ? <X className="w-5 h-5 text-fortress-gold" />
-                : <LayoutGrid className={`w-5 h-5 transition-colors ${overflowItems.some(i => pathname.startsWith(i.href)) ? "text-fortress-gold" : "text-fortress-silver/55"}`} />
+                ? <X className="w-5 h-5 text-gvi-gold" />
+                : <LayoutGrid className={`w-5 h-5 transition-colors ${overflowItems.some(i => pathname.startsWith(i.href)) ? "text-gvi-gold" : "text-gvi-silver/55"}`} />
               }
             </div>
-            <span className={`text-[9.5px] font-medium transition-colors ${menuOpen || overflowItems.some(i => pathname.startsWith(i.href)) ? "text-fortress-gold" : "text-white/45"}`}>
+            <span className={`text-[9.5px] font-medium transition-colors ${menuOpen || overflowItems.some(i => pathname.startsWith(i.href)) ? "text-gvi-gold" : "text-white/45"}`}>
               {menuOpen ? "Đóng" : "Menu"}
             </span>
           </button>
@@ -282,7 +282,7 @@ export default function Navbar() {
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
               transition={{ type: "spring", stiffness: 380, damping: 36, mass: 0.9 }}
-              className="fixed bottom-[64px] inset-x-0 z-40 md:hidden bg-[#07111D] border-t border-fortress-gold/20 rounded-t-2xl overflow-hidden"
+              className="fixed bottom-[64px] inset-x-0 z-40 md:hidden bg-[#07111D] border-t border-gvi-gold/20 rounded-t-2xl overflow-hidden"
               style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
             >
               {/* Handle bar */}
@@ -292,7 +292,7 @@ export default function Navbar() {
 
               {/* Header row */}
               <div className="flex items-center justify-between px-5 pt-2 pb-4 border-b border-white/6">
-                <span className="text-[10px] font-semibold tracking-[0.22em] uppercase text-fortress-gold/70">
+                <span className="text-[10px] font-semibold tracking-[0.22em] uppercase text-gvi-gold/70">
                   Điều Hướng
                 </span>
                 <LanguageSwitcher variant="toggle" />
@@ -310,18 +310,18 @@ export default function Navbar() {
                       onClick={() => setMenuOpen(false)}
                       className={`flex items-center gap-3.5 px-4 py-3.5 rounded-xl transition-all duration-150 active:scale-[0.98] ${
                         isActive
-                          ? "bg-fortress-gold/12 border border-fortress-gold/25"
+                          ? "bg-gvi-gold/12 border border-gvi-gold/25"
                           : "hover:bg-white/5 border border-transparent"
                       }`}
                     >
-                      <div className={`w-9 h-9 flex items-center justify-center rounded-lg shrink-0 ${isActive ? "bg-fortress-gold/15" : "bg-white/5"}`}>
-                        <Icon className={`w-4.5 h-4.5 ${isActive ? "text-fortress-gold" : "text-fortress-silver/70"}`} />
+                      <div className={`w-9 h-9 flex items-center justify-center rounded-lg shrink-0 ${isActive ? "bg-gvi-gold/15" : "bg-white/5"}`}>
+                        <Icon className={`w-4.5 h-4.5 ${isActive ? "text-gvi-gold" : "text-gvi-silver/70"}`} />
                       </div>
-                      <span className={`text-sm font-medium ${isActive ? "text-fortress-gold" : "text-fortress-ivory/80"}`}>
+                      <span className={`text-sm font-medium ${isActive ? "text-gvi-gold" : "text-gvi-ivory/80"}`}>
                         {item.label}
                       </span>
                       {isActive && (
-                        <div className="ml-auto w-1.5 h-1.5 rounded-full bg-fortress-gold shrink-0" />
+                        <div className="ml-auto w-1.5 h-1.5 rounded-full bg-gvi-gold shrink-0" />
                       )}
                     </Link>
                   );
@@ -334,7 +334,7 @@ export default function Navbar() {
                 <Link
                   href="/contact"
                   onClick={() => setMenuOpen(false)}
-                  className="flex items-center justify-center gap-2.5 w-full py-3.5 bg-fortress-gold hover:bg-fortress-champagne active:scale-[0.98] text-fortress-navy font-bold text-xs tracking-[0.18em] uppercase rounded-xl transition-all duration-150"
+                  className="flex items-center justify-center gap-2.5 w-full py-3.5 bg-gvi-gold hover:bg-gvi-champagne active:scale-[0.98] text-gvi-navy font-bold text-xs tracking-[0.18em] uppercase rounded-xl transition-all duration-150"
                 >
                   <Phone className="w-4 h-4" />
                   {t("nav.contact", lang)}

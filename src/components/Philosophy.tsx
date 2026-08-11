@@ -54,7 +54,7 @@ export default function Philosophy() {
       whileInView="visible"
       viewport={{ once: true, margin: "-80px" }}
       variants={sectionReveal}
-      className="relative overflow-hidden bg-fortress-navy border-t border-fortress-gold/10 rounded-2xl section-mx section-my"
+      className="relative overflow-hidden bg-gvi-navy border-t border-gvi-gold/10 rounded-2xl section-mx section-my"
       style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}
     >
       <div className="relative max-w-[1400px] mx-auto section-px">
@@ -62,14 +62,14 @@ export default function Philosophy() {
           <Stagger>
             <StaggerItem>
               <div className="flex items-center justify-center gap-3 mb-6">
-                <div className="w-6 h-px bg-fortress-gold/60" />
+                <div className="w-6 h-px bg-gvi-gold/60" />
                 <span className="section-tag">{philTag}</span>
-                <div className="w-6 h-px bg-fortress-gold/60" />
+                <div className="w-6 h-px bg-gvi-gold/60" />
               </div>
             </StaggerItem>
             <StaggerItem>
               <h2
-                className="text-fortress-ivory text-center font-light mb-7 md:mb-9 uppercase leading-[1.28]"
+                className="text-gvi-ivory text-center font-light mb-7 md:mb-9 uppercase leading-[1.28]"
                 style={{ fontSize: "var(--text-h2)", letterSpacing: "var(--tracking-heading)" }}
               >
                 {philTitle}
@@ -77,7 +77,7 @@ export default function Philosophy() {
             </StaggerItem>
             <StaggerItem>
               <p
-                className="text-fortress-silver/80 leading-[1.8] text-center max-w-[680px] mx-auto mb-12 md:mb-16"
+                className="text-gvi-silver/80 leading-[1.8] text-center max-w-[680px] mx-auto mb-12 md:mb-16"
                 style={{ fontSize: "var(--text-lead)" }}
               >
                 {philDesc}
@@ -91,11 +91,11 @@ export default function Philosophy() {
                     variants={cardVariants}
                     initial="rest"
                     whileHover="hover"
-                    className="text-center border bg-fortress-deep rounded-sm cursor-default"
+                    className="text-center border bg-gvi-deep rounded-sm cursor-default"
                     style={{ padding: "clamp(1.25rem, 2vw + 0.5rem, 2rem)" }}
                   >
                     <motion.span
-                      className="text-fortress-gold/30 font-thin block mb-5 leading-none tracking-tight"
+                      className="text-gvi-gold/30 font-thin block mb-5 leading-none tracking-tight"
                       style={{ fontSize: "clamp(3rem, 4vw + 1rem, 4.5rem)" }}
                       whileHover={{ color: "rgba(201,162,74,0.7)", scale: 1.04 }}
                       transition={{ duration: 0.2 }}
@@ -103,12 +103,12 @@ export default function Philosophy() {
                       {item.number}
                     </motion.span>
                     <h3
-                      className="font-semibold text-fortress-ivory mb-4 leading-[1.4]"
+                      className="font-semibold text-gvi-ivory mb-4 leading-[1.4]"
                       style={{ fontSize: "var(--text-h3)" }}
                     >
                       {item.title}
                     </h3>
-                    <p className="text-fortress-silver/70 leading-[1.8]" style={{ fontSize: "var(--text-body)" }}>
+                    <p className="text-gvi-silver/70 leading-[1.8]" style={{ fontSize: "var(--text-body)" }}>
                       {item.desc}
                     </p>
                   </motion.div>
@@ -118,7 +118,7 @@ export default function Philosophy() {
             <StaggerItem>
               <div className="mt-10 md:mt-14 flex justify-center">
                 <p
-                  className="text-fortress-silver/45 leading-[1.8] text-center max-w-[560px] italic border-t border-fortress-gold/10 pt-8"
+                  className="text-gvi-silver/45 leading-[1.8] text-center max-w-[560px] italic border-t border-gvi-gold/10 pt-8"
                   style={{ fontSize: "var(--text-body)" }}
                 >
                   {philQuote}

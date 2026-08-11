@@ -13,6 +13,7 @@ import {
 interface Me {
   id: string; name: string; email: string; role: string;
   equityPercent: number; capitalCommitted: number; capitalPaid: number;
+  kycStatus?: string;
 }
 interface Task {
   _id: string; title: string; description: string; category: string;
@@ -37,7 +38,7 @@ const ROLE_LABELS: Record<string, string> = {
   legal: "⚖️ Pháp Lý", foreign: "🌐 Nước Ngoài",
 };
 const STATUS_CONFIG: Record<string, { label: string; icon: typeof CheckCircle2; cls: string }> = {
-  pending:     { label: "Chưa bắt đầu", icon: Clock,        cls: "text-fortress-silver/50" },
+  pending:     { label: "Chưa bắt đầu", icon: Clock,        cls: "text-gvi-silver/50" },
   in_progress: { label: "Đang làm",      icon: RefreshCw,    cls: "text-blue-400" },
   done:        { label: "Hoàn thành",    icon: CheckCircle2, cls: "text-emerald-400" },
   blocked:     { label: "Bị chặn",       icon: XCircle,      cls: "text-red-400" },
@@ -63,28 +64,40 @@ const MEETING_TYPE: Record<string, string> = {
   general: "Họp Thường Kỳ", emergency: "Họp Khẩn", technical: "Kỹ Thuật",
   legal: "Pháp Lý", progress: "Tiến Độ",
 };
+const KYC_STATUS_LABELS: Record<string, { label: string; cls: string }> = {
+  not_started: { label: "KYC: Chưa bắt đầu", cls: "text-gvi-silver/40 bg-gvi-navy/60" },
+  pending:     { label: "KYC: Chờ xét duyệt", cls: "text-yellow-400 bg-yellow-500/10" },
+  approved:    { label: "KYC: Đã xác minh ✓", cls: "text-emerald-400 bg-emerald-500/10" },
+  rejected:    { label: "KYC: Bị từ chối",   cls: "text-red-400 bg-red-500/10" },
+};
 
 // ─── Sidebar ──────────────────────────────────────────────────────────────────
-function Sidebar({ active, setActive, me, onLogout }: {
+function Sidebar({ active, setActive, me, onLogout, unreadCount }: {
   active: string; setActive: (s: string) => void; me: Me | null; onLogout: () => void;
+  unreadCount: number;
 }) {
-  const nav = [
+  const nav: { key: string; icon: typeof LayoutDashboard; label: string; badge?: number }[] = [
     { key: "dashboard", icon: LayoutDashboard, label: "Tổng Quan" },
     { key: "tasks",     icon: CheckSquare,     label: "Nhiệm Vụ" },
-    { key: "messages",  icon: MessageSquare,   label: "Nhắn Tin" },
+    { key: "messages",  icon: MessageSquare,   label: "Nhắn Tin", badge: unreadCount },
     { key: "meetings",  icon: Users,           label: "Họp Cổ Đông" },
   ];
   return (
-    <aside className="w-64 bg-[#03080e]/95 border-r border-fortress-gold/10 flex flex-col shrink-0 h-screen sticky top-0">
-      <div className="p-6 border-b border-fortress-gold/10">
-        <Image src="/large-logo.png" alt="Fortress" width={160} height={44} className="h-9 w-auto object-contain brightness-110" />
-        <p className="text-fortress-gold/60 text-[10px] font-semibold tracking-widest uppercase mt-2">Cổ Đông Portal</p>
+    <aside className="w-64 bg-[#03080e]/95 border-r border-gvi-gold/10 flex flex-col shrink-0 h-screen sticky top-0">
+      <div className="p-6 border-b border-gvi-gold/10">
+        <Image src="/large-logo.png" alt="GVI Tech Holding" width={160} height={44} className="h-9 w-auto object-contain brightness-110" />
+        <p className="text-gvi-gold/60 text-[10px] font-semibold tracking-widest uppercase mt-2">Cổ Đông Portal</p>
       </div>
       {me && (
-        <div className="px-4 py-3 border-b border-fortress-gold/8 mx-2 my-2 rounded-xl bg-fortress-gold/5">
-          <p className="text-fortress-ivory text-sm font-semibold truncate">{me.name}</p>
-          <p className="text-fortress-silver/50 text-[11px]">{ROLE_LABELS[me.role] || me.role}</p>
-          <p className="text-fortress-gold text-xs font-bold mt-1">{me.equityPercent}% cổ phần</p>
+        <div className="px-4 py-3 border-b border-gvi-gold/8 mx-2 my-2 rounded-xl bg-gvi-gold/5">
+          <p className="text-gvi-ivory text-sm font-semibold truncate">{me.name}</p>
+          <p className="text-gvi-silver/50 text-[11px]">{ROLE_LABELS[me.role] || me.role}</p>
+          <p className="text-gvi-gold text-xs font-bold mt-1">{me.equityPercent}% cổ phần</p>
+          {me.kycStatus && (
+            <span className={`mt-1 inline-block text-[10px] font-medium px-1.5 py-0.5 rounded ${KYC_STATUS_LABELS[me.kycStatus]?.cls || ""}`}>
+              {KYC_STATUS_LABELS[me.kycStatus]?.label || me.kycStatus}
+            </span>
+          )}
         </div>
       )}
       <nav className="flex-1 p-3 space-y-1 overflow-auto">
@@ -92,17 +105,22 @@ function Sidebar({ active, setActive, me, onLogout }: {
           <button key={item.key} onClick={() => setActive(item.key)}
             className={`w-full flex items-center gap-3 px-4 py-3 text-sm rounded-xl transition-all duration-200 ${
               active === item.key
-                ? "text-fortress-gold font-medium bg-fortress-gold/10 border border-fortress-gold/15"
-                : "text-fortress-silver hover:text-fortress-ivory hover:bg-fortress-gold/5"
+                ? "text-gvi-gold font-medium bg-gvi-gold/10 border border-gvi-gold/15"
+                : "text-gvi-silver hover:text-gvi-ivory hover:bg-gvi-gold/5"
             }`}>
             <item.icon className="w-4 h-4 shrink-0" />
-            {item.label}
+            <span className="flex-1 text-left">{item.label}</span>
+            {item.badge != null && item.badge > 0 && (
+              <span className="text-[10px] font-bold bg-gvi-gold text-gvi-navy rounded-full w-4 h-4 flex items-center justify-center">
+                {item.badge > 9 ? "9+" : item.badge}
+              </span>
+            )}
           </button>
         ))}
       </nav>
-      <div className="p-3 border-t border-fortress-gold/10">
+      <div className="p-3 border-t border-gvi-gold/10">
         <button onClick={onLogout}
-          className="w-full flex items-center gap-3 px-4 py-3 text-sm text-fortress-silver/50 hover:text-fortress-champagne hover:bg-fortress-gold/5 rounded-xl transition-all">
+          className="w-full flex items-center gap-3 px-4 py-3 text-sm text-gvi-silver/50 hover:text-gvi-champagne hover:bg-gvi-gold/5 rounded-xl transition-all">
           <LogOut className="w-4 h-4" />
           Đăng xuất
         </button>
@@ -129,8 +147,8 @@ function DashboardView({ me, tasks, meetings }: { me: Me | null; tasks: Task[]; 
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-fortress-ivory font-semibold text-lg">Xin chào, {me?.name} 👋</h2>
-        <p className="text-fortress-silver/50 text-sm mt-1">Dưới đây là toàn cảnh tiến độ dự án của bạn.</p>
+        <h2 className="text-gvi-ivory font-semibold text-lg">Xin chào, {me?.name} 👋</h2>
+        <p className="text-gvi-silver/50 text-sm mt-1">Dưới đây là toàn cảnh tiến độ dự án của bạn.</p>
       </div>
 
       {/* KPI cards */}
@@ -139,25 +157,25 @@ function DashboardView({ me, tasks, meetings }: { me: Me | null; tasks: Task[]; 
           { label: "Nhiệm vụ hoàn thành", value: `${done}/${tasks.length}`, icon: CheckCircle2, cls: "text-emerald-400" },
           { label: "Đang thực hiện", value: inProgress.toString(), icon: RefreshCw, cls: "text-blue-400" },
           { label: "Bị chặn / tắc", value: blocked.toString(), icon: XCircle, cls: "text-red-400" },
-          { label: "Cổ phần", value: `${me?.equityPercent ?? 0}%`, icon: Users, cls: "text-fortress-gold" },
+          { label: "Cổ phần", value: `${me?.equityPercent ?? 0}%`, icon: Users, cls: "text-gvi-gold" },
         ].map((kpi) => (
-          <div key={kpi.label} className="bg-fortress-deep border border-fortress-gold/10 rounded-xl p-5">
+          <div key={kpi.label} className="bg-gvi-deep border border-gvi-gold/10 rounded-xl p-5">
             <kpi.icon className={`w-5 h-5 ${kpi.cls} mb-3`} />
             <p className={`font-black text-2xl ${kpi.cls}`}>{kpi.value}</p>
-            <p className="text-fortress-silver/50 text-xs mt-1">{kpi.label}</p>
+            <p className="text-gvi-silver/50 text-xs mt-1">{kpi.label}</p>
           </div>
         ))}
       </div>
 
       {/* Task progress bar */}
       {tasks.length > 0 && (
-        <div className="bg-fortress-deep border border-fortress-gold/10 rounded-xl p-5">
+        <div className="bg-gvi-deep border border-gvi-gold/10 rounded-xl p-5">
           <div className="flex items-center justify-between mb-3">
-            <p className="text-fortress-ivory text-sm font-semibold">Tiến độ nhiệm vụ</p>
-            <p className="text-fortress-gold text-sm font-bold">{Math.round((done / tasks.length) * 100)}%</p>
+            <p className="text-gvi-ivory text-sm font-semibold">Tiến độ nhiệm vụ</p>
+            <p className="text-gvi-gold text-sm font-bold">{Math.round((done / tasks.length) * 100)}%</p>
           </div>
-          <div className="h-2 bg-fortress-navy rounded-full overflow-hidden">
-            <div className="h-full bg-gradient-to-r from-fortress-gold to-fortress-champagne rounded-full transition-all duration-700"
+          <div className="h-2 bg-gvi-navy rounded-full overflow-hidden">
+            <div className="h-full bg-gradient-to-r from-gvi-gold to-gvi-champagne rounded-full transition-all duration-700"
               style={{ width: `${Math.round((done / tasks.length) * 100)}%` }} />
           </div>
         </div>
@@ -165,22 +183,22 @@ function DashboardView({ me, tasks, meetings }: { me: Me | null; tasks: Task[]; 
 
       {/* Capital progress */}
       {me && me.capitalCommitted > 0 && (
-        <div className="bg-fortress-deep border border-fortress-gold/10 rounded-xl p-5">
+        <div className="bg-gvi-deep border border-gvi-gold/10 rounded-xl p-5">
           <div className="flex items-center justify-between mb-3">
-            <p className="text-fortress-ivory text-sm font-semibold">Tiến độ vốn góp</p>
-            <p className="text-fortress-gold text-sm font-bold">{capitalPct}%</p>
+            <p className="text-gvi-ivory text-sm font-semibold">Tiến độ vốn góp</p>
+            <p className="text-gvi-gold text-sm font-bold">{capitalPct}%</p>
           </div>
-          <div className="h-2 bg-fortress-navy rounded-full overflow-hidden mb-3">
+          <div className="h-2 bg-gvi-navy rounded-full overflow-hidden mb-3">
             <div className="h-full bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full transition-all"
               style={{ width: `${capitalPct}%` }} />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <p className="text-fortress-silver/40 text-[10px] uppercase tracking-wider">Cam kết</p>
-              <p className="text-fortress-ivory text-sm font-bold">{fVND(me.capitalCommitted)} VNĐ</p>
+              <p className="text-gvi-silver/40 text-[10px] uppercase tracking-wider">Cam kết</p>
+              <p className="text-gvi-ivory text-sm font-bold">{fVND(me.capitalCommitted)} VNĐ</p>
             </div>
             <div>
-              <p className="text-fortress-silver/40 text-[10px] uppercase tracking-wider">Đã góp</p>
+              <p className="text-gvi-silver/40 text-[10px] uppercase tracking-wider">Đã góp</p>
               <p className="text-emerald-400 text-sm font-bold">{fVND(me.capitalPaid)} VNĐ</p>
             </div>
           </div>
@@ -189,15 +207,15 @@ function DashboardView({ me, tasks, meetings }: { me: Me | null; tasks: Task[]; 
 
       {/* Upcoming meetings */}
       {upcoming.length > 0 && (
-        <div className="bg-fortress-deep border border-fortress-gold/10 rounded-xl p-5">
-          <p className="text-fortress-ivory text-sm font-semibold mb-4">Cuộc họp sắp tới</p>
+        <div className="bg-gvi-deep border border-gvi-gold/10 rounded-xl p-5">
+          <p className="text-gvi-ivory text-sm font-semibold mb-4">Cuộc họp sắp tới</p>
           <div className="space-y-3">
             {upcoming.map((m) => (
-              <div key={m._id} className="flex items-start gap-3 p-3 bg-fortress-navy/60 rounded-lg">
-                <Calendar className="w-4 h-4 text-fortress-gold shrink-0 mt-0.5" />
+              <div key={m._id} className="flex items-start gap-3 p-3 bg-gvi-navy/60 rounded-lg">
+                <Calendar className="w-4 h-4 text-gvi-gold shrink-0 mt-0.5" />
                 <div className="flex-1 min-w-0">
-                  <p className="text-fortress-ivory text-sm font-medium truncate">{m.title}</p>
-                  <p className="text-fortress-silver/50 text-xs">{new Date(m.scheduledAt).toLocaleString("vi-VN")}</p>
+                  <p className="text-gvi-ivory text-sm font-medium truncate">{m.title}</p>
+                  <p className="text-gvi-silver/50 text-xs">{new Date(m.scheduledAt).toLocaleString("vi-VN")}</p>
                 </div>
                 {m.meetingLink && (
                   <a href={m.meetingLink} target="_blank" rel="noopener noreferrer"
@@ -251,12 +269,12 @@ function TasksView({ tasks, onUpdate }: { tasks: Task[]; onUpdate: () => void })
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-fortress-ivory font-semibold text-lg">Danh sách nhiệm vụ</h2>
-        <div className="flex gap-1 bg-fortress-deep border border-fortress-gold/10 rounded-xl p-1">
+        <h2 className="text-gvi-ivory font-semibold text-lg">Danh sách nhiệm vụ</h2>
+        <div className="flex gap-1 bg-gvi-deep border border-gvi-gold/10 rounded-xl p-1 overflow-x-auto">
           {statusFilters.map((f) => (
             <button key={f.key} onClick={() => setFilter(f.key)}
-              className={`px-3 py-1.5 text-[11px] font-semibold rounded-lg transition-colors ${
-                filter === f.key ? "bg-fortress-gold text-fortress-navy" : "text-fortress-silver/60 hover:text-fortress-ivory"
+              className={`px-3 py-1.5 text-[11px] font-semibold rounded-lg transition-colors whitespace-nowrap ${
+                filter === f.key ? "bg-gvi-gold text-gvi-navy" : "text-gvi-silver/60 hover:text-gvi-ivory"
               }`}>
               {f.label}
             </button>
@@ -265,17 +283,17 @@ function TasksView({ tasks, onUpdate }: { tasks: Task[]; onUpdate: () => void })
       </div>
 
       {Object.keys(grouped).length === 0 && (
-        <div className="text-center py-20 text-fortress-silver/30 text-sm">Không có nhiệm vụ nào.</div>
+        <div className="text-center py-20 text-gvi-silver/30 text-sm">Không có nhiệm vụ nào.</div>
       )}
 
       <div className="space-y-6">
         {Object.entries(grouped).map(([milestone, mileTasks]) => (
           <div key={milestone}>
             <div className="flex items-center gap-2 mb-3">
-              <div className="w-4 h-px bg-fortress-gold/40" />
-              <span className="text-fortress-gold/70 text-[11px] font-mono tracking-widest uppercase">{milestone}</span>
-              <div className="flex-1 h-px bg-fortress-gold/10" />
-              <span className="text-fortress-silver/30 text-[10px]">
+              <div className="w-4 h-px bg-gvi-gold/40" />
+              <span className="text-gvi-gold/70 text-[11px] font-mono tracking-widest uppercase">{milestone}</span>
+              <div className="flex-1 h-px bg-gvi-gold/10" />
+              <span className="text-gvi-silver/30 text-[10px]">
                 {mileTasks.filter((t) => t.status === "done").length}/{mileTasks.length} xong
               </span>
             </div>
@@ -285,31 +303,31 @@ function TasksView({ tasks, onUpdate }: { tasks: Task[]; onUpdate: () => void })
                 const StatusIcon = cfg.icon;
                 return (
                   <div key={task._id}
-                    className={`bg-fortress-deep border rounded-xl p-4 transition-all ${
-                      task.status === "done" ? "border-emerald-500/15 opacity-75" : "border-fortress-gold/10"
+                    className={`bg-gvi-deep border rounded-xl p-4 transition-all ${
+                      task.status === "done" ? "border-emerald-500/15 opacity-75" : "border-gvi-gold/10"
                     }`}>
                     <div className="flex items-start gap-3">
                       <StatusIcon className={`w-4 h-4 shrink-0 mt-0.5 ${cfg.cls}`} />
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap mb-1">
-                          <p className={`font-semibold text-sm ${task.status === "done" ? "line-through text-fortress-silver/40" : "text-fortress-ivory"}`}>
+                          <p className={`font-semibold text-sm ${task.status === "done" ? "line-through text-gvi-silver/40" : "text-gvi-ivory"}`}>
                             {task.title}
                           </p>
                           <span className={`text-[10px] border px-1.5 py-0.5 rounded font-semibold ${PRIORITY_CLS[task.priority]}`}>
                             {task.priority === "critical" ? "Cấp bách" : task.priority === "high" ? "Cao" : task.priority === "medium" ? "TB" : "Thấp"}
                           </span>
-                          <span className="text-[10px] text-fortress-silver/30 bg-fortress-navy/60 px-1.5 py-0.5 rounded">
+                          <span className="text-[10px] text-gvi-silver/30 bg-gvi-navy/60 px-1.5 py-0.5 rounded">
                             {CAT_LABELS[task.category] || task.category}
                           </span>
                         </div>
                         {task.description && (
-                          <p className="text-fortress-silver/55 text-xs leading-relaxed mb-2">{task.description}</p>
+                          <p className="text-gvi-silver/55 text-xs leading-relaxed mb-2">{task.description}</p>
                         )}
                         {task.legalRef && (
-                          <p className="text-fortress-gold/50 text-[10px]">📋 {task.legalRef}</p>
+                          <p className="text-gvi-gold/50 text-[10px]">📋 {task.legalRef}</p>
                         )}
                         {task.dueDate && (
-                          <p className="text-fortress-silver/30 text-[10px] mt-1">
+                          <p className="text-gvi-silver/30 text-[10px] mt-1">
                             ⏱ Hạn: {new Date(task.dueDate).toLocaleDateString("vi-VN")}
                           </p>
                         )}
@@ -343,13 +361,14 @@ function TasksView({ tasks, onUpdate }: { tasks: Task[]; onUpdate: () => void })
 }
 
 // ─── Messages View ─────────────────────────────────────────────────────────────
-function MessagesView({ me }: { me: Me | null }) {
+function MessagesView({ me, onRead }: { me: Me | null; onRead: () => void }) {
   const [channel, setChannel] = useState("general");
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const sseRef = useRef<EventSource | null>(null);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -357,10 +376,31 @@ function MessagesView({ me }: { me: Me | null }) {
       const res = await fetch(`/api/shareholders/messages?channel=${channel}`);
       const data = await res.json();
       if (data.success) setMessages(Array.isArray(data.data) ? data.data : []);
+      onRead();
     } finally { setLoading(false); }
-  }, [channel]);
+  }, [channel, onRead]);
 
-  useEffect(() => { load(); }, [load]);
+  // SSE: nhận tin nhắn mới realtime cho channel đang active
+  useEffect(() => {
+    load();
+    sseRef.current?.close();
+    const es = new EventSource(`/api/shareholders/messages/sse?channel=${channel}`);
+    sseRef.current = es;
+    es.addEventListener("message", (evt) => {
+      try {
+        const msg = JSON.parse(evt.data) as Message;
+        setMessages((prev) => {
+          // tránh duplicate
+          if (prev.find((m) => m._id === msg._id)) return prev;
+          return [...prev, msg];
+        });
+        onRead();
+      } catch { /* ignore parse error */ }
+    });
+    es.addEventListener("error", () => { es.close(); });
+    return () => { es.close(); sseRef.current = null; };
+  }, [channel, load, onRead]);
+
   useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages]);
 
   async function sendMessage() {
@@ -374,7 +414,10 @@ function MessagesView({ me }: { me: Me | null }) {
       });
       const data = await res.json();
       if (data.success) {
-        setMessages((prev) => [...prev, data.data]);
+        setMessages((prev) => {
+          if (prev.find((m) => m._id === data.data._id)) return prev;
+          return [...prev, data.data];
+        });
         setInput("");
       }
     } finally { setSending(false); }
@@ -383,14 +426,14 @@ function MessagesView({ me }: { me: Me | null }) {
   return (
     <div className="flex gap-4 h-[calc(100vh-140px)]">
       {/* Channel list */}
-      <div className="w-48 shrink-0 bg-fortress-deep border border-fortress-gold/10 rounded-xl p-2">
-        <p className="text-fortress-silver/40 text-[10px] uppercase tracking-widest px-3 py-2">Kênh liên lạc</p>
+      <div className="w-48 shrink-0 bg-gvi-deep border border-gvi-gold/10 rounded-xl p-2">
+        <p className="text-gvi-silver/40 text-[10px] uppercase tracking-widest px-3 py-2">Kênh liên lạc</p>
         {CHANNELS.map((ch) => (
           <button key={ch.key} onClick={() => setChannel(ch.key)}
             className={`w-full flex items-center gap-2.5 px-3 py-2.5 text-sm rounded-lg transition-colors mb-0.5 ${
               channel === ch.key
-                ? "bg-fortress-gold/15 text-fortress-gold border border-fortress-gold/20"
-                : "text-fortress-silver/60 hover:text-fortress-ivory hover:bg-fortress-gold/5"
+                ? "bg-gvi-gold/15 text-gvi-gold border border-gvi-gold/20"
+                : "text-gvi-silver/60 hover:text-gvi-ivory hover:bg-gvi-gold/5"
             }`}>
             <ch.icon className="w-3.5 h-3.5 shrink-0" />
             {ch.label}
@@ -399,41 +442,41 @@ function MessagesView({ me }: { me: Me | null }) {
       </div>
 
       {/* Message area */}
-      <div className="flex-1 flex flex-col bg-fortress-deep border border-fortress-gold/10 rounded-xl overflow-hidden">
-        <div className="px-4 py-3 border-b border-fortress-gold/10 flex items-center justify-between">
+      <div className="flex-1 flex flex-col bg-gvi-deep border border-gvi-gold/10 rounded-xl overflow-hidden">
+        <div className="px-4 py-3 border-b border-gvi-gold/10 flex items-center justify-between">
           <div>
-            <p className="text-fortress-ivory text-sm font-semibold">
+            <p className="text-gvi-ivory text-sm font-semibold">
               {CHANNELS.find((c) => c.key === channel)?.label || channel}
             </p>
-            <p className="text-fortress-silver/40 text-[11px]">{messages.length} tin nhắn</p>
+            <p className="text-gvi-silver/40 text-[11px]">{messages.length} tin nhắn</p>
           </div>
-          <button onClick={load} className="text-fortress-silver/30 hover:text-fortress-gold transition-colors">
+          <button onClick={load} className="text-gvi-silver/30 hover:text-gvi-gold transition-colors">
             <RefreshCw className="w-4 h-4" />
           </button>
         </div>
 
         <div className="flex-1 overflow-y-auto p-4 space-y-3">
-          {loading && <div className="flex justify-center py-8"><Loader2 className="w-5 h-5 text-fortress-gold animate-spin" /></div>}
+          {loading && <div className="flex justify-center py-8"><Loader2 className="w-5 h-5 text-gvi-gold animate-spin" /></div>}
           {messages.map((msg) => {
             const isMine = msg.senderName === me?.name;
             return (
               <div key={msg._id} className={`flex ${isMine ? "justify-end" : "justify-start"}`}>
                 <div className={`max-w-[75%] ${isMine ? "items-end" : "items-start"} flex flex-col`}>
                   {!isMine && (
-                    <p className="text-[10px] text-fortress-silver/40 mb-1 px-1">
+                    <p className="text-[10px] text-gvi-silver/40 mb-1 px-1">
                       {msg.senderName} · {msg.isAdminSender ? "🔧 Admin" : ROLE_LABELS[msg.senderRole] || msg.senderRole}
                     </p>
                   )}
                   <div className={`px-4 py-2.5 rounded-2xl text-sm leading-relaxed ${
                     isMine
-                      ? "bg-fortress-gold/20 text-fortress-ivory rounded-tr-sm"
+                      ? "bg-gvi-gold/20 text-gvi-ivory rounded-tr-sm"
                       : msg.isAdminSender
-                      ? "bg-blue-500/15 border border-blue-500/20 text-fortress-ivory rounded-tl-sm"
-                      : "bg-fortress-navy text-fortress-silver/80 rounded-tl-sm"
+                      ? "bg-blue-500/15 border border-blue-500/20 text-gvi-ivory rounded-tl-sm"
+                      : "bg-gvi-navy text-gvi-silver/80 rounded-tl-sm"
                   }`}>
                     {msg.content}
                   </div>
-                  <p className="text-[10px] text-fortress-silver/25 mt-1 px-1">
+                  <p className="text-[10px] text-gvi-silver/25 mt-1 px-1">
                     {new Date(msg.createdAt).toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" })}
                   </p>
                 </div>
@@ -443,13 +486,13 @@ function MessagesView({ me }: { me: Me | null }) {
           <div ref={bottomRef} />
         </div>
 
-        <div className="px-4 py-3 border-t border-fortress-gold/10 flex gap-2">
+        <div className="px-4 py-3 border-t border-gvi-gold/10 flex gap-2">
           <input value={input} onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); } }}
             placeholder="Nhập tin nhắn... (Enter để gửi)"
-            className="flex-1 bg-fortress-navy border border-white/10 text-fortress-ivory text-sm px-4 py-2.5 focus:outline-none focus:border-fortress-gold/40 rounded-xl transition-colors" />
+            className="flex-1 bg-gvi-navy border border-white/10 text-gvi-ivory text-sm px-4 py-2.5 focus:outline-none focus:border-gvi-gold/40 rounded-xl transition-colors" />
           <button onClick={sendMessage} disabled={sending || !input.trim()}
-            className="p-2.5 bg-fortress-gold text-fortress-navy rounded-xl hover:bg-fortress-champagne transition-colors disabled:opacity-40">
+            className="p-2.5 bg-gvi-gold text-gvi-navy rounded-xl hover:bg-gvi-champagne transition-colors disabled:opacity-40">
             {sending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
           </button>
         </div>
@@ -463,31 +506,31 @@ function MeetingsView({ meetings }: { meetings: Meeting[] }) {
   const [open, setOpen] = useState<string | null>(null);
 
   if (meetings.length === 0) {
-    return <div className="text-center py-24 text-fortress-silver/30 text-sm">Chưa có cuộc họp nào được lên lịch.</div>;
+    return <div className="text-center py-24 text-gvi-silver/30 text-sm">Chưa có cuộc họp nào được lên lịch.</div>;
   }
 
   return (
     <div>
-      <h2 className="text-fortress-ivory font-semibold text-lg mb-6">Họp Cổ Đông</h2>
+      <h2 className="text-gvi-ivory font-semibold text-lg mb-6">Họp Cổ Đông</h2>
       <div className="space-y-3">
         {meetings.map((m) => (
           <div key={m._id} className={`border rounded-xl overflow-hidden transition-all ${
-            m.status === "completed" ? "border-fortress-gold/8 opacity-75" : "border-fortress-gold/15"
+            m.status === "completed" ? "border-gvi-gold/8 opacity-75" : "border-gvi-gold/15"
           }`}>
-            <button className="w-full flex items-center gap-4 p-5 bg-fortress-deep hover:bg-fortress-navy/60 transition-colors text-left"
+            <button className="w-full flex items-center gap-4 p-5 bg-gvi-deep hover:bg-gvi-navy/60 transition-colors text-left"
               onClick={() => setOpen(open === m._id ? null : m._id)}>
               <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
                 m.status === "scheduled" ? "bg-blue-500/15 text-blue-400" :
-                m.status === "in_progress" ? "bg-fortress-gold/15 text-fortress-gold" :
+                m.status === "in_progress" ? "bg-gvi-gold/15 text-gvi-gold" :
                 m.status === "completed" ? "bg-emerald-500/15 text-emerald-400" : "bg-red-500/15 text-red-400"
               }`}>
                 <Calendar className="w-4 h-4" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-fortress-ivory text-sm font-semibold truncate">{m.title}</p>
+                <p className="text-gvi-ivory text-sm font-semibold truncate">{m.title}</p>
                 <div className="flex items-center gap-3 mt-0.5 flex-wrap">
-                  <span className="text-fortress-silver/50 text-xs">{new Date(m.scheduledAt).toLocaleString("vi-VN")}</span>
-                  <span className="text-fortress-gold/60 text-[10px] uppercase tracking-wider">{MEETING_TYPE[m.type] || m.type}</span>
+                  <span className="text-gvi-silver/50 text-xs">{new Date(m.scheduledAt).toLocaleString("vi-VN")}</span>
+                  <span className="text-gvi-gold/60 text-[10px] uppercase tracking-wider">{MEETING_TYPE[m.type] || m.type}</span>
                   <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${
                     m.status === "scheduled" ? "bg-blue-500/15 text-blue-400" :
                     m.status === "completed" ? "bg-emerald-500/15 text-emerald-400" : "bg-yellow-500/15 text-yellow-400"
@@ -503,25 +546,25 @@ function MeetingsView({ meetings }: { meetings: Meeting[] }) {
                     <Video className="w-3 h-3" /> Tham gia
                   </a>
                 )}
-                {open === m._id ? <ChevronDown className="w-4 h-4 text-fortress-silver/30" /> : <ChevronRight className="w-4 h-4 text-fortress-silver/30" />}
+                {open === m._id ? <ChevronDown className="w-4 h-4 text-gvi-silver/30" /> : <ChevronRight className="w-4 h-4 text-gvi-silver/30" />}
               </div>
             </button>
 
             {open === m._id && (
-              <div className="px-5 pb-5 bg-fortress-navy/30 border-t border-fortress-gold/8">
+              <div className="px-5 pb-5 bg-gvi-navy/30 border-t border-gvi-gold/8">
                 {/* Agenda */}
                 {m.agenda.length > 0 && (
                   <div className="mt-4">
-                    <p className="text-fortress-silver/50 text-[10px] uppercase tracking-widest mb-3">Chương trình họp</p>
+                    <p className="text-gvi-silver/50 text-[10px] uppercase tracking-widest mb-3">Chương trình họp</p>
                     <div className="space-y-2">
                       {m.agenda.map((item) => (
                         <div key={item.order} className={`flex gap-3 p-3 rounded-lg border ${
-                          item.resolved ? "bg-emerald-500/5 border-emerald-500/15" : "bg-fortress-deep border-fortress-gold/8"
+                          item.resolved ? "bg-emerald-500/5 border-emerald-500/15" : "bg-gvi-deep border-gvi-gold/8"
                         }`}>
-                          <span className="text-fortress-gold/50 text-xs font-mono font-bold shrink-0">{String(item.order).padStart(2, "0")}</span>
+                          <span className="text-gvi-gold/50 text-xs font-mono font-bold shrink-0">{String(item.order).padStart(2, "0")}</span>
                           <div>
-                            <p className={`text-sm font-medium ${item.resolved ? "text-emerald-400" : "text-fortress-ivory"}`}>{item.title}</p>
-                            {item.description && <p className="text-fortress-silver/50 text-xs mt-0.5">{item.description}</p>}
+                            <p className={`text-sm font-medium ${item.resolved ? "text-emerald-400" : "text-gvi-ivory"}`}>{item.title}</p>
+                            {item.description && <p className="text-gvi-silver/50 text-xs mt-0.5">{item.description}</p>}
                             {item.resolved && item.resolution && (
                               <p className="text-emerald-400/70 text-xs mt-1">✓ Kết quả: {item.resolution}</p>
                             )}
@@ -534,9 +577,9 @@ function MeetingsView({ meetings }: { meetings: Meeting[] }) {
                 {/* Minutes */}
                 {m.minutes && (
                   <div className="mt-4">
-                    <p className="text-fortress-silver/50 text-[10px] uppercase tracking-widest mb-2">Biên bản họp</p>
-                    <div className="bg-fortress-deep border border-fortress-gold/8 rounded-lg p-4">
-                      <p className="text-fortress-silver/70 text-sm leading-relaxed whitespace-pre-wrap">{m.minutes}</p>
+                    <p className="text-gvi-silver/50 text-[10px] uppercase tracking-widest mb-2">Biên bản họp</p>
+                    <div className="bg-gvi-deep border border-gvi-gold/8 rounded-lg p-4">
+                      <p className="text-gvi-silver/70 text-sm leading-relaxed whitespace-pre-wrap">{m.minutes}</p>
                     </div>
                   </div>
                 )}
@@ -557,6 +600,9 @@ export default function ShareholderDashboard() {
   const [meetings, setMeetings] = useState<Meeting[]>([]);
   const [active, setActive] = useState("dashboard");
   const [bootLoading, setBootLoading] = useState(true);
+  const [unreadCount, setUnreadCount] = useState(0);
+  // SSE refs per channel for background notification
+  const sseRefs = useRef<EventSource[]>([]);
 
   const fetchTasks = useCallback(async () => {
     const res = await fetch("/api/shareholders/tasks");
@@ -568,6 +614,44 @@ export default function ShareholderDashboard() {
     const res = await fetch("/api/shareholders/meetings");
     const d = await res.json();
     if (d.success) setMeetings(Array.isArray(d.data) ? d.data : []);
+  }, []);
+
+  // Lấy unread count từ server khi load
+  const refreshUnread = useCallback(async () => {
+    setUnreadCount(0);
+  }, []);
+
+  // Background SSE: khi không ở tab messages, lắng nghe tất cả channel để tăng unread
+  useEffect(() => {
+    if (!me || active === "messages") {
+      // Đóng tất cả SSE background khi ở tab messages
+      sseRefs.current.forEach((es) => es.close());
+      sseRefs.current = [];
+      return;
+    }
+
+    // Subscribe tất cả channel để nhận thông báo
+    const channels = CHANNELS.map((ch) => ch.key);
+    sseRefs.current.forEach((es) => es.close());
+    sseRefs.current = channels.map((ch) => {
+      const es = new EventSource(`/api/shareholders/messages/sse?channel=${ch}`);
+      es.addEventListener("message", () => {
+        setUnreadCount((c) => c + 1);
+      });
+      es.addEventListener("error", () => { es.close(); });
+      return es;
+    });
+
+    return () => {
+      sseRefs.current.forEach((es) => es.close());
+      sseRefs.current = [];
+    };
+  }, [me, active]);
+
+  // Reset unread khi chuyển sang messages tab
+  const handleSetActive = useCallback((tab: string) => {
+    if (tab === "messages") setUnreadCount(0);
+    setActive(tab);
   }, []);
 
   useEffect(() => {
@@ -585,26 +669,27 @@ export default function ShareholderDashboard() {
   }, [router, fetchTasks, fetchMeetings]);
 
   async function logout() {
+    sseRefs.current.forEach((es) => es.close());
     await fetch("/api/shareholders/auth", { method: "DELETE" });
     router.replace("/shareholders/login");
   }
 
   if (bootLoading) {
     return (
-      <div className="min-h-screen bg-fortress-navy flex items-center justify-center">
-        <Loader2 className="w-8 h-8 text-fortress-gold animate-spin" />
+      <div className="min-h-screen bg-[#03080e] flex items-center justify-center">
+        <Loader2 className="w-8 h-8 text-gvi-gold animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#03080e] flex selection:bg-fortress-gold/20 font-sans">
-      <Sidebar active={active} setActive={setActive} me={me} onLogout={logout} />
+    <div className="min-h-screen bg-[#03080e] flex selection:bg-gvi-gold/20 font-sans">
+      <Sidebar active={active} setActive={handleSetActive} me={me} onLogout={logout} unreadCount={unreadCount} />
       <main className="flex-1 overflow-y-auto">
         <div className="max-w-5xl mx-auto px-6 py-8">
           {active === "dashboard" && <DashboardView me={me} tasks={tasks} meetings={meetings} />}
           {active === "tasks"     && <TasksView tasks={tasks} onUpdate={fetchTasks} />}
-          {active === "messages"  && <MessagesView me={me} />}
+          {active === "messages"  && <MessagesView me={me} onRead={refreshUnread} />}
           {active === "meetings"  && <MeetingsView meetings={meetings} />}
         </div>
       </main>

@@ -56,7 +56,7 @@ const ROLES: Role[] = [
     ],
     documents: [
       "CMND / CCCD / Hộ chiếu còn hiệu lực",
-      "Hợp đồng góp vốn ký kết với Fortress",
+      "Hợp đồng góp vốn ký kết với GVI Tech Holding",
       "Giấy xác nhận chuyển tiền góp vốn",
     ],
   },
@@ -231,8 +231,8 @@ export default function RoleSelector() {
               }}
               className={`group text-left p-5 rounded-xl border transition-all duration-200 ${
                 isActive
-                  ? `${role.border} bg-fortress-navy ring-1 ring-fortress-gold/20`
-                  : "border-fortress-silver/10 bg-fortress-deep hover:border-fortress-gold/25 hover:bg-fortress-deep/80"
+                  ? `${role.border} bg-gvi-navy ring-1 ring-gvi-gold/20`
+                  : "border-gvi-silver/10 bg-gvi-deep hover:border-gvi-gold/25 hover:bg-gvi-deep/80"
               }`}
             >
               <div className="flex items-start gap-3">
@@ -240,28 +240,28 @@ export default function RoleSelector() {
                   <Icon className={`w-4 h-4 ${role.color}`} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className={`font-bold text-sm leading-snug ${isActive ? role.color : "text-fortress-ivory"}`}>
+                  <p className={`font-bold text-sm leading-snug ${isActive ? role.color : "text-gvi-ivory"}`}>
                     {role.label}
                   </p>
-                  <p className="text-fortress-silver/50 text-[10px] mt-0.5 leading-snug">{role.group}</p>
+                  <p className="text-gvi-silver/50 text-[10px] mt-0.5 leading-snug">{role.group}</p>
                 </div>
                 <ChevronDown
                   className={`w-4 h-4 shrink-0 mt-0.5 transition-transform duration-200 ${
-                    isActive ? `${role.color} rotate-180` : "text-fortress-silver/30"
+                    isActive ? `${role.color} rotate-180` : "text-gvi-silver/30"
                   }`}
                 />
               </div>
 
               <div className="mt-3 grid grid-cols-2 gap-2">
                 <div className="bg-black/20 rounded-lg p-2">
-                  <p className="text-fortress-silver/40 text-[9px] uppercase tracking-wider mb-0.5">Vốn tối thiểu</p>
-                  <p className={`text-[10px] font-semibold leading-tight ${isActive ? role.color : "text-fortress-ivory/80"}`}>
+                  <p className="text-gvi-silver/40 text-[9px] uppercase tracking-wider mb-0.5">Vốn tối thiểu</p>
+                  <p className={`text-[10px] font-semibold leading-tight ${isActive ? role.color : "text-gvi-ivory/80"}`}>
                     {role.minCapital}
                   </p>
                 </div>
                 <div className="bg-black/20 rounded-lg p-2">
-                  <p className="text-fortress-silver/40 text-[9px] uppercase tracking-wider mb-0.5">Cổ phần</p>
-                  <p className={`text-[10px] font-semibold leading-tight ${isActive ? role.color : "text-fortress-ivory/80"}`}>
+                  <p className="text-gvi-silver/40 text-[9px] uppercase tracking-wider mb-0.5">Cổ phần</p>
+                  <p className={`text-[10px] font-semibold leading-tight ${isActive ? role.color : "text-gvi-ivory/80"}`}>
                     {role.equity}
                   </p>
                 </div>
@@ -273,21 +273,21 @@ export default function RoleSelector() {
 
       {/* Detail panel */}
       {selected && (
-        <div className={`rounded-2xl border ${selected.border} bg-fortress-navy overflow-hidden`}>
+        <div className={`rounded-2xl border ${selected.border} bg-gvi-navy overflow-hidden`}>
           {/* Header */}
-          <div className="flex items-center gap-3 p-5 border-b border-fortress-gold/10">
+          <div className="flex items-center gap-3 p-5 border-b border-gvi-gold/10">
             <div className={`w-10 h-10 rounded-xl ${selected.iconBg} flex items-center justify-center shrink-0`}>
               <selected.icon className={`w-5 h-5 ${selected.color}`} />
             </div>
             <div>
               <h3 className={`font-black text-base ${selected.color}`}>{selected.label}</h3>
-              <p className="text-fortress-silver/50 text-xs mt-0.5">{selected.group}</p>
+              <p className="text-gvi-silver/50 text-xs mt-0.5">{selected.group}</p>
             </div>
           </div>
 
           <div className="p-5 space-y-5">
             {/* Highlight */}
-            <p className="text-fortress-ivory/80 text-sm leading-relaxed">{selected.highlight}</p>
+            <p className="text-gvi-ivory/80 text-sm leading-relaxed">{selected.highlight}</p>
 
             {/* Warning if any */}
             {selected.warning && (
@@ -298,7 +298,7 @@ export default function RoleSelector() {
             )}
 
             {/* Tabs */}
-            <div className="flex gap-1 p-1 bg-fortress-deep rounded-xl">
+            <div className="flex gap-1 p-1 bg-gvi-deep rounded-xl">
               {(
                 [
                   { key: "rights",      label: "Quyền Lợi",    Icon: CheckCircle },
@@ -311,8 +311,8 @@ export default function RoleSelector() {
                   onClick={() => setTab(t.key)}
                   className={`flex-1 flex items-center justify-center gap-1.5 px-2 py-2 text-[11px] font-semibold tracking-wide rounded-lg transition-colors ${
                     tab === t.key
-                      ? "bg-fortress-navy text-fortress-ivory shadow-sm"
-                      : "text-fortress-silver/60 hover:text-fortress-ivory hover:bg-fortress-charcoal"
+                      ? "bg-gvi-navy text-gvi-ivory shadow-sm"
+                      : "text-gvi-silver/60 hover:text-gvi-ivory hover:bg-gvi-charcoal"
                   }`}
                 >
                   <t.Icon className="w-3 h-3" />
@@ -325,9 +325,9 @@ export default function RoleSelector() {
             {tab === "rights" && (
               <ul className="space-y-2">
                 {selected.rights.map((r, i) => (
-                  <li key={i} className="flex items-start gap-2.5 p-3 bg-fortress-deep/60 rounded-lg">
+                  <li key={i} className="flex items-start gap-2.5 p-3 bg-gvi-deep/60 rounded-lg">
                     <CheckCircle className={`w-4 h-4 mt-0.5 shrink-0 ${selected.color}`} />
-                    <span className="text-fortress-silver/80 text-sm leading-relaxed">{r}</span>
+                    <span className="text-gvi-silver/80 text-sm leading-relaxed">{r}</span>
                   </li>
                 ))}
               </ul>
@@ -336,9 +336,9 @@ export default function RoleSelector() {
             {tab === "obligations" && (
               <ul className="space-y-2">
                 {selected.obligations.map((o, i) => (
-                  <li key={i} className="flex items-start gap-2.5 p-3 bg-fortress-deep/60 border border-fortress-gold/10 rounded-lg">
-                    <AlertTriangle className="w-4 h-4 mt-0.5 shrink-0 text-fortress-gold/70" />
-                    <span className="text-fortress-silver/80 text-sm leading-relaxed">{o}</span>
+                  <li key={i} className="flex items-start gap-2.5 p-3 bg-gvi-deep/60 border border-gvi-gold/10 rounded-lg">
+                    <AlertTriangle className="w-4 h-4 mt-0.5 shrink-0 text-gvi-gold/70" />
+                    <span className="text-gvi-silver/80 text-sm leading-relaxed">{o}</span>
                   </li>
                 ))}
               </ul>
@@ -347,25 +347,25 @@ export default function RoleSelector() {
             {tab === "documents" && (
               <ul className="space-y-2">
                 {selected.documents.map((d, i) => (
-                  <li key={i} className="flex items-start gap-2.5 p-3 bg-fortress-deep/60 border border-fortress-gold/10 rounded-lg">
-                    <FileText className="w-4 h-4 mt-0.5 shrink-0 text-fortress-gold/60" />
-                    <span className="text-fortress-silver/80 text-sm leading-relaxed">{d}</span>
+                  <li key={i} className="flex items-start gap-2.5 p-3 bg-gvi-deep/60 border border-gvi-gold/10 rounded-lg">
+                    <FileText className="w-4 h-4 mt-0.5 shrink-0 text-gvi-gold/60" />
+                    <span className="text-gvi-silver/80 text-sm leading-relaxed">{d}</span>
                   </li>
                 ))}
               </ul>
             )}
 
             {/* CTA */}
-            <div className="pt-2 border-t border-fortress-gold/10 flex flex-col sm:flex-row gap-3">
+            <div className="pt-2 border-t border-gvi-gold/10 flex flex-col sm:flex-row gap-3">
               <a
                 href="/invest-with-fortress#connect"
-                className="flex-1 flex items-center justify-center py-3 bg-gradient-to-r from-fortress-gold to-fortress-champagne text-fortress-navy font-bold text-xs uppercase tracking-wider rounded-xl hover:opacity-90 transition-opacity"
+                className="flex-1 flex items-center justify-center py-3 bg-gradient-to-r from-gvi-gold to-gvi-champagne text-gvi-navy font-bold text-xs uppercase tracking-wider rounded-xl hover:opacity-90 transition-opacity"
               >
                 Đăng Ký Vai Trò Này
               </a>
               <a
                 href="/contact"
-                className="flex-1 flex items-center justify-center py-3 border border-fortress-gold/25 text-fortress-gold font-semibold text-xs uppercase tracking-wider rounded-xl hover:bg-fortress-gold/5 transition-colors"
+                className="flex-1 flex items-center justify-center py-3 border border-gvi-gold/25 text-gvi-gold font-semibold text-xs uppercase tracking-wider rounded-xl hover:bg-gvi-gold/5 transition-colors"
               >
                 Hỏi Thêm
               </a>

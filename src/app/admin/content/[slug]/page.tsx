@@ -72,18 +72,18 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
   }
 
   return (
-    <div className="min-h-screen bg-[#03080e] flex selection:bg-fortress-gold/20 selection:text-fortress-champagne font-sans">
+    <div className="min-h-screen bg-[#03080e] flex selection:bg-gvi-gold/20 selection:text-gvi-champagne font-sans">
       <AdminSidebar active="Content" />
       <main className="flex-1 overflow-y-auto overflow-x-hidden min-h-screen relative">
         {/* Ambient background glows */}
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-fortress-gold/5 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-fortress-navy/50 rounded-full blur-[150px] pointer-events-none" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-gvi-gold/5 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-gvi-navy/50 rounded-full blur-[150px] pointer-events-none" />
         
         <AdminNavbar title={pageLabels[slug] || slug} />
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 relative z-10">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <Link href="/admin/content" className="flex items-center gap-1.5 text-fortress-silver/50 hover:text-fortress-gold text-xs transition-colors mb-2">
+              <Link href="/admin/content" className="flex items-center gap-1.5 text-gvi-silver/50 hover:text-gvi-gold text-xs transition-colors mb-2">
                 <ArrowLeft className="w-3.5 h-3.5" /> Quay lại danh sách
               </Link>
             </div>
@@ -91,7 +91,7 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="flex items-center gap-2 px-5 py-2.5 bg-fortress-gold text-fortress-navy text-sm font-bold hover:bg-fortress-champagne transition-colors disabled:opacity-50 rounded-lg cursor-pointer shadow-lg"
+                className="flex items-center gap-2 px-5 py-2.5 bg-gvi-gold text-gvi-navy text-sm font-bold hover:bg-gvi-champagne transition-colors disabled:opacity-50 rounded-lg cursor-pointer shadow-lg"
               >
                 <Save className="w-4 h-4" />
                 {saving ? "Đang lưu..." : "Lưu thay đổi"}
@@ -128,43 +128,43 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
               />
             </div>
 
-            <div className="bg-fortress-navy border-t-2 border-t-fortress-gold/30 p-5 rounded-lg">
-              <label className="block text-fortress-silver text-xs font-medium mb-2 tracking-wide">Tiêu đề trang</label>
+            <div className="bg-gvi-navy border-t-2 border-t-gvi-gold/30 p-5 rounded-lg">
+              <label className="block text-gvi-silver text-xs font-medium mb-2 tracking-wide">Tiêu đề trang</label>
               <input
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full bg-fortress-deep border border-white/10 text-fortress-ivory text-sm px-4 py-3 focus:outline-none focus:border-fortress-gold/50 transition-colors rounded-lg"
+                className="w-full bg-gvi-deep border border-white/10 text-gvi-ivory text-sm px-4 py-3 focus:outline-none focus:border-gvi-gold/50 transition-colors rounded-lg"
               />
             </div>
 
-            <div className="bg-fortress-navy border-t-2 border-t-fortress-gold/30 p-5 rounded-lg">
+            <div className="bg-gvi-navy border-t-2 border-t-gvi-gold/30 p-5 rounded-lg">
               <div className="flex items-center justify-between mb-2">
-                <label className="block text-fortress-silver text-xs font-medium tracking-wide">Biến nội dung cấu trúc (Trường dữ liệu tĩnh)</label>
-                <span className="text-[11px] text-fortress-silver/40">Thay đổi trực tiếp các câu chữ hiển thị trên website</span>
+                <label className="block text-gvi-silver text-xs font-medium tracking-wide">Biến nội dung cấu trúc (Trường dữ liệu tĩnh)</label>
+                <span className="text-[11px] text-gvi-silver/40">Thay đổi trực tiếp các câu chữ hiển thị trên website</span>
               </div>
               <textarea
                 rows={10}
                 value={pageDataStr}
                 onChange={(e) => setPageDataStr(e.target.value)}
-                className="w-full bg-fortress-deep border border-white/10 text-fortress-champagne font-mono text-xs p-4 focus:outline-none focus:border-fortress-gold/50 transition-colors rounded-lg leading-relaxed"
+                className="w-full bg-gvi-deep border border-white/10 text-gvi-champagne font-mono text-xs p-4 focus:outline-none focus:border-gvi-gold/50 transition-colors rounded-lg leading-relaxed"
                 placeholder="{}"
               />
               {jsonError && <p className="text-red-400 text-xs mt-2">{jsonError}</p>}
             </div>
 
-            <div className="bg-fortress-navy border-t-2 border-t-fortress-gold/30 p-5 rounded-lg">
-              <label className="block text-fortress-silver text-xs font-medium mb-2 tracking-wide">Nội dung chi tiết (Rich Text)</label>
+            <div className="bg-gvi-navy border-t-2 border-t-gvi-gold/30 p-5 rounded-lg">
+              <label className="block text-gvi-silver text-xs font-medium mb-2 tracking-wide">Nội dung chi tiết (Rich Text)</label>
               <RichTextEditor value={content} onChange={setContent} />
             </div>
 
-            <div className="bg-fortress-navy border-t-2 border-t-fortress-gold/30 p-5 rounded-lg">
+            <div className="bg-gvi-navy border-t-2 border-t-gvi-gold/30 p-5 rounded-lg">
               <div className="flex items-center gap-2 mb-3">
-                <Eye className="w-4 h-4 text-fortress-gold" />
-                <label className="text-fortress-silver text-xs font-medium tracking-wide">Xem trước nội dung chi tiết</label>
+                <Eye className="w-4 h-4 text-gvi-gold" />
+                <label className="text-gvi-silver text-xs font-medium tracking-wide">Xem trước nội dung chi tiết</label>
               </div>
-              <div className="border border-white/5 p-5 bg-fortress-deep rounded-lg">
-                <div className="prose max-w-none text-fortress-ivory text-sm" dangerouslySetInnerHTML={{ __html: content }} />
+              <div className="border border-white/5 p-5 bg-gvi-deep rounded-lg">
+                <div className="prose max-w-none text-gvi-ivory text-sm" dangerouslySetInnerHTML={{ __html: content }} />
               </div>
             </div>
           </div>

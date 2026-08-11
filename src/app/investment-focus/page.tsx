@@ -188,7 +188,7 @@ export default function InvestmentFocusPage() {
         heading={
           <>
             Đầu Tư Vào{" "}
-            <span className="font-bold bg-gradient-to-r from-fortress-gold to-fortress-champagne bg-clip-text text-transparent">
+            <span className="font-bold bg-gradient-to-r from-gvi-gold to-gvi-champagne bg-clip-text text-transparent">
               Kinh Tế Số
             </span>
           </>
@@ -197,23 +197,23 @@ export default function InvestmentFocusPage() {
       />
 
       {/* Introduction */}
-      <section className="bg-fortress-navy rounded-2xl section-mx section-my" style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}>
+      <section className="bg-gvi-navy rounded-2xl section-mx section-my" style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}>
         <div className="max-w-[1400px] mx-auto section-px">
           <div className="max-w-3xl">
             <div className="flex items-center gap-3 mb-5">
-              <div className="w-5 h-px bg-fortress-gold/55" />
+              <div className="w-5 h-px bg-gvi-gold/55" />
               <span className="section-tag">Danh Mục Đầu Tư Công Nghệ & Tài Sản Số</span>
             </div>
             <h2
-              className="font-light text-fortress-ivory mb-6 leading-[1.28] uppercase"
+              className="font-light text-gvi-ivory mb-6 leading-[1.28] uppercase"
               style={{ fontSize: "var(--text-h2)", letterSpacing: "var(--tracking-heading)" }}
             >
               Các Lĩnh Vực Chiến Lược
             </h2>
-            <p className="text-fortress-silver/80 leading-[1.8] mb-4" style={{ fontSize: "var(--text-body)" }}>
+            <p className="text-gvi-silver/80 leading-[1.8] mb-4" style={{ fontSize: "var(--text-body)" }}>
               Nghị quyết 5/2025/NQ-CP có hiệu lực từ ngày 9/9/2025 mở ra kỷ nguyên mới cho thị trường tài sản mã hóa hợp pháp tại Việt Nam — một cột mốc lịch sử tạo ra cơ hội tiên phong cho các nhà đầu tư và doanh nghiệp có tầm nhìn.
             </p>
-            <p className="text-fortress-silver/70 leading-[1.8] mb-4" style={{ fontSize: "var(--text-body)" }}>
+            <p className="text-gvi-silver/70 leading-[1.8] mb-4" style={{ fontSize: "var(--text-body)" }}>
               Fortress Investment Holdings định vị tập trung vào FinTech, dịch vụ tài sản mã hóa, blockchain, EdTech và kinh tế số — những lĩnh vực đang hội tụ để tạo ra hệ sinh thái tài chính số hoàn toàn mới tại Việt Nam.
             </p>
           </div>
@@ -225,25 +225,25 @@ export default function InvestmentFocusPage() {
         <section
           key={sector.title}
           id={sector.id}
-          className={`rounded-2xl section-mx section-my ${index % 2 === 1 ? "bg-fortress-deep" : "bg-white"}`}
+          className={`rounded-2xl section-mx section-my ${index % 2 === 1 ? "bg-gvi-deep" : "bg-white"}`}
           style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}
         >
           <div className="max-w-[1400px] mx-auto section-px">
             {/* Header */}
             <div className="flex items-start gap-4 md:gap-5 mb-8 md:mb-10">
-              <div className="w-12 h-12 md:w-14 md:h-14 bg-fortress-gold/10 flex items-center justify-center flex-shrink-0 rounded-sm">
-                <sector.icon className="w-5 h-5 md:w-7 md:h-7 text-fortress-gold" />
+              <div className="w-12 h-12 md:w-14 md:h-14 bg-gvi-gold/10 flex items-center justify-center flex-shrink-0 rounded-sm">
+                <sector.icon className="w-5 h-5 md:w-7 md:h-7 text-gvi-gold" />
               </div>
               <div className="min-w-0">
-                <p className="text-fortress-gold/50 text-[10px] md:text-xs tracking-[3px] md:tracking-[4px] uppercase font-semibold mb-1">
+                <p className="text-gvi-gold/50 text-[10px] md:text-xs tracking-[3px] md:tracking-[4px] uppercase font-semibold mb-1">
                   Lĩnh Vực {String(index + 1).padStart(2, "0")}
                 </p>
                 <h2
-                  className={`text-xl md:text-4xl font-bold mb-1 break-words ${index % 2 === 1 ? "text-fortress-ivory" : "text-fortress-navy"}`}
+                  className={`text-xl md:text-4xl font-bold mb-1 break-words ${index % 2 === 1 ? "text-gvi-ivory" : "text-gvi-navy"}`}
                 >
                   {sector.title}
                 </h2>
-                <p className="text-fortress-gold text-sm md:text-lg">
+                <p className="text-gvi-gold text-sm md:text-lg">
                   {sector.subtitle}
                 </p>
               </div>
@@ -256,7 +256,7 @@ export default function InvestmentFocusPage() {
                 className={`lg:col-span-2 ${index % 2 === 0 ? "lg:order-last" : ""}`}
               >
                 <div
-                  className={`relative aspect-[4/3] overflow-hidden border rounded-sm ${index % 2 === 1 ? "border-fortress-gold/10" : "border-fortress-gold/20"}`}
+                  className={`relative aspect-[4/3] overflow-hidden border rounded-sm ${index % 2 === 1 ? "border-gvi-gold/10" : "border-gvi-gold/20"}`}
                 >
                   <Image
                     src={sector.image}
@@ -267,7 +267,7 @@ export default function InvestmentFocusPage() {
                     loading="lazy"
                   />
                   <div
-                    className={`absolute inset-0 bg-gradient-to-t ${index % 2 === 1 ? "from-fortress-deep/40" : "from-white/40"} to-transparent`}
+                    className={`absolute inset-0 bg-gradient-to-t ${index % 2 === 1 ? "from-gvi-deep/40" : "from-white/40"} to-transparent`}
                   />
                 </div>
               </div>
@@ -277,7 +277,7 @@ export default function InvestmentFocusPage() {
                 {sector.body.split("\n\n").map((para, i) => (
                   <p
                     key={i}
-                    className={`text-sm md:text-base leading-relaxed mb-4 md:mb-5 last:mb-0 ${index % 2 === 1 ? "text-fortress-silver" : "text-fortress-charcoal/70"}`}
+                    className={`text-sm md:text-base leading-relaxed mb-4 md:mb-5 last:mb-0 ${index % 2 === 1 ? "text-gvi-silver" : "text-gvi-charcoal/70"}`}
                   >
                     {para}
                   </p>
@@ -285,27 +285,27 @@ export default function InvestmentFocusPage() {
 
                 {/* Investment areas list */}
                 <div className="mt-6 md:mt-8">
-                  <p className="text-fortress-gold text-[10px] md:text-xs tracking-[3px] md:tracking-[4px] uppercase font-semibold mb-3 md:mb-4">
+                  <p className="text-gvi-gold text-[10px] md:text-xs tracking-[3px] md:tracking-[4px] uppercase font-semibold mb-3 md:mb-4">
                     Trọng Tâm Đầu Tư
                   </p>
                   <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
                     {sector.items.map((item, i) => (
                       <li key={i}>
                         {typeof item === "string" ? (
-                          <div className={`flex items-start gap-3 p-3 border-l-2 border-fortress-gold/30 ${index % 2 === 1 ? "bg-fortress-navy/60" : "bg-fortress-ivory/40"} rounded-sm`}>
-                            <span className="mt-1 text-fortress-gold text-[10px] font-mono font-bold shrink-0 select-none">
+                          <div className={`flex items-start gap-3 p-3 border-l-2 border-gvi-gold/30 ${index % 2 === 1 ? "bg-gvi-navy/60" : "bg-gvi-ivory/40"} rounded-sm`}>
+                            <span className="mt-1 text-gvi-gold text-[10px] font-mono font-bold shrink-0 select-none">
                               {String(i + 1).padStart(2, "0")}
                             </span>
-                            <span className={`text-xs md:text-sm leading-relaxed ${index % 2 === 1 ? "text-fortress-silver/80" : "text-fortress-charcoal/60"}`}>
+                            <span className={`text-xs md:text-sm leading-relaxed ${index % 2 === 1 ? "text-gvi-silver/80" : "text-gvi-charcoal/60"}`}>
                               {item}
                             </span>
                           </div>
                         ) : (
-                          <div className={`p-3 border border-fortress-gold/15 rounded-sm hover:border-fortress-gold/30 transition-colors ${index % 2 === 1 ? "bg-fortress-navy/40" : "bg-fortress-ivory/30"}`}>
-                            <p className={`text-sm font-semibold mb-0.5 ${index % 2 === 1 ? "text-fortress-ivory" : "text-fortress-navy"}`}>
+                          <div className={`p-3 border border-gvi-gold/15 rounded-sm hover:border-gvi-gold/30 transition-colors ${index % 2 === 1 ? "bg-gvi-navy/40" : "bg-gvi-ivory/30"}`}>
+                            <p className={`text-sm font-semibold mb-0.5 ${index % 2 === 1 ? "text-gvi-ivory" : "text-gvi-navy"}`}>
                               {item.heading}
                             </p>
-                            <p className={`text-xs leading-relaxed ${index % 2 === 1 ? "text-fortress-silver/70" : "text-fortress-charcoal/60"}`}>
+                            <p className={`text-xs leading-relaxed ${index % 2 === 1 ? "text-gvi-silver/70" : "text-gvi-charcoal/60"}`}>
                               {item.desc}
                             </p>
                           </div>
@@ -318,16 +318,16 @@ export default function InvestmentFocusPage() {
                 {/* Sub-criteria (e.g. regulatory framework) */}
                 {sector.subheading && sector.subitems && (
                   <div
-                    className={`mt-8 md:mt-10 p-5 md:p-8 border-l border-fortress-gold/25 rounded-sm ${index % 2 === 1 ? "bg-fortress-navy" : "bg-fortress-ivory/30"}`}
+                    className={`mt-8 md:mt-10 p-5 md:p-8 border-l border-gvi-gold/25 rounded-sm ${index % 2 === 1 ? "bg-gvi-navy" : "bg-gvi-ivory/30"}`}
                   >
-                    <p className="text-fortress-gold text-[10px] md:text-xs tracking-[3px] md:tracking-[4px] uppercase font-semibold mb-3 md:mb-4">
+                    <p className="text-gvi-gold text-[10px] md:text-xs tracking-[3px] md:tracking-[4px] uppercase font-semibold mb-3 md:mb-4">
                       {sector.subheading}
                     </p>
                     <ul className="space-y-3">
                       {sector.subitems.map((item, i) => (
                         <li
                           key={i}
-                          className={`text-xs md:text-sm leading-relaxed ${index % 2 === 1 ? "text-fortress-silver/80" : "text-fortress-charcoal/60"}`}
+                          className={`text-xs md:text-sm leading-relaxed ${index % 2 === 1 ? "text-gvi-silver/80" : "text-gvi-charcoal/60"}`}
                         >
                           {item}
                         </li>
@@ -335,7 +335,7 @@ export default function InvestmentFocusPage() {
                     </ul>
                     {sector.disclaimer && (
                       <p
-                        className={`text-[10px] md:text-xs leading-relaxed mt-3 md:mt-4 ${index % 2 === 1 ? "text-fortress-silver/50" : "text-fortress-charcoal/40"}`}
+                        className={`text-[10px] md:text-xs leading-relaxed mt-3 md:mt-4 ${index % 2 === 1 ? "text-gvi-silver/50" : "text-gvi-charcoal/40"}`}
                       >
                         {sector.disclaimer}
                       </p>
@@ -346,7 +346,7 @@ export default function InvestmentFocusPage() {
                 {/* Closing */}
                 {sector.closing && (
                   <p
-                    className={`text-sm md:text-base leading-relaxed mt-6 md:mt-8 border-t pt-4 md:pt-6 ${index % 2 === 1 ? "text-fortress-silver/70 border-fortress-gold/10" : "text-fortress-charcoal/60 border-fortress-gold/20"}`}
+                    className={`text-sm md:text-base leading-relaxed mt-6 md:mt-8 border-t pt-4 md:pt-6 ${index % 2 === 1 ? "text-gvi-silver/70 border-gvi-gold/10" : "text-gvi-charcoal/60 border-gvi-gold/20"}`}
                   >
                     {sector.closing}
                   </p>
@@ -358,25 +358,25 @@ export default function InvestmentFocusPage() {
       ))}
 
       {/* CTA */}
-      <section className="bg-fortress-navy rounded-2xl section-mx section-my" style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}>
+      <section className="bg-gvi-navy rounded-2xl section-mx section-my" style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}>
         <div className="max-w-[1400px] mx-auto section-px text-center">
           <div className="flex items-center justify-center gap-3 mb-5">
-            <div className="w-8 h-px bg-fortress-gold/40" />
+            <div className="w-8 h-px bg-gvi-gold/40" />
             <span className="section-tag">Đồng Hành Xây Dựng</span>
-            <div className="w-8 h-px bg-fortress-gold/40" />
+            <div className="w-8 h-px bg-gvi-gold/40" />
           </div>
           <h2
-            className="font-light text-fortress-ivory mb-4 md:mb-6 uppercase leading-[1.28]"
+            className="font-light text-gvi-ivory mb-4 md:mb-6 uppercase leading-[1.28]"
             style={{ fontSize: "var(--text-h2)", letterSpacing: "var(--tracking-heading)" }}
           >
             Bạn Thấy Cùng Một Cơ Hội?
           </h2>
-          <p className="text-fortress-silver/80 leading-[1.8] max-w-2xl mx-auto mb-8" style={{ fontSize: "var(--text-lead)" }}>
+          <p className="text-gvi-silver/80 leading-[1.8] max-w-2xl mx-auto mb-8" style={{ fontSize: "var(--text-lead)" }}>
             Nếu bạn làm việc trong FinTech, tài sản mã hóa, AI hoặc kinh tế số — và bạn tin vào những gì Fortress đang xây dựng — chúng tôi muốn nói chuyện. Không phải về vốn, mà về việc cùng nhau tạo ra điều gì đó có ý nghĩa lâu dài.
           </p>
           <Link
             href="/invest-with-fortress"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-fortress-gold to-fortress-champagne text-fortress-navy font-bold text-sm tracking-widest hover:shadow-2xl hover:shadow-fortress-gold/25 transition-all duration-300"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-gvi-gold to-gvi-champagne text-gvi-navy font-bold text-sm tracking-widest hover:shadow-2xl hover:shadow-gvi-gold/25 transition-all duration-300"
           >
             XEM HÀNH TRÌNH & KẾT NỐI
             <ArrowRight className="w-4 h-4" />

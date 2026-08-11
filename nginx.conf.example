@@ -1,6 +1,6 @@
 # ================================================================
-# Nginx — Fortress Investment Holdings
-# Location: /etc/nginx/sites-available/fortress.conf
+# Nginx — GVI Tech Holding
+# Location: /etc/nginx/sites-available/gvi.conf
 # Replace YOURDOMAIN.COM with your actual domain before deploying.
 # ================================================================
 

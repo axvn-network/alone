@@ -339,7 +339,7 @@ export default function InsightsClient() {
             Góc Nhìn &amp; <span className="font-bold bg-gradient-to-r from-[#C9A24A] to-[#E6C879] bg-clip-text text-transparent">Chuyên Sâu</span>
           </h1>
           <p className="text-gray-400 max-w-2xl mx-auto mb-8 sm:mb-10 leading-[1.8] px-2" style={{ fontSize: "clamp(0.9rem, 1.5vw + 0.3rem, 1.125rem)" }}>
-            Góc nhìn đầu tư, phân tích thị trường và bình luận chiến lược từ Fortress Investment Holdings.
+            Góc nhìn đầu tư, phân tích thị trường và bình luận chiến lược từ GVI Tech Holding.
           </p>
           {/* Search bar */}
           <div className="max-w-2xl mx-auto mb-6 sm:mb-8 relative">
@@ -514,8 +514,8 @@ export default function InsightsClient() {
             ].map((b,i)=>(
               <motion.div key={b.title} initial={{opacity:0,y:30}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*0.12,duration:0.5,ease:"easeOut"}} className="bg-[#0d1e30] border border-[#C9A24A]/15 p-5 text-left hover:border-[#C9A24A]/40 transition-colors rounded-xl">
                 <div className="text-[#C9A24A] mb-3">{b.icon}</div>
-                <p className="text-fortress-ivory text-sm font-semibold mb-1">{b.title}</p>
-                <p className="text-fortress-silver/60 text-xs">{b.desc}</p>
+                <p className="text-gvi-ivory text-sm font-semibold mb-1">{b.title}</p>
+                <p className="text-gvi-silver/60 text-xs">{b.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -532,13 +532,13 @@ export default function InsightsClient() {
           <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={()=>setMobileDrawerOpen(false)} />
           <div className="absolute left-0 top-0 bottom-0 w-[80vw] max-w-[300px] sm:max-w-[320px] bg-[#03080e] overflow-y-auto shadow-2xl border-r border-gray-200">
             <div className="flex items-center justify-between p-4 border-b border-white/10 bg-[#07111D] sticky top-0 z-10">
-              <h2 className="font-bold text-fortress-ivory flex items-center gap-2">
+              <h2 className="font-bold text-gvi-ivory flex items-center gap-2">
                 <Filter className="w-4 h-4 text-[#C9A24A]" /> Bộ Lọc
                 {activeFilterCount>0&&<span className="bg-[#C9A24A] text-[#07111D] text-[10px] font-bold px-2 py-0.5 ">{activeFilterCount}</span>}
               </h2>
               <div className="flex items-center gap-2">
                 {activeFilterCount>0&&<button onClick={clearAll} className="text-xs text-red-400 font-medium">Xóa tất cả</button>}
-                <button onClick={()=>setMobileDrawerOpen(false)} className="p-1.5 hover:bg-white/5 text-fortress-silver/60 hover:text-fortress-ivory transition-colors "><X className="w-5 h-5" /></button>
+                <button onClick={()=>setMobileDrawerOpen(false)} className="p-1.5 hover:bg-white/5 text-gvi-silver/60 hover:text-gvi-ivory transition-colors "><X className="w-5 h-5" /></button>
               </div>
             </div>
             <div className="p-4 flex flex-col gap-4"><Sidebar /></div>

@@ -241,9 +241,9 @@ export default function PartnerJourney() {
           <div
             key={q.id}
             className={`flex-1 h-1 rounded-full transition-all duration-300 ${
-              i < step ? "bg-fortress-gold" :
-              i === step ? "bg-fortress-gold/50" :
-              "bg-fortress-silver/15"
+              i < step ? "bg-gvi-gold" :
+              i === step ? "bg-gvi-gold/50" :
+              "bg-gvi-silver/15"
             }`}
           />
         ))}
@@ -260,17 +260,17 @@ export default function PartnerJourney() {
           >
             {/* Step label */}
             <div className="flex items-center gap-2 mb-3">
-              <span className="text-fortress-gold/60 text-[10px] font-mono font-bold tracking-widest uppercase">
+              <span className="text-gvi-gold/60 text-[10px] font-mono font-bold tracking-widest uppercase">
                 {currentQ.label}
               </span>
-              <div className="flex-1 h-px bg-fortress-gold/10" />
-              <span className="text-fortress-silver/55 text-[10px] font-mono">
+              <div className="flex-1 h-px bg-gvi-gold/10" />
+              <span className="text-gvi-silver/55 text-[10px] font-mono">
                 {step + 1}/{QUESTIONS.length}
               </span>
             </div>
 
             {/* Question */}
-            <h3 className="text-fortress-ivory font-semibold text-lg mb-6 leading-snug">
+            <h3 className="text-gvi-ivory font-semibold text-lg mb-6 leading-snug">
               {currentQ.question}
             </h3>
 
@@ -285,29 +285,29 @@ export default function PartnerJourney() {
                     onClick={() => handleSelect(opt.value, opt.result)}
                     className={`group flex items-start gap-3 p-4 rounded-xl border text-left transition-all duration-200 ${
                       isSelected
-                        ? "bg-fortress-gold/10 border-fortress-gold/50"
-                        : "bg-fortress-deep border-fortress-silver/10 hover:border-fortress-gold/30 hover:bg-fortress-gold/5"
+                        ? "bg-gvi-gold/10 border-gvi-gold/50"
+                        : "bg-gvi-deep border-gvi-silver/10 hover:border-gvi-gold/30 hover:bg-gvi-gold/5"
                     }`}
                   >
                     <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
-                      isSelected ? "bg-fortress-gold/20" : "bg-white/5 group-hover:bg-fortress-gold/10"
+                      isSelected ? "bg-gvi-gold/20" : "bg-white/5 group-hover:bg-gvi-gold/10"
                     }`}>
                       <Icon className={`w-4 h-4 transition-colors ${
-                        isSelected ? "text-fortress-gold" : "text-fortress-silver/60 group-hover:text-fortress-gold/70"
+                        isSelected ? "text-gvi-gold" : "text-gvi-silver/60 group-hover:text-gvi-gold/70"
                       }`} />
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className={`font-semibold text-sm transition-colors ${
-                        isSelected ? "text-fortress-gold" : "text-fortress-ivory"
+                        isSelected ? "text-gvi-gold" : "text-gvi-ivory"
                       }`}>
                         {opt.label}
                       </p>
-                      <p className="text-fortress-silver/70 text-xs mt-0.5 leading-relaxed">
+                      <p className="text-gvi-silver/70 text-xs mt-0.5 leading-relaxed">
                         {opt.detail}
                       </p>
                     </div>
                     {isSelected && (
-                      <CheckCircle className="w-4 h-4 text-fortress-gold shrink-0 mt-0.5" />
+                      <CheckCircle className="w-4 h-4 text-gvi-gold shrink-0 mt-0.5" />
                     )}
                   </button>
                 );
@@ -318,7 +318,7 @@ export default function PartnerJourney() {
             {step > 0 && (
               <button
                 onClick={() => { setStep(step - 1); }}
-                className="mt-5 text-fortress-silver/40 text-xs hover:text-fortress-silver/70 transition-colors flex items-center gap-1"
+                className="mt-5 text-gvi-silver/40 text-xs hover:text-gvi-silver/70 transition-colors flex items-center gap-1"
               >
                 ← Quay lại câu trước
               </button>
@@ -337,7 +337,7 @@ export default function PartnerJourney() {
               <CheckCircle className="w-5 h-5 text-emerald-400 shrink-0" />
               <div>
                 <p className="text-emerald-300 font-bold text-sm">{FINAL_MESSAGE.title}</p>
-                <p className="text-fortress-silver/60 text-xs mt-0.5 leading-relaxed">{FINAL_MESSAGE.desc}</p>
+                <p className="text-gvi-silver/60 text-xs mt-0.5 leading-relaxed">{FINAL_MESSAGE.desc}</p>
               </div>
             </div>
 
@@ -347,10 +347,10 @@ export default function PartnerJourney() {
                 const selected = q.options.find(o => o.value === answers[q.id]);
                 if (!selected) return null;
                 return (
-                  <div key={q.id} className="p-3.5 bg-fortress-deep border border-fortress-gold/10 rounded-xl">
-                    <p className="text-fortress-gold/50 text-[10px] font-mono uppercase tracking-widest mb-1.5">{q.label}</p>
-                    <p className="text-fortress-ivory text-sm font-semibold leading-tight">{selected.label}</p>
-                    <p className="text-fortress-silver/65 text-[11px] mt-0.5">{selected.detail}</p>
+                  <div key={q.id} className="p-3.5 bg-gvi-deep border border-gvi-gold/10 rounded-xl">
+                    <p className="text-gvi-gold/50 text-[10px] font-mono uppercase tracking-widest mb-1.5">{q.label}</p>
+                    <p className="text-gvi-ivory text-sm font-semibold leading-tight">{selected.label}</p>
+                    <p className="text-gvi-silver/65 text-[11px] mt-0.5">{selected.detail}</p>
                   </div>
                 );
               })}
@@ -358,24 +358,24 @@ export default function PartnerJourney() {
 
             {/* Role card if available */}
             {selectedResult && (
-              <div className="p-5 bg-fortress-navy border border-fortress-gold/20 rounded-xl space-y-3">
+              <div className="p-5 bg-gvi-navy border border-gvi-gold/20 rounded-xl space-y-3">
                 <div className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-fortress-gold animate-pulse" />
-                  <p className="text-fortress-gold/70 text-[10px] font-mono uppercase tracking-widest">Vai trò phù hợp nhất</p>
+                  <div className="w-1.5 h-1.5 rounded-full bg-gvi-gold animate-pulse" />
+                  <p className="text-gvi-gold/70 text-[10px] font-mono uppercase tracking-widest">Vai trò phù hợp nhất</p>
                 </div>
                 <p className={`font-black text-base ${selectedResult.color}`}>{selectedResult.role}</p>
-                <p className="text-fortress-silver/70 text-xs">{selectedResult.group}</p>
+                <p className="text-gvi-silver/70 text-xs">{selectedResult.group}</p>
                 <div className="grid grid-cols-2 gap-2 pt-1">
-                  <div className="bg-fortress-deep rounded-lg p-2.5">
-                    <p className="text-fortress-silver/60 text-[9px] uppercase tracking-widest mb-0.5">Vốn tối thiểu</p>
+                  <div className="bg-gvi-deep rounded-lg p-2.5">
+                    <p className="text-gvi-silver/60 text-[9px] uppercase tracking-widest mb-0.5">Vốn tối thiểu</p>
                     <p className={`font-bold text-xs ${selectedResult.color}`}>{selectedResult.minCapital}</p>
                   </div>
-                  <div className="bg-fortress-deep rounded-lg p-2.5">
-                    <p className="text-fortress-silver/60 text-[9px] uppercase tracking-widest mb-0.5">Cổ phần</p>
+                  <div className="bg-gvi-deep rounded-lg p-2.5">
+                    <p className="text-gvi-silver/60 text-[9px] uppercase tracking-widest mb-0.5">Cổ phần</p>
                     <p className={`font-bold text-xs ${selectedResult.color}`}>{selectedResult.maxEquity}</p>
                   </div>
                 </div>
-                <p className="text-fortress-silver/75 text-xs leading-relaxed italic border-t border-fortress-gold/10 pt-3">
+                <p className="text-gvi-silver/75 text-xs leading-relaxed italic border-t border-gvi-gold/10 pt-3">
                   {selectedResult.highlight}
                 </p>
 
@@ -390,8 +390,8 @@ export default function PartnerJourney() {
                           <div key={item.label} className="flex items-start gap-2.5 bg-purple-500/5 border border-purple-500/15 rounded-lg p-2.5">
                             <Icon className="w-3.5 h-3.5 text-purple-400 shrink-0 mt-0.5" />
                             <div>
-                              <p className="text-fortress-ivory text-[11px] font-semibold leading-tight">{item.label}</p>
-                              <p className="text-fortress-silver/65 text-[10px] mt-0.5 leading-snug">{item.detail}</p>
+                              <p className="text-gvi-ivory text-[11px] font-semibold leading-tight">{item.label}</p>
+                              <p className="text-gvi-silver/65 text-[10px] mt-0.5 leading-snug">{item.detail}</p>
                             </div>
                           </div>
                         );
@@ -413,13 +413,13 @@ export default function PartnerJourney() {
             <div className="flex flex-col sm:flex-row gap-3 pt-2">
               <a
                 href="#roles"
-                className="flex-1 flex items-center justify-center gap-2 py-3.5 bg-gradient-to-r from-fortress-gold to-fortress-champagne text-fortress-navy font-bold text-xs uppercase tracking-wider rounded-xl hover:opacity-90 transition-opacity"
+                className="flex-1 flex items-center justify-center gap-2 py-3.5 bg-gradient-to-r from-gvi-gold to-gvi-champagne text-gvi-navy font-bold text-xs uppercase tracking-wider rounded-xl hover:opacity-90 transition-opacity"
               >
                 Xem Phân Vai Đối Tác Bên Dưới
               </a>
               <button
                 onClick={reset}
-                className="flex-1 flex items-center justify-center gap-2 py-3.5 border border-fortress-silver/20 text-fortress-silver/60 text-xs uppercase tracking-wider rounded-xl hover:border-fortress-gold/30 hover:text-fortress-silver transition-colors"
+                className="flex-1 flex items-center justify-center gap-2 py-3.5 border border-gvi-silver/20 text-gvi-silver/60 text-xs uppercase tracking-wider rounded-xl hover:border-gvi-gold/30 hover:text-gvi-silver transition-colors"
               >
                 Làm Lại Từ Đầu
               </button>

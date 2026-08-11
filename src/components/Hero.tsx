@@ -67,7 +67,7 @@ export default function Hero() {
       variants={heroContainerVariants}
       initial="hidden"
       animate="visible"
-      className="relative flex flex-col items-center justify-center overflow-hidden bg-fortress-navy"
+      className="relative flex flex-col items-center justify-center overflow-hidden bg-gvi-navy"
       style={{
         /* Fluid min-height: 85vh mobile → 100vh desktop */
         minHeight: "clamp(85vh, 92vw, 100vh)",
@@ -83,15 +83,15 @@ export default function Hero() {
       <div className="absolute inset-0 z-0">
         <Image
           src="/Hero-Background.png"
-          alt="Fortress Investment Holdings"
+          alt="GVI Tech Holding"
           fill
           className="object-cover object-center"
           priority
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-fortress-navy/80 md:bg-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-fortress-navy/95 via-fortress-navy/85 md:via-fortress-navy/80 to-fortress-navy/60 md:to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-fortress-navy/80 via-transparent to-fortress-navy/30" />
+        <div className="absolute inset-0 bg-gvi-navy/80 md:bg-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-gvi-navy/95 via-gvi-navy/85 md:via-gvi-navy/80 to-gvi-navy/60 md:to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-gvi-navy/80 via-transparent to-gvi-navy/30" />
       </div>
 
       {/* Subtle animated grain texture overlay */}
@@ -111,7 +111,7 @@ export default function Hero() {
       >
         {/* Eyebrow tag */}
         <motion.div variants={heroItemVariants} className="flex items-center gap-3 mb-5 md:mb-7">
-          <div className="w-6 h-px bg-fortress-gold/70" />
+          <div className="w-6 h-px bg-gvi-gold/70" />
           <span
             className="section-tag"
             style={{ letterSpacing: "var(--tracking-tag)" }}
@@ -129,7 +129,7 @@ export default function Hero() {
           }}
         >
           {heroTitleLine1}<br />
-          <span className="font-bold bg-gradient-to-r from-fortress-gold via-fortress-champagne to-fortress-gold bg-clip-text text-transparent bg-[length:200%_100%]"
+          <span className="font-bold bg-gradient-to-r from-gvi-gold via-gvi-champagne to-gvi-gold bg-clip-text text-transparent bg-[length:200%_100%]"
             style={{ backgroundPosition: "0% 50%" }}
           >
             {heroTitleLine2}
@@ -139,12 +139,12 @@ export default function Hero() {
         {/* Thin gold rule under heading */}
         <motion.div
           variants={{ hidden: { scaleX: 0 }, visible: { scaleX: 1, transition: { duration: 0.7, ease: [0.22,1,0.36,1], delay: 0.9 } } }}
-          className="w-16 h-px bg-gradient-to-r from-fortress-gold to-transparent mb-5 md:mb-8 origin-left"
+          className="w-16 h-px bg-gradient-to-r from-gvi-gold to-transparent mb-5 md:mb-8 origin-left"
         />
 
         <motion.p
           variants={heroItemVariants}
-          className="text-fortress-silver/85 w-full md:max-w-2xl leading-[1.75] mb-8 md:mb-11 font-light"
+          className="text-gvi-silver/85 w-full md:max-w-2xl leading-[1.75] mb-8 md:mb-11 font-light"
           style={{ fontSize: "var(--text-lead)" }}
         >
           {heroDescription}
@@ -159,7 +159,7 @@ export default function Hero() {
           >
             <Link
               href="/investment-focus"
-              className="block w-full sm:w-auto px-7 sm:px-9 py-4 md:py-4.5 bg-gradient-to-r from-fortress-gold to-fortress-champagne text-fortress-navy font-bold text-xs uppercase hover:opacity-90 transition-opacity shadow-lg shadow-fortress-gold/20 text-center"
+              className="block w-full sm:w-auto px-7 sm:px-9 py-4 md:py-4.5 bg-gradient-to-r from-gvi-gold to-gvi-champagne text-gvi-navy font-bold text-xs uppercase hover:opacity-90 transition-opacity shadow-lg shadow-gvi-gold/20 text-center"
               style={{ letterSpacing: "var(--tracking-btn)" }}
             >
               {heroBtn1Text}
@@ -173,7 +173,7 @@ export default function Hero() {
           >
             <Link
               href="/invest-with-fortress"
-              className="block w-full sm:w-auto px-7 sm:px-9 py-4 md:py-4.5 border border-fortress-silver/35 text-fortress-ivory font-semibold text-xs uppercase hover:bg-white/8 hover:border-fortress-silver/70 transition-all backdrop-blur-sm text-center"
+              className="block w-full sm:w-auto px-7 sm:px-9 py-4 md:py-4.5 border border-gvi-silver/35 text-gvi-ivory font-semibold text-xs uppercase hover:bg-white/8 hover:border-gvi-silver/70 transition-all backdrop-blur-sm text-center"
               style={{ letterSpacing: "var(--tracking-btn)" }}
             >
               {heroBtn2Text}
@@ -184,7 +184,7 @@ export default function Hero() {
 
       {/* Animated decorative gold line at bottom */}
       <motion.div
-        className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-fortress-gold/40 to-transparent z-10"
+        className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gvi-gold/40 to-transparent z-10"
         initial={{ scaleX: 0 }}
         animate={{ scaleX: 1 }}
         transition={{ duration: 1.4, ease: "easeOut", delay: 1.2 }}

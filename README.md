@@ -1,6 +1,6 @@
-# Fortress Investment Holdings — Website
+# GVI Tech Holding — Website
 
-Next.js website cho Fortress Investment Holdings.  
+Next.js website cho GVI Tech Holding.  
 MongoDB · Cloudinary · Nodemailer · Admin panel với HMAC-signed cookie auth · SSE realtime · AI content assistant.
 
 > **Lưu ý trước khi public:** Chủ sở hữu cần xác minh toàn bộ thông tin pháp lý, giấy phép, số liệu tài chính, địa chỉ và kênh liên hệ trong CMS/Settings trước khi go-live.
@@ -54,7 +54,7 @@ npm run migrate
 
 ```bash
 # Rolling update (zero-downtime)
-cd /var/www/fortress/app
+cd /var/lkvip/langding
 git pull
 bash scripts/deploy.sh     # npm ci → build → pm2 reload
 ```
@@ -64,7 +64,7 @@ bash scripts/deploy.sh     # npm ci → build → pm2 reload
 ```bash
 cp .env.example .env.local
 nano .env.local
-# MONGODB_URI=mongodb://127.0.0.1:27017/fortress_db
+# MONGODB_URI=mongodb://127.0.0.1:27017/gvi_db
 # ADMIN_EMAIL=admin@yourdomain.com
 # ADMIN_PASSWORD=<strong_min_12_chars>
 # SESSION_SECRET=$(openssl rand -hex 32)
@@ -86,9 +86,9 @@ bash scripts/check-env.sh        # Kiểm tra tất cả env vars
 
 ```bash
 pm2 status
-pm2 logs fortress-website --lines 100
-pm2 reload fortress-website --update-env   # zero-downtime reload
-pm2 restart fortress-website               # hard restart
+pm2 logs gvi-langding --lines 100
+pm2 reload gvi-langding --update-env   # zero-downtime reload
+pm2 restart gvi-langding               # hard restart
 pm2 save && pm2 startup                    # persist across reboots
 ```
 
@@ -99,14 +99,14 @@ pm2 save && pm2 startup                    # persist across reboots
 ```bash
 # Backup thủ công
 bash scripts/backup.sh
-# → /var/backups/fortress/fortress_YYYYMMDD_HHMMSS.gz
+# → /var/backups/gvi/gvi_YYYYMMDD_HHMMSS.gz
 
 # Backup tự động hằng ngày lúc 02:00
-(crontab -l; echo "0 2 * * * /var/www/fortress/app/scripts/backup.sh >> /var/log/fortress-backup.log 2>&1") | crontab -
+(crontab -l; echo "0 2 * * * /var/lkvip/langding/scripts/backup.sh >> /var/log/gvi-backup.log 2>&1") | crontab -
 
 # Restore
 mongorestore --uri="mongodb://127.0.0.1:27017" \
-  --archive=/var/backups/fortress/fortress_YYYYMMDD_HHMMSS.gz --gzip
+  --archive=/var/backups/gvi/gvi_YYYYMMDD_HHMMSS.gz --gzip
 ```
 
 ---

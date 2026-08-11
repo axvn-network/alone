@@ -452,7 +452,7 @@ export default function DocumentsClient() {
         heading={
           <>
             Minh Bạch &{" "}
-            <span className="font-bold bg-gradient-to-r from-fortress-gold to-fortress-champagne bg-clip-text text-transparent">
+            <span className="font-bold bg-gradient-to-r from-gvi-gold to-gvi-champagne bg-clip-text text-transparent">
               Trách Nhiệm
             </span>
           </>

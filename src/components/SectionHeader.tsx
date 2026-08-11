@@ -34,20 +34,20 @@ export default function SectionHeader({
     <div className={`${isCenter ? "text-center mx-auto max-w-3xl" : ""} ${className}`}>
       {tag && (
         <div className={`flex items-center gap-3 mb-5 ${isCenter ? "justify-center" : ""}`}>
-          <div className="w-5 h-px bg-fortress-gold/55" />
+          <div className="w-5 h-px bg-gvi-gold/55" />
           <span className="section-tag">{tag}</span>
-          {isCenter && <div className="w-5 h-px bg-fortress-gold/55" />}
+          {isCenter && <div className="w-5 h-px bg-gvi-gold/55" />}
         </div>
       )}
       <h2
-        className={`font-light leading-[1.28] uppercase ${dark ? "text-fortress-ivory" : "text-fortress-navy"}`}
+        className={`font-light leading-[1.28] uppercase ${dark ? "text-gvi-ivory" : "text-gvi-navy"}`}
         style={{ fontSize: "var(--text-h2)", letterSpacing: "var(--tracking-heading)" }}
       >
         {heading}
       </h2>
       {description && (
         <p
-          className={`mt-5 leading-[1.8] ${isCenter ? "max-w-2xl mx-auto" : "max-w-3xl"} ${dark ? "text-fortress-silver/75" : "text-fortress-charcoal/65"}`}
+          className={`mt-5 leading-[1.8] ${isCenter ? "max-w-2xl mx-auto" : "max-w-3xl"} ${dark ? "text-gvi-silver/75" : "text-gvi-charcoal/65"}`}
           style={{ fontSize: "var(--text-body)" }}
         >
           {description}

@@ -14,7 +14,7 @@ DOMAIN="langding.tc-gaming.live"
 APP_DIR="/var/lkvip/langding"
 REPO_URL="https://github.com/hoangbom98/alone.git"
 BRANCH="main"
-PM2_APP="fortress-website"
+PM2_APP="gvi-langding"
 NGINX_CONF="/etc/nginx/sites-available/langding.conf"
 FIRST_DEPLOY="${1:-}"
 
@@ -49,9 +49,8 @@ if [[ "$FIRST_DEPLOY" == "--first" ]]; then
 fi
 
 cd "$APP_DIR"
-git fetch origin
-git checkout "$BRANCH"
-git reset --hard "origin/$BRANCH"
+# Thay đổi: chỉ pull thay vì fetch + reset --hard
+git pull origin "$BRANCH"
 print_ok "Code: $(git log -1 --oneline)"
 
 # ================================================================

@@ -29,13 +29,13 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Hạng Mục Hợp Tác | Fortress Investment Holdings",
+  title: "Hạng Mục Hợp Tác | GVI Tech Holding",
   description:
     "Hướng dẫn đầy đủ để trở thành cổ đông xây dựng sàn giao dịch tài sản mã hóa hợp pháp đầu tiên Việt Nam theo NQ 05/2025/NQ-CP. Hiểu rõ vai trò, quyền, nghĩa vụ và hồ sơ cần chuẩn bị.",
   openGraph: {
-    title: "Hạng Mục Hợp Tác | Fortress Investment Holdings",
+    title: "Hạng Mục Hợp Tác | GVI Tech Holding",
     description:
-      "Hướng dẫn đầy đủ — từ định nghĩa pháp lý đến hồ sơ cấp phép — để trở thành cổ đông cùng Fortress xây dựng sàn TSMH đầu tiên tại Việt Nam.",
+      "Hướng dẫn đầy đủ — từ định nghĩa pháp lý đến hồ sơ cấp phép — để trở thành cổ đông cùng GVI Tech Holding xây dựng sàn TSMH đầu tiên tại Việt Nam.",
   },
 };
 
@@ -50,8 +50,8 @@ const CAPITAL_STRUCTURE = [
 
 const FAQ = [
   {
-    q: "Fortress đang ở giai đoạn nào? Tôi có bị trễ không?",
-    a: "Fortress đang ở giai đoạn 03 — tích lũy vốn và tuyển đối tác. Đây là thời điểm tốt nhất để tham gia: bạn được vào với mức định giá thấp nhất, cổ phần tốt nhất, và có tiếng nói sớm nhất trong chiến lược dự án. Chưa ai được cấp phép tại Việt Nam.",
+    q: "GVI Tech Holding đang ở giai đoạn nào? Tôi có bị trễ không?",
+    a: "GVI Tech Holding đang ở giai đoạn 03 — tích lũy vốn và tuyển đối tác. Đây là thời điểm tốt nhất để tham gia: bạn được vào với mức định giá thấp nhất, cổ phần tốt nhất, và có tiếng nói sớm nhất trong chiến lược dự án. Chưa ai được cấp phép tại Việt Nam.",
   },
   {
     q: "Vốn điều lệ 10.000 tỷ VNĐ — một mình không góp nổi, làm sao?",
@@ -96,7 +96,7 @@ const LICENSING_CONDITIONS = [
 
 const DOC_SUMMARY = [
   { Icon: Building2,   label: "Pháp lý Doanh nghiệp", count: "5 tài liệu", color: "border-blue-500/30 bg-blue-500/5",          iconColor: "text-blue-400" },
-  { Icon: Coins,       label: "Cổ đông & Vốn góp",   count: "6 tài liệu", color: "border-fortress-gold/30 bg-fortress-gold/5", iconColor: "text-fortress-gold" },
+  { Icon: Coins,       label: "Cổ đông & Vốn góp",   count: "6 tài liệu", color: "border-gvi-gold/30 bg-gvi-gold/5", iconColor: "text-gvi-gold" },
   { Icon: Users,       label: "Nhân sự",              count: "5 tài liệu", color: "border-purple-500/30 bg-purple-500/5",       iconColor: "text-purple-400" },
   { Icon: Monitor,     label: "CNTT & 10 Quy trình", count: "11 tài liệu", color: "border-emerald-500/30 bg-emerald-500/5",     iconColor: "text-emerald-400" },
 ];
@@ -106,7 +106,7 @@ const DOC_SUMMARY = [
 function Section({ id, dark, altDark, noPad, children }: {
   id?: string; dark?: boolean; altDark?: boolean; noPad?: boolean; children: React.ReactNode;
 }) {
-  const bg = dark ? "bg-fortress-navy" : altDark ? "bg-fortress-deep" : "bg-white";
+  const bg = dark ? "bg-gvi-navy" : altDark ? "bg-gvi-deep" : "bg-white";
   return (
     <section id={id} className={`rounded-2xl section-mx section-my ${bg}`}
       style={noPad ? undefined : { paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}>
@@ -145,9 +145,9 @@ function CapitalDonut() {
           ))}
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <p className="text-fortress-gold font-black text-xl leading-none">{CAPITAL_AMOUNT.short}</p>
-          <p className="text-fortress-silver/60 text-[11px] font-mono mt-0.5">tỷ VNĐ</p>
-          <p className="text-fortress-silver/40 text-[10px] mt-1">vốn điều lệ</p>
+          <p className="text-gvi-gold font-black text-xl leading-none">{CAPITAL_AMOUNT.short}</p>
+          <p className="text-gvi-silver/60 text-[11px] font-mono mt-0.5">tỷ VNĐ</p>
+          <p className="text-gvi-silver/40 text-[10px] mt-1">vốn điều lệ</p>
         </div>
       </div>
       {/* Legend */}
@@ -157,15 +157,15 @@ function CapitalDonut() {
             <div className="w-3 h-3 rounded-sm shrink-0 mt-1" style={{ background: s.color }} />
             <div className="flex-1">
               <div className="flex items-center justify-between">
-                <p className="text-fortress-ivory text-sm font-semibold">{s.label}</p>
-                <p className="text-fortress-silver/50 text-xs font-mono ml-2 shrink-0">{s.pct}%</p>
+                <p className="text-gvi-ivory text-sm font-semibold">{s.label}</p>
+                <p className="text-gvi-silver/50 text-xs font-mono ml-2 shrink-0">{s.pct}%</p>
               </div>
-              <p className="text-fortress-silver/50 text-xs leading-relaxed mt-0.5">{s.detail}</p>
+              <p className="text-gvi-silver/50 text-xs leading-relaxed mt-0.5">{s.detail}</p>
             </div>
           </div>
         ))}
-        <div className="pt-3 border-t border-fortress-gold/15">
-          <p className="text-fortress-gold/60 text-[11px] font-mono">
+        <div className="pt-3 border-t border-gvi-gold/15">
+          <p className="text-gvi-gold/60 text-[11px] font-mono">
             Căn cứ: Điều 8 Khoản 4 — NQ 05/2025/NQ-CP
           </p>
         </div>
@@ -179,13 +179,13 @@ function FAQ_Section() {
   return (
     <div className="max-w-3xl mx-auto space-y-2">
       {FAQ.map((item, i) => (
-        <details key={i} className="group bg-fortress-navy border border-fortress-gold/10 rounded-xl overflow-hidden">
-          <summary className="flex items-center justify-between px-5 py-4 cursor-pointer select-none list-none hover:bg-fortress-deep/50 transition-colors gap-4">
-            <span className="font-semibold text-fortress-ivory text-sm leading-snug">{item.q}</span>
-            <span className="text-fortress-gold/50 text-lg shrink-0 group-open:rotate-45 transition-transform duration-200 leading-none">+</span>
+        <details key={i} className="group bg-gvi-navy border border-gvi-gold/10 rounded-xl overflow-hidden">
+          <summary className="flex items-center justify-between px-5 py-4 cursor-pointer select-none list-none hover:bg-gvi-deep/50 transition-colors gap-4">
+            <span className="font-semibold text-gvi-ivory text-sm leading-snug">{item.q}</span>
+            <span className="text-gvi-gold/50 text-lg shrink-0 group-open:rotate-45 transition-transform duration-200 leading-none">+</span>
           </summary>
-          <div className="px-5 pb-5 border-t border-fortress-gold/8">
-            <p className="text-fortress-silver/75 text-sm leading-relaxed mt-4">{item.a}</p>
+          <div className="px-5 pb-5 border-t border-gvi-gold/8">
+            <p className="text-gvi-silver/75 text-sm leading-relaxed mt-4">{item.a}</p>
           </div>
         </details>
       ))}
@@ -204,7 +204,7 @@ export default function ShareholderPlansPage() {
         heading={
           <>
             Xây Dựng Sàn{" "}
-            <span className="font-bold text-fortress-gold bg-gradient-to-r from-fortress-gold to-fortress-champagne bg-clip-text [color:transparent]">
+            <span className="font-bold text-gvi-gold bg-gradient-to-r from-gvi-gold to-gvi-champagne bg-clip-text [color:transparent]">
               TSMH Hợp Pháp Đầu Tiên
             </span>{" "}
             Tại Việt Nam
@@ -216,8 +216,8 @@ export default function ShareholderPlansPage() {
         <div className="flex flex-col items-center gap-4">
           {/* Status badges */}
           <div className="flex flex-wrap justify-center gap-2">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-fortress-gold/15 border border-fortress-gold/30 rounded-full text-fortress-gold text-xs font-semibold">
-              <span className="w-2 h-2 rounded-full bg-fortress-gold animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gvi-gold/15 border border-gvi-gold/30 rounded-full text-gvi-gold text-xs font-semibold">
+              <span className="w-2 h-2 rounded-full bg-gvi-gold animate-pulse" />
               Từ 20/01/2026 — BTC tiếp nhận hồ sơ
             </div>
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-red-500/10 border border-red-500/20 rounded-full text-red-400 text-xs font-semibold">
@@ -236,10 +236,10 @@ export default function ShareholderPlansPage() {
               { label: "Hạng mục",          href: "#plans" },
               { label: "Hồ sơ cần có",     href: "#docs" },
               { label: "FAQ",               href: "#faq" },
-              { label: "Điều lệ & Quyền",  href: "/invest-with-fortress/charter" },
+              { label: "Điều lệ & Quyền",  href: "/documents" },
             ].map((nav) => (
               <a key={nav.href} href={nav.href}
-                className="px-3 py-1.5 text-[11px] font-semibold text-fortress-silver/70 border border-fortress-silver/20 rounded-full hover:border-fortress-gold/50 hover:text-fortress-gold transition-all">
+                className="px-3 py-1.5 text-[11px] font-semibold text-gvi-silver/70 border border-gvi-silver/20 rounded-full hover:border-gvi-gold/50 hover:text-gvi-gold transition-all">
                 {nav.label}
               </a>
             ))}
@@ -253,7 +253,7 @@ export default function ShareholderPlansPage() {
           <SectionHeader
             tag="Nhìn Toàn Bộ Dự Án"
             heading="Bạn Đang Bước Vào Hệ Sinh Thái Nào?"
-            description="Fortress ở trung tâm. Mỗi đối tác có một vai trò rõ ràng — góp gì, nhận gì, ở đâu trong sơ đồ."
+            description="GVI Tech Holding ở trung tâm. Mỗi đối tác có một vai trò rõ ràng — góp gì, nhận gì, ở đâu trong sơ đồ."
             dark
           />
         </div>
@@ -284,17 +284,17 @@ export default function ShareholderPlansPage() {
         <div className="max-w-5xl mx-auto grid lg:grid-cols-2 gap-6">
 
           {/* Định nghĩa pháp lý */}
-          <div className="bg-fortress-navy border border-fortress-gold/20 rounded-2xl p-6 space-y-5">
+          <div className="bg-gvi-navy border border-gvi-gold/20 rounded-2xl p-6 space-y-5">
             <div className="flex items-start gap-3">
-              <div className="w-9 h-9 rounded-lg bg-fortress-gold/15 flex items-center justify-center shrink-0">
-                <FileText className="w-4 h-4 text-fortress-gold" />
+              <div className="w-9 h-9 rounded-lg bg-gvi-gold/15 flex items-center justify-center shrink-0">
+                <FileText className="w-4 h-4 text-gvi-gold" />
               </div>
               <div>
-                <p className="font-bold text-fortress-gold text-sm uppercase tracking-wide">Tổ Chức Thị Trường Giao Dịch TSMH</p>
-                <p className="text-fortress-silver/40 text-[11px] font-mono mt-0.5">Khoản 4 Điều 3, NQ 05/2025/NQ-CP</p>
+                <p className="font-bold text-gvi-gold text-sm uppercase tracking-wide">Tổ Chức Thị Trường Giao Dịch TSMH</p>
+                <p className="text-gvi-silver/40 text-[11px] font-mono mt-0.5">Khoản 4 Điều 3, NQ 05/2025/NQ-CP</p>
               </div>
             </div>
-            <p className="text-fortress-silver/60 text-xs italic border-l-2 border-fortress-gold/30 pl-3">
+            <p className="text-gvi-silver/60 text-xs italic border-l-2 border-gvi-gold/30 pl-3">
               &ldquo;Cung cấp nền tảng hoặc hệ thống hạ tầng để:&rdquo;
             </p>
             <ul className="space-y-2">
@@ -304,13 +304,13 @@ export default function ShareholderPlansPage() {
                 "Thanh toán giao dịch tài sản mã hóa",
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-2.5">
-                  <CheckCircle className="w-4 h-4 text-fortress-gold shrink-0 mt-0.5" />
-                  <span className="text-fortress-ivory text-sm">{item}</span>
+                  <CheckCircle className="w-4 h-4 text-gvi-gold shrink-0 mt-0.5" />
+                  <span className="text-gvi-ivory text-sm">{item}</span>
                 </li>
               ))}
             </ul>
-            <div className="border-t border-fortress-gold/15 pt-4">
-              <p className="text-fortress-silver/50 text-[11px] uppercase tracking-wider mb-3 font-semibold">4 dịch vụ được phép sau cấp phép (Điều 7)</p>
+            <div className="border-t border-gvi-gold/15 pt-4">
+              <p className="text-gvi-silver/50 text-[11px] uppercase tracking-wider mb-3 font-semibold">4 dịch vụ được phép sau cấp phép (Điều 7)</p>
               <div className="grid grid-cols-2 gap-2">
                 {([
                   [Landmark,      "Tổ chức thị trường giao dịch"],
@@ -318,9 +318,9 @@ export default function ShareholderPlansPage() {
                   [BarChart3,     "Tự doanh tài sản mã hóa"],
                   [ClipboardList, "Phát hành, chào bán TSMH"],
                 ] as const).map(([Icon, label]) => (
-                  <div key={label} className="flex items-center gap-2 bg-fortress-deep rounded-lg p-2.5">
-                    <Icon className="w-4 h-4 text-fortress-gold shrink-0" />
-                    <span className="text-fortress-ivory text-[11px] font-medium leading-tight">{label}</span>
+                  <div key={label} className="flex items-center gap-2 bg-gvi-deep rounded-lg p-2.5">
+                    <Icon className="w-4 h-4 text-gvi-gold shrink-0" />
+                    <span className="text-gvi-ivory text-[11px] font-medium leading-tight">{label}</span>
                   </div>
                 ))}
               </div>
@@ -350,7 +350,7 @@ export default function ShareholderPlansPage() {
               </div>
             </div>
 
-            <div className="bg-fortress-navy border border-blue-500/20 rounded-2xl p-5 space-y-3">
+            <div className="bg-gvi-navy border border-blue-500/20 rounded-2xl p-5 space-y-3">
               <div className="flex items-center gap-2">
                 <Globe className="w-4 h-4 text-blue-300 shrink-0" />
                 <p className="font-bold text-blue-300 text-sm">Tại sao đây là cơ hội lịch sử?</p>
@@ -364,7 +364,7 @@ export default function ShareholderPlansPage() {
                 ] as const).map(([Icon, text]) => (
                   <div key={text} className="flex items-start gap-2.5">
                     <Icon className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
-                    <span className="text-fortress-silver/70 text-xs leading-relaxed">{text}</span>
+                    <span className="text-gvi-silver/70 text-xs leading-relaxed">{text}</span>
                   </div>
                 ))}
               </div>
@@ -377,7 +377,7 @@ export default function ShareholderPlansPage() {
       <Section dark>
         <div className="text-center mb-10">
           <SectionHeader tag="Tiến Độ Dự Án" heading={`Chúng Ta Đang Ở Giai Đoạn ${CURRENT_PHASE}`} dark
-            description="Fortress đang tích lũy vốn và xây dựng liên minh đối tác. Đây là thời điểm tốt nhất để tham gia — trước khi hồ sơ được nộp." />
+            description="GVI Tech Holding đang tích lũy vốn và xây dựng liên minh đối tác. Đây là thời điểm tốt nhất để tham gia — trước khi hồ sơ được nộp." />
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
           {PROJECT_TIMELINE.map((p) => {
@@ -386,28 +386,28 @@ export default function ShareholderPlansPage() {
               p.status === "active" ? CircleDot   : Clock;
             return (
               <div key={p.phase} className={`flex gap-4 p-4 rounded-xl border transition-all ${
-                p.status === "done"   ? "bg-fortress-gold/8 border-fortress-gold/25" :
+                p.status === "done"   ? "bg-gvi-gold/8 border-gvi-gold/25" :
                 p.status === "active" ? "bg-blue-500/10 border-blue-500/40 ring-1 ring-blue-500/30" :
-                "bg-fortress-deep/40 border-fortress-silver/10 opacity-60"
+                "bg-gvi-deep/40 border-gvi-silver/10 opacity-60"
               }`}>
                 <div className={`w-10 h-10 shrink-0 flex items-center justify-center rounded-full border ${
-                  p.status === "done"   ? "bg-fortress-gold/20 border-fortress-gold" :
+                  p.status === "done"   ? "bg-gvi-gold/20 border-gvi-gold" :
                   p.status === "active" ? "bg-blue-500/20 border-blue-400" :
-                  "bg-fortress-deep border-fortress-silver/20"
+                  "bg-gvi-deep border-gvi-silver/20"
                 }`}>
                   <StatusIcon className={`w-4 h-4 ${
-                    p.status === "done"   ? "text-fortress-gold" :
+                    p.status === "done"   ? "text-gvi-gold" :
                     p.status === "active" ? "text-blue-300" :
-                    "text-fortress-silver/30"
+                    "text-gvi-silver/30"
                   }`} />
                 </div>
                 <div>
                   <p className={`font-mono text-[10px] tracking-widest mb-0.5 ${
-                    p.status === "done"   ? "text-fortress-gold" :
-                    p.status === "active" ? "text-blue-300" : "text-fortress-silver/30"
+                    p.status === "done"   ? "text-gvi-gold" :
+                    p.status === "active" ? "text-blue-300" : "text-gvi-silver/30"
                   }`}>{p.date}</p>
-                  <p className="font-semibold text-fortress-ivory text-sm">{p.label}</p>
-                  <p className="text-fortress-silver/50 text-xs mt-0.5 leading-relaxed">{p.detail}</p>
+                  <p className="font-semibold text-gvi-ivory text-sm">{p.label}</p>
+                  <p className="text-gvi-silver/50 text-xs mt-0.5 leading-relaxed">{p.detail}</p>
                 </div>
               </div>
             );
@@ -424,20 +424,20 @@ export default function ShareholderPlansPage() {
             description="Không một ai góp một mình. Luật quy định cụ thể tỷ lệ từng nhóm — đây là lý do dự án cần nhiều cổ đông với vai trò khác nhau."
           />
         </div>
-        <div className="max-w-3xl mx-auto bg-fortress-navy border border-fortress-gold/20 rounded-2xl p-6 md:p-8">
+        <div className="max-w-3xl mx-auto bg-gvi-navy border border-gvi-gold/20 rounded-2xl p-6 md:p-8">
           <CapitalDonut />
         </div>
         <div className="mt-6 max-w-3xl mx-auto grid sm:grid-cols-3 gap-4 text-center">
           {[
-            { Icon: Coins,    label: "Vốn điều lệ bắt buộc", value: "10.000 tỷ VNĐ", sub: "≈ 400 triệu USD",                                   color: "text-fortress-gold" },
+            { Icon: Coins,    label: "Vốn điều lệ bắt buộc", value: "10.000 tỷ VNĐ", sub: "≈ 400 triệu USD",                                   color: "text-gvi-gold" },
             { Icon: Building2,label: "Tổ chức bắt buộc",     value: ">35% từ ≥2 tổ chức", sub: "Ngân hàng / CTCK / Quỹ / Bảo hiểm / Công nghệ", color: "text-blue-400" },
             { Icon: Globe,    label: "Giới hạn nước ngoài",  value: "Tối đa 49%",      sub: "Điều 8, Khoản 4 — bắt buộc tuyệt đối",            color: "text-purple-400" },
           ].map(({ Icon, label, value, sub, color }) => (
-            <div key={label} className="p-5 bg-fortress-navy border border-fortress-gold/10 rounded-xl">
+            <div key={label} className="p-5 bg-gvi-navy border border-gvi-gold/10 rounded-xl">
               <Icon className={`w-5 h-5 mx-auto mb-2 ${color}`} />
-              <p className="text-fortress-silver/50 text-[10px] uppercase tracking-widest mb-1">{label}</p>
+              <p className="text-gvi-silver/50 text-[10px] uppercase tracking-widest mb-1">{label}</p>
               <p className={`font-black text-sm ${color}`}>{value}</p>
-              <p className="text-fortress-silver/40 text-[11px] mt-1 leading-tight">{sub}</p>
+              <p className="text-gvi-silver/40 text-[11px] mt-1 leading-tight">{sub}</p>
             </div>
           ))}
         </div>
@@ -466,10 +466,10 @@ export default function ShareholderPlansPage() {
           />
         </div>
         <InvestmentPlansClient />
-        <div className="mt-8 max-w-3xl mx-auto p-4 bg-fortress-charcoal/5 border border-fortress-navy/15 rounded-xl">
-          <p className="text-fortress-charcoal/50 text-[11px] leading-relaxed text-center">
+        <div className="mt-8 max-w-3xl mx-auto p-4 bg-gvi-charcoal/5 border border-gvi-navy/15 rounded-xl">
+          <p className="text-gvi-charcoal/50 text-[11px] leading-relaxed text-center">
             Đây là hạng mục góp vốn B2B xây dựng dự án —{" "}
-            <strong className="text-fortress-charcoal/70">không phải sản phẩm đầu tư tài chính bán lẻ</strong>.
+            <strong className="text-gvi-charcoal/70">không phải sản phẩm đầu tư tài chính bán lẻ</strong>.
             Điều khoản cụ thể được thương lượng trực tiếp và ký kết theo Luật Doanh nghiệp + NQ 05/2025/NQ-CP.
           </p>
         </div>
@@ -490,14 +490,14 @@ export default function ShareholderPlansPage() {
             {DOC_SUMMARY.map(({ Icon, label, count, color, iconColor }) => (
               <div key={label} className={`p-5 rounded-xl border ${color} flex flex-col items-center text-center gap-2`}>
                 <Icon className={`w-6 h-6 ${iconColor}`} />
-                <p className="text-fortress-ivory font-semibold text-xs leading-snug">{label}</p>
-                <p className="text-fortress-silver/50 text-[11px]">{count}</p>
+                <p className="text-gvi-ivory font-semibold text-xs leading-snug">{label}</p>
+                <p className="text-gvi-silver/50 text-[11px]">{count}</p>
               </div>
             ))}
           </div>
-          <p className="text-fortress-silver/50 text-xs text-center">
+          <p className="text-gvi-silver/50 text-xs text-center">
             Chi tiết từng tài liệu theo vai trò → xem phần{" "}
-            <a href="#roles" className="text-fortress-gold underline hover:text-fortress-champagne">Phân Vai Đối Tác</a>
+            <a href="#roles" className="text-gvi-gold underline hover:text-gvi-champagne">Phân Vai Đối Tác</a>
             {" "}ở trên · Tab &ldquo;Hồ Sơ Cần Có&rdquo; trong từng vai trò
           </p>
         </div>
@@ -511,20 +511,20 @@ export default function ShareholderPlansPage() {
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
           {LICENSING_CONDITIONS.map(({ n, Icon, label, detail, source }) => (
-            <div key={n} className="p-5 bg-fortress-deep border border-fortress-gold/10 hover:border-fortress-gold/30 transition-all rounded-xl group">
+            <div key={n} className="p-5 bg-gvi-deep border border-gvi-gold/10 hover:border-gvi-gold/30 transition-all rounded-xl group">
               <div className="flex items-center justify-between mb-3">
-                <span className="text-fortress-gold/30 font-mono font-black text-xl group-hover:text-fortress-gold/50 transition-colors">{n}</span>
-                <div className="w-8 h-8 rounded-lg bg-fortress-navy flex items-center justify-center">
-                  <Icon className="w-4 h-4 text-fortress-gold/60 group-hover:text-fortress-gold transition-colors" />
+                <span className="text-gvi-gold/30 font-mono font-black text-xl group-hover:text-gvi-gold/50 transition-colors">{n}</span>
+                <div className="w-8 h-8 rounded-lg bg-gvi-navy flex items-center justify-center">
+                  <Icon className="w-4 h-4 text-gvi-gold/60 group-hover:text-gvi-gold transition-colors" />
                 </div>
               </div>
-              <p className="font-semibold text-fortress-ivory text-sm mb-1.5">{label}</p>
-              <p className="text-fortress-silver/55 text-xs leading-relaxed">{detail}</p>
-              <p className="text-fortress-gold/30 text-[10px] font-mono mt-3">{source}</p>
+              <p className="font-semibold text-gvi-ivory text-sm mb-1.5">{label}</p>
+              <p className="text-gvi-silver/55 text-xs leading-relaxed">{detail}</p>
+              <p className="text-gvi-gold/30 text-[10px] font-mono mt-3">{source}</p>
             </div>
           ))}
         </div>
-        <p className="text-center mt-6 text-fortress-silver/30 text-[11px] font-mono">
+        <p className="text-center mt-6 text-gvi-silver/30 text-[11px] font-mono">
           Điều 8, NQ 05/2025/NQ-CP ngày 09/09/2025 · QĐ 96/QĐ-BTC ngày 20/01/2026
         </p>
       </Section>
@@ -552,11 +552,11 @@ export default function ShareholderPlansPage() {
           />
           <div className="mt-6 flex flex-wrap justify-center gap-4">
             <Link href="/investment-disclaimer"
-              className="inline-flex items-center gap-2 text-fortress-gold/60 hover:text-fortress-gold text-xs font-semibold tracking-wide transition-colors">
+              className="inline-flex items-center gap-2 text-gvi-gold/60 hover:text-gvi-gold text-xs font-semibold tracking-wide transition-colors">
               Tuyên Bố Miễn Trừ Trách Nhiệm <ArrowRight className="w-3 h-3" />
             </Link>
-            <Link href="/invest-with-fortress/charter"
-              className="inline-flex items-center gap-2 text-fortress-silver/40 hover:text-fortress-silver text-xs font-semibold tracking-wide transition-colors">
+            <Link href="/documents"
+              className="inline-flex items-center gap-2 text-gvi-silver/40 hover:text-gvi-silver text-xs font-semibold tracking-wide transition-colors">
               Quyền & Nghĩa Vụ Hợp Tác <ArrowRight className="w-3 h-3" />
             </Link>
           </div>
@@ -574,11 +574,11 @@ export default function ShareholderPlansPage() {
           />
           <div className="flex flex-col sm:flex-row gap-3 justify-center mt-8">
             <Link href="/invest-with-fortress#connect"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-fortress-gold to-fortress-champagne text-fortress-navy font-bold text-xs tracking-[0.18em] uppercase hover:opacity-90 transition-opacity shadow-lg shadow-fortress-gold/20 rounded-sm">
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-gvi-gold to-gvi-champagne text-gvi-navy font-bold text-xs tracking-[0.18em] uppercase hover:opacity-90 transition-opacity shadow-lg shadow-gvi-gold/20 rounded-sm">
               Kết Nối Với Chúng Tôi <ArrowRight className="w-3.5 h-3.5" />
             </Link>
             <Link href="/contact"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-fortress-gold/35 text-fortress-gold font-semibold text-xs tracking-[0.18em] uppercase hover:bg-fortress-gold/8 transition-all rounded-sm">
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-gvi-gold/35 text-gvi-gold font-semibold text-xs tracking-[0.18em] uppercase hover:bg-gvi-gold/8 transition-all rounded-sm">
               Đặt Câu Hỏi Trực Tiếp
             </Link>
           </div>
@@ -588,14 +588,14 @@ export default function ShareholderPlansPage() {
               { Icon: Zap,      label: "Phản hồi 2–3 ngày",  sub: "Đội ngũ phản hồi trực tiếp, không qua bot" },
               { Icon: FileText, label: "Không áp lực",        sub: "Bước kết nối đầu tiên không có nghĩa vụ gì" },
             ].map(({ Icon, label, sub }) => (
-              <div key={label} className="p-5 bg-fortress-deep border border-fortress-gold/10 rounded-xl">
-                <Icon className="w-5 h-5 mx-auto mb-2 text-fortress-gold/60" />
-                <p className="text-fortress-ivory font-semibold text-xs">{label}</p>
-                <p className="text-fortress-silver/45 text-[11px] mt-1 leading-relaxed">{sub}</p>
+              <div key={label} className="p-5 bg-gvi-deep border border-gvi-gold/10 rounded-xl">
+                <Icon className="w-5 h-5 mx-auto mb-2 text-gvi-gold/60" />
+                <p className="text-gvi-ivory font-semibold text-xs">{label}</p>
+                <p className="text-gvi-silver/45 text-[11px] mt-1 leading-relaxed">{sub}</p>
               </div>
             ))}
           </div>
-          <p className="mt-6 text-fortress-silver/30 text-[11px] font-mono">
+          <p className="mt-6 text-gvi-silver/30 text-[11px] font-mono">
             Căn cứ: NQ 05/2025/NQ-CP · QĐ 96/QĐ-BTC ngày 20/01/2026 · Luật Doanh nghiệp · Luật Đầu tư
           </p>
         </div>

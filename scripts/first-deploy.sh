@@ -37,15 +37,15 @@ print_ok "Standalone output prepared"
 # ── Seed data ────────────────────────────────────────────────
 print_step "Seeding database"
 node scripts/seed-mongo.js || echo "  Seed skipped (may already be seeded)"
-node scripts/seed.js
-print_ok "Seed complete"
-
+APP_DIR="/var/lkvip/langding"
+DOMAIN="${DOMAIN:-langding.tc-gaming.live}"
+...
 # ── Nginx config ─────────────────────────────────────────────
 print_step "Installing Nginx config for $DOMAIN"
-CONF="/etc/nginx/sites-available/fortress.conf"
+CONF="/etc/nginx/sites-available/langding.conf"
 if [[ ! -f "$CONF" ]]; then
   sed "s/YOURDOMAIN.COM/$DOMAIN/g" nginx.conf.example | sudo tee "$CONF" > /dev/null
-  sudo ln -sf "$CONF" /etc/nginx/sites-enabled/fortress.conf
+  sudo ln -sf "$CONF" /etc/nginx/sites-enabled/langding.conf
   sudo rm -f /etc/nginx/sites-enabled/default
   sudo nginx -t && sudo systemctl reload nginx
   print_ok "Nginx configured for $DOMAIN"
@@ -55,7 +55,7 @@ fi
 
 # ── PM2 start ────────────────────────────────────────────────
 print_step "Starting application with PM2"
-pm2 delete fortress-website 2>/dev/null || true
+pm2 delete gvi-langding 2>/dev/null || true
 pm2 start ecosystem.config.js --env production
 pm2 save
 print_ok "PM2 started — app running on port 3000"
@@ -63,6 +63,6 @@ print_ok "PM2 started — app running on port 3000"
 print_step "✅ First deploy complete!"
 echo ""
 echo "  Run SSL setup next: bash scripts/ssl-setup.sh $DOMAIN"
-echo "  View logs:          pm2 logs fortress-website"
+echo "  View logs:          pm2 logs gvi-langding"
 echo "  Monitor:            pm2 monit"
 echo ""

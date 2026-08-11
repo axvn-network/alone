@@ -42,19 +42,19 @@ export const documentService = {
   async list(query: DocumentQuery = {}) {
     await connectDB();
     const filter: Record<string, unknown> = {};
-    if (query.status) filter.status = query.status;
+    if (query.status)   filter.status   = query.status;
     if (query.category) filter.category = query.category;
-    if (query.year) filter.year = query.year;
+    if (query.year)     filter.year     = query.year;
     if (query.search) {
       filter.$or = [
-        { title: { $regex: query.search, $options: "i" } },
+        { title:   { $regex: query.search, $options: "i" } },
         { titleEn: { $regex: query.search, $options: "i" } },
       ];
     }
 
-    const page = Math.max(1, query.page || 1);
+    const page  = Math.max(1, query.page  || 1);
     const limit = Math.min(100, Math.max(1, query.limit || 50));
-    const skip = (page - 1) * limit;
+    const skip  = (page - 1) * limit;
 
     const [docs, total] = await Promise.all([
       DocumentModel.find(filter).sort({ publishedDate: -1, year: -1 }).skip(skip).limit(limit).lean(),
@@ -62,6 +62,11 @@ export const documentService = {
     ]);
 
     return { documents: docs.map((d) => ({ ...d, _id: String(d._id) })), total, page, limit };
+  },
+
+  /** Public: only status=published */
+  async listPublic(query: Omit<DocumentQuery, "status"> = {}) {
+    return documentService.list({ ...query, status: "published" });
   },
 
   async getById(id: string) {
@@ -84,7 +89,7 @@ export const documentService = {
     await connectDB();
     const update: Record<string, unknown> = { ...data };
     if (data.publishedDate) update.publishedDate = new Date(data.publishedDate);
-    const doc = await DocumentModel.findByIdAndUpdate(id, update, { new: true });
+    const doc = await DocumentModel.findByIdAndUpdate(id, { $set: update }, { new: true });
     if (!doc) throw new Error("Document not found");
     return toPlain(doc);
   },
@@ -100,5 +105,22 @@ export const documentService = {
     await connectDB();
     const years = await DocumentModel.distinct("year", { status: "published" });
     return (years as number[]).sort((a, b) => b - a);
+  },
+
+  /** Distinct categories that have at least one published document */
+  async getCategories(): Promise<DocumentCategory[]> {
+    await connectDB();
+    const cats = await DocumentModel.distinct("category", { status: "published" });
+    return cats as DocumentCategory[];
+  },
+
+  async getStats() {
+    await connectDB();
+    const [total, published, draft] = await Promise.all([
+      DocumentModel.countDocuments(),
+      DocumentModel.countDocuments({ status: "published" }),
+      DocumentModel.countDocuments({ status: "draft" }),
+    ]);
+    return { total, published, draft };
   },
 };

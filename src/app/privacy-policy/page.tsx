@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Chính Sách Bảo Mật",
   description:
-    "Chính sách bảo mật thông tin của Fortress Investment Holdings — cách chúng tôi thu thập, sử dụng, lưu trữ và bảo vệ dữ liệu cá nhân của bạn.",
+    "Chính sách bảo mật thông tin của GVI Tech Holding — cách chúng tôi thu thập, sử dụng, lưu trữ và bảo vệ dữ liệu cá nhân của bạn.",
 };
 
 export default function PrivacyPolicyPage() {
@@ -14,7 +14,7 @@ export default function PrivacyPolicyPage() {
       <PageHero
         tag="Pháp Lý"
         heading="Chính Sách Bảo Mật Quyền Riêng Tư"
-        description="Fortress Investment Holdings tôn trọng quyền riêng tư của mọi người dùng. Tài liệu này giải thích cách chúng tôi thu thập, sử dụng, lưu trữ và bảo vệ dữ liệu cá nhân của bạn."
+        description="GVI Tech Holding tôn trọng quyền riêng tư của mọi người dùng. Tài liệu này giải thích cách chúng tôi thu thập, sử dụng, lưu trữ và bảo vệ dữ liệu cá nhân của bạn."
       />
 
       <section
@@ -23,9 +23,9 @@ export default function PrivacyPolicyPage() {
       >
         <div className="max-w-[860px] mx-auto section-px">
           {/* Ngày cập nhật */}
-          <div className="flex items-center gap-3 mb-10 md:mb-14 pb-6 border-b border-fortress-gold/15">
-            <div className="w-1.5 h-1.5 rounded-full bg-fortress-gold/60" />
-            <p className="text-fortress-charcoal/45 text-xs font-mono tracking-widest uppercase">Cập nhật lần cuối: 2025</p>
+          <div className="flex items-center gap-3 mb-10 md:mb-14 pb-6 border-b border-gvi-gold/15">
+            <div className="w-1.5 h-1.5 rounded-full bg-gvi-gold/60" />
+            <p className="text-gvi-charcoal/45 text-xs font-mono tracking-widest uppercase">Cập nhật lần cuối: 2025</p>
           </div>
 
           <ProseDoc
@@ -35,7 +35,7 @@ export default function PrivacyPolicyPage() {
                 title: "Cam Kết Bảo Mật",
                 content: (
                   <p>
-                    Fortress Investment Holdings luôn tôn trọng quyền riêng tư của mọi người dùng truy cập website,
+                    GVI Tech Holding luôn tôn trọng quyền riêng tư của mọi người dùng truy cập website,
                     liên hệ với chúng tôi hoặc gửi thông tin qua các biểu mẫu trực tuyến.
                     Chính sách này giải thích cách thức chúng tôi xử lý dữ liệu cá nhân của bạn một cách minh bạch và có trách nhiệm.
                   </p>
@@ -78,7 +78,7 @@ export default function PrivacyPolicyPage() {
                 content: (
                   <>
                     <p>
-                      Tài liệu tải lên qua website được bảo mật theo tiêu chuẩn nội bộ nghiêm ngặt của Fortress.
+                      Tài liệu tải lên qua website được bảo mật theo tiêu chuẩn nội bộ nghiêm ngặt của GVI Tech Holding.
                       Chỉ những nhân sự được ủy quyền mới có quyền truy cập.
                     </p>
                     <ProseNote>
@@ -115,9 +115,9 @@ export default function PrivacyPolicyPage() {
                 content: (
                   <>
                     <p>Mọi thắc mắc liên quan đến quyền riêng tư và dữ liệu cá nhân, vui lòng liên hệ với chúng tôi qua:</p>
-                    <div className="mt-4 p-5 bg-fortress-navy/3 border border-fortress-gold/12 rounded-sm space-y-1.5">
-                      <p className="font-semibold text-fortress-navy">Fortress Investment Holdings</p>
-                      <p>Email: <a href="mailto:info@fortressih.com" className="text-fortress-gold hover:underline font-medium">info@fortressih.com</a></p>
+                    <div className="mt-4 p-5 bg-gvi-navy/3 border border-gvi-gold/12 rounded-sm space-y-1.5">
+                      <p className="font-semibold text-gvi-navy">GVI Tech Holding</p>
+                      <p>Email: <a href="mailto:info@gvitech.vn" className="text-gvi-gold hover:underline font-medium">info@gvitech.vn</a></p>
                       <p>Địa chỉ: Dubai, Các Tiểu Vương Quốc Ả Rập Thống Nhất</p>
                     </div>
                   </>

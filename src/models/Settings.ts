@@ -54,10 +54,10 @@ const ChatButtonSchema = new Schema<IChatButton>(
 
 const SettingsSchema = new Schema<ISettings>(
   {
-    companyName: { type: String, default: "Fortress Investment Holdings" },
+    companyName: { type: String, default: "GVI Tech Holding" },
     logo: { type: String, default: "/large-logo.png" },
     favicon: { type: String, default: "" },
-    email: { type: String, default: "info@fortressih.com" },
+    email: { type: String, default: "info@gvitech.vn" },
     phone: { type: String, default: "+971 4 XXX XXXX" },
     address: { type: String, default: "Dubai, United Arab Emirates" },
     whatsapp: { type: String, default: "971500000000" },
@@ -67,7 +67,7 @@ const SettingsSchema = new Schema<ISettings>(
     metaPixelId: { type: String, default: "" },
     footer: { type: String, default: "" },
     chatButtons: { type: [ChatButtonSchema], default: [
-      { type: "whatsapp", enabled: true, value: "971500000000", messageVi: "Xin chào, tôi muốn tìm hiểu thêm về Fortress Investment Holdings.", messageEn: "Hello, I would like to enquire about Fortress Investment Holdings." },
+      { type: "whatsapp", enabled: true, value: "971500000000", messageVi: "Xin chào, tôi muốn tìm hiểu thêm về GVI Tech Holding.", messageEn: "Hello, I would like to enquire about GVI Tech Holding." },
     ]},
   },
   { timestamps: true }

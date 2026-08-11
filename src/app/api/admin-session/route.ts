@@ -1,10 +1,13 @@
-import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth-utils";
+import { successResponse, unauthorizedResponse } from "@/utils/api-response";
 
 export async function GET() {
   const user = await getCurrentUser();
-  if (user) {
-    return NextResponse.json({ authenticated: true, user });
-  }
-  return NextResponse.json({ authenticated: false });
+  if (!user) return unauthorizedResponse();
+  return successResponse({
+    id:    user.id,
+    name:  user.name,
+    email: user.email,
+    role:  user.role,
+  });
 }

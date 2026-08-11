@@ -24,6 +24,22 @@ export interface AdminEnquiryItem {
   };
 }
 
+export interface EnquiryStats {
+  total: number;
+  new: number;
+  read: number;
+  archived: number;
+  contacts: number;
+  submissions: number;
+}
+
+const SUBMISSION_TYPES = [
+  "Investment Opportunity",
+  "Business Acquisition",
+  "Joint Venture",
+  "Strategic Partnership",
+];
+
 // ─── public submission ────────────────────────────────────────────────────────
 
 export async function createEnquiry(data: ContactEnquiryInput) {
@@ -37,15 +53,23 @@ export async function createEnquiry(data: ContactEnquiryInput) {
 export async function getEnquiries(options?: {
   status?: string;
   type?: string;
+  search?: string;
   page?: number;
   limit?: number;
 }) {
   await connectDB();
 
-  const { status, type, page = 1, limit = 20 } = options || {};
+  const { status, type, search, page = 1, limit = 20 } = options || {};
   const query: Record<string, unknown> = {};
   if (status) query.status = status;
-  if (type) query.type = type;
+  if (type)   query.type   = type;
+  if (search) {
+    query.$or = [
+      { name:    { $regex: search, $options: "i" } },
+      { email:   { $regex: search, $options: "i" } },
+      { subject: { $regex: search, $options: "i" } },
+    ];
+  }
 
   const [total, enquiries] = await Promise.all([
     Enquiry.countDocuments(query),
@@ -63,6 +87,7 @@ export async function getEnquiries(options?: {
 export async function listForAdmin(options?: {
   type?: "contact" | "submission";
   status?: string;
+  search?: string;
 }): Promise<AdminEnquiryItem[]> {
   await connectDB();
 
@@ -74,9 +99,14 @@ export async function listForAdmin(options?: {
   if (options?.type === "contact") {
     query.type = "Contact";
   } else if (options?.type === "submission") {
-    query.type = {
-      $in: ["Investment Opportunity", "Business Acquisition", "Joint Venture", "Strategic Partnership"],
-    };
+    query.type = { $in: SUBMISSION_TYPES };
+  }
+  if (options?.search) {
+    query.$or = [
+      { name:    { $regex: options.search, $options: "i" } },
+      { email:   { $regex: options.search, $options: "i" } },
+      { subject: { $regex: options.search, $options: "i" } },
+    ];
   }
 
   const docs = await Enquiry.find(query).sort({ createdAt: -1 }).limit(200).lean();
@@ -91,9 +121,9 @@ export async function listForAdmin(options?: {
     read: e.status !== "new",
     createdAt: (e.createdAt as Date).toISOString(),
     details: {
-      phone: e.phone || "",
-      company: e.company || "",
-      document: e.document || "",
+      phone:       e.phone    || "",
+      company:     e.company  || "",
+      document:    e.document || "",
       enquiryType: e.type,
     },
   }));
@@ -120,4 +150,28 @@ export async function deleteEnquiry(id: string) {
   const enquiry = await Enquiry.findByIdAndDelete(id).lean();
   if (!enquiry) throw new NotFoundError("Enquiry not found");
   return enquiry;
+}
+
+/** Bulk mark read — e.g., mark all new contact enquiries as read */
+export async function bulkMarkRead(ids: string[]) {
+  await connectDB();
+  const result = await Enquiry.updateMany(
+    { _id: { $in: ids } },
+    { $set: { status: "read" } }
+  );
+  return result.modifiedCount;
+}
+
+/** Summary stats for dashboard badge & overview */
+export async function getStats(): Promise<EnquiryStats> {
+  await connectDB();
+  const [total, newCount, readCount, archivedCount, contacts, submissions] = await Promise.all([
+    Enquiry.countDocuments(),
+    Enquiry.countDocuments({ status: "new" }),
+    Enquiry.countDocuments({ status: "read" }),
+    Enquiry.countDocuments({ status: "archived" }),
+    Enquiry.countDocuments({ type: "Contact" }),
+    Enquiry.countDocuments({ type: { $in: SUBMISSION_TYPES } }),
+  ]);
+  return { total, new: newCount, read: readCount, archived: archivedCount, contacts, submissions };
 }

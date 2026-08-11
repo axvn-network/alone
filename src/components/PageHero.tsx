@@ -19,7 +19,7 @@ interface PageHeroProps {
 export default function PageHero({ tag, heading, description, children, dark = false }: PageHeroProps) {
   return (
     <section
-      className={`relative text-center overflow-hidden ${dark ? "bg-fortress-navy border-b border-fortress-gold/10" : "bg-white"}`}
+      className={`relative text-center overflow-hidden ${dark ? "bg-gvi-navy border-b border-gvi-gold/10" : "bg-white"}`}
       style={{
         paddingTop: "clamp(6rem, 8vw + 1.5rem, 9rem)",
         paddingBottom: "clamp(2.5rem, 4vw + 0.5rem, 5rem)",
@@ -34,8 +34,8 @@ export default function PageHero({ tag, heading, description, children, dark = f
       {/* Ambient corner glows */}
       {dark && (
         <>
-          <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-fortress-gold/8 rounded-full blur-[100px] -translate-y-1/3 translate-x-1/3 pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-fortress-champagne/6 rounded-full blur-[80px] translate-y-1/3 -translate-x-1/3 pointer-events-none" />
+          <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-gvi-gold/8 rounded-full blur-[100px] -translate-y-1/3 translate-x-1/3 pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-gvi-champagne/6 rounded-full blur-[80px] translate-y-1/3 -translate-x-1/3 pointer-events-none" />
         </>
       )}
 
@@ -48,14 +48,14 @@ export default function PageHero({ tag, heading, description, children, dark = f
           >
             {/* Eyebrow */}
             <div className="flex items-center justify-center gap-3 mb-5">
-              <div className={`w-5 h-px ${dark ? "bg-fortress-gold/60" : "bg-fortress-gold/50"}`} />
+              <div className={`w-5 h-px ${dark ? "bg-gvi-gold/60" : "bg-gvi-gold/50"}`} />
               <span className="section-tag">{tag}</span>
-              <div className={`w-5 h-px ${dark ? "bg-fortress-gold/60" : "bg-fortress-gold/50"}`} />
+              <div className={`w-5 h-px ${dark ? "bg-gvi-gold/60" : "bg-gvi-gold/50"}`} />
             </div>
 
             {/* Heading */}
             <h1
-              className={`font-light leading-[1.22] uppercase mb-5 ${dark ? "text-fortress-ivory" : "text-fortress-navy"}`}
+              className={`font-light leading-[1.22] uppercase mb-5 ${dark ? "text-gvi-ivory" : "text-gvi-navy"}`}
               style={{ fontSize: "var(--text-display)", letterSpacing: "var(--tracking-display)" }}
             >
               {heading}
@@ -66,13 +66,13 @@ export default function PageHero({ tag, heading, description, children, dark = f
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.35 }}
-              className={`w-10 h-px mx-auto mb-6 origin-center ${dark ? "bg-fortress-gold/50" : "bg-fortress-gold/40"}`}
+              className={`w-10 h-px mx-auto mb-6 origin-center ${dark ? "bg-gvi-gold/50" : "bg-gvi-gold/40"}`}
             />
 
             {/* Description */}
             {description && (
               <p
-                className={`leading-[1.8] max-w-2xl mx-auto ${dark ? "text-fortress-silver/80" : "text-fortress-charcoal/65"}`}
+                className={`leading-[1.8] max-w-2xl mx-auto ${dark ? "text-gvi-silver/80" : "text-gvi-charcoal/65"}`}
                 style={{ fontSize: "var(--text-lead)" }}
               >
                 {description}

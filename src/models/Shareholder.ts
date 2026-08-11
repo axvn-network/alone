@@ -19,6 +19,17 @@ export interface IShareholder extends Document {
   lastLogin: Date | null;
   createdAt: Date;
   updatedAt: Date;
+  // KYC fields (NQ05/2025 & AML)
+  kycStatus: "not_started" | "pending" | "approved" | "rejected";
+  kycSubmittedAt: Date | null;
+  kycApprovedAt: Date | null;
+  nationalId: string; // Mã hóa AES-256-GCM tại service layer
+  nationalIdIssuedDate: Date | null;
+  nationalIdIssuedPlace: string;
+  permanentAddress: string;
+  sourceOfFunds: string;
+  isPEP: boolean;
+  isSanctioned: boolean;
   comparePassword(plain: string): Promise<boolean>;
 }
 
@@ -36,6 +47,17 @@ const ShareholderSchema = new Schema<IShareholder>(
     notes:            { type: String, default: "" },
     avatarUrl:        { type: String, default: "" },
     lastLogin:        { type: Date, default: null },
+    // KYC fields (NQ05/2025 & AML)
+    kycStatus:        { type: String, enum: ["not_started", "pending", "approved", "rejected"], default: "not_started" },
+    kycSubmittedAt:   { type: Date, default: null },
+    kycApprovedAt:    { type: Date, default: null },
+    nationalId:       { type: String, select: false, default: "" }, // Mã hóa AES-256-GCM tại service layer
+    nationalIdIssuedDate: { type: Date, default: null },
+    nationalIdIssuedPlace: { type: String, default: "" },
+    permanentAddress: { type: String, default: "" },
+    sourceOfFunds:    { type: String, default: "" },
+    isPEP:            { type: Boolean, default: false },
+    isSanctioned:     { type: Boolean, default: false },
   },
   { timestamps: true }
 );

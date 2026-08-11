@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { useLang } from "@/contexts/LangContext";
 
 const WHATSAPP_MESSAGES = {
-  vi: "Xin chào, tôi muốn tìm hiểu thêm về Fortress Investment Holdings.",
-  en: "Hello, I would like to enquire about Fortress Investment Holdings.",
+  vi: "Xin chào, tôi muốn tìm hiểu thêm về GVI Tech Holding.",
+  en: "Hello, I would like to enquire about GVI Tech Holding.",
 };
 
 export default function WhatsAppButton() {

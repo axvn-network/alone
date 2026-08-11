@@ -1,0 +1,40 @@
+"use client";
+
+import { Timeline } from "@/components/visual/Timeline";
+import { RoadmapAccordion } from "@/components/visual/RoadmapAccordion";
+import DocLayout, { DocSidebar, DocMain, DocHero, DocBody } from "@/components/layouts/DocLayout";
+import { ROADMAP_PHASES, ROADMAP_META } from "@/data/roadmap";
+import type { TocItem } from "@/components/layouts/DocLayout";
+import StrategyNotice from "@/components/StrategyNotice";
+
+const TOC: readonly TocItem[] = [
+  { id: "timeline", label: "Lộ trình", level: 1 },
+  { id: "details",  label: "Chi tiết", level: 1 },
+];
+
+export default function RoadmapClient() {
+  return (
+    <DocLayout>
+      <DocSidebar toc={TOC} />
+      <DocMain>
+        <DocHero id="timeline">
+          <h2 className="text-[10px] font-semibold uppercase tracking-widest text-gvi-gold mb-6">
+            Lộ Trình Định Hướng {ROADMAP_META.startYear}–{ROADMAP_META.endYear}
+          </h2>
+          <Timeline />
+        </DocHero>
+
+        <DocBody id="details">
+          <h2 className="text-[10px] font-semibold uppercase tracking-widest text-gvi-gold mb-4">
+            Chi Tiết Từng Giai Đoạn
+          </h2>
+          <RoadmapAccordion phases={ROADMAP_PHASES} />
+        </DocBody>
+
+        <div className="mt-8">
+          <StrategyNotice className="max-w-none" />
+        </div>
+      </DocMain>
+    </DocLayout>
+  );
+}

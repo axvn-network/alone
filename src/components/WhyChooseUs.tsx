@@ -45,18 +45,18 @@ export default function WhyChooseUs() {
       className="relative overflow-hidden rounded-2xl section-mx section-my"
       style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}
     >
-      <div className="absolute inset-0 bg-fortress-deep" />
+      <div className="absolute inset-0 bg-gvi-deep" />
       <div className="relative max-w-[1280px] mx-auto section-px">
         <Stagger>
           <StaggerItem>
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-6 h-px bg-fortress-gold/60" />
+              <div className="w-6 h-px bg-gvi-gold/60" />
               <span className="section-tag">{whyTag}</span>
             </div>
           </StaggerItem>
           <StaggerItem>
             <h2
-              className="font-light text-fortress-ivory mb-10 md:mb-14 leading-[1.28] uppercase"
+              className="font-light text-gvi-ivory mb-10 md:mb-14 leading-[1.28] uppercase"
               style={{ fontSize: "var(--text-h2)", letterSpacing: "var(--tracking-heading)" }}
             >
               {whyTitle}
@@ -72,18 +72,18 @@ export default function WhyChooseUs() {
                   transition={{ type: "spring", stiffness: 400, damping: 28 }}
                 >
                   <motion.div
-                    className="h-px w-8 bg-fortress-gold/30 mb-4"
+                    className="h-px w-8 bg-gvi-gold/30 mb-4"
                     whileHover={{ width: "3rem", backgroundColor: "rgba(201,162,74,0.7)" }}
                     transition={{ duration: 0.3, ease: "easeOut" }}
                   />
                   <h3
-                    className="font-semibold text-fortress-gold mb-3 transition-colors duration-300 group-hover:text-fortress-champagne leading-[1.4]"
+                    className="font-semibold text-gvi-gold mb-3 transition-colors duration-300 group-hover:text-gvi-champagne leading-[1.4]"
                     style={{ fontSize: "var(--text-h3)" }}
                   >
                     {item.title}
                   </h3>
                   <p
-                    className="text-fortress-silver/65 leading-[1.8] transition-colors duration-300 group-hover:text-fortress-silver/85"
+                    className="text-gvi-silver/65 leading-[1.8] transition-colors duration-300 group-hover:text-gvi-silver/85"
                     style={{ fontSize: "var(--text-body)" }}
                   >
                     {item.desc}

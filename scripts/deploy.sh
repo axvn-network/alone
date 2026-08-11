@@ -29,15 +29,9 @@ print_step "Building Next.js (production)"
 NODE_ENV=production npm run build
 print_ok "Build complete"
 
-# ── Copy standalone output ───────────────────────────────────
-print_step "Preparing standalone output"
-cp -r public .next/standalone/public
-cp -r .next/static .next/standalone/.next/static
-print_ok "Standalone updated"
-
 # ── PM2 zero-downtime reload ──────────────────────────────────
 print_step "Reloading PM2 (zero-downtime)"
-pm2 reload fortress-website --update-env
+pm2 reload gvi-langding --update-env
 pm2 save
 print_ok "PM2 reloaded"
 
@@ -48,4 +42,4 @@ if sudo nginx -t 2>/dev/null; then
 fi
 
 print_step "✅ Deploy complete — $(date '+%Y-%m-%d %H:%M:%S')"
-pm2 status fortress-website
+pm2 status gvi-langding

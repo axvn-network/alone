@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Điều Khoản Sử Dụng",
   description:
-    "Điều khoản sử dụng website Fortress Investment Holdings. Vui lòng đọc kỹ các điều khoản trước khi truy cập dịch vụ.",
+    "Điều khoản sử dụng website GVI Tech Holding. Vui lòng đọc kỹ các điều khoản trước khi truy cập dịch vụ.",
 };
 
 export default function TermsOfUsePage() {
@@ -14,7 +14,7 @@ export default function TermsOfUsePage() {
       <PageHero
         tag="Pháp Lý"
         heading="Điều Khoản Sử Dụng Website"
-        description="Khi truy cập hoặc sử dụng website Fortress Investment Holdings, bạn đồng ý tuân thủ các điều khoản dưới đây. Nếu không đồng ý, vui lòng tạm dừng sử dụng website."
+        description="Khi truy cập hoặc sử dụng website GVI Tech Holding, bạn đồng ý tuân thủ các điều khoản dưới đây. Nếu không đồng ý, vui lòng tạm dừng sử dụng website."
       />
 
       <section
@@ -23,9 +23,9 @@ export default function TermsOfUsePage() {
       >
         <div className="max-w-[860px] mx-auto section-px">
           {/* Ngày cập nhật */}
-          <div className="flex items-center gap-3 mb-10 md:mb-14 pb-6 border-b border-fortress-gold/15">
-            <div className="w-1.5 h-1.5 rounded-full bg-fortress-gold/60" />
-            <p className="text-fortress-charcoal/45 text-xs font-mono tracking-widest uppercase">Cập nhật lần cuối: 2025</p>
+          <div className="flex items-center gap-3 mb-10 md:mb-14 pb-6 border-b border-gvi-gold/15">
+            <div className="w-1.5 h-1.5 rounded-full bg-gvi-gold/60" />
+            <p className="text-gvi-charcoal/45 text-xs font-mono tracking-widest uppercase">Cập nhật lần cuối: 2025</p>
           </div>
 
           <ProseDoc
@@ -36,7 +36,7 @@ export default function TermsOfUsePage() {
                 content: (
                   <>
                     <p>
-                      Website này cung cấp thông tin tổng quan về Fortress Investment Holdings, các hoạt động đầu tư,
+                      Website này cung cấp thông tin tổng quan về GVI Tech Holding, các hoạt động đầu tư,
                       lĩnh vực quan tâm và đối tác chiến lược.
                     </p>
                     <ProseNote>
@@ -82,7 +82,7 @@ export default function TermsOfUsePage() {
                       và không tạo ra bất kỳ cam kết đầu tư, quan hệ đối tác hay nghĩa vụ hợp đồng nào.
                     </p>
                     <ProseNote>
-                      Fortress Investment Holdings có toàn quyền chấp nhận, từ chối hoặc không phản hồi bất kỳ đề xuất nào
+                      GVI Tech Holding có toàn quyền chấp nhận, từ chối hoặc không phản hồi bất kỳ đề xuất nào
                       mà không cần nêu lý do.
                     </ProseNote>
                   </>
@@ -94,7 +94,7 @@ export default function TermsOfUsePage() {
                 content: (
                   <p>
                     Trừ khi có quy định khác, toàn bộ nội dung website bao gồm thương hiệu, logo, thiết kế, văn bản,
-                    đồ họa và tài liệu đều thuộc sở hữu hoặc được cấp phép cho Fortress Investment Holdings.
+                    đồ họa và tài liệu đều thuộc sở hữu hoặc được cấp phép cho GVI Tech Holding.
                     Nội dung không được sao chép, chỉnh sửa, tái bản, phân phối hay sử dụng cho mục đích thương mại
                     khi chưa có sự cho phép bằng văn bản.
                   </p>
@@ -105,7 +105,7 @@ export default function TermsOfUsePage() {
                 title: "Liên Kết Bên Thứ Ba",
                 content: (
                   <p>
-                    Website có thể chứa liên kết đến các website bên thứ ba. Fortress Investment Holdings không chịu trách nhiệm
+                    Website có thể chứa liên kết đến các website bên thứ ba. GVI Tech Holding không chịu trách nhiệm
                     về nội dung, chính sách bảo mật, tính khả dụng hay độ chính xác của các trang đó.
                     Việc truy cập các website bên thứ ba hoàn toàn theo quyết định của bạn.
                   </p>
@@ -116,7 +116,7 @@ export default function TermsOfUsePage() {
                 title: "Giới Hạn Trách Nhiệm",
                 content: (
                   <p>
-                    Trong phạm vi tối đa được pháp luật cho phép, Fortress Investment Holdings không chịu trách nhiệm
+                    Trong phạm vi tối đa được pháp luật cho phép, GVI Tech Holding không chịu trách nhiệm
                     về các tổn thất, thiệt hại, chi phí hoặc nghĩa vụ phát sinh từ việc sử dụng website, phụ thuộc vào nội dung,
                     gián đoạn kỹ thuật, sự cố bảo mật ngoài tầm kiểm soát, liên kết bên thứ ba, hoặc các quyết định đầu tư,
                     kinh doanh của người dùng.
@@ -129,7 +129,7 @@ export default function TermsOfUsePage() {
                 content: (
                   <p>
                     Các điều khoản sử dụng này được điều chỉnh bởi pháp luật hiện hành của Các Tiểu Vương Quốc Ả Rập Thống Nhất
-                    và các quy định của tiểu vương quốc nơi Fortress Investment Holdings đăng ký hoạt động.
+                    và các quy định của tiểu vương quốc nơi GVI Tech Holding đăng ký hoạt động.
                   </p>
                 ),
               },
@@ -139,9 +139,9 @@ export default function TermsOfUsePage() {
                 content: (
                   <>
                     <p>Mọi thắc mắc về các điều khoản này, vui lòng liên hệ:</p>
-                    <div className="mt-4 p-5 bg-fortress-navy/3 border border-fortress-gold/12 rounded-sm space-y-1.5">
-                      <p className="font-semibold text-fortress-navy">Fortress Investment Holdings</p>
-                      <p>Email: <a href="mailto:legal@fortressih.com" className="text-fortress-gold hover:underline font-medium">legal@fortressih.com</a></p>
+                    <div className="mt-4 p-5 bg-gvi-navy/3 border border-gvi-gold/12 rounded-sm space-y-1.5">
+                      <p className="font-semibold text-gvi-navy">GVI Tech Holding</p>
+                      <p>Email: <a href="mailto:legal@gvitech.vn" className="text-gvi-gold hover:underline font-medium">legal@gvitech.vn</a></p>
                       <p>Địa chỉ: Dubai, Các Tiểu Vương Quốc Ả Rập Thống Nhất</p>
                     </div>
                   </>

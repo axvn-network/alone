@@ -56,7 +56,7 @@ export default function WhatWeDo() {
       whileInView="visible"
       viewport={{ once: true, margin: "-80px" }}
       variants={sectionReveal}
-      className="relative overflow-hidden bg-fortress-navy border-t border-fortress-gold/10 rounded-2xl section-mx section-my"
+      className="relative overflow-hidden bg-gvi-navy border-t border-gvi-gold/10 rounded-2xl section-mx section-my"
       style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}
     >
       <div className="relative max-w-[1400px] mx-auto section-px">
@@ -65,22 +65,22 @@ export default function WhatWeDo() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-16 mb-10 md:mb-16">
               <div>
                 <div className="flex items-center gap-3 mb-5">
-                  <div className="w-6 h-px bg-fortress-gold/60" />
+                  <div className="w-6 h-px bg-gvi-gold/60" />
                   <span className="section-tag">{tag}</span>
                 </div>
                 <h2
-                  className="text-fortress-ivory font-light leading-[1.28] uppercase"
+                  className="text-gvi-ivory font-light leading-[1.28] uppercase"
                   style={{ fontSize: "var(--text-h2)", letterSpacing: "var(--tracking-heading)" }}
                 >
                   {title}
                 </h2>
-                <p className="text-fortress-gold/90 font-medium mt-4 leading-[1.8]" style={{ fontSize: "var(--text-body)" }}>
+                <p className="text-gvi-gold/90 font-medium mt-4 leading-[1.8]" style={{ fontSize: "var(--text-body)" }}>
                   {subtitle}
                 </p>
               </div>
               <div className="space-y-5 lg:self-end">
-                <p className="text-fortress-silver/80 leading-[1.8]" style={{ fontSize: "var(--text-body)" }}>{desc1}</p>
-                <p className="text-fortress-silver/75 leading-[1.8]" style={{ fontSize: "var(--text-body)" }}>{desc2}</p>
+                <p className="text-gvi-silver/80 leading-[1.8]" style={{ fontSize: "var(--text-body)" }}>{desc1}</p>
+                <p className="text-gvi-silver/75 leading-[1.8]" style={{ fontSize: "var(--text-body)" }}>{desc2}</p>
               </div>
             </div>
           </StaggerItem>
@@ -93,27 +93,27 @@ export default function WhatWeDo() {
                   variants={cardVariants}
                   initial="rest"
                   whileHover="hover"
-                  className="group border bg-fortress-deep cursor-pointer rounded-sm flex flex-col"
+                  className="group border bg-gvi-deep cursor-pointer rounded-sm flex flex-col"
                   style={{ padding: "clamp(1.25rem, 2vw + 0.5rem, 2.5rem)" }}
                 >
                   <div className="flex-1 flex flex-col">
                     <span
-                      className="text-fortress-gold/45 uppercase font-semibold block mb-2"
+                      className="text-gvi-gold/45 uppercase font-semibold block mb-2"
                       style={{ fontSize: "var(--text-caption)", letterSpacing: "var(--tracking-tag)" }}
                     >
                       {t("whatWeDo.focusPrefix", lang)} {String(i + 1).padStart(2, "0")}
                     </span>
                     <h3
-                      className="font-semibold text-fortress-ivory mb-3 leading-[1.4]"
+                      className="font-semibold text-gvi-ivory mb-3 leading-[1.4]"
                       style={{ fontSize: "var(--text-h3)" }}
                     >
                       {item.title}
                     </h3>
-                    <p className="text-fortress-silver/70 leading-[1.8] flex-1" style={{ fontSize: "var(--text-body)" }}>
+                    <p className="text-gvi-silver/70 leading-[1.8] flex-1" style={{ fontSize: "var(--text-body)" }}>
                       {item.desc}
                     </p>
                     <motion.div
-                      className="h-px bg-gradient-to-r from-fortress-gold/60 to-transparent mt-6"
+                      className="h-px bg-gradient-to-r from-gvi-gold/60 to-transparent mt-6"
                       initial={{ scaleX: 0, transformOrigin: "left" }}
                       whileHover={{ scaleX: 1 }}
                       transition={{ duration: 0.4, ease: "easeOut" }}

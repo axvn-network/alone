@@ -99,14 +99,14 @@ export default function InvestorForm({ defaultPlan = "" }: { defaultPlan?: strin
   if (submitted) {
     return (
       <div className="text-center py-16">
-        <div className="w-20 h-20 bg-fortress-gold/10 flex items-center justify-center mx-auto mb-6 rounded-full">
-          <CheckCircle2 className="w-10 h-10 text-fortress-gold" />
+        <div className="w-20 h-20 bg-gvi-gold/10 flex items-center justify-center mx-auto mb-6 rounded-full">
+          <CheckCircle2 className="w-10 h-10 text-gvi-gold" />
         </div>
-        <h3 className="text-xl font-bold text-fortress-ivory mb-3">
+        <h3 className="text-xl font-bold text-gvi-ivory mb-3">
           Chúng tôi đã nhận được thông tin{formData.name ? `, ${formData.name}` : ""}.
         </h3>
-        <p className="text-fortress-silver/75 max-w-md mx-auto text-sm leading-relaxed">
-          Đội ngũ Fortress sẽ phản hồi trong 2–3 ngày làm việc. Không có bot, không có mẫu tự động — người thật đọc và người thật trả lời.
+        <p className="text-gvi-silver/75 max-w-md mx-auto text-sm leading-relaxed">
+          Đội ngũ GVI Tech Holding sẽ phản hồi trong 2–3 ngày làm việc. Không có bot, không có mẫu tự động — người thật đọc và người thật trả lời.
         </p>
       </div>
     );
@@ -117,7 +117,7 @@ export default function InvestorForm({ defaultPlan = "" }: { defaultPlan?: strin
 
       {/* Bước 1 — Bạn là ai? */}
       <div>
-        <label className="block text-fortress-ivory font-medium mb-4 text-sm">
+        <label className="block text-gvi-ivory font-medium mb-4 text-sm">
           Bạn tham gia với tư cách nào? *
         </label>
         <div className="grid sm:grid-cols-2 gap-3">
@@ -126,8 +126,8 @@ export default function InvestorForm({ defaultPlan = "" }: { defaultPlan?: strin
               key={type.id}
               className={`flex items-start gap-3 p-4 border cursor-pointer transition-all duration-200 ${
                 formData.enquiryType === type.id
-                  ? "border-fortress-gold/50 bg-fortress-gold/5"
-                  : "border-fortress-gold/10 bg-fortress-deep/50 hover:border-fortress-gold/25"
+                  ? "border-gvi-gold/50 bg-gvi-gold/5"
+                  : "border-gvi-gold/10 bg-gvi-deep/50 hover:border-gvi-gold/25"
               }`}
             >
               <input
@@ -141,24 +141,24 @@ export default function InvestorForm({ defaultPlan = "" }: { defaultPlan?: strin
               />
               <div
                 className={`w-9 h-9 flex items-center justify-center flex-shrink-0 mt-0.5 ${
-                  formData.enquiryType === type.id ? "bg-fortress-gold/20" : "bg-white/5"
+                  formData.enquiryType === type.id ? "bg-gvi-gold/20" : "bg-white/5"
                 }`}
               >
                 <type.icon
                   className={`w-4 h-4 ${
-                    formData.enquiryType === type.id ? "text-fortress-gold" : "text-fortress-silver"
+                    formData.enquiryType === type.id ? "text-gvi-gold" : "text-gvi-silver"
                   }`}
                 />
               </div>
               <div>
                 <p
                   className={`font-medium text-sm ${
-                    formData.enquiryType === type.id ? "text-fortress-gold" : "text-fortress-ivory"
+                    formData.enquiryType === type.id ? "text-gvi-gold" : "text-gvi-ivory"
                   }`}
                 >
                   {type.label}
                 </p>
-                <p className="text-fortress-silver/70 text-xs mt-0.5">{type.description}</p>
+                <p className="text-gvi-silver/70 text-xs mt-0.5">{type.description}</p>
               </div>
             </label>
           ))}
@@ -168,33 +168,33 @@ export default function InvestorForm({ defaultPlan = "" }: { defaultPlan?: strin
       {/* Bước 2 — Liên hệ */}
       <div className="grid sm:grid-cols-2 gap-5">
         <div>
-          <label className="block text-fortress-silver text-sm mb-2">Tên của bạn</label>
+          <label className="block text-gvi-silver text-sm mb-2">Tên của bạn</label>
           <input
             type="text"
             name="name"
             value={formData.name}
             onChange={handleChange}
             autoComplete="name"
-            className="w-full px-4 py-3 bg-fortress-navy border border-fortress-gold/20 text-fortress-ivory placeholder:text-fortress-silver/40 focus:outline-none focus:border-fortress-gold/50 transition-colors rounded-sm"
+            className="w-full px-4 py-3 bg-gvi-navy border border-gvi-gold/20 text-gvi-ivory placeholder:text-gvi-silver/40 focus:outline-none focus:border-gvi-gold/50 transition-colors rounded-sm"
             placeholder="Nguyễn Văn A"
           />
         </div>
         <div>
-          <label className="block text-fortress-silver text-sm mb-2">Số điện thoại</label>
+          <label className="block text-gvi-silver text-sm mb-2">Số điện thoại</label>
           <input
             type="tel"
             name="phone"
             value={formData.phone}
             onChange={handleChange}
             autoComplete="tel"
-            className="w-full px-4 py-3 bg-fortress-navy border border-fortress-gold/20 text-fortress-ivory placeholder:text-fortress-silver/40 focus:outline-none focus:border-fortress-gold/50 transition-colors rounded-sm"
+            className="w-full px-4 py-3 bg-gvi-navy border border-gvi-gold/20 text-gvi-ivory placeholder:text-gvi-silver/40 focus:outline-none focus:border-gvi-gold/50 transition-colors rounded-sm"
             placeholder="+84 90 XXX XXXX"
           />
         </div>
       </div>
 
       <div>
-        <label className="block text-fortress-silver text-sm mb-2">
+        <label className="block text-gvi-silver text-sm mb-2">
           Địa chỉ Email *
         </label>
         <input
@@ -204,14 +204,14 @@ export default function InvestorForm({ defaultPlan = "" }: { defaultPlan?: strin
           onChange={handleChange}
           required
           autoComplete="email"
-          className="w-full px-4 py-3 bg-fortress-navy border border-fortress-gold/20 text-fortress-ivory placeholder:text-fortress-silver/40 focus:outline-none focus:border-fortress-gold/50 transition-colors rounded-sm"
+          className="w-full px-4 py-3 bg-gvi-navy border border-gvi-gold/20 text-gvi-ivory placeholder:text-gvi-silver/40 focus:outline-none focus:border-gvi-gold/50 transition-colors rounded-sm"
           placeholder="email@company.com"
         />
       </div>
 
       {/* Bước 3 — Quy mô vốn (chips) */}
       <div>
-        <label className="block text-fortress-silver text-sm mb-3">
+        <label className="block text-gvi-silver text-sm mb-3">
           Quy mô vốn dự kiến (VNĐ)
         </label>
         <div className="flex flex-wrap gap-2">
@@ -227,8 +227,8 @@ export default function InvestorForm({ defaultPlan = "" }: { defaultPlan?: strin
               }
               className={`px-4 py-2 text-sm border transition-all duration-150 rounded-sm ${
                 formData.investmentRange === r.value
-                  ? "border-fortress-gold/60 bg-fortress-gold/10 text-fortress-gold"
-                  : "border-fortress-gold/15 bg-fortress-deep/40 text-fortress-silver hover:border-fortress-gold/35 hover:text-fortress-ivory"
+                  ? "border-gvi-gold/60 bg-gvi-gold/10 text-gvi-gold"
+                  : "border-gvi-gold/15 bg-gvi-deep/40 text-gvi-silver hover:border-gvi-gold/35 hover:text-gvi-ivory"
               }`}
             >
               {r.label}
@@ -239,25 +239,25 @@ export default function InvestorForm({ defaultPlan = "" }: { defaultPlan?: strin
 
       {/* Bước 4 — Gói hợp tác */}
       <div>
-        <label className="block text-fortress-silver text-sm mb-2">
+        <label className="block text-gvi-silver text-sm mb-2">
           Hạng mục hợp tác quan tâm
         </label>
         <select
           name="partnershipPlan"
           value={formData.partnershipPlan}
           onChange={handleChange}
-          className="w-full px-4 py-3 bg-fortress-navy border border-fortress-gold/20 text-fortress-ivory focus:outline-none focus:border-fortress-gold/50 transition-colors appearance-none rounded-sm"
+          className="w-full px-4 py-3 bg-gvi-navy border border-gvi-gold/20 text-gvi-ivory focus:outline-none focus:border-gvi-gold/50 transition-colors appearance-none rounded-sm"
         >
           {PARTNERSHIP_PLANS.map((p) => (
             <option key={p.value} value={p.value}>{p.label}</option>
           ))}
         </select>
-        <p className="text-fortress-silver/40 text-xs mt-1.5">
+        <p className="text-gvi-silver/40 text-xs mt-1.5">
           Xem chi tiết:{" "}
           <a
             href="/invest-with-fortress/plans"
             target="_blank"
-            className="text-fortress-gold/70 underline hover:text-fortress-gold transition-colors"
+            className="text-gvi-gold/70 underline hover:text-gvi-gold transition-colors"
           >
             /invest-with-fortress/plans
           </a>
@@ -266,7 +266,7 @@ export default function InvestorForm({ defaultPlan = "" }: { defaultPlan?: strin
 
       {/* Bước 5 — Lời nhắn */}
       <div>
-        <label className="block text-fortress-silver text-sm mb-2">
+        <label className="block text-gvi-silver text-sm mb-2">
           Bạn muốn nói gì với chúng tôi? *
         </label>
         <textarea
@@ -275,7 +275,7 @@ export default function InvestorForm({ defaultPlan = "" }: { defaultPlan?: strin
           onChange={handleChange}
           required
           rows={4}
-          className="w-full px-4 py-3 bg-fortress-navy border border-fortress-gold/20 text-fortress-ivory placeholder:text-fortress-silver/40 focus:outline-none focus:border-fortress-gold/50 transition-colors resize-none rounded-sm"
+          className="w-full px-4 py-3 bg-gvi-navy border border-gvi-gold/20 text-gvi-ivory placeholder:text-gvi-silver/40 focus:outline-none focus:border-gvi-gold/50 transition-colors resize-none rounded-sm"
           placeholder="Chia sẻ ngắn gọn: bạn thấy cơ hội gì, bạn muốn đóng góp gì, và bạn kỳ vọng gì trong dài hạn."
         />
       </div>
@@ -284,12 +284,12 @@ export default function InvestorForm({ defaultPlan = "" }: { defaultPlan?: strin
       <div className="pt-2">
         <button
           type="submit"
-          className="w-full sm:w-auto px-10 py-4 bg-gradient-to-r from-fortress-gold to-fortress-champagne text-fortress-navy font-bold text-sm hover:shadow-2xl hover:shadow-fortress-gold/25 transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2 rounded-sm"
+          className="w-full sm:w-auto px-10 py-4 bg-gradient-to-r from-gvi-gold to-gvi-champagne text-gvi-navy font-bold text-sm hover:shadow-2xl hover:shadow-gvi-gold/25 transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2 rounded-sm"
         >
           <Send className="w-4 h-4" />
           Gửi Thông Tin Kết Nối
         </button>
-        <p className="text-fortress-silver/40 text-xs mt-4">
+        <p className="text-gvi-silver/40 text-xs mt-4">
           Mọi thông tin được bảo mật. Đây không phải cam kết hay hợp đồng — chỉ là bước đầu để chúng ta có thể nói chuyện với nhau.
         </p>
       </div>

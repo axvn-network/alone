@@ -53,7 +53,7 @@ function Section({
   return (
     <section
       id={id}
-      className={`rounded-2xl section-mx section-my ${dark ? "bg-fortress-navy" : "bg-white"}`}
+      className={`rounded-2xl section-mx section-my ${dark ? "bg-gvi-navy" : "bg-white"}`}
       style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}
     >
       <div className="max-w-[1400px] mx-auto section-px">{children}</div>
@@ -70,12 +70,12 @@ export default function AboutPage() {
         heading={
           <>
             Con Người.{" "}
-            <span className="font-bold bg-gradient-to-r from-fortress-gold to-fortress-champagne bg-clip-text text-transparent">
+            <span className="font-bold bg-gradient-to-r from-gvi-gold to-gvi-champagne bg-clip-text text-transparent">
               Lý Tưởng.
             </span>
             <br />
             Hành Trình{" "}
-            <span className="font-bold bg-gradient-to-r from-fortress-gold to-fortress-champagne bg-clip-text text-transparent">
+            <span className="font-bold bg-gradient-to-r from-gvi-gold to-gvi-champagne bg-clip-text text-transparent">
               Xây Dựng.
             </span>
           </>
@@ -101,34 +101,34 @@ export default function AboutPage() {
           <SectionHeader tag="Tại Sao Chúng Tôi Ở Đây" heading="Lý Do Và Mục Đích" />
         </Reveal>
         <Stagger className="grid md:grid-cols-2 gap-5 md:gap-8">
-          <StaggerItem className="bg-fortress-navy border border-fortress-gold/10 hover:border-fortress-gold/30 transition-all duration-300 rounded-2xl p-7 md:p-10">
-            <div className="w-11 h-11 bg-fortress-gold/10 border border-fortress-gold/20 flex items-center justify-center rounded-sm mb-6">
-              <Eye className="w-5 h-5 text-fortress-gold" />
+          <StaggerItem className="bg-gvi-navy border border-gvi-gold/10 hover:border-gvi-gold/30 transition-all duration-300 rounded-2xl p-7 md:p-10">
+            <div className="w-11 h-11 bg-gvi-gold/10 border border-gvi-gold/20 flex items-center justify-center rounded-sm mb-6">
+              <Eye className="w-5 h-5 text-gvi-gold" />
             </div>
             <p className="section-tag mb-3">Tầm Nhìn</p>
             <h3
-              className="font-semibold text-fortress-ivory mb-4 leading-snug"
+              className="font-semibold text-gvi-ivory mb-4 leading-snug"
               style={{ fontSize: "var(--text-h3)" }}
             >
               Thị Trường Tài Sản Số Hợp Pháp Là Nền Tảng Tài Chính Thế Hệ Tiếp Theo Của Việt Nam
             </h3>
-            <p className="text-fortress-silver/80 leading-[1.8]" style={{ fontSize: "var(--text-body)" }}>
+            <p className="text-gvi-silver/80 leading-[1.8]" style={{ fontSize: "var(--text-body)" }}>
               Không phải vì đây là xu hướng. Vì đây là tất yếu. Với 100 triệu dân, tỷ lệ sở hữu crypto cao nhất Đông Nam Á nhưng chưa có một sàn giao dịch hợp pháp — thị trường này cần được xây dựng đúng, bởi người có trách nhiệm. Fortress ở đây để làm điều đó.
             </p>
           </StaggerItem>
 
-          <StaggerItem className="bg-fortress-deep border border-fortress-gold/10 hover:border-fortress-gold/30 transition-all duration-300 rounded-2xl p-7 md:p-10">
-            <div className="w-11 h-11 bg-fortress-gold/10 border border-fortress-gold/20 flex items-center justify-center rounded-sm mb-6">
-              <Target className="w-5 h-5 text-fortress-gold" />
+          <StaggerItem className="bg-gvi-deep border border-gvi-gold/10 hover:border-gvi-gold/30 transition-all duration-300 rounded-2xl p-7 md:p-10">
+            <div className="w-11 h-11 bg-gvi-gold/10 border border-gvi-gold/20 flex items-center justify-center rounded-sm mb-6">
+              <Target className="w-5 h-5 text-gvi-gold" />
             </div>
             <p className="section-tag mb-3">Sứ Mệnh</p>
             <h3
-              className="font-semibold text-fortress-ivory mb-4 leading-snug"
+              className="font-semibold text-gvi-ivory mb-4 leading-snug"
               style={{ fontSize: "var(--text-h3)" }}
             >
               Xây Dựng Đúng. Kỷ Luật. Minh Bạch. Để Tồn Tại Lâu Dài.
             </h3>
-            <p className="text-fortress-silver/80 leading-[1.8]" style={{ fontSize: "var(--text-body)" }}>
+            <p className="text-gvi-silver/80 leading-[1.8]" style={{ fontSize: "var(--text-body)" }}>
               Tập hợp những người cùng lý tưởng — tổ chức tài chính, chuyên gia công nghệ, nhà đầu tư dài hạn — để cùng nhau xây dựng sàn giao dịch tài sản mã hóa đầu tiên được Bộ Tài chính Việt Nam cấp phép theo NQ 05/2025/NQ-CP. Đúng quy trình. Đúng pháp lý. Không đường tắt.
             </p>
           </StaggerItem>
@@ -169,7 +169,7 @@ export default function AboutPage() {
           ].map((person) => (
             <StaggerItem
               key={person.name}
-              className="group bg-gradient-to-br from-fortress-navy to-fortress-charcoal border border-fortress-gold/10 hover:border-fortress-gold/35 hover:shadow-2xl hover:shadow-fortress-gold/8 hover:-translate-y-1 transition-all duration-500 rounded-2xl overflow-hidden"
+              className="group bg-gradient-to-br from-gvi-navy to-gvi-charcoal border border-gvi-gold/10 hover:border-gvi-gold/35 hover:shadow-2xl hover:shadow-gvi-gold/8 hover:-translate-y-1 transition-all duration-500 rounded-2xl overflow-hidden"
             >
               <div className="relative w-full aspect-[4/3] overflow-hidden">
                 <Image
@@ -180,24 +180,24 @@ export default function AboutPage() {
                   loading="lazy"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-fortress-navy/60 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-gvi-navy/60 to-transparent" />
               </div>
               <div className="p-7 md:p-10">
                 <div className="flex items-start justify-between mb-5">
                   <div>
                     <h3
-                      className="font-bold text-fortress-ivory mb-1 group-hover:text-fortress-gold transition-colors duration-300"
+                      className="font-bold text-gvi-ivory mb-1 group-hover:text-gvi-gold transition-colors duration-300"
                       style={{ fontSize: "var(--text-h3)" }}
                     >
                       {person.name}
                     </h3>
                     <p className="section-tag">{person.role}</p>
                   </div>
-                  <div className="w-8 h-px bg-fortress-gold/40 mt-2 shrink-0" />
+                  <div className="w-8 h-px bg-gvi-gold/40 mt-2 shrink-0" />
                 </div>
                 <div className="space-y-3">
                   {person.bio.map((para, i) => (
-                    <p key={i} className="text-fortress-silver/75 leading-[1.8]" style={{ fontSize: "var(--text-body)" }}>
+                    <p key={i} className="text-gvi-silver/75 leading-[1.8]" style={{ fontSize: "var(--text-body)" }}>
                       {para}
                     </p>
                   ))}
@@ -221,18 +221,18 @@ export default function AboutPage() {
           {values.map((v) => (
             <StaggerItem
               key={v.title}
-              className="group bg-fortress-navy border border-fortress-gold/10 hover:border-fortress-gold/30 hover:-translate-y-1 hover:shadow-lg hover:shadow-fortress-gold/5 transition-all duration-300 rounded-2xl p-6 md:p-7"
+              className="group bg-gvi-navy border border-gvi-gold/10 hover:border-gvi-gold/30 hover:-translate-y-1 hover:shadow-lg hover:shadow-gvi-gold/5 transition-all duration-300 rounded-2xl p-6 md:p-7"
             >
-              <div className="w-10 h-10 bg-fortress-gold/10 border border-fortress-gold/15 flex items-center justify-center rounded-sm mb-5 group-hover:bg-fortress-gold/20 transition-colors">
-                <v.icon className="w-5 h-5 text-fortress-gold" />
+              <div className="w-10 h-10 bg-gvi-gold/10 border border-gvi-gold/15 flex items-center justify-center rounded-sm mb-5 group-hover:bg-gvi-gold/20 transition-colors">
+                <v.icon className="w-5 h-5 text-gvi-gold" />
               </div>
               <h3
-                className="font-semibold text-fortress-ivory mb-2.5 leading-snug"
+                className="font-semibold text-gvi-ivory mb-2.5 leading-snug"
                 style={{ fontSize: "var(--text-h3)" }}
               >
                 {v.title}
               </h3>
-              <p className="text-fortress-silver/70 leading-[1.75]" style={{ fontSize: "var(--text-body)" }}>
+              <p className="text-gvi-silver/70 leading-[1.75]" style={{ fontSize: "var(--text-body)" }}>
                 {v.description}
               </p>
             </StaggerItem>
@@ -248,7 +248,7 @@ export default function AboutPage() {
             heading={
               <>
                 Vốn Kỷ Luật.{" "}
-                <span className="font-bold text-fortress-gold">Tuân Thủ. Tăng Trưởng Bền Vững.</span>
+                <span className="font-bold text-gvi-gold">Tuân Thủ. Tăng Trưởng Bền Vững.</span>
               </>
             }
             description="Giá trị bền vững trong kinh tế số bắt đầu từ tuân thủ pháp lý, nền tảng thị trường vững chắc và đội ngũ đủ năng lực — tất cả những thứ khác chỉ là ảo ảnh nhất thời."
@@ -259,12 +259,12 @@ export default function AboutPage() {
           {philosophyPoints.map((point, i) => (
             <StaggerItem
               key={i}
-              className="group flex items-start gap-4 p-5 md:p-6 bg-fortress-deep border border-fortress-gold/10 hover:border-fortress-gold/30 hover:-translate-y-0.5 hover:shadow-md hover:shadow-fortress-gold/5 transition-all duration-300 rounded-sm"
+              className="group flex items-start gap-4 p-5 md:p-6 bg-gvi-deep border border-gvi-gold/10 hover:border-gvi-gold/30 hover:-translate-y-0.5 hover:shadow-md hover:shadow-gvi-gold/5 transition-all duration-300 rounded-sm"
             >
-              <div className="w-px h-full min-h-[2.5rem] bg-fortress-gold/30 shrink-0 group-hover:bg-fortress-gold/60 transition-colors" />
+              <div className="w-px h-full min-h-[2.5rem] bg-gvi-gold/30 shrink-0 group-hover:bg-gvi-gold/60 transition-colors" />
               <div>
-                <p className="font-semibold text-fortress-ivory text-sm mb-1">{point.label}</p>
-                <p className="text-fortress-silver/60 leading-relaxed" style={{ fontSize: "var(--text-body)" }}>{point.desc}</p>
+                <p className="font-semibold text-gvi-ivory text-sm mb-1">{point.label}</p>
+                <p className="text-gvi-silver/60 leading-relaxed" style={{ fontSize: "var(--text-body)" }}>{point.desc}</p>
               </div>
             </StaggerItem>
           ))}
@@ -316,36 +316,36 @@ export default function AboutPage() {
             <StaggerItem key={i}>
               <div className={`flex items-start gap-4 p-5 md:p-6 border rounded-sm transition-all duration-300 ${
                 item.status === "done"
-                  ? "bg-fortress-navy border-fortress-gold/25"
+                  ? "bg-gvi-navy border-gvi-gold/25"
                   : item.status === "active"
-                  ? "bg-fortress-gold/5 border-fortress-gold/50"
-                  : "bg-white border-fortress-gold/10"
+                  ? "bg-gvi-gold/5 border-gvi-gold/50"
+                  : "bg-white border-gvi-gold/10"
               }`}>
                 <div className="shrink-0 mt-0.5">
                   {item.status === "done" ? (
-                    <CheckCircle2 className="w-5 h-5 text-fortress-gold" />
+                    <CheckCircle2 className="w-5 h-5 text-gvi-gold" />
                   ) : item.status === "active" ? (
-                    <div className="w-5 h-5 rounded-full border-2 border-fortress-gold flex items-center justify-center">
-                      <div className="w-2 h-2 rounded-full bg-fortress-gold animate-pulse" />
+                    <div className="w-5 h-5 rounded-full border-2 border-gvi-gold flex items-center justify-center">
+                      <div className="w-2 h-2 rounded-full bg-gvi-gold animate-pulse" />
                     </div>
                   ) : (
-                    <div className="w-5 h-5 rounded-full border border-fortress-gold/30" />
+                    <div className="w-5 h-5 rounded-full border border-gvi-gold/30" />
                   )}
                 </div>
                 <div className="min-w-0">
                   <div className="flex items-center gap-2 mb-1 flex-wrap">
                     <span className={`text-[10px] font-mono font-bold tracking-widest uppercase ${
-                      item.status === "done" ? "text-fortress-gold" : item.status === "active" ? "text-fortress-gold" : "text-fortress-gold/40"
+                      item.status === "done" ? "text-gvi-gold" : item.status === "active" ? "text-gvi-gold" : "text-gvi-gold/40"
                     }`}>{item.phase}</span>
                     {item.status === "active" && (
-                      <span className="text-[10px] font-bold tracking-wider text-fortress-gold bg-fortress-gold/10 border border-fortress-gold/30 px-2 py-0.5 uppercase">Đang Thực Hiện</span>
+                      <span className="text-[10px] font-bold tracking-wider text-gvi-gold bg-gvi-gold/10 border border-gvi-gold/30 px-2 py-0.5 uppercase">Đang Thực Hiện</span>
                     )}
                   </div>
                   <p className={`font-semibold text-sm mb-1 ${
-                    item.status === "upcoming" ? "text-fortress-charcoal/60" : "text-fortress-ivory"
+                    item.status === "upcoming" ? "text-gvi-charcoal/60" : "text-gvi-ivory"
                   }`}>{item.title}</p>
                   <p className={`text-xs leading-relaxed ${
-                    item.status === "upcoming" ? "text-fortress-charcoal/50" : "text-fortress-silver/70"
+                    item.status === "upcoming" ? "text-gvi-charcoal/50" : "text-gvi-silver/70"
                   }`}>{item.desc}</p>
                 </div>
               </div>
@@ -366,14 +366,14 @@ export default function AboutPage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
             <Link
               href="/invest-with-fortress"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-fortress-gold to-fortress-champagne text-fortress-navy font-bold text-sm tracking-widest hover:shadow-2xl hover:shadow-fortress-gold/25 transition-all duration-300"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-gvi-gold to-gvi-champagne text-gvi-navy font-bold text-sm tracking-widest hover:shadow-2xl hover:shadow-gvi-gold/25 transition-all duration-300"
             >
               XEM HÀNH TRÌNH & KẾT NỐI
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 px-8 py-4 border border-fortress-gold/40 text-fortress-gold font-semibold text-sm tracking-widest hover:bg-fortress-gold/10 transition-all duration-300"
+              className="inline-flex items-center gap-2 px-8 py-4 border border-gvi-gold/40 text-gvi-gold font-semibold text-sm tracking-widest hover:bg-gvi-gold/10 transition-all duration-300"
             >
               LIÊN HỆ TRỰC TIẾP
             </Link>

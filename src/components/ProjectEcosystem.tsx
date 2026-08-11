@@ -17,9 +17,9 @@ const NODES: Node[] = [
     id: "fortress",
     label: "FORTRESS",
     sub: "Điều phối · Pháp lý · Chiến lược",
-    color: "bg-fortress-gold/15",
-    border: "border-fortress-gold/60",
-    textColor: "text-fortress-gold",
+    color: "bg-gvi-gold/15",
+    border: "border-gvi-gold/60",
+    textColor: "text-gvi-gold",
     size: "lg",
   },
   {
@@ -132,12 +132,12 @@ export default function ProjectEcosystem() {
             className={`${SIZE_STYLE.lg} ${NODES[0].color} border ${NODES[0].border} rounded-xl text-center`}
           >
             <p className={`${TEXT_SIZE.lg} ${NODES[0].textColor} tracking-widest`}>{NODES[0].label}</p>
-            <p className={`${SUB_SIZE.lg} text-fortress-silver/50 mt-0.5`}>{NODES[0].sub}</p>
+            <p className={`${SUB_SIZE.lg} text-gvi-silver/50 mt-0.5`}>{NODES[0].sub}</p>
           </motion.div>
         </div>
         {/* Arrow down */}
         <div className="flex justify-center">
-          <div className="w-px h-5 bg-fortress-gold/30" />
+          <div className="w-px h-5 bg-gvi-gold/30" />
         </div>
         {/* Satellite nodes in 2-col grid */}
         <div className="grid grid-cols-2 gap-3">
@@ -151,7 +151,7 @@ export default function ProjectEcosystem() {
               className={`${node.color} border ${node.border} rounded-xl p-3 text-center`}
             >
               <p className={`${TEXT_SIZE.sm} ${node.textColor} tracking-wide leading-tight`}>{node.label}</p>
-              <p className={`${SUB_SIZE.sm} text-fortress-silver/65 mt-1 leading-snug`}>{node.sub}</p>
+              <p className={`${SUB_SIZE.sm} text-gvi-silver/65 mt-1 leading-snug`}>{node.sub}</p>
             </motion.div>
           ))}
         </div>
@@ -159,11 +159,11 @@ export default function ProjectEcosystem() {
         <div className="mt-4 space-y-2">
           {CONNECTIONS.map((c, i) => (
             <div key={i} className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-fortress-gold/50 shrink-0" />
-              <p className="text-fortress-silver/70 text-[11px]">
-                <span className="text-fortress-gold/80 font-semibold">Fortress</span>
+              <div className="w-2 h-2 rounded-full bg-gvi-gold/50 shrink-0" />
+              <p className="text-gvi-silver/70 text-[11px]">
+                <span className="text-gvi-gold/80 font-semibold">GVI Tech Holding</span>
                 {" → "}
-                <span className="text-fortress-ivory/70">
+                <span className="text-gvi-ivory/70">
                   {NODES.find(n => n.id === c.to)?.label}
                 </span>
                 {" — "}
@@ -245,7 +245,7 @@ export default function ProjectEcosystem() {
       {/* Legend bar */}
       <div className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2">
         {[
-          { color: "bg-fortress-gold/40",  label: "Điều phối trung tâm" },
+          { color: "bg-gvi-gold/40",  label: "Điều phối trung tâm" },
           { color: "bg-blue-400/40",       label: "Cơ quan quản lý" },
           { color: "bg-emerald-400/40",    label: "Cổ đông bắt buộc (>35%)" },
           { color: "bg-purple-400/40",     label: "Đối tác kỹ thuật" },
@@ -254,7 +254,7 @@ export default function ProjectEcosystem() {
         ].map((item) => (
           <div key={item.label} className="flex items-center gap-1.5">
             <div className={`w-2.5 h-2.5 rounded-full ${item.color} shrink-0`} />
-            <span className="text-fortress-silver/70 text-[10px]">{item.label}</span>
+            <span className="text-gvi-silver/70 text-[10px]">{item.label}</span>
           </div>
         ))}
       </div>

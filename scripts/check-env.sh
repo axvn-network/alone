@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # ================================================================
-# Environment Validation Script — Fortress Investment Holdings
+# Environment Validation Script — GVI Tech Holding
 # Purpose: Validate all required environment variables before deploy
 # Usage: bash scripts/check-env.sh
 # ================================================================

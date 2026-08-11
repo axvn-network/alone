@@ -18,7 +18,7 @@ async function seedAdmin() {
     const count = await Admin.countDocuments();
     if (count > 0) { cached.seeded = true; return; }
 
-    const email    = process.env.ADMIN_EMAIL    || "admin@fortressih.com";
+    const email    = process.env.ADMIN_EMAIL    || "admin@gvitech.vn";
     const password = process.env.ADMIN_PASSWORD;
     const name     = process.env.ADMIN_NAME     || "Admin";
 

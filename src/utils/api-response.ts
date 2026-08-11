@@ -31,3 +31,11 @@ export function unauthorizedResponse(message = "Unauthorized") {
 export function serverErrorResponse(message = "Internal server error") {
   return errorResponse(message, 500);
 }
+
+export function badRequestResponse(message = "Bad request") {
+  return errorResponse(message, 400);
+}
+
+export function forbiddenResponse(message = "Forbidden") {
+  return errorResponse(message, 403);
+}

@@ -88,7 +88,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const article = await getPost(slug);
   if (!article) return { title: "Article Not Found" };
   return {
-    title: `${article.title} | Fortress Investment Holdings`,
+    title: `${article.title} | GVI Tech Holding`,
     description: article.excerpt,
     openGraph: {
       title: article.title,

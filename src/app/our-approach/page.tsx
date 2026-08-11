@@ -79,7 +79,7 @@ const processSteps = [
     title: "Quản Lý Và Phát Triển Giá Trị",
     subtitle: "Đóng Góp Vượt Trên Nguồn Vốn",
     description:
-      "Ký kết thỏa thuận là nơi công việc của chúng tôi bắt đầu – không phải kết thúc. Fortress tích cực hỗ trợ phát triển thông qua lập kế hoạch chiến lược, giám sát tài chính, hỗ trợ quản lý, phát triển kinh doanh, xây dựng thương hiệu, triển khai công nghệ, cải thiện vận hành, quản trị và phát triển quan hệ đối tác.",
+      "Ký kết thỏa thuận là nơi công việc của chúng tôi bắt đầu – không phải kết thúc. GVI Tech Holding tích cực hỗ trợ phát triển thông qua lập kế hoạch chiến lược, giám sát tài chính, hỗ trợ quản lý, phát triển kinh doanh, xây dựng thương hiệu, triển khai công nghệ, cải thiện vận hành, quản trị và phát triển quan hệ đối tác.",
     supportAreas: [
       { label: "Lập kế hoạch chiến lược", desc: "định hướng rõ ràng và mục tiêu đo lường được" },
       { label: "Giám sát tài chính", desc: "báo cáo kỷ luật và quản lý hiệu suất" },
@@ -117,32 +117,32 @@ const evaluationPrinciples = [
 export default function OurApproachPage() {
   return (
     <PageTransition>
-      <main className="min-h-screen bg-white text-fortress-ivory relative pb-safe md:pb-0">
+      <main className="min-h-screen bg-white text-gvi-ivory relative pb-safe md:pb-0">
         {/* ── 1. Hero Section ── */}
         <PageHero
           tag="Cách Chúng Tôi Xây Dựng"
           heading={
             <>
               Không Có{" "}
-              <span className="font-bold bg-gradient-to-r from-fortress-gold to-fortress-champagne bg-clip-text text-transparent">
+              <span className="font-bold bg-gradient-to-r from-gvi-gold to-gvi-champagne bg-clip-text text-transparent">
                 Đường Tắt.
               </span>{" "}
               Không Có Ảo Tưởng.
             </>
           }
-          description="Đây là cách Fortress tiếp cận mọi quyết định — từ lựa chọn đối tác, thẩm định cơ hội, đến xây dựng từng bước của hồ sơ cấp phép. Không vẽ bánh. Không hứa hẹn vô căn cứ."
+          description="Đây là cách GVI Tech Holding tiếp cận mọi quyết định — từ lựa chọn đối tác, thẩm định cơ hội, đến xây dựng từng bước của hồ sơ cấp phép. Không vẽ bánh. Không hứa hẹn vô căn cứ."
         >
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
             <Link
               href="#process"
-              className="inline-flex items-center justify-center gap-3 px-7 py-3.5 bg-gradient-to-r from-fortress-gold to-fortress-champagne text-fortress-navy font-bold text-xs tracking-[0.18em] uppercase hover:opacity-90 transition-all shadow-lg shadow-fortress-gold/15 group"
+              className="inline-flex items-center justify-center gap-3 px-7 py-3.5 bg-gradient-to-r from-gvi-gold to-gvi-champagne text-gvi-navy font-bold text-xs tracking-[0.18em] uppercase hover:opacity-90 transition-all shadow-lg shadow-gvi-gold/15 group"
             >
               Xem Cách Chúng Tôi Làm Việc
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
               href="#principles"
-              className="inline-flex items-center justify-center gap-3 px-7 py-3.5 border border-fortress-navy/30 text-fortress-navy font-semibold text-xs tracking-[0.18em] uppercase hover:bg-fortress-navy/5 hover:border-fortress-navy/50 transition-all"
+              className="inline-flex items-center justify-center gap-3 px-7 py-3.5 border border-gvi-navy/30 text-gvi-navy font-semibold text-xs tracking-[0.18em] uppercase hover:bg-gvi-navy/5 hover:border-gvi-navy/50 transition-all"
             >
               Tiêu Chuẩn Đánh Giá
             </Link>
@@ -152,7 +152,7 @@ export default function OurApproachPage() {
         {/* ── 2. Investment Process Section ──────────────────────────────── */}
         <section
           id="process"
-          className="bg-fortress-navy rounded-2xl section-mx section-my"
+          className="bg-gvi-navy rounded-2xl section-mx section-my"
           style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}
         >
           <div className="max-w-[1400px] mx-auto section-px">
@@ -160,21 +160,21 @@ export default function OurApproachPage() {
             {/* Section Header */}
             <Reveal className="text-center max-w-3xl mx-auto mb-10 md:mb-20">
               <div className="flex items-center justify-center gap-3 mb-4">
-                <div className="w-8 h-px bg-fortress-gold/40" />
+                <div className="w-8 h-px bg-gvi-gold/40" />
                 <span className="section-tag">5 Bước Xây Dựng Thực Tế</span>
-                <div className="w-8 h-px bg-fortress-gold/40" />
+                <div className="w-8 h-px bg-gvi-gold/40" />
               </div>
               <h2
-                className="font-light text-fortress-ivory uppercase leading-[1.28] mb-3 sm:mb-4"
+                className="font-light text-gvi-ivory uppercase leading-[1.28] mb-3 sm:mb-4"
                 style={{ fontSize: "var(--text-h2)", letterSpacing: "var(--tracking-heading)" }}
               >
-                Quy Trình <span className="font-semibold text-fortress-gold">Thực Hiện</span>
+                Quy Trình <span className="font-semibold text-gvi-gold">Thực Hiện</span>
               </h2>
-              <p className="text-fortress-gold font-semibold mb-3 sm:mb-4" style={{ fontSize: "var(--text-lead)" }}>
+              <p className="text-gvi-gold font-semibold mb-3 sm:mb-4" style={{ fontSize: "var(--text-lead)" }}>
                 Mỗi cơ hội là duy nhất. Tiêu chuẩn của chúng tôi thì không.
               </p>
-              <p className="text-fortress-silver/80 leading-[1.8] font-light" style={{ fontSize: "var(--text-body)" }}>
-                Không phải quy trình để trấn an nhà đầu tư trên PowerPoint — đây là cách Fortress thực sự vận hành. Từ nhận diện cơ hội đến quản lý giá trị dài hạn, mỗi bước đều có mục đích rõ ràng và có thể kiểm chứng được.
+              <p className="text-gvi-silver/80 leading-[1.8] font-light" style={{ fontSize: "var(--text-body)" }}>
+                Không phải quy trình để trấn an nhà đầu tư trên PowerPoint — đây là cách GVI Tech Holding thực sự vận hành. Từ nhận diện cơ hội đến quản lý giá trị dài hạn, mỗi bước đều có mục đích rõ ràng và có thể kiểm chứng được.
               </p>
             </Reveal>
 
@@ -183,33 +183,33 @@ export default function OurApproachPage() {
                 const Icon = stepItem.icon;
                 return (
                   <Reveal key={i}>
-                    <div className="group relative bg-fortress-deep border border-fortress-gold/15 hover:border-fortress-gold/40 rounded-xl sm:rounded-2xl p-5 sm:p-8 md:p-10 transition-all duration-300">
+                    <div className="group relative bg-gvi-deep border border-gvi-gold/15 hover:border-gvi-gold/40 rounded-xl sm:rounded-2xl p-5 sm:p-8 md:p-10 transition-all duration-300">
 
                       {/* Top bar */}
-                      <div className="flex items-center justify-between gap-3 mb-5 border-b border-fortress-gold/10 pb-5">
+                      <div className="flex items-center justify-between gap-3 mb-5 border-b border-gvi-gold/10 pb-5">
                         <div className="flex items-center gap-3 sm:gap-4 min-w-0">
-                          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-fortress-gold/10 text-fortress-gold border border-fortress-gold/20 flex items-center justify-center shrink-0 group-hover:bg-fortress-gold group-hover:text-fortress-navy transition-colors duration-300">
+                          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gvi-gold/10 text-gvi-gold border border-gvi-gold/20 flex items-center justify-center shrink-0 group-hover:bg-gvi-gold group-hover:text-gvi-navy transition-colors duration-300">
                             <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
                           </div>
                           <div className="min-w-0">
-                            <span className="text-fortress-gold text-[10px] font-mono font-bold tracking-widest uppercase block">
+                            <span className="text-gvi-gold text-[10px] font-mono font-bold tracking-widest uppercase block">
                               Bước {stepItem.step}
                             </span>
-                            <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-fortress-ivory leading-tight">
+                            <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gvi-ivory leading-tight">
                               {stepItem.title}
                             </h3>
                           </div>
                         </div>
-                        <span className="hidden sm:block text-4xl sm:text-5xl font-black font-mono text-fortress-gold/20 select-none shrink-0">
+                        <span className="hidden sm:block text-4xl sm:text-5xl font-black font-mono text-gvi-gold/20 select-none shrink-0">
                           {stepItem.step}
                         </span>
                       </div>
 
-                      <p className="text-fortress-gold font-semibold text-sm sm:text-base mb-2 sm:mb-3">
+                      <p className="text-gvi-gold font-semibold text-sm sm:text-base mb-2 sm:mb-3">
                         {stepItem.subtitle}
                       </p>
 
-                      <div className="text-fortress-silver/80 text-sm leading-relaxed mb-4 space-y-3 sm:space-y-4">
+                      <div className="text-gvi-silver/80 text-sm leading-relaxed mb-4 space-y-3 sm:space-y-4">
                         {stepItem.description.split("\n\n").map((paragraph, idx) => (
                           <p key={idx}>{paragraph}</p>
                         ))}
@@ -217,19 +217,19 @@ export default function OurApproachPage() {
 
                       {/* Bước 02 – danh sách kiểm tra */}
                       {stepItem.checklist && (
-                        <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-fortress-gold/10">
+                        <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-gvi-gold/10">
                           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3">
                             {stepItem.checklist.map((item, idx) => (
                               <div
                                 key={idx}
-                                className="flex items-start gap-2.5 p-3 rounded-xl bg-fortress-navy border border-fortress-gold/15"
+                                className="flex items-start gap-2.5 p-3 rounded-xl bg-gvi-navy border border-gvi-gold/15"
                               >
-                                <CheckCircle2 className="w-4 h-4 text-fortress-gold shrink-0 mt-0.5" />
+                                <CheckCircle2 className="w-4 h-4 text-gvi-gold shrink-0 mt-0.5" />
                                 <div>
-                                  <span className="text-xs font-bold text-fortress-ivory block capitalize">
+                                  <span className="text-xs font-bold text-gvi-ivory block capitalize">
                                     {item.label}
                                   </span>
-                                  <span className="text-[11px] text-fortress-silver/70 leading-snug">
+                                  <span className="text-[11px] text-gvi-silver/70 leading-snug">
                                     {item.desc}
                                   </span>
                                 </div>
@@ -241,19 +241,19 @@ export default function OurApproachPage() {
 
                       {/* Bước 03 – cấu trúc đầu tư */}
                       {stepItem.structures && (
-                        <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-fortress-gold/10">
+                        <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-gvi-gold/10">
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4">
                             {stepItem.structures.map((struct, idx) => (
                               <div
                                 key={idx}
-                                className="flex items-start gap-3 p-3 sm:p-4 rounded-xl bg-fortress-navy border border-fortress-gold/15"
+                                className="flex items-start gap-3 p-3 sm:p-4 rounded-xl bg-gvi-navy border border-gvi-gold/15"
                               >
-                                <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-fortress-gold shrink-0 mt-0.5" />
+                                <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-gvi-gold shrink-0 mt-0.5" />
                                 <div>
-                                  <span className="text-xs sm:text-sm font-bold text-fortress-ivory block mb-0.5 sm:mb-1 capitalize">
+                                  <span className="text-xs sm:text-sm font-bold text-gvi-ivory block mb-0.5 sm:mb-1 capitalize">
                                     {struct.label}
                                   </span>
-                                  <span className="text-[11px] sm:text-xs text-fortress-silver/70">
+                                  <span className="text-[11px] sm:text-xs text-gvi-silver/70">
                                     {struct.desc}
                                   </span>
                                 </div>
@@ -265,22 +265,22 @@ export default function OurApproachPage() {
 
                       {/* Bước 04 – lĩnh vực hỗ trợ */}
                       {stepItem.supportAreas && (
-                        <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-fortress-gold/10">
-                          <span className="text-fortress-ivory text-xs sm:text-sm font-bold uppercase tracking-wider block mb-3 sm:mb-4">
+                        <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-gvi-gold/10">
+                          <span className="text-gvi-ivory text-xs sm:text-sm font-bold uppercase tracking-wider block mb-3 sm:mb-4">
                             Lĩnh Vực Hỗ Trợ Chủ Động
                           </span>
                           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3">
                             {stepItem.supportAreas.map((area, idx) => (
                               <div
                                 key={idx}
-                                className="flex items-start gap-2.5 p-3 rounded-xl bg-fortress-navy border border-fortress-gold/15"
+                                className="flex items-start gap-2.5 p-3 rounded-xl bg-gvi-navy border border-gvi-gold/15"
                               >
-                                <CheckCheck className="w-4 h-4 text-fortress-gold shrink-0 mt-0.5" />
+                                <CheckCheck className="w-4 h-4 text-gvi-gold shrink-0 mt-0.5" />
                                 <div>
-                                  <span className="text-xs font-bold text-fortress-ivory block capitalize">
+                                  <span className="text-xs font-bold text-gvi-ivory block capitalize">
                                     {area.label}
                                   </span>
-                                  <span className="text-[11px] text-fortress-silver/70 leading-snug">
+                                  <span className="text-[11px] text-gvi-silver/70 leading-snug">
                                     {area.desc}
                                   </span>
                                 </div>
@@ -301,25 +301,25 @@ export default function OurApproachPage() {
         {/* ── 3. Evaluation Principles Section ───────────────────────────── */}
         <section
           id="principles"
-          className="bg-fortress-navy rounded-2xl section-mx section-my"
+          className="bg-gvi-navy rounded-2xl section-mx section-my"
           style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}
         >
           <div className="max-w-[1400px] mx-auto section-px">
 
             <Reveal className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
               <div className="flex items-center justify-center gap-3 mb-4">
-                <div className="w-8 h-px bg-fortress-gold/40" />
+                <div className="w-8 h-px bg-gvi-gold/40" />
                 <span className="section-tag">9 Tiêu Chí Không Thể Thỏa Hiệp</span>
-                <div className="w-8 h-px bg-fortress-gold/40" />
+                <div className="w-8 h-px bg-gvi-gold/40" />
               </div>
               <h2
-                className="font-light text-fortress-ivory uppercase leading-[1.28] mb-3 sm:mb-4"
+                className="font-light text-gvi-ivory uppercase leading-[1.28] mb-3 sm:mb-4"
                 style={{ fontSize: "var(--text-h2)", letterSpacing: "var(--tracking-heading)" }}
               >
-                Tiêu Chuẩn <span className="font-semibold text-fortress-gold">Đánh Giá</span>
+                Tiêu Chuẩn <span className="font-semibold text-gvi-gold">Đánh Giá</span>
               </h2>
-              <p className="text-fortress-silver/80 leading-[1.8] font-light" style={{ fontSize: "var(--text-body)" }}>
-                Đây không phải checklist marketing. Đây là 9 điều kiện thực sự mà Fortress dùng để quyết định có tiến tới hay không — áp dụng cho mọi cơ hội, không có ngoại lệ.
+              <p className="text-gvi-silver/80 leading-[1.8] font-light" style={{ fontSize: "var(--text-body)" }}>
+                Đây không phải checklist marketing. Đây là 9 điều kiện thực sự mà GVI Tech Holding dùng để quyết định có tiến tới hay không — áp dụng cho mọi cơ hội, không có ngoại lệ.
               </p>
             </Reveal>
 
@@ -330,25 +330,25 @@ export default function OurApproachPage() {
                   <StaggerItem key={i}>
                     <motion.div
                       whileHover={{ y: -6, borderColor: "rgba(201,162,74,0.4)" }}
-                      className="group p-5 sm:p-8 rounded-xl sm:rounded-2xl bg-fortress-deep border border-fortress-gold/15 transition-all duration-300 h-full flex flex-col justify-between"
+                      className="group p-5 sm:p-8 rounded-xl sm:rounded-2xl bg-gvi-deep border border-gvi-gold/15 transition-all duration-300 h-full flex flex-col justify-between"
                     >
                       <div>
                         <div className="flex items-center justify-between mb-4 sm:mb-5">
-                          <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-fortress-gold/10 border border-fortress-gold/20 flex items-center justify-center text-fortress-gold group-hover:bg-fortress-gold group-hover:text-fortress-navy transition-colors duration-300">
+                          <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gvi-gold/10 border border-gvi-gold/20 flex items-center justify-center text-gvi-gold group-hover:bg-gvi-gold group-hover:text-gvi-navy transition-colors duration-300">
                             <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
                           </div>
-                          <span className="text-xl sm:text-2xl font-black font-mono text-fortress-gold/30 group-hover:text-fortress-gold/50 transition-colors">
+                          <span className="text-xl sm:text-2xl font-black font-mono text-gvi-gold/30 group-hover:text-gvi-gold/50 transition-colors">
                             {item.number}
                           </span>
                         </div>
-                        <h3 className="text-base sm:text-lg font-semibold text-fortress-ivory mb-1.5 sm:mb-2 capitalize">
+                        <h3 className="text-base sm:text-lg font-semibold text-gvi-ivory mb-1.5 sm:mb-2 capitalize">
                           {item.title}
                         </h3>
-                        <p className="text-fortress-silver/70 text-xs sm:text-sm leading-relaxed">
+                        <p className="text-gvi-silver/70 text-xs sm:text-sm leading-relaxed">
                           {item.desc}
                         </p>
                       </div>
-                      <div className="h-0.5 bg-gradient-to-r from-fortress-gold/40 to-transparent mt-5 sm:mt-6 group-hover:from-fortress-gold transition-colors" />
+                      <div className="h-0.5 bg-gradient-to-r from-gvi-gold/40 to-transparent mt-5 sm:mt-6 group-hover:from-gvi-gold transition-colors" />
                     </motion.div>
                   </StaggerItem>
                 );
@@ -360,36 +360,36 @@ export default function OurApproachPage() {
 
         {/* ── 4. CTA ─────────────────────────────────────────────────────── */}
         <section
-          className="bg-fortress-navy rounded-2xl section-mx section-my"
+          className="bg-gvi-navy rounded-2xl section-mx section-my"
           style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}
         >
           <div className="max-w-[1400px] mx-auto section-px text-center">
             <Reveal>
               <div className="flex items-center justify-center gap-3 mb-5">
-                <div className="w-8 h-px bg-fortress-gold/40" />
+                <div className="w-8 h-px bg-gvi-gold/40" />
                 <span className="section-tag">Đồng Hành Xây Dựng</span>
-                <div className="w-8 h-px bg-fortress-gold/40" />
+                <div className="w-8 h-px bg-gvi-gold/40" />
               </div>
               <h2
-                className="font-light text-fortress-ivory mb-4 md:mb-6 uppercase leading-[1.28]"
+                className="font-light text-gvi-ivory mb-4 md:mb-6 uppercase leading-[1.28]"
                 style={{ fontSize: "var(--text-h2)", letterSpacing: "var(--tracking-heading)" }}
               >
                 Bạn Thấy Cùng Một Lý Tưởng?
               </h2>
-              <p className="text-fortress-silver/80 leading-[1.8] max-w-2xl mx-auto mb-8" style={{ fontSize: "var(--text-lead)" }}>
-                Fortress xây dựng theo đúng quy trình này — công khai, có thể kiểm chứng. Nếu bạn tin vào cách tiếp cận này và muốn là một phần của hành trình, chúng tôi muốn nói chuyện với bạn.
+              <p className="text-gvi-silver/80 leading-[1.8] max-w-2xl mx-auto mb-8" style={{ fontSize: "var(--text-lead)" }}>
+                GVI Tech Holding xây dựng theo đúng quy trình này — công khai, có thể kiểm chứng. Nếu bạn tin vào cách tiếp cận này và muốn là một phần của hành trình, chúng tôi muốn nói chuyện với bạn.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link
                   href="/invest-with-fortress"
-                  className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-fortress-gold to-fortress-champagne text-fortress-navy font-bold text-sm tracking-widest hover:shadow-2xl hover:shadow-fortress-gold/25 transition-all duration-300"
+                  className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-gvi-gold to-gvi-champagne text-gvi-navy font-bold text-sm tracking-widest hover:shadow-2xl hover:shadow-gvi-gold/25 transition-all duration-300"
                 >
                   XEM LỘ TRÌNH & KẾT NỐI
                   <ArrowRight className="w-4 h-4" />
                 </Link>
                 <Link
                   href="/about"
-                  className="inline-flex items-center gap-2 px-8 py-4 border border-fortress-gold/40 text-fortress-gold font-semibold text-sm tracking-widest hover:bg-fortress-gold/10 transition-all duration-300"
+                  className="inline-flex items-center gap-2 px-8 py-4 border border-gvi-gold/40 text-gvi-gold font-semibold text-sm tracking-widest hover:bg-gvi-gold/10 transition-all duration-300"
                 >
                   TÌM HIỂU VỀ CHÚNG TÔI
                 </Link>

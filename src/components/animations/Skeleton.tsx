@@ -12,14 +12,14 @@ export default function Skeleton({ className = "" }: SkeletonProps) {
     <motion.div
       variants={skeletonVariants}
       animate="animate"
-      className={`bg-fortress-charcoal/50 rounded-md ${className}`}
+      className={`bg-gvi-charcoal/50 rounded-md ${className}`}
     />
   );
 }
 
 export function SkeletonCard() {
   return (
-    <div className="p-6 border border-fortress-gold/10 rounded-2xl bg-fortress-deep space-y-4">
+    <div className="p-6 border border-gvi-gold/10 rounded-2xl bg-gvi-deep space-y-4">
       <Skeleton className="h-4 w-3/4" />
       <Skeleton className="h-3 w-full" />
       <Skeleton className="h-3 w-5/6" />

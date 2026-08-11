@@ -52,7 +52,7 @@ const socialPlatforms = ["LinkedIn", "Instagram", "Facebook", "X (Twitter)", "Yo
 
 const CHAT_TYPES: { type: ChatButtonType; label: string; color: string; hint: string }[] = [
   { type: "whatsapp",  label: "WhatsApp",  color: "#25D366", hint: "Nhập số điện thoại (chỉ số, không dấu +), VD: 84987654321" },
-  { type: "telegram",  label: "Telegram",  color: "#229ED9", hint: "Nhập username (@ten) hoặc số điện thoại, VD: fortressih" },
+  { type: "telegram",  label: "Telegram",  color: "#229ED9", hint: "Nhập username (@ten) hoặc số điện thoại, VD: gvitech" },
   { type: "zalo",      label: "Zalo",      color: "#0068FF", hint: "Nhập số điện thoại Zalo, VD: 0987654321" },
   { type: "livechat",  label: "Live Chat", color: "#C9A24A", hint: "Nhập URL đầy đủ của live chat widget, VD: https://..." },
 ];
@@ -68,9 +68,9 @@ const sections = [
 
 const DEFAULT_NEWS = {
   newsTitle: "Đăng Ký Nhận Bản Tin Chuyên Sâu",
-  newsDescription: "Cập nhật góc nhìn thị trường, phân tích xu hướng đầu tư và tin tức mới nhất từ Fortress – gửi tới bạn khi có giá trị thực sự.",
+  newsDescription: "Cập nhật góc nhìn thị trường, phân tích xu hướng đầu tư và tin tức mới nhất từ GVI Tech Holding – gửi tới bạn khi có giá trị thực sự.",
   newsBtnText: "ĐĂNG KÝ",
-  newsDisclaimer: "Bằng cách đăng ký, bạn đồng ý nhận các thông tin từ Fortress Investment Holdings. Bạn có thể hủy đăng ký bất kỳ lúc nào.",
+  newsDisclaimer: "Bằng cách đăng ký, bạn đồng ý nhận các thông tin từ GVI Tech Holding. Bạn có thể hủy đăng ký bất kỳ lúc nào.",
   newsPlaceholder: "Địa chỉ email của bạn",
   newsSuccessTitle: "Cảm ơn bạn đã đăng ký.",
   newsSuccessDesc: "Chúng tôi sẽ gửi tới bạn những góc nhìn chuyên sâu quan trọng nhất.",
@@ -226,8 +226,8 @@ export default function SettingsPage() {
             onClick={() => setActiveSection(s.key)}
             className={`flex items-center gap-2 px-3 py-2 text-xs font-medium whitespace-nowrap transition-colors rounded-md ${
               activeSection === s.key
-                ? "text-fortress-gold bg-fortress-gold/10 border-b-2 border-fortress-gold"
-                : "text-fortress-silver hover:text-fortress-ivory"
+                ? "text-gvi-gold bg-gvi-gold/10 border-b-2 border-gvi-gold"
+                : "text-gvi-silver hover:text-gvi-ivory"
             }`}
           >
             <s.icon className="w-3.5 h-3.5" />
@@ -238,23 +238,23 @@ export default function SettingsPage() {
     );
   }
 
-  const inputCls = "w-full bg-fortress-deep border border-white/10 text-fortress-ivory text-sm px-4 py-3 focus:outline-none focus:border-fortress-gold/50 rounded-lg";
-  const labelCls = "block text-fortress-silver text-xs font-medium mb-1.5 tracking-wide";
+  const inputCls = "w-full bg-gvi-deep border border-white/10 text-gvi-ivory text-sm px-4 py-3 focus:outline-none focus:border-gvi-gold/50 rounded-lg";
+  const labelCls = "block text-gvi-silver text-xs font-medium mb-1.5 tracking-wide";
 
   if (!data) {
     return (
       <div className="min-h-screen bg-[#03080e] flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-fortress-gold border-t-transparent animate-spin rounded-full" />
+        <div className="w-8 h-8 border-2 border-gvi-gold border-t-transparent animate-spin rounded-full" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#03080e] flex selection:bg-fortress-gold/20 selection:text-fortress-champagne font-sans">
+    <div className="min-h-screen bg-[#03080e] flex selection:bg-gvi-gold/20 selection:text-gvi-champagne font-sans">
       <AdminSidebar active="Settings" />
       <main className="flex-1 overflow-y-auto overflow-x-hidden min-h-screen relative">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-fortress-gold/5 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-fortress-navy/50 rounded-full blur-[150px] pointer-events-none" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-gvi-gold/5 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-gvi-navy/50 rounded-full blur-[150px] pointer-events-none" />
 
         <AdminNavbar title="Cài Đặt" />
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 relative z-10">
@@ -263,20 +263,20 @@ export default function SettingsPage() {
             <button
               onClick={handleSave}
               disabled={saving}
-              className="flex items-center gap-2 px-5 py-2.5 bg-fortress-gold text-fortress-navy text-sm font-bold hover:bg-fortress-champagne transition-colors disabled:opacity-50 rounded-lg"
+              className="flex items-center gap-2 px-5 py-2.5 bg-gvi-gold text-gvi-navy text-sm font-bold hover:bg-gvi-champagne transition-colors disabled:opacity-50 rounded-lg"
             >
               <Save className="w-4 h-4" /> {saving ? "Đang lưu..." : "Lưu Thay Đổi"}
             </button>
           </div>
 
-          <div className="md:hidden mb-4 bg-fortress-navy border border-white/5 rounded-lg">
+          <div className="md:hidden mb-4 bg-gvi-navy border border-white/5 rounded-lg">
             <SectionNav />
           </div>
 
           <div className="flex gap-5">
             {/* Desktop sidebar nav */}
             <div className="hidden md:block w-44 shrink-0">
-              <div className="bg-fortress-navy border-t-2 border-t-fortress-gold/30 rounded-lg sticky top-4">
+              <div className="bg-gvi-navy border-t-2 border-t-gvi-gold/30 rounded-lg sticky top-4">
                 <div className="flex flex-col gap-0.5 p-2">
                   {sections.map((s) => (
                     <button
@@ -284,8 +284,8 @@ export default function SettingsPage() {
                       onClick={() => setActiveSection(s.key)}
                       className={`flex items-center gap-2.5 px-3 py-2.5 text-xs font-medium text-left transition-all rounded-md ${
                         activeSection === s.key
-                          ? "text-fortress-gold bg-fortress-gold/10 border-l-2 border-fortress-gold"
-                          : "text-fortress-silver hover:text-fortress-ivory hover:bg-fortress-deep border-l-2 border-transparent"
+                          ? "text-gvi-gold bg-gvi-gold/10 border-l-2 border-gvi-gold"
+                          : "text-gvi-silver hover:text-gvi-ivory hover:bg-gvi-deep border-l-2 border-transparent"
                       }`}
                     >
                       <s.icon className="w-3.5 h-3.5 shrink-0" />
@@ -299,10 +299,10 @@ export default function SettingsPage() {
             <div className="flex-1 min-w-0 space-y-5">
               {/* ── Thông tin công ty ── */}
               {activeSection === "company" && (
-                <div className="bg-fortress-navy border-t-2 border-t-fortress-gold/30 p-5 rounded-lg">
+                <div className="bg-gvi-navy border-t-2 border-t-gvi-gold/30 p-5 rounded-lg">
                   <div className="flex items-center gap-3 mb-5">
-                    <Building2 className="w-5 h-5 text-fortress-gold" />
-                    <h2 className="text-sm font-bold text-fortress-ivory tracking-wide">Thông tin công ty</h2>
+                    <Building2 className="w-5 h-5 text-gvi-gold" />
+                    <h2 className="text-sm font-bold text-gvi-ivory tracking-wide">Thông tin công ty</h2>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="sm:col-span-2">
@@ -331,12 +331,12 @@ export default function SettingsPage() {
 
               {/* ── Nút Chat Nổi ── */}
               {activeSection === "chat" && (
-                <div className="bg-fortress-navy border-t-2 border-t-fortress-gold/30 p-5 rounded-lg space-y-4">
+                <div className="bg-gvi-navy border-t-2 border-t-gvi-gold/30 p-5 rounded-lg space-y-4">
                   <div className="flex items-center gap-3 mb-1">
-                    <MessageCircle className="w-5 h-5 text-fortress-gold" />
-                    <h2 className="text-sm font-bold text-fortress-ivory tracking-wide">Nút Chat Nổi</h2>
+                    <MessageCircle className="w-5 h-5 text-gvi-gold" />
+                    <h2 className="text-sm font-bold text-gvi-ivory tracking-wide">Nút Chat Nổi</h2>
                   </div>
-                  <p className="text-fortress-silver/50 text-xs mb-4">
+                  <p className="text-gvi-silver/50 text-xs mb-4">
                     Bật tối đa 3 kênh. Các nút được hiển thị góc phải màn hình theo thứ tự từ dưới lên.
                   </p>
 
@@ -348,15 +348,15 @@ export default function SettingsPage() {
                     return (
                       <div
                         key={cfg.type}
-                        className={`border rounded-lg p-4 transition-colors ${btn.enabled ? "border-fortress-gold/30 bg-fortress-deep/60" : "border-white/5 bg-fortress-deep/20"}`}
+                        className={`border rounded-lg p-4 transition-colors ${btn.enabled ? "border-gvi-gold/30 bg-gvi-deep/60" : "border-white/5 bg-gvi-deep/20"}`}
                       >
                         {/* Header row: color dot + label + toggle */}
                         <div className="flex items-center justify-between mb-3">
                           <div className="flex items-center gap-2.5">
                             <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ backgroundColor: cfg.color }} />
-                            <span className="text-fortress-ivory text-sm font-semibold">{cfg.label}</span>
+                            <span className="text-gvi-ivory text-sm font-semibold">{cfg.label}</span>
                             {btn.enabled && (
-                              <span className="text-[10px] font-medium px-1.5 py-0.5 rounded-full text-fortress-navy" style={{ backgroundColor: cfg.color }}>
+                              <span className="text-[10px] font-medium px-1.5 py-0.5 rounded-full text-gvi-navy" style={{ backgroundColor: cfg.color }}>
                                 Đang bật
                               </span>
                             )}
@@ -380,12 +380,12 @@ export default function SettingsPage() {
                               <label className={labelCls}>
                                 {cfg.type === "livechat" ? "URL Live Chat" : "Số / Username"}
                               </label>
-                              <p className="text-fortress-silver/35 text-[10px] mb-1.5">{cfg.hint}</p>
+                              <p className="text-gvi-silver/35 text-[10px] mb-1.5">{cfg.hint}</p>
                               <input
                                 type="text"
                                 value={btn.value}
                                 onChange={(e) => updateChat(cfg.type, "value", e.target.value)}
-                                placeholder={cfg.type === "livechat" ? "https://..." : cfg.type === "telegram" ? "fortressih" : "971500000000"}
+                                placeholder={cfg.type === "livechat" ? "https://..." : cfg.type === "telegram" ? "gvitech" : "971500000000"}
                                 className={inputCls}
                               />
                             </div>
@@ -421,7 +421,7 @@ export default function SettingsPage() {
 
                   {/* Preview */}
                   <div className="mt-2 pt-4 border-t border-white/5">
-                    <p className="text-fortress-silver/40 text-[10px] uppercase tracking-widest mb-3">Preview thứ tự hiển thị</p>
+                    <p className="text-gvi-silver/40 text-[10px] uppercase tracking-widest mb-3">Preview thứ tự hiển thị</p>
                     <div className="flex flex-col-reverse gap-2 items-start">
                       {data.chatButtons
                         .filter((b) => b.enabled)
@@ -429,17 +429,17 @@ export default function SettingsPage() {
                           const c = CHAT_TYPES.find((c) => c.type === btn.type);
                           if (!c) return null;
                           return (
-                            <div key={btn.type} className="flex items-center gap-2 text-xs text-fortress-silver">
+                            <div key={btn.type} className="flex items-center gap-2 text-xs text-gvi-silver">
                               <div className="w-6 h-6 rounded-full flex items-center justify-center" style={{ backgroundColor: c.color }}>
                                 <span className="text-white text-[8px] font-bold">{c.label[0]}</span>
                               </div>
                               <span>{c.label}</span>
-                              {btn.value && <span className="text-fortress-silver/40 truncate max-w-[160px]">{btn.value}</span>}
+                              {btn.value && <span className="text-gvi-silver/40 truncate max-w-[160px]">{btn.value}</span>}
                             </div>
                           );
                         })}
                       {data.chatButtons.filter((b) => b.enabled).length === 0 && (
-                        <p className="text-fortress-silver/30 text-xs italic">Chưa có kênh nào được bật</p>
+                        <p className="text-gvi-silver/30 text-xs italic">Chưa có kênh nào được bật</p>
                       )}
                     </div>
                   </div>
@@ -448,10 +448,10 @@ export default function SettingsPage() {
 
               {/* ── Mạng xã hội ── */}
               {activeSection === "social" && (
-                <div className="bg-fortress-navy border-t-2 border-t-fortress-gold/30 p-5 rounded-lg">
+                <div className="bg-gvi-navy border-t-2 border-t-gvi-gold/30 p-5 rounded-lg">
                   <div className="flex items-center gap-3 mb-5">
-                    <Share2 className="w-5 h-5 text-fortress-gold" />
-                    <h2 className="text-sm font-bold text-fortress-ivory tracking-wide">Liên kết Mạng Xã Hội</h2>
+                    <Share2 className="w-5 h-5 text-gvi-gold" />
+                    <h2 className="text-sm font-bold text-gvi-ivory tracking-wide">Liên kết Mạng Xã Hội</h2>
                   </div>
                   <div className="space-y-2.5">
                     {data.socialLinks.map((link, i) => (
@@ -459,7 +459,7 @@ export default function SettingsPage() {
                         <select
                           value={link.platform}
                           onChange={(e) => updateSocial(i, "platform", e.target.value)}
-                          className="w-40 bg-fortress-deep border border-white/10 text-fortress-ivory text-sm px-3 py-3 focus:outline-none focus:border-fortress-gold/50 rounded-lg"
+                          className="w-40 bg-gvi-deep border border-white/10 text-gvi-ivory text-sm px-3 py-3 focus:outline-none focus:border-gvi-gold/50 rounded-lg"
                         >
                           <option value="">Chọn...</option>
                           {socialPlatforms.map((p) => <option key={p} value={p}>{p}</option>)}
@@ -469,14 +469,14 @@ export default function SettingsPage() {
                           value={link.url}
                           onChange={(e) => updateSocial(i, "url", e.target.value)}
                           placeholder="https://..."
-                          className="flex-1 bg-fortress-deep border border-white/10 text-fortress-ivory text-sm px-3 py-3 focus:outline-none focus:border-fortress-gold/50 rounded-lg"
+                          className="flex-1 bg-gvi-deep border border-white/10 text-gvi-ivory text-sm px-3 py-3 focus:outline-none focus:border-gvi-gold/50 rounded-lg"
                         />
-                        <button onClick={() => removeSocial(i)} className="p-2 text-fortress-silver/30 hover:text-red-400 transition-colors shrink-0 rounded-md">
+                        <button onClick={() => removeSocial(i)} className="p-2 text-gvi-silver/30 hover:text-red-400 transition-colors shrink-0 rounded-md">
                           <Trash2 className="w-4 h-4" />
                         </button>
                       </div>
                     ))}
-                    <button onClick={addSocial} className="flex items-center gap-1.5 text-xs text-fortress-gold hover:text-fortress-champagne transition-colors mt-3 rounded-md">
+                    <button onClick={addSocial} className="flex items-center gap-1.5 text-xs text-gvi-gold hover:text-gvi-champagne transition-colors mt-3 rounded-md">
                       <Plus className="w-3.5 h-3.5" /> Thêm Liên Kết
                     </button>
                   </div>
@@ -485,10 +485,10 @@ export default function SettingsPage() {
 
               {/* ── Footer ── */}
               {activeSection === "footer" && (
-                <div className="bg-fortress-navy border-t-2 border-t-fortress-gold/30 p-5 rounded-lg">
+                <div className="bg-gvi-navy border-t-2 border-t-gvi-gold/30 p-5 rounded-lg">
                   <div className="flex items-center gap-3 mb-5">
-                    <FileText className="w-5 h-5 text-fortress-gold" />
-                    <h2 className="text-sm font-bold text-fortress-ivory tracking-wide">Nội dung Footer</h2>
+                    <FileText className="w-5 h-5 text-gvi-gold" />
+                    <h2 className="text-sm font-bold text-gvi-ivory tracking-wide">Nội dung Footer</h2>
                   </div>
                   <div>
                     <label className={labelCls}>Mô tả Footer</label>
@@ -496,7 +496,7 @@ export default function SettingsPage() {
                       value={data.footer}
                       onChange={(e) => update("footer", e.target.value)}
                       rows={4}
-                      className="w-full bg-fortress-deep border border-white/10 text-fortress-ivory text-sm px-4 py-3 focus:outline-none focus:border-fortress-gold/50 resize-none rounded-lg"
+                      className="w-full bg-gvi-deep border border-white/10 text-gvi-ivory text-sm px-4 py-3 focus:outline-none focus:border-gvi-gold/50 resize-none rounded-lg"
                     />
                   </div>
                 </div>
@@ -504,34 +504,34 @@ export default function SettingsPage() {
 
               {/* ── Logo & Favicon ── */}
               {activeSection === "media" && (
-                <div className="bg-fortress-navy border-t-2 border-t-fortress-gold/30 p-5 rounded-lg">
+                <div className="bg-gvi-navy border-t-2 border-t-gvi-gold/30 p-5 rounded-lg">
                   <div className="flex items-center gap-3 mb-5">
-                    <ImageIcon className="w-5 h-5 text-fortress-gold" />
-                    <h2 className="text-sm font-bold text-fortress-ivory tracking-wide">Logo & Favicon</h2>
+                    <ImageIcon className="w-5 h-5 text-gvi-gold" />
+                    <h2 className="text-sm font-bold text-gvi-ivory tracking-wide">Logo & Favicon</h2>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
-                      <label className="block text-fortress-silver text-xs font-medium mb-2 tracking-wide">Logo</label>
+                      <label className="block text-gvi-silver text-xs font-medium mb-2 tracking-wide">Logo</label>
                       {data.logo && (
-                        <div className="mb-2 p-4 bg-fortress-deep border border-white/5 flex items-center justify-center rounded-lg">
+                        <div className="mb-2 p-4 bg-gvi-deep border border-white/5 flex items-center justify-center rounded-lg">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img src={data.logo} alt="" className="h-12 w-auto object-contain" />
                         </div>
                       )}
-                      <label className="flex items-center justify-center gap-2 px-4 py-3.5 bg-fortress-deep border border-dashed border-white/10 text-fortress-silver text-xs hover:border-fortress-gold/40 cursor-pointer transition-colors rounded-lg">
+                      <label className="flex items-center justify-center gap-2 px-4 py-3.5 bg-gvi-deep border border-dashed border-white/10 text-gvi-silver text-xs hover:border-gvi-gold/40 cursor-pointer transition-colors rounded-lg">
                         <input type="file" accept="image/*" onChange={handleLogoUpload} className="hidden" />
                         {data.logo ? "Đổi Logo" : "Tải Logo Lên"}
                       </label>
                     </div>
                     <div>
-                      <label className="block text-fortress-silver text-xs font-medium mb-2 tracking-wide">Favicon</label>
+                      <label className="block text-gvi-silver text-xs font-medium mb-2 tracking-wide">Favicon</label>
                       {data.favicon && (
-                        <div className="mb-2 p-4 bg-fortress-deep border border-white/5 flex items-center justify-center rounded-lg">
+                        <div className="mb-2 p-4 bg-gvi-deep border border-white/5 flex items-center justify-center rounded-lg">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img src={data.favicon} alt="" className="h-10 w-auto object-contain" />
                         </div>
                       )}
-                      <label className="flex items-center justify-center gap-2 px-4 py-3.5 bg-fortress-deep border border-dashed border-white/10 text-fortress-silver text-xs hover:border-fortress-gold/40 cursor-pointer transition-colors rounded-lg">
+                      <label className="flex items-center justify-center gap-2 px-4 py-3.5 bg-gvi-deep border border-dashed border-white/10 text-gvi-silver text-xs hover:border-gvi-gold/40 cursor-pointer transition-colors rounded-lg">
                         <input type="file" accept="image/*" onChange={handleFaviconUpload} className="hidden" />
                         {data.favicon ? "Đổi Favicon" : "Tải Favicon Lên"}
                       </label>
@@ -542,12 +542,12 @@ export default function SettingsPage() {
 
               {/* ── Bản Tin ── */}
               {activeSection === "newsletter" && (
-                <div className="bg-fortress-navy border-t-2 border-t-fortress-gold/30 p-5 rounded-lg space-y-5">
+                <div className="bg-gvi-navy border-t-2 border-t-gvi-gold/30 p-5 rounded-lg space-y-5">
                   <div className="flex items-center gap-3 mb-1">
-                    <Mail className="w-5 h-5 text-fortress-gold" />
-                    <h2 className="text-sm font-bold text-fortress-ivory tracking-wide">Nội Dung Bản Tin</h2>
+                    <Mail className="w-5 h-5 text-gvi-gold" />
+                    <h2 className="text-sm font-bold text-gvi-ivory tracking-wide">Nội Dung Bản Tin</h2>
                   </div>
-                  <p className="text-fortress-silver/50 text-xs">
+                  <p className="text-gvi-silver/50 text-xs">
                     Chỉnh sửa nội dung hiển thị trong phần đăng ký bản tin ở trang chủ.
                   </p>
 
@@ -567,7 +567,7 @@ export default function SettingsPage() {
                       value={newsData.newsDescription}
                       onChange={(e) => setNewsData((p) => ({ ...p, newsDescription: e.target.value }))}
                       rows={3}
-                      className="w-full bg-fortress-deep border border-white/10 text-fortress-ivory text-sm px-4 py-3 focus:outline-none focus:border-fortress-gold/50 resize-none rounded-lg"
+                      className="w-full bg-gvi-deep border border-white/10 text-gvi-ivory text-sm px-4 py-3 focus:outline-none focus:border-gvi-gold/50 resize-none rounded-lg"
                     />
                   </div>
 
@@ -598,12 +598,12 @@ export default function SettingsPage() {
                       value={newsData.newsDisclaimer}
                       onChange={(e) => setNewsData((p) => ({ ...p, newsDisclaimer: e.target.value }))}
                       rows={2}
-                      className="w-full bg-fortress-deep border border-white/10 text-fortress-ivory text-sm px-4 py-3 focus:outline-none focus:border-fortress-gold/50 resize-none rounded-lg"
+                      className="w-full bg-gvi-deep border border-white/10 text-gvi-ivory text-sm px-4 py-3 focus:outline-none focus:border-gvi-gold/50 resize-none rounded-lg"
                     />
                   </div>
 
                   <div className="pt-2 border-t border-white/5">
-                    <p className="text-fortress-silver/40 text-[10px] uppercase tracking-widest mb-3">Thông báo sau khi đăng ký thành công</p>
+                    <p className="text-gvi-silver/40 text-[10px] uppercase tracking-widest mb-3">Thông báo sau khi đăng ký thành công</p>
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div>
                         <label className={labelCls}>Tiêu Đề Thành Công</label>
@@ -628,19 +628,19 @@ export default function SettingsPage() {
 
                   {/* Preview */}
                   <div className="pt-3 border-t border-white/5">
-                    <p className="text-fortress-silver/40 text-[10px] uppercase tracking-widest mb-3">Xem trước</p>
-                    <div className="bg-fortress-deep border border-fortress-gold/10 rounded-lg p-5 text-center">
-                      <p className="text-fortress-ivory text-sm font-bold mb-2">{newsData.newsTitle || "—"}</p>
-                      <p className="text-fortress-silver/60 text-xs mb-3">{newsData.newsDescription || "—"}</p>
+                    <p className="text-gvi-silver/40 text-[10px] uppercase tracking-widest mb-3">Xem trước</p>
+                    <div className="bg-gvi-deep border border-gvi-gold/10 rounded-lg p-5 text-center">
+                      <p className="text-gvi-ivory text-sm font-bold mb-2">{newsData.newsTitle || "—"}</p>
+                      <p className="text-gvi-silver/60 text-xs mb-3">{newsData.newsDescription || "—"}</p>
                       <div className="flex max-w-xs mx-auto">
-                        <div className="flex-1 px-3 py-2 bg-fortress-navy border border-fortress-gold/20 text-fortress-silver/40 text-xs">
+                        <div className="flex-1 px-3 py-2 bg-gvi-navy border border-gvi-gold/20 text-gvi-silver/40 text-xs">
                           {newsData.newsPlaceholder || "—"}
                         </div>
-                        <div className="px-4 py-2 bg-fortress-gold text-fortress-navy text-xs font-bold">
+                        <div className="px-4 py-2 bg-gvi-gold text-gvi-navy text-xs font-bold">
                           {newsData.newsBtnText || "—"}
                         </div>
                       </div>
-                      <p className="text-fortress-silver/25 text-[10px] mt-3">{newsData.newsDisclaimer || "—"}</p>
+                      <p className="text-gvi-silver/25 text-[10px] mt-3">{newsData.newsDisclaimer || "—"}</p>
                     </div>
                   </div>
                 </div>

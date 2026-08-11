@@ -356,7 +356,7 @@ const PLANS = [
       "Profitable for at least 2 consecutive years",
       "2 most recent years with clean unqualified audit opinion",
       "Equity contribution limited to only 1 BTC-licensed financial organization",
-      "Approved by Fortress Investment Holdings leadership",
+      "Approved by GVI Tech Holding leadership",
     ],
     rights: [
       "Bổ nhiệm Chủ tịch/Phó chủ tịch HĐQT",
