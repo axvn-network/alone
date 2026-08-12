@@ -99,8 +99,9 @@ print_ok "Standalone đã chuẩn bị"
 # ================================================================
 if [[ "$FIRST_DEPLOY" == "--first" ]]; then
   print_step "Seed MongoDB"
-  node scripts/seed-mongo.js || print_warn "seed-mongo.js bỏ qua (có thể đã seed)"
-  node scripts/seed.js        || print_warn "seed.js bỏ qua"
+  if [[ -f scripts/seed-investment-plans.ts ]]; then
+    npx tsx scripts/seed-investment-plans.ts || print_warn "seed-investment-plans.ts bỏ qua"
+  fi
   print_ok "Seed hoàn tất"
 fi
 
