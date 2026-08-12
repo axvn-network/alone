@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
   const admin = await Admin.findOne({ email: user.email }).select("+mfaSecret");
   if (!admin || !admin.mfaSecret) return errorResponse("MFA not set up");
 
-  const result = await verify({ token, secret: admin.mfaSecret, type: "totp" });
+  const result = await verify({ token, secret: admin.mfaSecret, strategy: "totp" });
   const verified = result.valid;
   if (verified) {
     admin.mfaEnabled = true;

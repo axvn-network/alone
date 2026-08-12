@@ -54,6 +54,8 @@ ok "TypeScript clean"
 # ── 2. Build ──────────────────────────────────────────────────────────────────
 if [[ "$SKIP_BUILD" == false ]]; then
   step "Production build"
+  # Xóa Turbopack build lock nếu còn sót từ lần trước (tránh "Another build running")
+  rm -rf .next/build 2>/dev/null || true
   npm run build 2>&1 \
     || err "Build thất bại"
   ok "Build thành công"

@@ -44,6 +44,13 @@ _standardized/
 # ── AI / Agent Workflow (nội bộ, không phải source code) ────────────
 # Chứa manifest, work-queue, locks, handoff notes của multi-agent pipeline
 .ai/
+.claude/
+.codex/
+.vscode/
+
+# ── Orphaned infra configs (project uses PM2/Nginx) ─────────────────────────────
+nettlify.toml
+supabase/
 
 # ── Claude Worktrees (tự động tạo bởi Claude CLI) ───────────────────
 .claude/

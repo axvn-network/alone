@@ -127,12 +127,9 @@ fi
 print_step "PM2 reload (zero-downtime)"
 
 if pm2 describe "$PM2_APP" &>/dev/null; then
-  # App đang chạy → delete + start lại để đảm bảo env_production được nạp đúng
-  pm2 delete "$PM2_APP"
-  pm2 start "$APP_DIR/infra/ecosystem.config.js" --env production
-  print_ok "PM2 restarted: $PM2_APP"
+  pm2 reload "$PM2_APP"
+  print_ok "PM2 reloaded: $PM2_APP"
 else
-  # App chưa chạy → start mới
   pm2 start "$APP_DIR/infra/ecosystem.config.js" --env production
   print_ok "PM2 started: $PM2_APP"
 fi
