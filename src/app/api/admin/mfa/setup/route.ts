@@ -1,4 +1,4 @@
-import { authenticator } from "@otplib/preset-default";
+import { generateSecret, generateURI } from "otplib";
 import QRCode from "qrcode";
 import { getCurrentUser } from "@/lib/auth-utils";
 import { connectDB } from "@/lib/db";
@@ -17,8 +17,8 @@ export async function GET() {
   const admin = await Admin.findOne({ email: user.email }).select("+mfaSecret");
   if (!admin) return notFoundResponse("Admin not found");
 
-  const secret = authenticator.generateSecret();
-  const otpauth = authenticator.keyuri(admin.email, "GVI Tech Holding", secret);
+  const secret = generateSecret();
+  const otpauth = await generateURI({ secret, label: admin.email, issuer: "GVI Tech Holding", type: "totp" });
   const qrCode = await QRCode.toDataURL(otpauth);
 
   admin.mfaSecret = secret;

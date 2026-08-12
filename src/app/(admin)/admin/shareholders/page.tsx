@@ -10,28 +10,18 @@ import {
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import AdminNavbar from "@/components/admin/AdminNavbar";
 import { useCsrf } from "@/contexts/CsrfContext";
+import {
+  ROLE_LABELS, ALL_ROLES, SHAREHOLDER_STATUS_CLS as STATUS_CLS,
+  TASK_STATUS_LABELS as TASK_STATUS, PRIORITY_TEXT_CLS as PRIORITY_CLS,
+  TASK_CATEGORIES as CATEGORIES, CAT_LABELS,
+  MEETING_TYPES, MEETING_TYPE_LABELS, ADMIN_PAGE_CLS,
+} from "@/constants/admin";
+import { formatVNDCompact } from "@/lib/vn/format";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 interface Shareholder { _id: string; name: string; email: string; phone: string; role: string; status: string; equityPercent: number; capitalCommitted: number; capitalPaid: number; notes: string; kycStatus?: string; }
 interface Task { _id: string; title: string; description: string; category: string; priority: string; status: string; assignedRoles: string[]; milestoneTag: string; legalRef: string; dueDate: string | null; order: number; }
 interface Meeting { _id: string; title: string; type: string; status: string; scheduledAt: string; meetingLink: string; location: string; agenda: { order: number; title: string; description: string; resolved: boolean; resolution: string }[]; minutes: string; invitedRoles: string[]; }
-
-const ROLE_LABELS: Record<string, string> = { tech: "💻 Công Nghệ", financial: "🏦 Tài Chính Tổ Chức", "tech-company": "🚀 DN Công Nghệ", individual: "👤 Cá Nhân", legal: "⚖️ Pháp Lý", foreign: "🌐 Nước Ngoài" };
-const STATUS_CLS: Record<string, string> = { active: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30", pending: "bg-yellow-500/15 text-yellow-400 border-yellow-500/30", suspended: "bg-red-500/15 text-red-400 border-red-500/30" };
-const TASK_STATUS: Record<string, string> = { pending: "Chưa bắt đầu", in_progress: "Đang làm", done: "Hoàn thành", blocked: "Bị chặn" };
-const PRIORITY_CLS: Record<string, string> = { critical: "text-red-400", high: "text-orange-400", medium: "text-yellow-400", low: "text-emerald-400" };
-const CATEGORIES = ["legal", "capital", "tech", "hr", "docs", "compliance", "meeting", "other"];
-const CAT_LABELS: Record<string, string> = { legal: "Pháp Lý", capital: "Vốn Góp", tech: "Công Nghệ", hr: "Nhân Sự", docs: "Hồ Sơ", compliance: "Tuân Thủ", meeting: "Họp", other: "Khác" };
-const ALL_ROLES = ["tech", "financial", "tech-company", "individual", "legal", "foreign"];
-const MEETING_TYPES = ["general", "emergency", "technical", "legal", "progress"];
-const MEETING_TYPE_LABELS: Record<string, string> = { general: "Thường kỳ", emergency: "Khẩn", technical: "Kỹ thuật", legal: "Pháp lý", progress: "Tiến độ" };
-
-function fVND(n: number) {
-  if (n >= 1e12) return `${(n/1e12).toFixed(1)}K tỷ`;
-  if (n >= 1e9)  return `${(n/1e9).toFixed(1)} tỷ`;
-  if (n >= 1e6)  return `${(n/1e6).toFixed(0)} tr`;
-  return n.toLocaleString("vi-VN");
-}
 
 function Card({ title, icon: Icon, count, cls }: { title: string; icon: typeof Users; count: number; cls: string }) {
   return (
@@ -500,7 +490,7 @@ export default function ShareholdersAdmin() {
   const totalEquity = shareholders.reduce((sum, s) => sum + (s.equityPercent || 0), 0);
 
   return (
-    <div className="min-h-screen bg-[#03080e] flex selection:bg-gvi-gold/20 font-sans">
+    <div className={ADMIN_PAGE_CLS}>
       <AdminSidebar />
       <main className="flex-1 overflow-y-auto min-h-screen">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-gvi-gold/4 rounded-full blur-[120px] pointer-events-none" />
@@ -614,7 +604,7 @@ export default function ShareholdersAdmin() {
                           </div>
                           <p className="text-gvi-silver/50 text-xs">{sh.email} · {ROLE_LABELS[sh.role] || sh.role}</p>
                           {sh.capitalCommitted > 0 && (
-                            <p className="text-gvi-silver/40 text-[10px]">Cam kết: {fVND(sh.capitalCommitted)} · Đã góp: {fVND(sh.capitalPaid)} VNĐ</p>
+                            <p className="text-gvi-silver/40 text-[10px]">Cam kết: {formatVNDCompact(sh.capitalCommitted)} · Đã góp: {formatVNDCompact(sh.capitalPaid)}</p>
                           )}
                         </div>
                         <div className="flex items-center gap-2 shrink-0">

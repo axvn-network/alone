@@ -6,6 +6,10 @@ import { RefreshCw, CheckCircle2, XCircle, Clock, FileSearch, ChevronLeft, Chevr
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import AdminNavbar from "@/components/admin/AdminNavbar";
 import { useCsrf } from "@/contexts/CsrfContext";
+import {
+  ROLE_LABELS, APPLICATION_STATUS_LABELS as STATUS_LABELS,
+  APPLICATION_STATUS_CLS as STATUS_CLS, ADMIN_PAGE_CLS,
+} from "@/constants/admin";
 
 interface Application {
   _id: string;
@@ -25,22 +29,6 @@ interface Application {
 }
 
 const STATUS_OPTS = ["", "submitted", "under_review", "shortlisted", "approved", "rejected"] as const;
-const STATUS_LABELS: Record<string, string> = {
-  draft: "Nháp", submitted: "Đã nộp", under_review: "Đang xét",
-  shortlisted: "Vào danh sách ngắn", approved: "Chấp thuận", rejected: "Từ chối",
-};
-const STATUS_CLS: Record<string, string> = {
-  draft: "bg-gray-500/15 text-gray-400 border-gray-500/30",
-  submitted: "bg-blue-500/15 text-blue-400 border-blue-500/30",
-  under_review: "bg-yellow-500/15 text-yellow-400 border-yellow-500/30",
-  shortlisted: "bg-purple-500/15 text-purple-400 border-purple-500/30",
-  approved: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
-  rejected: "bg-red-500/15 text-red-400 border-red-500/30",
-};
-const ROLE_LABELS: Record<string, string> = {
-  tech: "💻 Công Nghệ", financial: "🏦 Tài Chính Tổ Chức", "tech-company": "🚀 DN Công Nghệ",
-  individual: "👤 Cá Nhân", legal: "⚖️ Pháp Lý", foreign: "🌐 Nước Ngoài",
-};
 
 export default function PartnerApplicationsPage() {
   const { csrfFetch } = useCsrf();
@@ -98,7 +86,7 @@ export default function PartnerApplicationsPage() {
     Math.round((s.technical + s.financial + s.legal + s.strategic + s.network) / 5);
 
   return (
-    <div className="min-h-screen bg-[#03080e] flex font-sans">
+    <div className={ADMIN_PAGE_CLS}>
       <AdminSidebar />
       <div className="flex-1 flex flex-col min-h-screen overflow-x-hidden">
         <AdminNavbar title="Đơn Đăng Ký Hợp Tác" />

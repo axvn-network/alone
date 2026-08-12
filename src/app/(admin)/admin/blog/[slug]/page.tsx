@@ -30,19 +30,7 @@ import RichTextEditor from "@/components/shared/RichTextEditor";
 import AiAssistPanel, { BLOG_AI_ACTIONS } from "@/components/shared/AiAssistPanel";
 import { useCsrf } from "@/contexts/CsrfContext";
 
-// Danh sách danh mục phải khớp hoàn toàn với CAT_COLORS trong blog/page.tsx
-const categories = [
-  "Real Estate",
-  "Business Acquisitions",
-  "Private Equity",
-  "AI & Technology",
-  "Digital Assets & Blockchain",
-  "Hospitality",
-  "Trading & Distribution",
-  "Market Insights",
-  "Company News",
-  "Strategic Investment Management",
-];
+import { ARTICLE_CATEGORIES as categories } from "@/constants/blog";
 
 type Tab = "content" | "seo" | "settings";
 
@@ -127,7 +115,7 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
   const [title, setTitle] = useState("");
   const [excerpt, setExcerpt] = useState("");
   const [content, setContent] = useState("");
-  const [category, setCategory] = useState(categories[0]);
+  const [category, setCategory] = useState<string>(categories[0]);
   const [readTime, setReadTime] = useState("5 min read");
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");

@@ -8,6 +8,9 @@ import {
   CheckCircle2, Clock, AlertCircle, XCircle, Send, ChevronDown,
   Calendar, Video, FileText, ChevronRight, RefreshCw, Loader2,
 } from "lucide-react";
+import {
+  ROLE_LABELS, PRIORITY_CLS, CAT_LABELS, KYC_STATUS_CONFIG as KYC_STATUS_LABELS,
+} from "@/constants/admin";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 interface Me {
@@ -32,26 +35,11 @@ interface Meeting {
 }
 
 // ─── Constants ─────────────────────────────────────────────────────────────────
-const ROLE_LABELS: Record<string, string> = {
-  tech: "💻 Công Nghệ", financial: "🏦 Tài Chính Tổ Chức",
-  "tech-company": "🚀 Công Ty Công Nghệ", individual: "👤 Cá Nhân",
-  legal: "⚖️ Pháp Lý", foreign: "🌐 Nước Ngoài",
-};
 const STATUS_CONFIG: Record<string, { label: string; icon: typeof CheckCircle2; cls: string }> = {
   pending:     { label: "Chưa bắt đầu", icon: Clock,        cls: "text-gvi-silver/50" },
   in_progress: { label: "Đang làm",      icon: RefreshCw,    cls: "text-blue-400" },
   done:        { label: "Hoàn thành",    icon: CheckCircle2, cls: "text-emerald-400" },
   blocked:     { label: "Bị chặn",       icon: XCircle,      cls: "text-red-400" },
-};
-const PRIORITY_CLS: Record<string, string> = {
-  critical: "bg-red-500/15 text-red-400 border-red-500/30",
-  high:     "bg-orange-500/15 text-orange-400 border-orange-500/30",
-  medium:   "bg-yellow-500/15 text-yellow-400 border-yellow-500/30",
-  low:      "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
-};
-const CAT_LABELS: Record<string, string> = {
-  legal: "Pháp Lý", capital: "Vốn Góp", tech: "Công Nghệ",
-  hr: "Nhân Sự", docs: "Hồ Sơ", compliance: "Tuân Thủ", meeting: "Họp", other: "Khác",
 };
 const CHANNELS = [
   { key: "general",      label: "Chung",        icon: MessageSquare },
@@ -63,12 +51,6 @@ const CHANNELS = [
 const MEETING_TYPE: Record<string, string> = {
   general: "Họp Thường Kỳ", emergency: "Họp Khẩn", technical: "Kỹ Thuật",
   legal: "Pháp Lý", progress: "Tiến Độ",
-};
-const KYC_STATUS_LABELS: Record<string, { label: string; cls: string }> = {
-  not_started: { label: "KYC: Chưa bắt đầu", cls: "text-gvi-silver/40 bg-gvi-navy/60" },
-  pending:     { label: "KYC: Chờ xét duyệt", cls: "text-yellow-400 bg-yellow-500/10" },
-  approved:    { label: "KYC: Đã xác minh ✓", cls: "text-emerald-400 bg-emerald-500/10" },
-  rejected:    { label: "KYC: Bị từ chối",   cls: "text-red-400 bg-red-500/10" },
 };
 
 // ─── Sidebar ──────────────────────────────────────────────────────────────────

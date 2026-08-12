@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { authenticator } from "@otplib/preset-default";
+import { verify } from "otplib";
 import { getCurrentUser } from "@/lib/auth-utils";
 import { connectDB } from "@/lib/db";
 import Admin from "@/models/Admin";
@@ -19,7 +19,8 @@ export async function POST(req: NextRequest) {
   const admin = await Admin.findOne({ email: user.email }).select("+mfaSecret");
   if (!admin || !admin.mfaSecret) return errorResponse("MFA not set up");
 
-  const verified = authenticator.check(token, admin.mfaSecret);
+  const result = await verify({ token, secret: admin.mfaSecret, type: "totp" });
+  const verified = result.valid;
   if (verified) {
     admin.mfaEnabled = true;
     await admin.save();

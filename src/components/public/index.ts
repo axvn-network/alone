@@ -12,6 +12,7 @@ export { default as PartnershipCTA } from "./PartnershipCTA";
 export { default as Philosophy } from "./Philosophy";
 export { default as ProjectEcosystem } from "./ProjectEcosystem";
 export { default as ProseSection } from "./ProseSection";
+export { ProseList, ProseNote } from "./ProseSection";
 export { default as RoleAssessmentQuiz } from "./RoleAssessmentQuiz";
 export { default as SectionHeader } from "./SectionHeader";
 export { default as StrategicCollaborationPage } from "./StrategicCollaborationPage";

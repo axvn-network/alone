@@ -5,5 +5,5 @@ import { redirect } from "next/navigation";
  * direct visitors to the public-safe strategy overview.
  */
 export default function KpisPage() {
-  redirect("/strategy");
+  redirect("/content/strategy");
 }

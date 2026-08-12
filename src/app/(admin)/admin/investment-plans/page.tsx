@@ -8,6 +8,8 @@ import {
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import AdminNavbar from "@/components/admin/AdminNavbar";
 import { useCsrf } from "@/contexts/CsrfContext";
+import { TIER_LABELS, PLAN_STATUS_CLS as STATUS_STYLES, ADMIN_PAGE_CLS } from "@/constants/admin";
+import { formatVNDCompact } from "@/lib/vn/format";
 
 interface Plan {
   _id: string;
@@ -38,25 +40,9 @@ interface Plan {
   status: "active" | "draft" | "closed";
 }
 
-const TIER_LABELS: Record<string, string> = {
-  seed:      "🌱 Hạt Giống",
-  growth:    "🚀 Tăng Trưởng",
-  expansion: "📈 Mở Rộng",
-  strategic: "🏛️ Chiến Lược",
-  anchor:    "⚓ Neo Chiến Lược",
-};
-
-const STATUS_STYLES: Record<string, string> = {
-  active: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
-  draft:  "bg-yellow-500/15 text-yellow-400 border-yellow-500/30",
-  closed: "bg-red-500/15 text-red-400 border-red-500/30",
-};
-
 function formatVND(n: number) {
   if (n === 0) return "Không giới hạn";
-  if (n >= 1e9) return `${(n / 1e9).toLocaleString("vi-VN")} tỷ`;
-  if (n >= 1e6) return `${(n / 1e6).toLocaleString("vi-VN")} triệu`;
-  return n.toLocaleString("vi-VN");
+  return formatVNDCompact(n);
 }
 
 const EMPTY: Partial<Plan> = {
@@ -163,7 +149,7 @@ export default function InvestmentPlansAdmin() {
   const areaCls = `${inputCls} resize-none`;
 
   return (
-    <div className="min-h-screen bg-[#03080e] flex selection:bg-gvi-gold/20 font-sans">
+    <div className={ADMIN_PAGE_CLS}>
       <AdminSidebar />
       <main className="flex-1 overflow-y-auto min-h-screen">
         <AdminNavbar title="Hạng Mục Hợp Tác Đầu Tư" />
@@ -213,7 +199,7 @@ export default function InvestmentPlansAdmin() {
                           </div>
                         </div>
                       </td>
-                      <td className="p-4 hidden md:table-cell text-gvi-silver text-xs">{formatVND(plan.minCommitment)} VNĐ</td>
+                      <td className="p-4 hidden md:table-cell text-gvi-silver text-xs">{formatVND(plan.minCommitment)}</td>
                       <td className="p-4 hidden lg:table-cell text-gvi-silver text-xs">{plan.equityRange}</td>
                       <td className="p-4">
                         <span className={`px-2 py-1 text-[10px] font-semibold rounded-full border ${STATUS_STYLES[plan.status]}`}>

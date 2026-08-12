@@ -11,7 +11,6 @@
     "hanh-chinh": "tsx scripts/update-hanh-chinh.ts"
   },
   "dependencies": {
-    "@otplib/preset-default": "^12.0.1",
     "@tailwindcss/postcss": "^4.1.11",
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "^22.15.23",
@@ -44,7 +43,6 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
     "@netlify/plugin-nextjs": "^5.15.13",
-    "@types/otplib": "^10.0.0",
     "@types/qrcode": "^1.5.6",
     "dotenv": "^16.6.1",
     "eslint": "^9.27.0",

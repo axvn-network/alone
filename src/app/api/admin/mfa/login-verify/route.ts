@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { authenticator } from "@otplib/preset-default";
+import { verify } from "otplib";
 import { connectDB } from "@/lib/db";
 import Admin from "@/models/Admin";
 import { setSessionCookie } from "@/lib/session";
@@ -12,7 +12,8 @@ export async function POST(req: NextRequest) {
   const admin = await Admin.findOne({ email: email.toLowerCase() }).select("+mfaSecret");
   if (!admin || !admin.mfaEnabled || !admin.mfaSecret) return errorResponse("Invalid request");
 
-  const verified = authenticator.check(token, admin.mfaSecret);
+  const result = await verify({ token, secret: admin.mfaSecret, type: "totp" });
+  const verified = result.valid;
   if (verified) {
     await setSessionCookie(admin.email);
     return successResponse(null, "Login verified");
