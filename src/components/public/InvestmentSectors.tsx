@@ -103,8 +103,8 @@ export default function InvestmentSectors() {
                   whileHover="hover"
                   className={`group relative overflow-hidden bg-gvi-deep border border-gvi-gold/5 flex flex-col justify-end rounded-sm cursor-default ${COL_SPANS[index] ?? ""}`}
                   style={{
-                    padding: "clamp(1.25rem, 2vw + 0.5rem, 2.5rem)",
-                    minHeight: "clamp(13.75rem, 18vw + 4rem, 23.75rem)",
+                    padding: "var(--card-padding)",
+                    minHeight: "var(--card-min-height)",
                   }}
                 >
                   <motion.div

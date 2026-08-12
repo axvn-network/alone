@@ -69,12 +69,9 @@ export default function Hero() {
       animate="visible"
       className="relative flex flex-col items-center justify-center overflow-hidden bg-gvi-navy"
       style={{
-        /* Fluid min-height: 85vh mobile → 100vh desktop */
-        minHeight: "clamp(85vh, 92vw, 100vh)",
-        /* Padding-top: navbar h-24 = 6rem; thêm 1.5rem buffer = 7.5rem mobile → 8rem desktop */
-        paddingTop: "clamp(7.5rem, 8vw + 2rem, 9rem)",
-        paddingBottom: "clamp(3.5rem, 4vw + 0.5rem, 5rem)",
-        /* Fluid horizontal padding */
+        minHeight: "var(--hero-min-height)",
+        paddingTop: "var(--hero-pt)",
+        paddingBottom: "var(--hero-pb)",
         paddingLeft: "var(--section-px)",
         paddingRight: "var(--section-px)",
       }}
@@ -107,7 +104,7 @@ export default function Hero() {
         variants={heroChildrenVariants}
         initial="hidden"
         animate="visible"
-        className="relative z-10 w-full max-w-[1280px] mx-auto flex flex-col items-center text-center md:items-start md:text-left"
+        className="relative z-10 w-full max-w-[1400px] mx-auto flex flex-col items-center text-center md:items-start md:text-left"
       >
         {/* Eyebrow tag */}
         <motion.div variants={heroItemVariants} className="flex items-center gap-3 mb-5 md:mb-7">

@@ -68,9 +68,9 @@ export default function Newsletter() {
       style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}
     >
       <div className="absolute inset-0 bg-gvi-deep" />
-      <div className="section-divider max-w-[1280px] mx-auto" />
+      <div className="section-divider max-w-[1400px] mx-auto" />
 
-      <div className="relative max-w-[1280px] mx-auto section-px">
+      <div className="relative max-w-[1400px] mx-auto section-px">
         <div className="max-w-[600px] mx-auto text-center">
           <Stagger>
             <StaggerItem>

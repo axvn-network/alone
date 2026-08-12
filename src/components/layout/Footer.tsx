@@ -186,7 +186,7 @@ export default function Footer() {
               className="relative z-10 max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-[240px_1fr] gap-10 md:gap-12"
               style={{
                 paddingTop: "var(--section-py)",
-                paddingBottom: "3.5rem",
+                paddingBottom: "var(--section-py)",
                 paddingLeft: "var(--section-px)",
                 paddingRight: "var(--section-px)",
               }}
@@ -266,8 +266,13 @@ export default function Footer() {
                 className="relative z-10 bg-[#060c17] border-t border-[#C9A24A]/15"
               >
                 <div
-                  className="max-w-[1400px] mx-auto py-5 flex flex-col lg:flex-row items-start lg:items-center gap-4 lg:gap-0 justify-between"
-                  style={{ paddingLeft: "var(--section-px)", paddingRight: "var(--section-px)" }}
+                  className="max-w-[1400px] mx-auto flex flex-col lg:flex-row items-start lg:items-center gap-4 lg:gap-0 justify-between"
+                  style={{
+                    paddingTop: "var(--footer-bar-py)",
+                    paddingBottom: "var(--footer-bar-py)",
+                    paddingLeft: "var(--section-px)",
+                    paddingRight: "var(--section-px)",
+                  }}
                 >
                   {/* Copyright */}
                   <div className="flex flex-col gap-1 shrink-0">

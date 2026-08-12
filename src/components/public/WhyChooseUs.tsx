@@ -46,7 +46,7 @@ export default function WhyChooseUs() {
       style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}
     >
       <div className="absolute inset-0 bg-gvi-deep" />
-      <div className="relative max-w-[1280px] mx-auto section-px">
+      <div className="relative max-w-[1400px] mx-auto section-px">
         <Stagger>
           <StaggerItem>
             <div className="flex items-center gap-3 mb-6">
@@ -94,7 +94,7 @@ export default function WhyChooseUs() {
           </StaggerItem>
         </Stagger>
       </div>
-      <div className="section-divider mt-16 md:mt-28 max-w-[1280px] mx-auto" />
+      <div className="section-divider section-my max-w-[1400px] mx-auto" />
     </motion.section>
   );
 }

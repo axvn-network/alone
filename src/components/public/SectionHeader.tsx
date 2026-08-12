@@ -31,7 +31,7 @@ export default function SectionHeader({
   const isCenter = align === "center";
 
   return (
-    <div className={`${isCenter ? "text-center mx-auto max-w-3xl" : ""} ${className}`}>
+    <div className={`${isCenter ? "text-center mx-auto max-w-4xl" : ""} ${className}`}>
       {tag && (
         <div className={`flex items-center gap-3 mb-5 ${isCenter ? "justify-center" : ""}`}>
           <div className="w-5 h-px bg-gvi-gold/55" />

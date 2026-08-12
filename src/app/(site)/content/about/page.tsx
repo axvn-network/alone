@@ -285,7 +285,7 @@ export default function AboutPage() {
             dark
           />
         </Reveal>
-        <Stagger className="grid sm:grid-cols-2 gap-3 md:gap-4 max-w-4xl mx-auto">
+        <Stagger className="grid sm:grid-cols-2 gap-3 md:gap-4">
           {philosophyPoints.map((point, i) => (
             <StaggerItem
               key={i}
@@ -310,7 +310,7 @@ export default function AboutPage() {
             description="Không phải slide deck. Đây là trạng thái thực tế của dự án — những gì đã hoàn thành, đang thực hiện, và những bước tiếp theo."
           />
         </Reveal>
-        <Stagger className="max-w-3xl mx-auto space-y-4">
+        <Stagger className="space-y-4">
           {[
             {
               status: "done",

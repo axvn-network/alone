@@ -94,7 +94,7 @@ export default function WhatWeDo() {
                   initial="rest"
                   whileHover="hover"
                   className="group border bg-gvi-deep cursor-pointer rounded-sm flex flex-col"
-                  style={{ padding: "clamp(1.25rem, 2vw + 0.5rem, 2.5rem)" }}
+                  style={{ padding: "var(--card-padding)" }}
                 >
                   <div className="flex-1 flex flex-col">
                     <span

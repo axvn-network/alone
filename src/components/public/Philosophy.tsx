@@ -92,11 +92,11 @@ export default function Philosophy() {
                     initial="rest"
                     whileHover="hover"
                     className="text-center border bg-gvi-deep rounded-sm cursor-default"
-                    style={{ padding: "clamp(1.25rem, 2vw + 0.5rem, 2rem)" }}
+                    style={{ padding: "var(--card-padding)" }}
                   >
                     <motion.span
                       className="text-gvi-gold/30 font-thin block mb-5 leading-none tracking-tight"
-                      style={{ fontSize: "clamp(3rem, 4vw + 1rem, 4.5rem)" }}
+                      style={{ fontSize: "var(--text-display-num)" }}
                       whileHover={{ color: "rgba(201,162,74,0.7)", scale: 1.04 }}
                       transition={{ duration: 0.2 }}
                     >
