@@ -1,3 +1,13 @@
+/**
+ * src/lib/auth-utils.ts
+ *
+ * Admin authentication helpers for server-side use:
+ *   - getCurrentUser()  — resolve session → Admin document
+ *   - requireAuth()     — redirect to /admin-login if unauthenticated
+ *   - requireAdmin()    — like requireAuth but checks role
+ *   - logoutAdmin()     — clear session cookie
+ */
+
 import { redirect } from "next/navigation";
 import { getSessionEmail, clearSessionCookie } from "./session";
 import { connectDB } from "./db";
@@ -44,13 +54,6 @@ export async function requireAdmin(): Promise<SessionUser> {
     redirect("/admin-login");
   }
   return user;
-}
-
-export function unauthorizedResponse() {
-  return Response.json(
-    { success: false, message: "Unauthorized" },
-    { status: 401 }
-  );
 }
 
 export async function logoutAdmin(): Promise<void> {

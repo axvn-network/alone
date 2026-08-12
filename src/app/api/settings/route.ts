@@ -10,6 +10,8 @@ import {
 } from "@/utils/api-response";
 import { handleError } from "@/utils/errors";
 
+export const dynamic = "force-dynamic";
+
 // GET — public: read site settings (used by frontend)
 export async function GET() {
   try {

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { logger } from "@/lib/logger";
 
 /**
  * WhatsApp Business Cloud API — Webhook
@@ -50,7 +51,7 @@ export async function GET(req: NextRequest) {
   const challenge = searchParams.get("hub.challenge");
 
   if (mode === "subscribe" && token === VERIFY_TOKEN) {
-    console.log("[WA Webhook] Verified ✅");
+    logger.info("[WA Webhook] Verified ✅");
     return new NextResponse(challenge, { status: 200 });
   }
   return new NextResponse("Forbidden", { status: 403 });
@@ -96,7 +97,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ status: "ok" });
   } catch (err) {
-    console.error("[WA Webhook] Error:", err);
+    logger.error("[WA Webhook] Error", err);
     return NextResponse.json({ status: "error" }, { status: 200 }); // always 200 to WA
   }
 }
@@ -342,10 +343,10 @@ function buildPlanDetail(planKey: string): WAMessage {
   if (!plan) return buildPlansMenu();
 
   const rightsText  = plan.rights.map((r, i) => `  ${i + 1}. ${r}`).join("\n");
-  const obligText   = plan.obligations.map((o, i) => `  ⚠️ ${o}`).join("\n");
+  const obligText   = plan.obligations.map((o, _i) => `  ⚠️ ${o}`).join("\n");
   const docsText    = plan.docs.map((d) => `  📄 ${d}`).join("\n");
 
-  const text = `${plan.icon} *${plan.name}*\n💰 Vốn góp: ${plan.min}\n📊 Cổ phần: ${plan.equity}\n\n*✅ Quyền Lợi:*\n${rightsText}\n\n*⚠️ Nghĩa Vụ:*\n${obligText}\n\n*📋 Hồ Sơ Cần Có:*\n${docsText}\n\n🔗 Chi tiết đầy đủ: ${SITE_URL}/invest-with-fortress/plans`;
+  const text = `${plan.icon} *${plan.name}*\n💰 Vốn góp: ${plan.min}\n📊 Cổ phần: ${plan.equity}\n\n*✅ Quyền Lợi:*\n${rightsText}\n\n*⚠️ Nghĩa Vụ:*\n${obligText}\n\n*📋 Hồ Sơ Cần Có:*\n${docsText}\n\n🔗 Chi tiết đầy đủ: ${SITE_URL}/invest-with-gvi/plans`;
 
   return {
     type: "interactive",
@@ -377,7 +378,7 @@ function buildNQ5Message(): WAMessage {
         buttons: [
           { type: "reply", reply: { id: "btn_plans",   title: "💼 Xem Hạng Mục Hợp Tác" } },
           { type: "reply", reply: { id: "btn_contact", title: "📞 Liên Hệ Tư Vấn" } },
-          { type: "reply", reply: { id: "btn_about",   title: "🏰 Về Fortress" } },
+          { type: "reply", reply: { id: "btn_about",   title: "🏢 Về GVI" } },
         ],
       },
     },
@@ -390,14 +391,14 @@ function buildContactMessage(): WAMessage {
     interactive: {
       type: "button",
       body: {
-        text: `📞 *Liên Hệ GVI Tech Holding*\n\n🌐 Website: ${SITE_URL}/contact\n📋 Đăng ký hợp tác: ${SITE_URL}/invest-with-fortress\n📧 Email: info@fortressih.com\n\nĐội ngũ chuyên gia sẽ phản hồi trong *2–3 ngày làm việc*.\n🔒 Mọi thông tin được bảo mật tuyệt đối.\n\nHoặc gửi trực tiếp *số điện thoại* và *tên* của bạn, chúng tôi sẽ liên hệ lại ngay!`,
+        text: `📞 *Liên Hệ GVI Tech Holding*\n\n🌐 Website: ${SITE_URL}/contact\n📋 Đăng ký hợp tác: ${SITE_URL}/invest-with-gvi\n📧 Email: info@fortressih.com\n\nĐội ngũ chuyên gia sẽ phản hồi trong *2–3 ngày làm việc*.\n🔒 Mọi thông tin được bảo mật tuyệt đối.\n\nHoặc gửi trực tiếp *số điện thoại* và *tên* của bạn, chúng tôi sẽ liên hệ lại ngay!`,
       },
       footer: { text: "GVI Tech Holding · Dubai, UAE" },
       action: {
         buttons: [
           { type: "reply", reply: { id: "btn_plans", title: "💼 Xem Hạng Mục Hợp Tác" } },
           { type: "reply", reply: { id: "btn_nq5",   title: "📜 Về NQ 05" } },
-          { type: "reply", reply: { id: "btn_about", title: "🏰 Về Fortress" } },
+          { type: "reply", reply: { id: "btn_about", title: "🏢 Về GVI Tech Holding" } },
         ],
       },
     },
@@ -446,6 +447,6 @@ async function sendWAMessage(to: string, message: WAMessage) {
 
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
-    console.error("[WA Webhook] Send failed:", err);
+    logger.error("[WA Webhook] Send failed", err);
   }
 }

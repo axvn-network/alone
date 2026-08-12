@@ -1,6 +1,9 @@
 export { default as Admin } from "./Admin";
 export type { IAdmin } from "./Admin";
 
+export { default as AuditLog } from "./AuditLog";
+export type { IAuditLog } from "./AuditLog";
+
 export { default as Page } from "./Page";
 export type { IPage, IPageSection, IPageSEO } from "./Page";
 
@@ -33,3 +36,6 @@ export type { IShareholderMessage, MessageChannel } from "./ShareholderMessage";
 
 export { default as ShareholderMeeting } from "./ShareholderMeeting";
 export type { IShareholderMeeting, MeetingStatus, MeetingType } from "./ShareholderMeeting";
+
+export { default as PartnerApplication } from "./PartnerApplication";
+export type { IPartnerApplication, PartnerApplicationStatus, AssessmentDimensions } from "./PartnerApplication";

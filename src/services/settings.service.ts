@@ -1,6 +1,7 @@
 import Settings, { type ISettings } from "@/models/Settings";
 import type { SettingsInput } from "@/validators";
 import { connectDB } from "@/lib/db";
+import { logger } from "@/lib/logger";
 
 const DEFAULT_SETTINGS = {
   companyName: "GVI Tech Holding",
@@ -41,13 +42,13 @@ export async function getSettings() {
         settings = await Settings.create(DEFAULT_SETTINGS);
         settings = settings.toObject ? settings.toObject() : settings;
       } catch (err) {
-        console.warn("Could not create settings document, using fallback defaults:", err);
+        logger.warn("Could not create settings document, using fallback defaults:", err);
         return DEFAULT_SETTINGS as unknown as ISettings;
       }
     }
     return settings;
   } catch (err) {
-    console.error("Database connection/query error in getSettings:", err);
+    logger.error("Database connection/query error in getSettings:", err);
     return DEFAULT_SETTINGS as unknown as ISettings;
   }
 }

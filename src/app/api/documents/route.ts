@@ -3,6 +3,8 @@ import { documentService, DocumentQuery } from "@/services/document.service";
 import { successResponse, serverErrorResponse } from "@/utils/api-response";
 import { handleError } from "@/utils/errors";
 
+export const dynamic = "force-dynamic";
+
 // GET /api/documents — public
 export async function GET(request: NextRequest) {
   try {

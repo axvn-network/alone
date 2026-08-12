@@ -3,6 +3,7 @@ import { enquiryService } from "@/services";
 import { contactEnquirySchema, formatZodErrors } from "@/validators";
 import { rateLimit } from "@/utils/rate-limit";
 import { sendEnquiryNotification } from "@/lib/email";
+import { logger } from "@/lib/logger";
 import {
   successResponse,
   validationErrorResponse,
@@ -22,7 +23,7 @@ export async function POST(request: NextRequest) {
     if (!parsed.success) return validationErrorResponse(formatZodErrors(parsed.error));
 
     const enquiry = await enquiryService.createEnquiry(parsed.data);
-    sendEnquiryNotification(parsed.data).catch(console.error);
+    sendEnquiryNotification(parsed.data).catch((err) => logger.error("Failed to send notification email", err));
     return successResponse(enquiry, "Investment opportunity submitted successfully", 201);
   } catch (error) {
     return serverErrorResponse(handleError(error).message);

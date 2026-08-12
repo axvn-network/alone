@@ -43,11 +43,12 @@ export async function updatePage(slug: string, data: Partial<PageContentInput>) 
   await connectDB();
 
   const updateData: Record<string, unknown> = {};
-  if (data.title)                updateData.title    = data.title;
-  if (data.hero)                 updateData.hero     = data.hero;
-  if (data.sections)             updateData.sections = data.sections;
-  if (data.seo)                  updateData.seo      = data.seo;
-  if (data.data !== undefined)   updateData.data     = data.data;
+  if (data.title !== undefined)   updateData.title    = data.title;
+  if (data.content !== undefined) updateData.content  = data.content;
+  if (data.hero)                  updateData.hero     = data.hero;
+  if (data.sections)              updateData.sections = data.sections;
+  if (data.seo)                   updateData.seo      = data.seo;
+  if (data.data !== undefined)    updateData.data     = data.data;
   updateData.updatedAt = new Date();
 
   const page = await Page.findOneAndUpdate(

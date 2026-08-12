@@ -1,3 +1,11 @@
+/**
+ * src/lib/logger.ts
+ *
+ * Lightweight structured logger with level control via env.LOG_LEVEL.
+ * Usage: import { logger } from "@/lib/logger";
+ *        logger.info("User logged in", { userId });
+ */
+
 import { env } from "./env";
 
 type LogLevel = "debug" | "info" | "warn" | "error";

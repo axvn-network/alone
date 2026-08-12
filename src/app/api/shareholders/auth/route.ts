@@ -2,6 +2,7 @@ import { NextRequest } from "next/server";
 import { connectDB } from "@/lib/db";
 import Shareholder from "@/models/Shareholder";
 import { successResponse, serverErrorResponse, notFoundResponse, unauthorizedResponse } from "@/utils/api-response";
+import { handleError } from "@/utils/errors";
 import { cookies } from "next/headers";
 import { makeShareholderToken, parseShareholderToken, SH_COOKIE } from "@/lib/sh-session";
 
@@ -35,7 +36,7 @@ export async function POST(req: NextRequest) {
       kycStatus: sh.kycStatus ?? "not_started",
     });
   } catch (e) {
-    return serverErrorResponse(e instanceof Error ? e.message : "Login failed");
+    return serverErrorResponse(handleError(e).message);
   }
 }
 
@@ -66,6 +67,6 @@ export async function GET() {
       kycStatus: sh.kycStatus ?? "not_started",
     });
   } catch (e) {
-    return serverErrorResponse(e instanceof Error ? e.message : "Session error");
+    return serverErrorResponse(handleError(e).message);
   }
 }

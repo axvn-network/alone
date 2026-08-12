@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { successResponse, serverErrorResponse, unauthorizedResponse, errorResponse } from "@/utils/api-response";
+import { successResponse, serverErrorResponse, unauthorizedResponse, errorResponse, notFoundResponse } from "@/utils/api-response";
 import { getCurrentUser } from "@/lib/auth-utils";
 import { shareholderService } from "@/services";
 import { handleError, NotFoundError } from "@/utils/errors";
@@ -50,7 +50,7 @@ export async function PUT(req: NextRequest) {
     if (!user) return unauthorizedResponse();
 
     const { _id, ...body } = await req.json();
-    if (!_id) return serverErrorResponse("ID required");
+    if (!_id) return errorResponse("ID required");
 
     const sh = await shareholderService.update(_id, body);
 
@@ -64,7 +64,7 @@ export async function PUT(req: NextRequest) {
 
     return successResponse(sh);
   } catch (e) {
-    if (e instanceof NotFoundError) return serverErrorResponse(e.message);
+    if (e instanceof NotFoundError) return notFoundResponse(e.message);
     return serverErrorResponse(handleError(e).message);
   }
 }
@@ -91,7 +91,7 @@ export async function DELETE(req: NextRequest) {
 
     return successResponse({ ok: true });
   } catch (e) {
-    if (e instanceof NotFoundError) return serverErrorResponse(e.message);
+    if (e instanceof NotFoundError) return notFoundResponse(e.message);
     return serverErrorResponse(handleError(e).message);
   }
 }

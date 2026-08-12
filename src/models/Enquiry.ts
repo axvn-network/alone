@@ -19,6 +19,10 @@ export interface IEnquiry extends Document {
   message: string;
   document: string;
   status: EnquiryStatus;
+  /** Đồng ý xử lý DLCN — theo NĐ 13/2023 */
+  consentGiven: boolean;
+  /** ISO timestamp khi người dùng tick checkbox */
+  consentTimestamp: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -38,12 +42,17 @@ const EnquirySchema = new Schema<IEnquiry>(
     message: { type: String, required: true },
     document: { type: String, default: "" },
     status: { type: String, enum: ["new", "read", "archived"], default: "new" },
+    /** Đồng ý xử lý DLCN — bắt buộc theo NĐ 13/2023 */
+    consentGiven:    { type: Boolean, default: false },
+    consentTimestamp: { type: String, default: "" },
   },
   { timestamps: true }
 );
 
 EnquirySchema.index({ status: 1, createdAt: -1 });
 EnquirySchema.index({ type: 1 });
+EnquirySchema.index({ email: 1 });
+EnquirySchema.index({ name: "text", email: "text", subject: "text" });
 
 const Enquiry = mongoose.models.Enquiry || mongoose.model<IEnquiry>("Enquiry", EnquirySchema);
 

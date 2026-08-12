@@ -1,5 +1,8 @@
 import { connectDB } from "@/lib/db";
 import DocumentModel, { DocumentCategory, IDocument } from "@/models/Document";
+import { NotFoundError } from "@/utils/errors";
+import { paginate } from "@/utils/pagination";
+import { buildSearchFilter } from "@/utils/search";
 
 export interface DocumentQuery {
   category?: DocumentCategory;
@@ -41,20 +44,14 @@ function toPlain(doc: IDocument) {
 export const documentService = {
   async list(query: DocumentQuery = {}) {
     await connectDB();
-    const filter: Record<string, unknown> = {};
-    if (query.status)   filter.status   = query.status;
-    if (query.category) filter.category = query.category;
-    if (query.year)     filter.year     = query.year;
-    if (query.search) {
-      filter.$or = [
-        { title:   { $regex: query.search, $options: "i" } },
-        { titleEn: { $regex: query.search, $options: "i" } },
-      ];
-    }
+    const filter: Record<string, unknown> = {
+      ...(query.status   ? { status:   query.status }   : {}),
+      ...(query.category ? { category: query.category } : {}),
+      ...(query.year     ? { year:     query.year }     : {}),
+      ...buildSearchFilter(query.search, ["title", "titleEn"]),
+    };
 
-    const page  = Math.max(1, query.page  || 1);
-    const limit = Math.min(100, Math.max(1, query.limit || 50));
-    const skip  = (page - 1) * limit;
+    const { page, limit, skip } = paginate(query, { limit: 50, maxLimit: 100 });
 
     const [docs, total] = await Promise.all([
       DocumentModel.find(filter).sort({ publishedDate: -1, year: -1 }).skip(skip).limit(limit).lean(),
@@ -72,7 +69,7 @@ export const documentService = {
   async getById(id: string) {
     await connectDB();
     const doc = await DocumentModel.findById(id);
-    if (!doc) throw new Error("Document not found");
+    if (!doc) throw new NotFoundError("Document not found");
     return toPlain(doc);
   },
 
@@ -89,15 +86,17 @@ export const documentService = {
     await connectDB();
     const update: Record<string, unknown> = { ...data };
     if (data.publishedDate) update.publishedDate = new Date(data.publishedDate);
-    const doc = await DocumentModel.findByIdAndUpdate(id, { $set: update }, { new: true });
-    if (!doc) throw new Error("Document not found");
+    const doc = await DocumentModel.findByIdAndUpdate(
+      id, { $set: update }, { new: true, runValidators: true }
+    );
+    if (!doc) throw new NotFoundError("Document not found");
     return toPlain(doc);
   },
 
   async delete(id: string) {
     await connectDB();
     const doc = await DocumentModel.findByIdAndDelete(id);
-    if (!doc) throw new Error("Document not found");
+    if (!doc) throw new NotFoundError("Document not found");
     return true;
   },
 

@@ -5,35 +5,11 @@ import Shareholder from "@/models/Shareholder";
 import InvestmentPlan from "@/models/InvestmentPlan";
 import ShareholderTask from "@/models/ShareholderTask";
 import ShareholderMeeting from "@/models/ShareholderMeeting";
+// ActivityItem and DashboardStats are the canonical types; use @/types
+import type { ActivityItem, DashboardStats } from "@/types";
 
-export interface ActivityItem {
-  id: string;
-  /** "contact" = type "Contact"; "submission" = all investment types */
-  type: "contact" | "submission";
-  /** Sender name */
-  title: string;
-  /** Subject or enquiry type label */
-  description: string;
-  /** ISO string — used by timeAgo() on the frontend */
-  time: string;
-}
-
-export interface DashboardStatsResult {
-  /** Total published blog posts */
-  blogPosts: number;
-  /** Total "Contact" enquiries */
-  totalContacts: number;
-  /** Total investment-type enquiries */
-  totalSubmissions: number;
-  /** Unread enquiries count — used for nav badge */
-  newEnquiries: number;
-  /** Total active shareholders */
-  totalShareholders: number;
-  /** Total active investment plans */
-  totalPlans: number;
-  /** 10 most recent enquiries as activity feed items */
-  activities: ActivityItem[];
-}
+/** @deprecated Use DashboardStats from @/types */
+export type DashboardStatsResult = DashboardStats;
 
 const SUBMISSION_TYPES = [
   "Investment Opportunity",

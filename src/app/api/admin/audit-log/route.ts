@@ -2,6 +2,7 @@ import { NextRequest } from "next/server";
 import { getCurrentUser } from "@/lib/auth-utils";
 import { queryLogs } from "@/services/audit.service";
 import { successResponse, serverErrorResponse, unauthorizedResponse } from "@/utils/api-response";
+import { handleError } from "@/utils/errors";
 
 // GET /api/admin/audit-log?page=1&limit=50&action=&actorId=&collection=&from=&to=
 export async function GET(req: NextRequest) {
@@ -23,6 +24,6 @@ export async function GET(req: NextRequest) {
 
     return successResponse(result);
   } catch (e) {
-    return serverErrorResponse(e instanceof Error ? e.message : "Error");
+    return serverErrorResponse(handleError(e).message);
   }
 }

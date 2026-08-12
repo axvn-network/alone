@@ -17,7 +17,9 @@ import {
   serverErrorResponse,
   unauthorizedResponse,
   errorResponse,
+  notFoundResponse,
 } from "@/utils/api-response";
+import { handleError } from "@/utils/errors";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -37,7 +39,7 @@ export async function GET() {
     const admins = await Admin.find({}).sort({ createdAt: -1 }).lean();
     return successResponse(admins.map(safe));
   } catch (e) {
-    return serverErrorResponse(e instanceof Error ? e.message : "Error");
+    return serverErrorResponse(handleError(e).message);
   }
 }
 
@@ -63,9 +65,9 @@ export async function POST(req: NextRequest) {
     });
     return successResponse(safe(admin.toObject()), "Admin created", 201);
   } catch (e: unknown) {
-    const msg = e instanceof Error ? e.message : "Error";
-    if (msg.includes("duplicate")) return errorResponse("Email đã tồn tại");
-    return serverErrorResponse(msg);
+    const { message } = handleError(e);
+    if (message.includes("duplicate") || message.includes("Duplicate")) return errorResponse("Email đã tồn tại");
+    return serverErrorResponse(message);
   }
 }
 
@@ -86,10 +88,10 @@ export async function PUT(req: NextRequest) {
     delete update._id;
 
     const admin = await Admin.findByIdAndUpdate(_id, { $set: update }, { new: true }).lean();
-    if (!admin) return errorResponse("Admin not found", 404);
+    if (!admin) return notFoundResponse("Admin not found");
     return successResponse(safe(admin as Record<string, unknown>));
   } catch (e) {
-    return serverErrorResponse(e instanceof Error ? e.message : "Error");
+    return serverErrorResponse(handleError(e).message);
   }
 }
 
@@ -110,6 +112,6 @@ export async function DELETE(req: NextRequest) {
     await Admin.findByIdAndDelete(id);
     return successResponse({ ok: true }, "Admin deleted");
   } catch (e) {
-    return serverErrorResponse(e instanceof Error ? e.message : "Error");
+    return serverErrorResponse(handleError(e).message);
   }
 }

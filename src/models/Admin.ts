@@ -6,6 +6,12 @@ export interface IAdmin extends Document {
   password: string;
   role: "admin" | "superadmin";
   lastLogin: Date | null;
+  /** TOTP secret (AES or base32) — not returned by default */
+  mfaSecret: string | null;
+  /** True once admin has verified the TOTP setup */
+  mfaEnabled: boolean;
+  /** When true, login flow requires TOTP after password */
+  mfaRequiredForLogin: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -17,6 +23,9 @@ const AdminSchema = new Schema<IAdmin>(
     password: { type: String, required: true },
     role: { type: String, enum: ["admin", "superadmin"], default: "admin" },
     lastLogin: { type: Date, default: null },
+    mfaSecret: { type: String, select: false, default: null },
+    mfaEnabled: { type: Boolean, default: false },
+    mfaRequiredForLogin: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

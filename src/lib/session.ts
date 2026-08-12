@@ -135,6 +135,47 @@ export function parseSessionToken(raw: string): string | null {
   return payload?.email ?? null;
 }
 
+// ─── Shareholder session helpers ─────────────────────────────────────────────
+//
+// Shared HMAC-SHA256 token logic — same algorithm, different cookie name and
+// payload shape.  Kept here to avoid duplicating the crypto primitives.
+
+export const SH_COOKIE = "sh_session";
+const SH_MAX_AGE = MAX_AGE_SECONDS; // same 8-hour window
+
+interface ShPayload {
+  id: string;
+  email: string;
+  exp: number;
+  nonce: string;
+}
+
+export function makeShareholderToken(id: string, email: string): string {
+  const exp = Math.floor(Date.now() / 1000) + SH_MAX_AGE;
+  const encoded = b64urlEncode(
+    JSON.stringify({ id, email, exp, nonce: randomBytes(8).toString("hex") })
+  );
+  const sig = sign(encoded);
+  return `${encoded}.${sig}`;
+}
+
+export function parseShareholderToken(raw: string): { id: string; email: string } | null {
+  try {
+    const dot = raw.lastIndexOf(".");
+    if (dot === -1) return null;
+    const encoded = raw.slice(0, dot);
+    const provided = raw.slice(dot + 1);
+    if (!constantTimeEqual(provided, sign(encoded))) return null;
+    const data = JSON.parse(
+      Buffer.from(encoded.replace(/-/g, "+").replace(/_/g, "/"), "base64").toString()
+    ) as ShPayload;
+    if (!data.exp || Date.now() / 1000 > data.exp) return null;
+    return { id: data.id, email: data.email };
+  } catch {
+    return null;
+  }
+}
+
 /** Delete the session cookie */
 export async function clearSessionCookie(): Promise<void> {
   const cookieStore = await cookies();

@@ -35,6 +35,10 @@ export interface IInvestmentPlan extends Document {
   benefitsEn: string[];
   conditions: string[];
   conditionsEn: string[];
+  rights: string[];
+  obligations: string[];
+  documents: string[];
+  shareholderType: string;
   highlighted: boolean;
   badge: string;
   badgeEn: string;
@@ -44,8 +48,7 @@ export interface IInvestmentPlan extends Document {
   updatedAt: Date;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const InvestmentPlanSchema = new Schema<any>(
+const InvestmentPlanSchema = new Schema<IInvestmentPlan>(
   {
     tier:            { type: String, enum: ["seed", "growth", "expansion", "strategic", "anchor"], required: true },
     name:            { type: String, required: true, trim: true },

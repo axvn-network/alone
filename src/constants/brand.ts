@@ -2,7 +2,6 @@ export const PUBLIC_BRAND = {
   name: "GVI Tech Holding",
   groupName: "GVI Group",
   canonicalUrl: "https://vnkr.vn",
-  logoStatus: "placeholder",
 } as const;
 
 export const STRATEGY_NOTICE =

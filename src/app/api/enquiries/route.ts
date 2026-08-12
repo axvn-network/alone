@@ -4,6 +4,7 @@ import { enquiryService } from "@/services";
 import { contactEnquirySchema, formatZodErrors } from "@/validators";
 import { rateLimit } from "@/utils/rate-limit";
 import { sendEnquiryNotification } from "@/lib/email";
+import { logger } from "@/lib/logger";
 import {
   successResponse,
   validationErrorResponse,
@@ -12,6 +13,8 @@ import {
   unauthorizedResponse,
 } from "@/utils/api-response";
 import { handleError } from "@/utils/errors";
+
+export const dynamic = "force-dynamic";
 
 // GET — admin only: list all enquiries
 export async function GET(request: NextRequest) {
@@ -39,7 +42,7 @@ export async function POST(request: NextRequest) {
     if (!parsed.success) return validationErrorResponse(formatZodErrors(parsed.error));
 
     const enquiry = await enquiryService.createEnquiry(parsed.data);
-    sendEnquiryNotification(parsed.data).catch(console.error);
+    sendEnquiryNotification(parsed.data).catch((err) => logger.error("Failed to send notification email", err));
     return successResponse(enquiry, "Enquiry submitted successfully", 201);
   } catch (error) {
     return serverErrorResponse(handleError(error).message);

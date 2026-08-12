@@ -22,6 +22,7 @@ import {
   unauthorizedResponse,
   badRequestResponse,
 } from "@/utils/api-response";
+import { handleError } from "@/utils/errors";
 
 // GET — trạng thái KYC hiện tại
 export async function GET() {
@@ -47,7 +48,7 @@ export async function GET() {
       isSanctioned:         doc.isSanctioned    ?? false,
     });
   } catch (e) {
-    return serverErrorResponse(e instanceof Error ? e.message : "Error");
+    return serverErrorResponse(handleError(e).message);
   }
 }
 
@@ -100,6 +101,6 @@ export async function POST(req: NextRequest) {
 
     return successResponse({ kycStatus: "pending", submittedAt: new Date().toISOString() });
   } catch (e) {
-    return serverErrorResponse(e instanceof Error ? e.message : "Error");
+    return serverErrorResponse(handleError(e).message);
   }
 }

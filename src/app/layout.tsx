@@ -1,13 +1,19 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import { Be_Vietnam_Pro, Plus_Jakarta_Sans } from "next/font/google";
-import FloatingChatButtons from "@/components/FloatingChatButtons";
-import CustomCursor from "@/components/CustomCursor";
-import AnimationProvider from "@/components/AnimationProvider";
-import GlobalNavbar from "@/components/GlobalNavbar";
-import GlobalFooter from "@/components/GlobalFooter";
+import FloatingChatButtons from "@/components/layout/FloatingChatButtons";
+import CustomCursor from "@/components/layout/CustomCursor";
+import AnimationProvider from "@/components/layout/AnimationProvider";
+import GlobalNavbar from "@/components/layout/GlobalNavbar";
+import GlobalFooter from "@/components/layout/GlobalFooter";
 import { LangProvider } from "@/contexts/LangContext";
 import "./globals.css";
+
+// Analytics IDs — read from env; scripts are NOT injected when value is absent or placeholder
+const GA_ID      = process.env.NEXT_PUBLIC_GA_ID;
+const PIXEL_ID   = process.env.NEXT_PUBLIC_META_PIXEL_ID;
+const GA_ACTIVE  = !!GA_ID    && GA_ID    !== "G-XXXXXXXXXX";
+const FB_ACTIVE  = !!PIXEL_ID && PIXEL_ID !== "XXXXXXXXXXXXXXX" && PIXEL_ID !== "XXXXXXXXXXXXXXXX";
 
 const beVietnamPro = Be_Vietnam_Pro({
   subsets: ["vietnamese", "latin"],
@@ -81,38 +87,28 @@ export default function RootLayout({
   return (
     <html lang="vi" className={`dark ${beVietnamPro.variable} ${plusJakartaSans.variable}`} suppressHydrationWarning>
       <head>
-        {/* Google Analytics */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
-          strategy="afterInteractive"
-        />
-        <Script id="ga-init" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-XXXXXXXXXX');
-          `}
-        </Script>
-        {/* Meta Pixel */}
-        <Script
-          id="fb-pixel"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              !function(f,b,e,v,n,t,s)
-              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-              n.queue=[];t=b.createElement(e);t.async=!0;
-              t.src=v;s=b.getElementsByTagName(e)[0];
-              s.parentNode.insertBefore(t,s)}(window, document,'script',
-              'https://connect.facebook.net/en_US/fbevents.js');
-              fbq('init', 'XXXXXXXXXXXXXXX');
-              fbq('track', 'PageView');
-            `,
-          }}
-        />
+        {/* Google Analytics — only injected when NEXT_PUBLIC_GA_ID is set to a real ID */}
+        {GA_ACTIVE && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga-init" strategy="afterInteractive">
+              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');`}
+            </Script>
+          </>
+        )}
+        {/* Meta Pixel — only injected when NEXT_PUBLIC_META_PIXEL_ID is set to a real ID */}
+        {FB_ACTIVE && (
+          <Script
+            id="fb-pixel"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${PIXEL_ID}');fbq('track','PageView');`,
+            }}
+          />
+        )}
       </head>
       <body
         className="antialiased bg-gvi-navy text-gvi-silver cursor-none"

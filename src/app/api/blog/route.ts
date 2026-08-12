@@ -12,6 +12,8 @@ import {
 } from "@/utils/api-response";
 import { handleError, NotFoundError } from "@/utils/errors";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(request: NextRequest) {
   try {
     const slug     = request.nextUrl.searchParams.get("slug");

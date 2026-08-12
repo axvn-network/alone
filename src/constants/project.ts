@@ -1,8 +1,8 @@
 /**
  * Shared project constants — single source of truth used across:
- *   /invest-with-fortress
- *   /invest-with-fortress/plans
- *   /invest-with-fortress/charter
+ *   /invest-with-gvi
+ *   /invest-with-gvi/plans
+ *   /invest-with-gvi/charter
  */
 
 export const CAPITAL_AMOUNT = {

@@ -1,28 +1,8 @@
 import Enquiry from "@/models/Enquiry";
 import type { ContactEnquiryInput } from "@/validators";
+import type { AdminEnquiryItem } from "@/types";
 import { NotFoundError } from "@/utils/errors";
 import { connectDB } from "@/lib/db";
-
-/** Shape returned to the admin enquiries list page */
-export interface AdminEnquiryItem {
-  id: string;
-  /** Normalised: "contact" | "submission" */
-  type: "contact" | "submission";
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-  /** true when status !== "new" */
-  read: boolean;
-  createdAt: string;
-  details: {
-    phone: string;
-    company: string;
-    document: string;
-    /** Raw DB type label for extra context */
-    enquiryType: string;
-  };
-}
 
 export interface EnquiryStats {
   total: number;

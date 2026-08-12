@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server";
-import { successResponse, serverErrorResponse, unauthorizedResponse } from "@/utils/api-response";
+import { successResponse, errorResponse, serverErrorResponse, unauthorizedResponse } from "@/utils/api-response";
+import { handleError } from "@/utils/errors";
 import { getActiveShareholder } from "@/lib/sh-auth";
 import { shareholderOpsService } from "@/services";
 import type { MessageChannel } from "@/models/ShareholderMessage";
@@ -21,7 +22,7 @@ export async function GET(req: NextRequest) {
     await messageService.markRead(channel, String(sh._id));
 
     return successResponse(messages);
-  } catch (e) { return serverErrorResponse(e instanceof Error ? e.message : "Error"); }
+  } catch (e) { return serverErrorResponse(handleError(e).message); }
 }
 
 // POST /api/shareholders/messages
@@ -33,7 +34,7 @@ export async function POST(req: NextRequest) {
     const { channel, content, replyTo } = await req.json() as {
       channel: string; content: string; replyTo?: string;
     };
-    if (!content?.trim()) return serverErrorResponse("Content required");
+    if (!content?.trim()) return errorResponse("Content required");
 
     const msg = await messageService.send({
       channel:       (channel || "general") as MessageChannel,
@@ -46,5 +47,5 @@ export async function POST(req: NextRequest) {
     });
 
     return successResponse(msg);
-  } catch (e) { return serverErrorResponse(e instanceof Error ? e.message : "Error"); }
+  } catch (e) { return serverErrorResponse(handleError(e).message); }
 }

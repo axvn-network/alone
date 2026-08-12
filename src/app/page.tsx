@@ -1,11 +1,11 @@
-import Hero from "@/components/Hero";
-import Introduction from "@/components/Introduction";
-import WhatWeDo from "@/components/WhatWeDo";
-import InvestmentSectors from "@/components/InvestmentSectors";
-import WhyChooseUs from "@/components/WhyChooseUs";
-import Philosophy from "@/components/Philosophy";
-import PartnershipCTA from "@/components/PartnershipCTA";
-import Newsletter from "@/components/Newsletter";
+import Hero from "@/components/public/Hero";
+import Introduction from "@/components/public/Introduction";
+import WhatWeDo from "@/components/public/WhatWeDo";
+import InvestmentSectors from "@/components/public/InvestmentSectors";
+import WhyChooseUs from "@/components/public/WhyChooseUs";
+import Philosophy from "@/components/public/Philosophy";
+import PartnershipCTA from "@/components/public/PartnershipCTA";
+import Newsletter from "@/components/public/Newsletter";
 
 import PageTransition from "@/components/animations/PageTransition";
 import { FloatingBlobs } from "@/components/animations/AnimatedBackground";
@@ -14,11 +14,11 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Trang chủ",
   description:
-    "Fortress Investment Holdings là tập đoàn đầu tư uy tín hàng đầu chuyên về bất động sản, đầu tư tư nhân, mua bán doanh nghiệp, công nghệ AI và dịch vụ nghỉ dưỡng cao cấp.",
+    "GVI Tech Holding là tập đoàn đầu tư công nghệ đang xây dựng nền tảng giao dịch tài sản mã hóa hợp pháp đầu tiên tại Việt Nam theo NQ 05/2025/NQ-CP.",
   openGraph: {
-    title: "Trang chủ | Fortress Investment Holdings",
+    title: "Trang chủ | GVI Tech Holding",
     description:
-      "Tập đoàn đầu tư chiến lược hàng đầu chuyên về bất động sản, private equity và thâu tóm doanh nghiệp.",
+      "Tập đoàn đầu tư chiến lược hàng đầu chuyên về FinTech, tài sản mã hóa hợp pháp, AI và kinh tế số Việt Nam.",
   },
 };
 

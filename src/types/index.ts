@@ -1,3 +1,8 @@
+import type { ShareholderRole, ShareholderStatus } from "@/models";
+import type { PlanStatus } from "@/models";
+import type { DocumentCategory } from "@/models";
+import type { PartnerApplicationStatus, AssessmentDimensions } from "@/models";
+
 // ─── Shared primitives ────────────────────────────────────────────────────────
 
 export interface SocialLink {
@@ -65,7 +70,7 @@ export interface BlogPost {
   updatedAt: Date;
 }
 
-/** Lightweight shape for admin article list cards — no content/seo */
+/** Lightweight shape for admin article list cards — no content or SEO fields. */
 export interface AdminArticleItem {
   slug: string;
   title: string;
@@ -99,7 +104,7 @@ export interface Enquiry {
   createdAt: Date;
 }
 
-/** Shaped enquiry for admin list page */
+/** Normalised enquiry shape for the admin list page. */
 export interface AdminEnquiryItem {
   id: string;
   type: "contact" | "submission";
@@ -119,7 +124,7 @@ export interface AdminEnquiryItem {
 
 // ─── Dashboard ────────────────────────────────────────────────────────────────
 
-/** Activity feed item for the admin dashboard */
+/** Single entry in the admin dashboard activity feed. */
 export interface ActivityItem {
   id: string;
   type: "contact" | "submission";
@@ -129,14 +134,16 @@ export interface ActivityItem {
 }
 
 /**
- * Shape returned by /api/admin/stats and dashboardService.getDashboardStats()
- * — matches exactly what admin/page.tsx Stats interface expects.
+ * Shape returned by GET /api/admin/stats and dashboardService.getDashboardStats().
+ * Must stay in sync with what admin/page.tsx expects.
  */
 export interface DashboardStats {
   blogPosts: number;
   totalContacts: number;
   totalSubmissions: number;
   newEnquiries: number;
+  totalShareholders: number;
+  totalPlans: number;
   activities: ActivityItem[];
 }
 
@@ -152,7 +159,7 @@ export interface UploadRecord {
   createdAt: Date;
 }
 
-// ─── API wrapper ──────────────────────────────────────────────────────────────
+// ─── API envelope ─────────────────────────────────────────────────────────────
 
 export interface ApiResponse<T = unknown> {
   success: boolean;
@@ -172,8 +179,8 @@ export interface AdminUser {
 
 // ─── Shareholder ──────────────────────────────────────────────────────────────
 
-export type ShareholderRole = "tech" | "financial" | "tech-company" | "individual" | "legal" | "foreign";
-export type ShareholderStatus = "pending" | "active" | "suspended";
+// Canonical types live in @/models; re-exported here so consumers only need "@/types".
+export type { ShareholderRole, ShareholderStatus } from "@/models";
 
 export interface ShareholderUser {
   _id: string;
@@ -195,7 +202,8 @@ export interface ShareholderUser {
 // ─── Investment Plan ──────────────────────────────────────────────────────────
 
 export type PlanTier = "seed" | "growth" | "expansion" | "strategic" | "anchor";
-export type PlanStatus = "active" | "draft" | "closed";
+// Canonical type lives in @/models; re-exported here so consumers only need "@/types".
+export type { PlanStatus } from "@/models";
 
 export interface InvestmentPlanItem {
   _id: string;
@@ -230,13 +238,8 @@ export interface InvestmentPlanItem {
 
 // ─── Document ─────────────────────────────────────────────────────────────────
 
-export type DocumentCategory =
-  | "financial_report"
-  | "disclosure"
-  | "charter"
-  | "shareholder_meeting"
-  | "annual_report"
-  | "governance_report";
+// Canonical type lives in @/models; re-exported here so consumers only need "@/types".
+export type { DocumentCategory } from "@/models";
 
 export interface DocumentItem {
   _id: string;
@@ -253,4 +256,69 @@ export interface DocumentItem {
   status: "published" | "draft";
   createdAt: string;
   updatedAt: string;
+}
+
+// ─── Partner Application ──────────────────────────────────────────────────────
+
+// Canonical types live in @/models; re-exported here so consumers only need "@/types".
+export type { PartnerApplicationStatus, AssessmentDimensions } from "@/models";
+
+export interface PartnerApplicationItem {
+  _id: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  company: string;
+  position: string;
+  linkedinUrl: string;
+  quizAnswers: Record<string, string>;
+  assessmentScore: AssessmentDimensions;
+  suggestedRole: ShareholderRole;
+  desiredRole: ShareholderRole;
+  capitalRange: string;
+  motivation: string;
+  capabilities: string;
+  investmentPlan: string;
+  consentGiven: boolean;
+  consentTimestamp: string;
+  status: PartnerApplicationStatus;
+  adminNotes: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// ─── Audit Log ────────────────────────────────────────────────────────────────
+
+export interface AuditLogItem {
+  _id: string;
+  actor: { id: string; name: string; email: string };
+  action: string;
+  target: { collection: string; id: string };
+  delta: Record<string, unknown>;
+  ip: string;
+  retainUntil: string;
+  createdAt: string;
+}
+
+// ─── Chat ─────────────────────────────────────────────────────────────────────
+
+export interface ChatMessage {
+  role: "user" | "assistant";
+  content: string;
+}
+
+export interface ChatApiRequest {
+  query: string;
+}
+
+export interface ChatApiResponse {
+  answer: string;
+  source?: string;
+}
+
+// ─── SSE ─────────────────────────────────────────────────────────────────────
+
+export interface SSEEvent<T = unknown> {
+  event: string;
+  data: T;
 }

@@ -1,8 +1,9 @@
 import { NextRequest } from "next/server";
-import { successResponse, serverErrorResponse, unauthorizedResponse } from "@/utils/api-response";
+import { successResponse, errorResponse, serverErrorResponse, unauthorizedResponse } from "@/utils/api-response";
 import { getCurrentUser } from "@/lib/auth-utils";
 import { shareholderOpsService } from "@/services";
 import { broadcast } from "@/lib/sse-broker";
+import { handleError } from "@/utils/errors";
 
 const { taskService, meetingService, messageService } = shareholderOpsService;
 
@@ -27,8 +28,8 @@ export async function GET(req: NextRequest) {
       const msgs = await messageService.list({ channel, limit: 100 });
       return successResponse(msgs);
     }
-    return serverErrorResponse("Unknown type");
-  } catch (e) { return serverErrorResponse(e instanceof Error ? e.message : "Error"); }
+    return errorResponse("Unknown type");
+  } catch (e) { return serverErrorResponse(handleError(e).message); }
 }
 
 // POST /api/admin/shareholder-ops — create task | meeting | admin message
@@ -62,8 +63,8 @@ export async function POST(req: NextRequest) {
       broadcast("admin", "shareholder_message", { channel, senderName: user.name });
       return successResponse(msg);
     }
-    return serverErrorResponse("Unknown type");
-  } catch (e) { return serverErrorResponse(e instanceof Error ? e.message : "Error"); }
+    return errorResponse("Unknown type");
+  } catch (e) { return serverErrorResponse(handleError(e).message); }
 }
 
 // PUT /api/admin/shareholder-ops — update task or meeting
@@ -73,7 +74,7 @@ export async function PUT(req: NextRequest) {
     if (!user) return unauthorizedResponse();
 
     const { type, _id, ...body } = await req.json();
-    if (!_id) return serverErrorResponse("_id required");
+    if (!_id) return errorResponse("_id required");
 
     if (type === "task") {
       const doc = await taskService.update(_id, body);
@@ -83,8 +84,8 @@ export async function PUT(req: NextRequest) {
       const doc = await meetingService.update(_id, body);
       return successResponse(doc);
     }
-    return serverErrorResponse("Unknown type");
-  } catch (e) { return serverErrorResponse(e instanceof Error ? e.message : "Error"); }
+    return errorResponse("Unknown type");
+  } catch (e) { return serverErrorResponse(handleError(e).message); }
 }
 
 // DELETE /api/admin/shareholder-ops?type=task|meeting&id=xxx
@@ -95,10 +96,10 @@ export async function DELETE(req: NextRequest) {
 
     const type = req.nextUrl.searchParams.get("type");
     const id   = req.nextUrl.searchParams.get("id");
-    if (!id) return serverErrorResponse("ID required");
+    if (!id) return errorResponse("ID required");
 
     if (type === "task")    await taskService.remove(id);
     else if (type === "meeting") await meetingService.remove(id);
     return successResponse({ ok: true });
-  } catch (e) { return serverErrorResponse(e instanceof Error ? e.message : "Error"); }
+  } catch (e) { return serverErrorResponse(handleError(e).message); }
 }

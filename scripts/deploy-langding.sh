@@ -83,11 +83,13 @@ print_ok "Dependencies đã cài"
 # BƯỚC 4 — Build Next.js (standalone output)
 # ================================================================
 print_step "Build Next.js production"
-NODE_ENV=production npm run build
+npm run build
 print_ok "Build xong"
 
 # Next.js standalone cần thư mục public và static riêng
+# (bắt buộc — không copy thì domain không tải được CSS/JS/assets)
 print_step "Copy public + static vào standalone"
+rm -rf .next/standalone/public .next/standalone/.next/static
 cp -r public         .next/standalone/public
 cp -r .next/static   .next/standalone/.next/static
 print_ok "Standalone đã chuẩn bị"
@@ -108,7 +110,7 @@ fi
 if [[ "$FIRST_DEPLOY" == "--first" ]]; then
   print_step "Cài Nginx config cho $DOMAIN"
   if [[ ! -f "$NGINX_CONF" ]]; then
-    sudo cp "$APP_DIR/nginx.conf.langding" "$NGINX_CONF"
+    sudo cp "$APP_DIR/infra/nginx/nginx.conf.langding" "$NGINX_CONF"
     sudo ln -sf "$NGINX_CONF" /etc/nginx/sites-enabled/langding.conf
     sudo rm -f /etc/nginx/sites-enabled/default
     sudo nginx -t && nginx_reload
@@ -124,12 +126,13 @@ fi
 print_step "PM2 reload (zero-downtime)"
 
 if pm2 describe "$PM2_APP" &>/dev/null; then
-  # App đang chạy → reload không downtime
-  pm2 reload "$PM2_APP" --update-env
-  print_ok "PM2 reloaded: $PM2_APP"
+  # App đang chạy → delete + start lại để đảm bảo env_production được nạp đúng
+  pm2 delete "$PM2_APP"
+  pm2 start "$APP_DIR/infra/ecosystem.config.js" --env production
+  print_ok "PM2 restarted: $PM2_APP"
 else
   # App chưa chạy → start mới
-  pm2 start "$APP_DIR/ecosystem.config.js" --env production
+  pm2 start "$APP_DIR/infra/ecosystem.config.js" --env production
   print_ok "PM2 started: $PM2_APP"
 fi
 

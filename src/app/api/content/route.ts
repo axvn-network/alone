@@ -11,6 +11,8 @@ import {
 } from "@/utils/api-response";
 import { handleError, NotFoundError } from "@/utils/errors";
 
+export const dynamic = "force-dynamic";
+
 // GET — public: fetch all pages or a single page by ?slug=
 export async function GET(request: NextRequest) {
   try {

@@ -39,14 +39,16 @@ export function CsrfProvider({ children }: { children: React.ReactNode }) {
     async (input, init = {}) => {
       const method = (init.method || "GET").toUpperCase();
       const mutating = ["POST", "PUT", "PATCH", "DELETE"].includes(method);
-      if (mutating && tokenRef.current) {
+      if (mutating) {
+        // If token not yet available, try to fetch it now (blocks once on first mutation)
+        if (!tokenRef.current) await refresh();
         const headers = new Headers(init.headers);
-        headers.set("x-csrf-token", tokenRef.current);
+        if (tokenRef.current) headers.set("x-csrf-token", tokenRef.current);
         return fetch(input, { ...init, headers });
       }
       return fetch(input, init);
     },
-    []
+    [refresh]
   );
 
   return (

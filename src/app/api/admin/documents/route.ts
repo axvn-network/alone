@@ -1,9 +1,10 @@
 import { NextRequest } from "next/server";
 import { getCurrentUser } from "@/lib/auth-utils";
 import { documentService, DocumentQuery } from "@/services/document.service";
+import { documentSchema, formatZodErrors } from "@/validators";
 import {
   successResponse,
-  errorResponse,
+  validationErrorResponse,
   serverErrorResponse,
   unauthorizedResponse,
 } from "@/utils/api-response";
@@ -33,11 +34,9 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   if (!await getCurrentUser()) return unauthorizedResponse();
   try {
-    const body = await request.json();
-    if (!body.title || !body.category || !body.fileUrl || !body.publishedDate || !body.year) {
-      return errorResponse("title, category, fileUrl, publishedDate and year are required");
-    }
-    const doc = await documentService.create(body);
+    const parsed = documentSchema.safeParse(await request.json());
+    if (!parsed.success) return validationErrorResponse(formatZodErrors(parsed.error));
+    const doc = await documentService.create(parsed.data);
     return successResponse(doc, "Document created", 201);
   } catch (error) {
     return serverErrorResponse(handleError(error).message);

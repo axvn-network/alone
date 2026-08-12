@@ -1,12 +1,13 @@
 import { NextRequest } from "next/server";
 import { getCurrentUser } from "@/lib/auth-utils";
-import { unauthorizedResponse, errorResponse, serverErrorResponse } from "@/utils/api-response";
+import { logger } from "@/lib/logger";
+import { successResponse, unauthorizedResponse, errorResponse, serverErrorResponse } from "@/utils/api-response";
 import { handleError } from "@/utils/errors";
 
 const GEMINI_MODEL = "gemini-2.0-flash";
 const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
 
-const SYSTEM_PROMPT = `Bạn là trợ lý AI chuyên biệt cho Fortress Investment Holdings — tập đoàn đầu tư công nghệ tập trung vào FinTech, tài sản mã hóa hợp pháp (theo NQ 5/2025/NQ-CP hiệu lực 9/9/2025), AI, EdTech và kinh tế số tại Việt Nam.
+const SYSTEM_PROMPT = `Bạn là trợ lý AI chuyên biệt cho GVI Tech Holding — tập đoàn đầu tư công nghệ tập trung vào FinTech, tài sản mã hóa hợp pháp (theo NQ 5/2025/NQ-CP hiệu lực 9/9/2025), AI, EdTech và kinh tế số tại Việt Nam.
 
 Quy tắc bắt buộc:
 - Viết nội dung chuyên nghiệp, súc tích, phù hợp với thương hiệu cao cấp
@@ -47,14 +48,14 @@ export async function POST(request: NextRequest) {
 
     if (!geminiRes.ok) {
       const err = await geminiRes.text();
-      console.error("Gemini error:", err);
+      logger.error(`Gemini API error ${geminiRes.status}`, err);
       return errorResponse(`Gemini API lỗi: ${geminiRes.status}`, geminiRes.status);
     }
 
     const data = await geminiRes.json();
     const text = data?.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
 
-    return Response.json({ success: true, data: { text: text.trim() } });
+    return successResponse({ text: text.trim() });
   } catch (error) {
     return serverErrorResponse(handleError(error).message);
   }
@@ -129,13 +130,13 @@ Return one clean English title only.`;
     /* ── Content / Page ─────────────────────────────────────────── */
     case "page_title":
       return `Tạo tiêu đề trang web chuyên nghiệp bằng ${lang} cho trang: ${ctx.page_name}
-Ngữ cảnh thương hiệu: Fortress Investment Holdings — FinTech, tài sản mã hóa, AI, EdTech.
+Ngữ cảnh thương hiệu: GVI Tech Holding — FinTech, tài sản mã hóa, AI, EdTech.
 Trả về 1 tiêu đề duy nhất, tối đa 60 ký tự.`;
 
     case "page_content":
       return `Viết nội dung HTML chuyên nghiệp bằng ${lang} cho trang: ${ctx.page_name}
 Dùng <h2>, <p>, <ul>, <li>. Khoảng 200–400 từ.
-Ngữ cảnh: ${ctx.existing_title || "Fortress Investment Holdings"}.`;
+Ngữ cảnh: ${ctx.existing_title || "GVI Tech Holding"}.`;
 
     case "page_improve":
       return `Cải thiện nội dung sau cho trang web chuyên nghiệp hơn, bằng ${lang}. Định dạng HTML. Giữ nguyên cấu trúc:

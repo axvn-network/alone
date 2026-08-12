@@ -1,8 +1,10 @@
 import { NextRequest } from "next/server";
 import { getCurrentUser } from "@/lib/auth-utils";
 import { investmentPlanService } from "@/services";
+import { investmentPlanSchema, formatZodErrors } from "@/validators";
 import {
   successResponse,
+  validationErrorResponse,
   serverErrorResponse,
   unauthorizedResponse,
 } from "@/utils/api-response";
@@ -24,8 +26,9 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   if (!(await getCurrentUser())) return unauthorizedResponse();
   try {
-    const body = await req.json();
-    const plan = await investmentPlanService.createPlan(body);
+    const parsed = investmentPlanSchema.safeParse(await req.json());
+    if (!parsed.success) return validationErrorResponse(formatZodErrors(parsed.error));
+    const plan = await investmentPlanService.createPlan(parsed.data);
     return successResponse(plan, "Hạng mục hợp tác đã được tạo thành công", 201);
   } catch (error) {
     return serverErrorResponse(handleError(error).message);

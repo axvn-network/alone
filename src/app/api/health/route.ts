@@ -30,8 +30,5 @@ export async function GET() {
   const status = dbStatus === "connected" ? "ok" : "degraded";
   const httpStatus = dbStatus === "connected" ? 200 : 503;
 
-  return Response.json(
-    { status, db: dbStatus, uptime },
-    { status: httpStatus }
-  );
+  return Response.json({ status, db: dbStatus, uptime }, { status: httpStatus });
 }

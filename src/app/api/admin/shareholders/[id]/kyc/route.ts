@@ -18,6 +18,7 @@ import {
   unauthorizedResponse,
   badRequestResponse,
 } from "@/utils/api-response";
+import { handleError } from "@/utils/errors";
 
 export async function PATCH(
   req: NextRequest,
@@ -63,6 +64,6 @@ export async function PATCH(
 
     return successResponse(updated);
   } catch (e) {
-    return serverErrorResponse(e instanceof Error ? e.message : "Error");
+    return serverErrorResponse(handleError(e).message);
   }
 }

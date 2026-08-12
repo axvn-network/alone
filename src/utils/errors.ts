@@ -1,3 +1,5 @@
+import { logger } from "@/lib/logger";
+
 export class AppError extends Error {
   public statusCode: number;
   public errors?: Record<string, string[]>;
@@ -86,7 +88,7 @@ export function handleError(error: unknown): {
   }
 
   // Unknown — log internally, return generic message (no stack trace to client)
-  console.error("[handleError] Unhandled error:", error);
+  logger.error("[handleError] Unhandled error:", error);
   return {
     message: SAFE_STATUS_MESSAGES[500],
     statusCode: 500,

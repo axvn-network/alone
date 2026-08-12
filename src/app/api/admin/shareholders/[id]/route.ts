@@ -17,6 +17,7 @@ import {
   notFoundResponse,
   errorResponse,
 } from "@/utils/api-response";
+import { handleError, NotFoundError } from "@/utils/errors";
 
 type Ctx = { params: Promise<{ id: string }> };
 
@@ -34,9 +35,8 @@ export async function GET(
     if (!sh) return notFoundResponse("Shareholder not found");
     return successResponse(sh);
   } catch (e) {
-    const msg = e instanceof Error ? e.message : "Error";
-    if (msg.includes("not found")) return notFoundResponse(msg);
-    return serverErrorResponse(msg);
+    if (e instanceof NotFoundError) return notFoundResponse(e.message);
+    return serverErrorResponse(handleError(e).message);
   }
 }
 
@@ -52,7 +52,6 @@ export async function PUT(
     const { id } = await params;
     const body = await req.json();
     // Remove _id from body to avoid conflicts
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { _id: _ignored, ...data } = body;
 
     const sh = await shareholderService.update(id, data);
@@ -67,9 +66,8 @@ export async function PUT(
 
     return successResponse(sh);
   } catch (e) {
-    const msg = e instanceof Error ? e.message : "Error";
-    if (msg.includes("not found")) return notFoundResponse(msg);
-    return serverErrorResponse(msg);
+    if (e instanceof NotFoundError) return notFoundResponse(e.message);
+    return serverErrorResponse(handleError(e).message);
   }
 }
 
@@ -96,8 +94,7 @@ export async function DELETE(
 
     return successResponse({ ok: true });
   } catch (e) {
-    const msg = e instanceof Error ? e.message : "Error";
-    if (msg.includes("not found")) return notFoundResponse(msg);
-    return serverErrorResponse(msg);
+    if (e instanceof NotFoundError) return notFoundResponse(e.message);
+    return serverErrorResponse(handleError(e).message);
   }
 }

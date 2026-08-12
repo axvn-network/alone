@@ -1,6 +1,9 @@
 import { connectDB } from "@/lib/db";
 import Shareholder, { IShareholder, ShareholderRole, ShareholderStatus } from "@/models/Shareholder";
+import { logAudit } from "@/services/audit.service";
 import bcrypt from "bcryptjs";
+import { paginate } from "@/utils/pagination";
+import { buildSearchFilter } from "@/utils/search";
 
 export interface ShareholderQuery {
   status?: ShareholderStatus;
@@ -62,34 +65,22 @@ function toSafe(doc: IShareholder) {
 export async function list(query: ShareholderQuery = {}) {
   await connectDB();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const filter: Record<string, any> = {};
-  if (query.status)    filter.status    = query.status;
-  if (query.role)      filter.role      = query.role;
-  if (query.kycStatus) filter.kycStatus = query.kycStatus;
-  if (query.search) {
-    filter.$or = [
-      { name:  { $regex: query.search, $options: "i" } },
-      { email: { $regex: query.search, $options: "i" } },
-    ];
-  }
+  const filter: Record<string, any> = {
+    ...(query.status    ? { status:    query.status }    : {}),
+    ...(query.role      ? { role:      query.role }      : {}),
+    ...(query.kycStatus ? { kycStatus: query.kycStatus } : {}),
+    ...buildSearchFilter(query.search, ["name", "email"]),
+  };
 
-  const page  = Math.max(1, query.page  || 1);
-  const limit = Math.min(200, Math.max(1, query.limit || 200));
+  const { page, limit, skip } = paginate(query, { limit: 200, maxLimit: 200 });
 
   const [docs, total] = await Promise.all([
-    Shareholder.find(filter).sort({ createdAt: -1 }).skip((page - 1) * limit).limit(limit).lean(),
+    Shareholder.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
     Shareholder.countDocuments(filter),
   ]);
 
   return {
-    shareholders: docs.map((d) => {
-      const safe = { ...d, _id: String(d._id) };
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      delete (safe as any).password;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      delete (safe as any).nationalId;
-      return safe;
-    }),
+    shareholders: docs.map(toSafe),
     total,
     page,
     limit,
@@ -98,14 +89,9 @@ export async function list(query: ShareholderQuery = {}) {
 
 export async function getById(id: string) {
   await connectDB();
-  const doc = await Shareholder.findById(id).lean();
+  const doc = await Shareholder.findById(id);
   if (!doc) throw new Error("Shareholder not found");
-  const safe = { ...doc, _id: String(doc._id) };
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  delete (safe as any).password;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  delete (safe as any).nationalId;
-  return safe;
+  return toSafe(doc);
 }
 
 export async function getByEmail(email: string) {
@@ -116,7 +102,8 @@ export async function getByEmail(email: string) {
 
 export async function create(data: CreateShareholderDto) {
   await connectDB();
-  const hashed = await bcrypt.hash(data.password || "gvi2026!", 12);
+  if (!data.password) throw new Error("Mật khẩu cổ đông là bắt buộc khi tạo tài khoản mới");
+  const hashed = await bcrypt.hash(data.password, 12);
   const doc = await Shareholder.create({
     ...data,
     password: hashed,
@@ -165,11 +152,17 @@ export async function approveKyc(id: string, adminId: string) {
     { new: true }
   );
   if (!doc) throw new Error("Shareholder not found");
-  void adminId; // for future audit trail integration
+  await logAudit({
+    actor: { id: adminId },
+    action: "shareholder.kyc.approve",
+    collection: "shareholders",
+    id,
+    delta: { kycStatus: "approved" },
+  });
   return toSafe(doc);
 }
 
-export async function rejectKyc(id: string) {
+export async function rejectKyc(id: string, adminId?: string) {
   await connectDB();
   const doc = await Shareholder.findByIdAndUpdate(
     id,
@@ -177,6 +170,15 @@ export async function rejectKyc(id: string) {
     { new: true }
   );
   if (!doc) throw new Error("Shareholder not found");
+  if (adminId) {
+    await logAudit({
+      actor: { id: adminId },
+      action: "shareholder.kyc.reject",
+      collection: "shareholders",
+      id,
+      delta: { kycStatus: "rejected" },
+    });
+  }
   return toSafe(doc);
 }
 

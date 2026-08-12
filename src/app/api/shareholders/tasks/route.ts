@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server";
-import { successResponse, serverErrorResponse, unauthorizedResponse } from "@/utils/api-response";
+import { successResponse, errorResponse, serverErrorResponse, unauthorizedResponse } from "@/utils/api-response";
+import { handleError } from "@/utils/errors";
 import { getActiveShareholder } from "@/lib/sh-auth";
 import { shareholderOpsService } from "@/services";
 
@@ -12,7 +13,7 @@ export async function GET() {
     if (!sh) return unauthorizedResponse();
     const tasks = await taskService.listForShareholder(String(sh._id), sh.role);
     return successResponse(tasks);
-  } catch (e) { return serverErrorResponse(e instanceof Error ? e.message : "Error"); }
+  } catch (e) { return serverErrorResponse(handleError(e).message); }
 }
 
 // PATCH /api/shareholders/tasks — mark task in_progress or done
@@ -23,7 +24,7 @@ export async function PATCH(req: NextRequest) {
 
     const { taskId, status } = await req.json() as { taskId: string; status: string };
     if (!taskId || !["in_progress", "done"].includes(status)) {
-      return serverErrorResponse("Invalid payload");
+      return errorResponse("Invalid payload");
     }
 
     if (status === "done") {
@@ -34,5 +35,5 @@ export async function PATCH(req: NextRequest) {
     // in_progress
     const task = await taskService.update(taskId, { status: "in_progress" });
     return successResponse(task);
-  } catch (e) { return serverErrorResponse(e instanceof Error ? e.message : "Error"); }
+  } catch (e) { return serverErrorResponse(handleError(e).message); }
 }

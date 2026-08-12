@@ -11,6 +11,7 @@
 
 import { connectDB } from "@/lib/db";
 import AuditLog, { IAuditLog } from "@/models/AuditLog";
+import { paginate } from "@/utils/pagination";
 
 export interface AuditActor {
   id: string;
@@ -86,13 +87,12 @@ export async function queryLogs(query: AuditQuery = {}): Promise<{
     if (query.to)   (filter.createdAt as Record<string, unknown>).$lte = new Date(query.to);
   }
 
-  const page  = Math.max(1, query.page  || 1);
-  const limit = Math.min(100, Math.max(1, query.limit || 50));
+  const { page, limit, skip } = paginate(query, { limit: 50, maxLimit: 100 });
 
   const [logs, total] = await Promise.all([
     AuditLog.find(filter)
       .sort({ createdAt: -1 })
-      .skip((page - 1) * limit)
+      .skip(skip)
       .limit(limit)
       .lean() as unknown as IAuditLog[],
     AuditLog.countDocuments(filter),

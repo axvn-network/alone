@@ -1,6 +1,21 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { createHmac } from "crypto";
+
+// ── Web Crypto API — Edge Runtime compatible (no Node.js crypto) ──
+async function hmacSha256(key: string, data: string): Promise<string> {
+  const enc = new TextEncoder();
+  const cryptoKey = await crypto.subtle.importKey(
+    "raw",
+    enc.encode(key),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"]
+  );
+  const signature = await crypto.subtle.sign("HMAC", cryptoKey, enc.encode(data));
+  return Array.from(new Uint8Array(signature))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
 
 // ── Constants are inlined — middleware runs in Edge, cannot import from Node lib ──
 const SESSION_COOKIE_NAME = "admin_session";
@@ -9,15 +24,27 @@ const CSRF_COOKIE = "csrf_token";
 const CSRF_HEADER = "x-csrf-token";
 
 const PROTECTED_PREFIXES = ["/admin"] as const;
-const PUBLIC_PATHS = ["/admin-login", "/admin-login/"] as const;
+const PUBLIC_PATHS = [
+  "/admin-login",
+  "/admin-login/",
+  "/auth/admin-login",
+  "/auth/admin-login/",
+] as const;
 
 // Shareholder portal
-const SH_PROTECTED_PREFIX = "/shareholders/dashboard";
-const SH_LOGIN_PATH = "/shareholders/login";
+const SH_PROTECTED_PREFIX = "/portals/shareholders/dashboard";
+const SH_LOGIN_PATH = "/portals/shareholders/login";
 
-// CSRF is enforced on all mutating admin API routes
+// CSRF is enforced on mutating admin API routes — except public auth endpoints
 const CSRF_METHODS = new Set(["POST", "PUT", "PATCH", "DELETE"]);
 const CSRF_API_PREFIX = "/api/admin";
+// Public auth endpoints — no session exists yet, CSRF adds no protection
+const CSRF_EXEMPT = new Set([
+  "/api/admin/login",
+  "/api/admin/logout",
+  "/api/admin/session",
+  "/api/admin/mfa/login-verify",
+]);
 
 // ── Security response headers added to every response ─────────────────────────
 const SECURITY_HEADERS: Record<string, string> = {
@@ -36,11 +63,7 @@ function getCsrfSecret(): string {
   return (process.env.SESSION_SECRET || "dev-csrf-fallback-secret") + ":csrf";
 }
 
-// ── Session verification ──────────────────────────────────────────────────────
-function hmac(secret: string, value: string): string {
-  return createHmac("sha256", secret).update(value).digest("hex");
-}
-
+// ── Helper functions ──────────────────────────────────────────────────────────
 function constantEqual(a: string, b: string): boolean {
   if (a.length !== b.length) return false;
   let diff = 0;
@@ -48,20 +71,40 @@ function constantEqual(a: string, b: string): boolean {
   return diff === 0;
 }
 
-function verifySessionCookie(raw: string): boolean {
+// ── Session verification ──────────────────────────────────────────────────────
+async function verifySessionCookie(raw: string): Promise<boolean> {
   const dot = raw.lastIndexOf(".");
   if (dot === -1) return false;
   const encoded = raw.slice(0, dot);
   const provided = raw.slice(dot + 1);
-  const expected = hmac(getSessionSecret(), encoded);
+  const expected = await hmacSha256(getSessionSecret(), encoded);
   if (!constantEqual(provided, expected)) return false;
 
   // Decode payload to check expiry
   try {
-    const json = Buffer.from(
-      encoded.replace(/-/g, "+").replace(/_/g, "/"),
-      "base64"
-    ).toString();
+    const b64 = encoded.replace(/-/g, "+").replace(/_/g, "/");
+    const json = atob(b64);
+    const { exp } = JSON.parse(json) as { exp?: number };
+    if (!exp || Date.now() / 1000 > exp) return false;
+  } catch {
+    return false;
+  }
+  return true;
+}
+
+// ── Shareholder session verification ─────────────────────────────────────────
+async function verifyShareholderCookie(raw: string): Promise<boolean> {
+  const dot = raw.lastIndexOf(".");
+  if (dot === -1) return false;
+  const payload = raw.slice(0, dot);
+  const provided = raw.slice(dot + 1);
+  const expected = await hmacSha256(getSessionSecret(), payload);
+  if (!constantEqual(provided, expected)) return false;
+
+  try {
+    // base64url → standard base64 for atob
+    const b64 = payload.replace(/-/g, "+").replace(/_/g, "/");
+    const json = atob(b64);
     const { exp } = JSON.parse(json) as { exp?: number };
     if (!exp || Date.now() / 1000 > exp) return false;
   } catch {
@@ -71,7 +114,7 @@ function verifySessionCookie(raw: string): boolean {
 }
 
 // ── CSRF verification ─────────────────────────────────────────────────────────
-function verifyCsrfToken(cookieToken: string, headerToken: string): boolean {
+async function verifyCsrfToken(cookieToken: string, headerToken: string): Promise<boolean> {
   if (!cookieToken || !headerToken) return false;
   if (!constantEqual(cookieToken, headerToken)) return false;
 
@@ -81,9 +124,10 @@ function verifyCsrfToken(cookieToken: string, headerToken: string): boolean {
   const [rand, expStr, sig] = parts;
   const exp = parseInt(expStr, 10);
   if (isNaN(exp) || Date.now() / 1000 > exp) return false;
-  const expected = hmac(getCsrfSecret(), `${rand}.${expStr}`);
+  const expected = await hmacSha256(getCsrfSecret(), `${rand}.${expStr}`);  // Web Crypto — Edge compatible
   return constantEqual(sig, expected);
 }
+
 
 // ── Middleware ─────────────────────────────────────────────────────────────────
 export async function middleware(request: NextRequest) {
@@ -99,7 +143,7 @@ export async function middleware(request: NextRequest) {
 
   if (isProtected) {
     const sessionCookie = request.cookies.get(SESSION_COOKIE_NAME)?.value;
-    if (!sessionCookie || !verifySessionCookie(sessionCookie)) {
+    if (!sessionCookie || !(await verifySessionCookie(sessionCookie))) {
       const loginUrl = new URL("/admin-login", request.url);
       loginUrl.searchParams.set("redirect", pathname);
       const res = NextResponse.redirect(loginUrl);
@@ -111,25 +155,24 @@ export async function middleware(request: NextRequest) {
   // ── 1b. Shareholder portal protection ─────────────────────────────────────
   if (pathname === SH_PROTECTED_PREFIX || pathname.startsWith(SH_PROTECTED_PREFIX + "/")) {
     const shCookie = request.cookies.get(SH_COOKIE_NAME)?.value;
-    if (!shCookie) {
+    if (!shCookie || !(await verifyShareholderCookie(shCookie))) {
       const loginUrl = new URL(SH_LOGIN_PATH, request.url);
       const res = NextResponse.redirect(loginUrl);
       applySecurityHeaders(res);
       return res;
     }
-    // Token validity is verified server-side in the API routes;
-    // here we just ensure the cookie is present to avoid redirect loops.
   }
 
   // ── 2. CSRF protection for mutating admin API routes ──────────────────────
   if (
     pathname.startsWith(CSRF_API_PREFIX) &&
-    CSRF_METHODS.has(reqMethod)
+    CSRF_METHODS.has(reqMethod) &&
+    !CSRF_EXEMPT.has(pathname)
   ) {
     const cookieToken = request.cookies.get(CSRF_COOKIE)?.value ?? "";
     const headerToken = request.headers.get(CSRF_HEADER) ?? "";
 
-    if (!verifyCsrfToken(cookieToken, headerToken)) {
+    if (!(await verifyCsrfToken(cookieToken, headerToken))) {
       const res = NextResponse.json(
         { success: false, message: "CSRF token invalid or missing" },
         { status: 403 }
@@ -156,9 +199,11 @@ export const config = {
     // Admin UI pages — includes /admin exact and all sub-paths
     "/admin",
     "/admin/:path*",
+    // Legacy /auth/admin-login alias — must be in matcher so PUBLIC_PATHS check runs
+    "/auth/admin-login",
     // Shareholder portal
-    "/shareholders/dashboard",
-    "/shareholders/dashboard/:path*",
+    "/portals/shareholders/dashboard",
+    "/portals/shareholders/dashboard/:path*",
     // All API routes (for security headers + CSRF on admin mutations)
     "/api/:path*",
   ],

@@ -1,3 +1,11 @@
+/**
+ * src/lib/animation.ts
+ *
+ * Framer Motion variant presets and shared transition tokens.
+ * Import named variants in components:
+ *   import { fadeUpVariants, staggerContainerVariants } from "@/lib/animation";
+ */
+
 import { type Variants, type Transition, type UseInViewOptions } from "framer-motion";
 
 export const easings = {

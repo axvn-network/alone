@@ -1,7 +1,9 @@
 import Blog from "@/models/Blog";
 import type { BlogInput } from "@/validators";
+import type { AdminArticleItem } from "@/types";
 import { NotFoundError } from "@/utils/errors";
 import { connectDB } from "@/lib/db";
+import { buildSearchFilter } from "@/utils/search";
 
 // ─── Public / paginated list ───────────────────────────────────────────────────
 
@@ -15,16 +17,11 @@ export async function getBlogs(options?: {
   await connectDB();
 
   const { status, category, search, page = 1, limit = 10 } = options || {};
-  const query: Record<string, unknown> = {};
-
-  if (status) query.status = status;
-  if (category) query.category = category;
-  if (search) {
-    query.$or = [
-      { title: { $regex: search, $options: "i" } },
-      { excerpt: { $regex: search, $options: "i" } },
-    ];
-  }
+  const query: Record<string, unknown> = {
+    ...(status   ? { status }   : {}),
+    ...(category ? { category } : {}),
+    ...buildSearchFilter(search, ["title", "excerpt"]),
+  };
 
   const [total, posts] = await Promise.all([
     Blog.countDocuments(query),
@@ -43,19 +40,6 @@ export async function getBlogs(options?: {
   };
 }
 
-/** Shape returned to the admin articles list page */
-export interface AdminArticleItem {
-  slug: string;
-  title: string;
-  excerpt: string;
-  category: string;
-  tags: string[];
-  featuredImage: string;
-  status: "draft" | "published";
-  /** ISO string — used by timeAgo() */
-  updatedAt: string;
-}
-
 /**
  * List view for admin blog management — strips content/seo to keep
  * payload small when rendering the card grid.
@@ -67,18 +51,14 @@ export async function listForAdmin(options?: {
 }): Promise<AdminArticleItem[]> {
   await connectDB();
 
-  const query: Record<string, unknown> = {};
-  if (options?.status) query.status = options.status;
-  if (options?.category) query.category = options.category;
-  if (options?.search) {
-    query.$or = [
-      { title: { $regex: options.search, $options: "i" } },
-      { excerpt: { $regex: options.search, $options: "i" } },
-    ];
-  }
+  const query: Record<string, unknown> = {
+    ...(options?.status   ? { status:   options.status }   : {}),
+    ...(options?.category ? { category: options.category } : {}),
+    ...buildSearchFilter(options?.search, ["title", "excerpt"]),
+  };
 
   const docs = await Blog.find(query, {
-    slug: 1, title: 1, excerpt: 1, category: 1, tags: 1,
+    slug: 1, title: 1, excerpt: 1, category: 1, readTime: 1, tags: 1,
     featuredImage: 1, status: 1, updatedAt: 1, createdAt: 1,
   })
     .sort({ createdAt: -1 })
@@ -90,6 +70,7 @@ export async function listForAdmin(options?: {
     title: a.title,
     excerpt: a.excerpt || "",
     category: a.category || "General",
+    readTime: (a as Record<string, unknown>).readTime as string || "5 min read",
     tags: a.tags || [],
     featuredImage: a.featuredImage || "",
     status: a.status,

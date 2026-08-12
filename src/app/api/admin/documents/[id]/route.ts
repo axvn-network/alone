@@ -4,10 +4,11 @@ import { documentService } from "@/services/document.service";
 import {
   successResponse,
   errorResponse,
+  notFoundResponse,
   serverErrorResponse,
   unauthorizedResponse,
 } from "@/utils/api-response";
-import { handleError } from "@/utils/errors";
+import { handleError, NotFoundError } from "@/utils/errors";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -23,6 +24,7 @@ export async function PUT(request: NextRequest, { params }: Props) {
     const doc = await documentService.update(id, body);
     return successResponse(doc, "Document updated");
   } catch (error) {
+    if (error instanceof NotFoundError) return notFoundResponse(error.message);
     return serverErrorResponse(handleError(error).message);
   }
 }
@@ -36,6 +38,7 @@ export async function DELETE(_request: NextRequest, { params }: Props) {
     await documentService.delete(id);
     return successResponse(null, "Document deleted");
   } catch (error) {
+    if (error instanceof NotFoundError) return notFoundResponse(error.message);
     return serverErrorResponse(handleError(error).message);
   }
 }

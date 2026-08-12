@@ -1,3 +1,11 @@
+/**
+ * src/lib/db.ts
+ *
+ * Mongoose connection helper with connection caching.
+ * On first call seeds a default superadmin if the Admin collection is empty.
+ * Every API route / service must call `await connectDB()` before any query.
+ */
+
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import Admin from "@/models/Admin";

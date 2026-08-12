@@ -1,3 +1,11 @@
+/**
+ * src/lib/env.ts
+ *
+ * Validated runtime environment variables via Zod.
+ * Throws at startup if any required variable is missing or malformed.
+ * Import `env` everywhere instead of accessing `process.env` directly.
+ */
+
 import { z } from "zod";
 
 const envSchema = z.object({

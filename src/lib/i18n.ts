@@ -1,3 +1,13 @@
+/**
+ * src/lib/i18n.ts
+ *
+ * Minimal i18n helper for server-side components.
+ * Usage:  import { t } from "@/lib/i18n";
+ *         const label = t("footer.contact", lang);
+ *
+ * Client-side components use the LangContext hook instead.
+ */
+
 import vi from "@/locales/vi.json";
 import en from "@/locales/en.json";
 

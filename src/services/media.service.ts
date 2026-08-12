@@ -1,6 +1,7 @@
 import Upload from "@/models/Upload";
 import { uploadToCloudinary, deleteFromCloudinary, validateFile } from "@/utils/cloudinary";
 import { connectDB } from "@/lib/db";
+import { logger } from "@/lib/logger";
 
 export async function uploadFile(file: File, folder = "gvi") {
   const validation = validateFile(file);
@@ -20,8 +21,13 @@ export async function uploadFile(file: File, folder = "gvi") {
       fileName:     file.name,
       fileSize:     file.size,
     });
-  } catch {
-    console.error("Failed to save upload record to DB, but Cloudinary upload succeeded");
+  } catch (dbErr) {
+    // DB save thất bại — rollback Cloudinary để tránh orphan file
+    await deleteFromCloudinary(result.publicId).catch(() => {
+      // Rollback thất bại — log để admin xử lý thủ công
+      logger.error("[media.service] Cloudinary rollback failed for:", result.publicId, dbErr);
+    });
+    throw new Error("Lỗi lưu trữ file. Vui lòng thử lại.");
   }
 
   return { ...result, _id: "" };
