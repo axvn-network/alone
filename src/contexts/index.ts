@@ -9,4 +9,6 @@
 
 export { useCsrf, CsrfProvider } from "./CsrfContext";
 export { useLang, LangProvider } from "./LangContext";
+export { useAdminSession, AdminSessionProvider } from "./AdminSessionContext";
+export type { AdminInfo } from "./AdminSessionContext";
 export type { Locale } from "@/lib/i18n";

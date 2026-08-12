@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import AdminNavbar from "@/components/admin/AdminNavbar";
+import { useAdminSession } from "@/contexts/AdminSessionContext";
 import {
   Newspaper,
   MessageCircle,
@@ -38,11 +39,6 @@ interface Stats {
   totalPlans: number;
   newEnquiries: number;
   activities: ActivityItem[];
-}
-
-interface AdminInfo {
-  name: string;
-  role: "admin" | "superadmin";
 }
 
 const statCards = [
@@ -108,16 +104,11 @@ const quickActions = [
 ];
 
 export default function AdminDashboard() {
-  const [stats, setStats]         = useState<Stats | null>(null);
-  const [admin, setAdmin]         = useState<AdminInfo | null>(null);
-  const [loading, setLoading]     = useState(true);
+  const { adminInfo: admin }  = useAdminSession();
+  const [stats, setStats]     = useState<Stats | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/admin/session")
-      .then((r) => r.json())
-      .then((d) => { if (d.success) setAdmin(d.data); })
-      .catch(() => {});
-
     fetch("/api/admin/stats")
       .then((r) => r.json())
       .then((res) => { if (res.success) setStats(res.data); })

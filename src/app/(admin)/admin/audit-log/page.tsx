@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import AdminNavbar from "@/components/admin/AdminNavbar";
 import { ClipboardList, RefreshCw, ChevronLeft, ChevronRight, Search, X } from "lucide-react";
+import { timeAgo } from "@/utils/time";
 
 interface AuditEntry {
   _id: string;
@@ -12,17 +13,6 @@ interface AuditEntry {
   target: { collection: string; id: string };
   ip: string;
   createdAt: string;
-}
-
-function timeAgo(iso: string) {
-  const diff = Date.now() - new Date(iso).getTime();
-  if (diff < 60_000)     return "vừa xong";
-  if (diff < 3_600_000)  return `${Math.floor(diff / 60_000)} phút trước`;
-  if (diff < 86_400_000) return `${Math.floor(diff / 3_600_000)} giờ trước`;
-  return new Intl.DateTimeFormat("vi-VN", {
-    day: "2-digit", month: "2-digit", year: "numeric",
-    hour: "2-digit", minute: "2-digit",
-  }).format(new Date(iso));
 }
 
 const ACTION_COLORS: Record<string, string> = {

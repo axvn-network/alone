@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -21,6 +21,7 @@ import {
   ClipboardList,
   FileSearch2,
 } from "lucide-react";
+import { useAdminSession } from "@/contexts/AdminSessionContext";
 
 const links = [
   { label: "Tổng Quan",          icon: LayoutDashboard, href: "/admin" },
@@ -36,24 +37,11 @@ const links = [
   { label: "Cài Đặt",            icon: Settings,        href: "/admin/settings" },
 ];
 
-interface AdminInfo {
-  name: string;
-  email: string;
-  role: "admin" | "superadmin";
-}
-
 export default function AdminSidebar() {
-  const router   = useRouter();
-  const pathname = usePathname();
-  const [open, setOpen]           = useState(false);
-  const [adminInfo, setAdminInfo] = useState<AdminInfo | null>(null);
-
-  useEffect(() => {
-    fetch("/api/admin/session")
-      .then((r) => r.json())
-      .then((d) => { if (d.success) setAdminInfo(d.data); })
-      .catch(() => {});
-  }, []);
+  const router            = useRouter();
+  const pathname          = usePathname();
+  const [open, setOpen]   = useState(false);
+  const { adminInfo }     = useAdminSession();
 
   async function handleLogout() {
     setOpen(false);

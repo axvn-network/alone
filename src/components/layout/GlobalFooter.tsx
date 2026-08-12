@@ -4,7 +4,11 @@ import Footer from "@/components/layout/Footer";
 
 export default function GlobalFooter() {
   const pathname = usePathname();
-  if (pathname?.startsWith("/admin") || pathname?.startsWith("/admin-login")) {
+  if (
+    pathname?.startsWith("/admin") ||
+    pathname?.startsWith("/admin-login") ||
+    pathname?.startsWith("/auth/admin-login")
+  ) {
     return null;
   }
   return <Footer />;

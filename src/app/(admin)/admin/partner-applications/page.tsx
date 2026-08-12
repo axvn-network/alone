@@ -98,11 +98,11 @@ export default function PartnerApplicationsPage() {
     Math.round((s.technical + s.financial + s.legal + s.strategic + s.network) / 5);
 
   return (
-    <div className="flex h-screen bg-[#03080e] text-white overflow-hidden">
+    <div className="min-h-screen bg-[#03080e] flex font-sans">
       <AdminSidebar />
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col min-h-screen overflow-x-hidden">
         <AdminNavbar title="Đơn Đăng Ký Hợp Tác" />
-        <main className="flex-1 overflow-y-auto p-6">
+        <main className="flex-1 overflow-y-auto px-4 sm:px-6 lg:px-8 py-6">
 
           {/* Filters */}
           <div className="flex flex-wrap gap-3 mb-6">
