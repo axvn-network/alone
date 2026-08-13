@@ -43,7 +43,7 @@ jobs:
 
       # ── Type-check ────────────────────────────────────────────────────────────
       - name: TypeScript
-        run: npx tsc --noEmit
+        run: npm run typecheck
 
       # ── Build ─────────────────────────────────────────────────────────────────
       - name: Next.js build

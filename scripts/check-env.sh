@@ -19,15 +19,19 @@ log "Validating environment file: $ENV_FILE"
 [[ -f "$ENV_FILE" ]] || { error "Environment file not found: $ENV_FILE"; exit 1; }
 
 # Load env file
-export $(grep -v '^#' "$ENV_FILE" | grep -v '^\s*$' | xargs)
+set -a
+# shellcheck disable=SC1090
+source "$ENV_FILE"
+set +a
 
 # ── Required variables ──────────────────────────────────────────
 REQUIRED=(
   "NODE_ENV"
-  "NEXT_PUBLIC_APP_URL"
+  "NEXT_PUBLIC_SITE_URL"
   "MONGODB_URI"
   "ADMIN_EMAIL"
   "ADMIN_PASSWORD"
+  "SESSION_SECRET"
 )
 
 for VAR in "${REQUIRED[@]}"; do
@@ -37,6 +41,13 @@ for VAR in "${REQUIRED[@]}"; do
     success "$VAR is set"
   fi
 done
+
+# ── Site URL validation ─────────────────────────────────────────
+if [[ "${NEXT_PUBLIC_SITE_URL:-}" =~ ^https?:// ]]; then
+  success "NEXT_PUBLIC_SITE_URL format is valid"
+else
+  error "NEXT_PUBLIC_SITE_URL must start with http:// or https://"
+fi
 
 # ── MongoDB URI validation ──────────────────────────────────────
 if [[ "${MONGODB_URI:-}" =~ ^mongodb(\+srv)?:// ]]; then

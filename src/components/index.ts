@@ -12,5 +12,3 @@ export * from "./layout";
 // ── Admin UI ─────────────────────────────────────────────────────────────────
 export * from "./admin";
 
-// ── Visual/data components ────────────────────────────────────────────────────
-export * from "./visual";

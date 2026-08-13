@@ -39,7 +39,7 @@ command -v pm2 &>/dev/null     || err "pm2 không tìm thấy — cài: npm i -g
 command -v nginx &>/dev/null   || err "nginx không tìm thấy"
 
 # Kiểm tra biến env tối thiểu
-for var in MONGODB_URI SESSION_SECRET; do
+for var in MONGODB_URI SESSION_SECRET NEXT_PUBLIC_SITE_URL; do
   grep -q "^${var}=" .env.local || err ".env.local thiếu biến bắt buộc: $var"
 done
 
@@ -109,7 +109,7 @@ ok "PM2 state saved"
 step "Smoke test"
 sleep 3  # chờ workers warm up
 
-BASE_URL=$(grep "^NEXT_PUBLIC_APP_URL=" .env.local | cut -d= -f2 | tr -d '"')
+BASE_URL=$(grep "^NEXT_PUBLIC_SITE_URL=" .env.local | cut -d= -f2- | tr -d '"')
 : "${BASE_URL:=http://localhost:3000}"
 
 PASS=0; FAIL=0
