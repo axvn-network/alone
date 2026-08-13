@@ -270,7 +270,7 @@ TTL tự động qua MongoDB TTL index trên field `retainUntil`.
 | `CLOUDINARY_API_KEY` | ✅ | Cloudinary key |
 | `CLOUDINARY_API_SECRET` | ✅ | Cloudinary secret |
 | `SMTP_HOST` / `SMTP_PORT` / `SMTP_USER` / `SMTP_PASS` | ✅ | Email notification |
-| `NEXT_PUBLIC_APP_URL` | ✅ | `https://vnkr.vn` (production) |
+| `NEXT_PUBLIC_SITE_URL` | ✅ | `https://vnkr.vn` (production) |
 | `WHATSAPP_VERIFY_TOKEN` | ✅ | WhatsApp webhook token |
 | `GEMINI_API_KEY` | ⚪ | AI assist (optional) |
 | `NEXT_PUBLIC_GA_ID` | ⚪ | Google Analytics (optional) |
@@ -315,12 +315,13 @@ bash scripts/backup.sh
 # + offsite sync S3 (nếu S3_BUCKET đã cấu hình)
 ```
 
-### 9.5. Seed database
+### 9.5. Seed gói đầu tư mẫu
 
 ```bash
-node scripts/seed-mongo.js
-npx tsx scripts/seed-investment-plans.ts
+npm run seed:plans
 ```
+
+Chỉ dùng với database trống. Tài khoản admin được tạo từ `ADMIN_EMAIL` và `ADMIN_PASSWORD` khi ứng dụng kết nối database.
 
 ### 9.6. Verify sau deploy
 
@@ -768,8 +769,8 @@ Sections: Summary → Timeline → Root Cause (5 Whys) → Impact → What went 
 ### MongoDB
 
 - **Lỗi kết nối:** Kiểm tra `MONGODB_URI` trong `.env.local`. Đảm bảo `mongod` đang chạy.
-- **Dữ liệu trống:** `node scripts/seed-mongo.js` + `npx tsx scripts/seed-investment-plans.ts`
-- **Lỗi migration:** Kiểm tra logs script trong `scripts/`
+- **Dữ liệu gói đầu tư trống:** `npm run seed:plans`
+- **Thay đổi schema hoặc dữ liệu:** Repository không có script migration độc lập; chuẩn bị, review và sao lưu trước khi chạy một migration riêng.
 
 ### SSE
 

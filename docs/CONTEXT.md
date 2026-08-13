@@ -63,7 +63,7 @@ UI phụ thuộc component/constants/hooks; routes phụ thuộc services; servi
 MongoDB, Cloudinary, SMTP, Google Analytics, Meta Pixel, WhatsApp và Gemini AI là tích hợp tùy cấu hình. Embedding/vector services là ví dụ opt-in, không được gọi nếu chưa có phê duyệt.
 
 ## 18. Configuration
-`.env.local` chứa secrets. `NEXT_PUBLIC_APP_URL` phải là `https://vnkr.vn` khi production. Không commit API key, password, DSN hay token.
+`.env.local` chứa secrets. `NEXT_PUBLIC_SITE_URL` phải là `https://vnkr.vn` khi production. Không commit API key, password, DSN hay token.
 
 ## 19. Logging and audit
 Lỗi server qua safe error handling; audit log lưu hành động quản trị. Không log secrets, access token, dữ liệu KYC hay toàn văn corpus nội bộ.

@@ -6,12 +6,11 @@ Tài liệu này tập trung vào các lỗi thường gặp trong quá trình p
 
 ## 1. Vấn đề về Cơ sở dữ liệu (MongoDB)
 - **Lỗi kết nối:** Kiểm tra `MONGODB_URI` trong `.env.local`. Đảm bảo dịch vụ `mongod` đang chạy trên server.
-- **Dữ liệu trống:** Chạy lại script seed nếu DB trống:
+- **Dữ liệu gói đầu tư trống:** Chạy lại script seed (chỉ dùng với DB trống):
   ```bash
-  node scripts/seed-mongo.js
-  npx tsx scripts/seed-investment-plans.ts
+  npm run seed:plans
   ```
-- **Lỗi Migration:** Nếu chạy `npm run migrate` bị lỗi, hãy kiểm tra logs của script trong thư mục `scripts/`.
+- **Thay đổi schema hoặc dữ liệu:** Repository hiện không có script migration độc lập. Chuẩn bị, review và sao lưu trước khi chạy một migration riêng.
 
 ---
 

@@ -33,6 +33,10 @@ const eslintConfig = defineConfig([
               name: "@/components/visual",
               message: "Please colocate Visual components within their feature route.",
             },
+            {
+              name: "@/components/admin",
+              message: "Please colocate Admin components within their feature route.",
+            },
           ],
         },
       ],

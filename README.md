@@ -24,29 +24,22 @@ npm run dev
 # → http://localhost:3000
 # → Admin: http://localhost:3000/admin-login
 
-# 4. Seed dữ liệu ban đầu (chỉ dùng lần đầu với DB trống)
-node scripts/seed-mongo.js        # Tạo tài khoản admin trong MongoDB
-npx tsx scripts/seed-investment-plans.ts  # Seed các gói đầu tư mẫu
+# 4. Seed gói đầu tư mẫu (chỉ dùng lần đầu với DB trống)
+npm run seed:plans
 ```
 
 ---
 
-## Database Migration
-
-Script migration idempotent — tạo MongoDB indexes và backfill giá trị mặc định cho documents cũ.
+## Kiểm tra chất lượng
 
 ```bash
-# Yêu cầu .env.local với MONGODB_URI
-npm run migrate
+npm run lint
+npm run typecheck
+npm run build
+npm run verify
 ```
 
-| Collection | Indexes | Fields backfill |
-|---|---|---|
-| `shareholders` | `email` (unique), `status` | — |
-| `shareholdermessages` | `channel`, `createdAt` | `isAdminSender`, `readBy`, `senderName` |
-| `shareholdertasks` | `assignedTo`, `status` | `status`, `priority`, `assignedRoles` |
-| `shareholdermeetings` | `scheduledAt` | `invitedRoles`, `attendees`, `roomUrl` |
-| `auditlogs` | `actor.id`, `createdAt` (TTL 90d) | — |
+Không có migration độc lập trong repository. MongoDB indexes do Mongoose quản lý khi ứng dụng khởi động; mọi migration dữ liệu phải được bổ sung và review riêng trước khi chạy production.
 
 ---
 
@@ -56,7 +49,7 @@ npm run migrate
 # Rolling update (zero-downtime)
 cd /var/lkvip/langding
 git pull
-bash scripts/deploy.sh     # npm ci → build → pm2 reload
+bash scripts/deploy.sh     # typecheck → build → PM2 reload
 ```
 
 ### Cấu hình môi trường production
@@ -68,7 +61,7 @@ nano .env.local
 # ADMIN_EMAIL=admin@yourdomain.com
 # ADMIN_PASSWORD=<strong_min_12_chars>
 # SESSION_SECRET=$(openssl rand -hex 32)
-# NEXT_PUBLIC_APP_URL=https://yourdomain.com
+# NEXT_PUBLIC_SITE_URL=https://yourdomain.com
 # GEMINI_API_KEY=AIza...
 ```
 
@@ -142,7 +135,7 @@ mongorestore --uri="mongodb://127.0.0.1:27017" \
 | Biến | Bắt buộc | Mô tả |
 |------|----------|-------|
 | `NODE_ENV` | ✅ | `production` hoặc `development` |
-| `NEXT_PUBLIC_APP_URL` | ✅ | URL đầy đủ e.g. `https://fortressih.com` |
+| `NEXT_PUBLIC_SITE_URL` | ✅ | URL đầy đủ e.g. `https://vnkr.vn` |
 | `MONGODB_URI` | ✅ | MongoDB connection string |
 | `ADMIN_EMAIL` | ✅ | Email admin (seed + fallback auth) |
 | `ADMIN_PASSWORD` | ✅ | Mật khẩu admin (tối thiểu 12 ký tự) |
@@ -158,7 +151,7 @@ mongorestore --uri="mongodb://127.0.0.1:27017" \
 | `WHATSAPP_VERIFY_TOKEN` | ⭕ | Webhook verify token (WhatsApp Business) |
 | `WHATSAPP_ACCESS_TOKEN` | ⭕ | Meta permanent access token |
 | `WHATSAPP_PHONE_NUMBER_ID` | ⭕ | Phone Number ID từ Meta dashboard |
-| `NEXT_PUBLIC_GOOGLE_ANALYTICS_ID` | ⭕ | GA4 measurement ID |
+| `NEXT_PUBLIC_GA_ID` | ⭕ | GA4 measurement ID |
 | `NEXT_PUBLIC_META_PIXEL_ID` | ⭕ | Meta Pixel ID |
 | `BACKUP_RETENTION_DAYS` | ⭕ | Số ngày giữ backup (mặc định: 30) |
 
@@ -250,11 +243,12 @@ Double-submit pattern: kẻ tấn công cross-origin không thể giả mạo he
 │   ├── deploy-langding.sh            Full deploy script
 │   ├── backup.sh                     mongodump với rotation
 │   ├── check-env.sh                  Kiểm tra env vars trước deploy
-│   ├── migrate.ts                    MongoDB indexes + backfill
-│   ├── seed-mongo.js                 Seed tài khoản admin ban đầu
-│   └── seed-investment-plans.ts      Seed gói đầu tư mẫu
-├── ecosystem.config.js               PM2 cluster config
-├── nginx.conf.langding               Nginx reverse-proxy + SSL template
+│   ├── seed-investment-plans.ts      Seed gói đầu tư mẫu
+│   ├── verify.sh                     Quality gate cục bộ
+│   └── setup.sh                      Thiết lập VPS Ubuntu
+├── infra/
+│   ├── ecosystem.config.js           PM2 fork configuration
+│   └── nginx/nginx.conf.langding     Nginx reverse-proxy + SSL template
 └── next.config.ts                    Standalone output; CSP; security headers
 ```
 
@@ -263,7 +257,7 @@ Double-submit pattern: kẻ tấn công cross-origin không thể giả mạo he
 | Lớp | Công nghệ |
 |-----|----------|
 | Framework | Next.js 16 (App Router, standalone) |
-| Ngôn ngữ | TypeScript 7 |
+| Ngôn ngữ | TypeScript 5 |
 | Database | MongoDB 9 + Mongoose |
 | Styling | Tailwind CSS 4 + Framer Motion + GSAP |
 | Auth | HMAC-SHA256 signed httpOnly cookies |
@@ -275,7 +269,7 @@ Double-submit pattern: kẻ tấn công cross-origin không thể giả mạo he
 | Media | Cloudinary |
 | Email | Nodemailer (SMTP) |
 | Validation | Zod 4 (messages tiếng Việt) |
-| Process Mgr | PM2 (cluster mode) |
+| Process Mgr | PM2 (fork mode, 1 instance) |
 | Web Server | Nginx (TLS 1.3, HSTS) |
 
 ---

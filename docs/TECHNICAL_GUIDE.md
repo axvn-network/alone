@@ -164,7 +164,7 @@ bash scripts/backup.sh  # mongodump hàng ngày — lên lịch cron
 | `SMTP_HOST` / `SMTP_PORT` / `SMTP_USER` / `SMTP_PASS` | Email notification |
 | `GEMINI_API_KEY` | AI assist (optional) |
 | `WHATSAPP_VERIFY_TOKEN` | WhatsApp webhook token |
-| `NEXT_PUBLIC_APP_URL` | `https://vnkr.vn` (production) |
+| `NEXT_PUBLIC_SITE_URL` | `https://vnkr.vn` (production) |
 
 ---
 
