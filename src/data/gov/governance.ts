@@ -26,21 +26,21 @@ export interface Advisor {
 
 export const GOVERNANCE_DOCS: readonly GovernanceDocument[] = [
   {
-    id: "GVI-FL-01",
+    id: "AXVN-FL-01",
     title: "Điều lệ Công ty",
     category: "Pháp lý",
     status: "Approved",
     createdAt: "2026-08-03"
   },
   {
-    id: "GVI-FL-02",
+    id: "AXVN-FL-02",
     title: "Danh sách Cổ đông sáng lập",
     category: "Cổ đông",
     status: "Approved",
     createdAt: "2026-08-03"
   },
   {
-    id: "GVI-B08",
+    id: "AXVN-B08",
     title: "Nghị quyết thành lập Hội đồng Cố vấn Pháp lý & Công nghệ",
     category: "Hội đồng",
     status: "Approved",
@@ -83,7 +83,7 @@ export const ADVISORS: readonly Advisor[] = [
   {
     position: "Cố vấn Pháp lý Sandbox",
     role: "Tư vấn và phản biện pháp lý",
-    objective: "Hỗ trợ GVI Tech tiếp cận cơ quan quản lý nhà nước (NHNN, BTC, Cục BQTG) qua mạng lưới quan hệ."
+    objective: "Hỗ trợ AXVN Tech tiếp cận cơ quan quản lý nhà nước (NHNN, BTC, Cục BQTG) qua mạng lưới quan hệ."
   },
   {
     position: "Cố vấn Công nghệ",

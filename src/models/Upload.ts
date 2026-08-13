@@ -14,7 +14,7 @@ const UploadSchema = new Schema<IUpload>(
   {
     publicId: { type: String, required: true, unique: true },
     secureUrl: { type: String, required: true },
-    folder: { type: String, default: "gvi" },
+    folder: { type: String, default: "AXVN" },
     resourceType: { type: String, required: true },
     fileName: { type: String, required: true },
     fileSize: { type: Number, required: true },

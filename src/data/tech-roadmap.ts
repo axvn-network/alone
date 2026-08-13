@@ -12,12 +12,12 @@ export const TECH_ROADMAP_PHASES: readonly TechRoadmapPhase[] = [
   {
     year: 2026,
     title: "Consolidate",
-    focus: ["VNKR Trade v2.0.0", "GVI Plugin System", "MySQL to PostgreSQL", "Microservices extraction"],
+    focus: ["VNKR Trade v2.0.0", "AXVN Plugin System", "MySQL to PostgreSQL", "Microservices extraction"],
   },
   {
     year: 2027,
     title: "Expand",
-    focus: ["GVI Pay service", "Web3 Wallet backend", "App-chain 78968 Testnet", "Apache Kafka"],
+    focus: ["AXVN Pay service", "Web3 Wallet backend", "App-chain 78968 Testnet", "Apache Kafka"],
   },
   {
     year: 2028,

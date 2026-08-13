@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # ================================================================
-# Environment Validation Script — GVI Tech Holding
+# Environment Validation Script — AXVN Tech Holding
 # Purpose: Validate all required environment variables before deploy
 # Usage: bash scripts/check-env.sh
 # ================================================================

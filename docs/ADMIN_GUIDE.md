@@ -1,6 +1,6 @@
 # Hướng dẫn Quản trị Hệ thống (Admin Guide)
 
-Tài liệu này cung cấp hướng dẫn chi tiết cho đội ngũ quản trị viên về cách vận hành website GVI Tech Holding (vnkr.vn).
+Tài liệu này cung cấp hướng dẫn chi tiết cho đội ngũ quản trị viên về cách vận hành website AXVN Tech Holding (vnkr.vn).
 
 ---
 

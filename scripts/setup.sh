@@ -104,7 +104,7 @@ print_ok "Fail2Ban running"
 print_step "Creating application directories"
 mkdir -p "$APP_DIR"
 mkdir -p "$LOG_DIR"
-mkdir -p /var/backups/gvi
+mkdir -p /var/backups/AXVN
 print_ok "Directories created: $APP_DIR, $LOG_DIR"
 
 # ── PM2 startup ──────────────────────────────────────────────

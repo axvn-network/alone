@@ -14,16 +14,16 @@ export function GovernanceCards({ docs }: GovernanceCardsProps) {
         <motion.div
           key={doc.id}
           whileHover={{ scale: 1.01 }}
-          className="p-5 bg-gvi-deep border border-white/10 rounded-lg"
+          className="p-5 bg-AXVN-deep border border-white/10 rounded-lg"
         >
           <div className="flex justify-between items-start mb-2">
-            <span className="font-mono text-xs text-gvi-gold">{doc.id}</span>
-            <span className="text-[10px] uppercase font-bold text-gvi-silver/60">
+            <span className="font-mono text-xs text-AXVN-gold">{doc.id}</span>
+            <span className="text-[10px] uppercase font-bold text-AXVN-silver/60">
               {doc.status}
             </span>
           </div>
-          <h3 className="font-semibold text-gvi-ivory mb-1">{doc.title}</h3>
-          <p className="text-xs text-gvi-silver/70">{doc.category}</p>
+          <h3 className="font-semibold text-AXVN-ivory mb-1">{doc.title}</h3>
+          <p className="text-xs text-AXVN-silver/70">{doc.category}</p>
         </motion.div>
       ))}
     </div>

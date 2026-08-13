@@ -7,7 +7,7 @@
 set -euo pipefail
 
 ENV_FILE="${ENV_FILE:-/var/lkvip/langding/.env.local}"
-BACKUP_DIR="/var/backups/gvi"
+BACKUP_DIR="/var/backups/AXVN"
 RETENTION_DAYS="${BACKUP_RETENTION_DAYS:-30}"
 TIMESTAMP=$(date '+%Y%m%d_%H%M%S')
 
@@ -23,7 +23,7 @@ fi
 
 mkdir -p "$BACKUP_DIR"
 
-BACKUP_FILE="$BACKUP_DIR/gvi_${TIMESTAMP}.gz"
+BACKUP_FILE="$BACKUP_DIR/AXVN_${TIMESTAMP}.gz"
 
 echo "[BACKUP] Starting backup at $(date '+%Y-%m-%d %H:%M:%S')"
 echo "[BACKUP] Output: $BACKUP_FILE"
@@ -39,8 +39,8 @@ fi
 
 # ── Rotate old backups ───────────────────────────────────────
 echo "[BACKUP] Rotating backups older than $RETENTION_DAYS days..."
-find "$BACKUP_DIR" -name "gvi_*.gz" -mtime +$RETENTION_DAYS -delete
-COUNT=$(find "$BACKUP_DIR" -name "gvi_*.gz" | wc -l)
+find "$BACKUP_DIR" -name "AXVN_*.gz" -mtime +$RETENTION_DAYS -delete
+COUNT=$(find "$BACKUP_DIR" -name "AXVN_*.gz" | wc -l)
 echo "[BACKUP] ✓ Rotation done. Retained backups: $COUNT"
 
 echo "[BACKUP] ✅ Done at $(date '+%Y-%m-%d %H:%M:%S')"

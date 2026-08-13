@@ -44,21 +44,24 @@ export interface UpdateShareholderDto extends Partial<Omit<CreateShareholderDto,
   kycApprovedAt?: string | Date | null;
 }
 
+function toDate(v: unknown): Date | null {
+  if (!v) return null;
+  return new Date(v as string | number | Date);
+}
+
 function toSafe(doc: IShareholder) {
-  const obj = doc.toObject ? doc.toObject() : { ...doc };
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  delete (obj as any).password;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  delete (obj as any).nationalId;   // KYC-sensitive — never expose
+  const raw = doc.toObject ? doc.toObject() : { ...doc };
+  // Destructure out sensitive fields so they are never serialised.
+  const { password: _pw, nationalId: _nid, ...obj } = raw as Record<string, unknown>;
   return {
     ...obj,
     _id: String(obj._id),
-    createdAt: obj.createdAt ? new Date(obj.createdAt).toISOString() : null,
-    updatedAt: obj.updatedAt ? new Date(obj.updatedAt).toISOString() : null,
-    lastLogin: obj.lastLogin ? new Date(obj.lastLogin).toISOString() : null,
-    kycSubmittedAt: obj.kycSubmittedAt ? new Date(obj.kycSubmittedAt).toISOString() : null,
-    kycApprovedAt:  obj.kycApprovedAt  ? new Date(obj.kycApprovedAt).toISOString()  : null,
-    nationalIdIssuedDate: obj.nationalIdIssuedDate ? new Date(obj.nationalIdIssuedDate).toISOString() : null,
+    createdAt: toDate(obj.createdAt)?.toISOString() ?? null,
+    updatedAt: toDate(obj.updatedAt)?.toISOString() ?? null,
+    lastLogin: toDate(obj.lastLogin)?.toISOString() ?? null,
+    kycSubmittedAt: toDate(obj.kycSubmittedAt)?.toISOString() ?? null,
+    kycApprovedAt:  toDate(obj.kycApprovedAt)?.toISOString()  ?? null,
+    nationalIdIssuedDate: toDate(obj.nationalIdIssuedDate)?.toISOString() ?? null,
   };
 }
 

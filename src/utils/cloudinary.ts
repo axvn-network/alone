@@ -44,7 +44,7 @@ interface UploadResult {
 
 export async function uploadToCloudinary(
   file: File,
-  folder = "fortress"
+  folder = "AXVN"
 ): Promise<UploadResult> {
   const cld = getCloudinary();
   const buffer = Buffer.from(await file.arrayBuffer());
@@ -73,7 +73,7 @@ export async function deleteFromCloudinary(publicId: string): Promise<void> {
 export async function replaceInCloudinary(
   file: File,
   oldPublicId: string,
-  folder = "fortress"
+  folder = "AXVN"
 ): Promise<UploadResult> {
   await deleteFromCloudinary(oldPublicId);
   return uploadToCloudinary(file, folder);

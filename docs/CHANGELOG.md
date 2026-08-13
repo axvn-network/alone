@@ -1,4 +1,4 @@
-# CHANGELOG — GVI Tech Holding Landing Page
+# CHANGELOG — AXVN Tech Holding Landing Page
 
 Tất cả thay đổi đáng chú ý được ghi tại đây theo chuẩn [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
@@ -119,42 +119,42 @@ Thêm `export const dynamic = "force-dynamic"` vào 6 route files để ngăn Ne
 - **`lib/email.ts`** — Nâng cấp `sendEnquiryNotification()`:
   - Thêm `consentGiven` + `consentTimestamp` vào signature (optional)
   - Hiển thị consent audit row trong HTML email nếu có
-  - Đổi branding: subject `[GVI] New ...`, footer GVI Tech Holding · vnkr.vn
+  - Đổi branding: subject `[AXVN] New ...`, footer AXVN Tech Holding · vnkr.vn
   - Tham số `phone`, `company`, `subject` đổi sang optional
 
 ---
 
-### 🔄 Rebranding (Fortress → GVI Tech Holding)
+### 🔄 Rebranding (Fortress → AXVN Tech Holding)
 
 #### Cloudinary Folders
-- **`models/Upload.ts`** — Default folder `"fortress"` → `"gvi"`.
-- **`utils/cloudinary.ts`** — Default folder trong `uploadToCloudinary()` và `replaceInCloudinary()`: `"fortress"` → `"gvi"`.
-- **`app/api/admin/upload/route.ts`** — `"fortress/blog"` → `"gvi/blog"`.
-- **`app/api/admin/documents/upload/route.ts`** — `"fortress/documents"` → `"gvi/documents"`.
-- **`app/api/media/route.ts`** — Default folder fallback `"fortress"` → `"gvi"`.
+- **`models/Upload.ts`** — Default folder `"fortress"` → `"AXVN"`.
+- **`utils/cloudinary.ts`** — Default folder trong `uploadToCloudinary()` và `replaceInCloudinary()`: `"fortress"` → `"AXVN"`.
+- **`app/api/admin/upload/route.ts`** — `"fortress/blog"` → `"AXVN/blog"`.
+- **`app/api/admin/documents/upload/route.ts`** — `"fortress/documents"` → `"AXVN/documents"`.
+- **`app/api/media/route.ts`** — Default folder fallback `"fortress"` → `"AXVN"`.
 
 #### Route Paths
-- **`src/app/invest-with-fortress/`** → đổi tên thư mục thành **`src/app/invest-with-gvi/`**.
-- Tất cả internal links trong `invest-with-gvi/` đã cập nhật.
-- Function name `InvestWithFortressPage` → `InvestWithGVIPage`.
+- **`src/app/invest-with-fortress/`** → đổi tên thư mục thành **`src/app/invest-with-AXVN/`**.
+- Tất cả internal links trong `invest-with-AXVN/` đã cập nhật.
+- Function name `InvestWithFortressPage` → `InvestWithAXVNPage`.
 
 #### Components & Pages
-- **`components/Footer.tsx`** — Href `/invest-with-fortress` → `/invest-with-gvi`.
+- **`components/Footer.tsx`** — Href `/invest-with-fortress` → `/invest-with-AXVN`.
 - **`components/Hero.tsx`** — Href đổi.
 - **`components/Navbar.tsx`** — Href đổi.
 - **`components/PartnershipCTA.tsx`** — Href đổi.
 - **`components/InvestorForm.tsx`** — Href + text đổi.
 - **`components/PartnerJourney.tsx`** — `nextHref` đổi.
-- **`components/ProjectEcosystem.tsx`** — Node ID `"fortress"` → `"gvi"`, label `"FORTRESS"` → `"GVI TECH HOLDING"`, CONNECTIONS từ `"fortress"` → `"gvi"`, POSITIONS key đổi.
-- **`app/page.tsx`** — Metadata description/og rebrand → GVI Tech Holding + NQ 05/2025.
+- **`components/ProjectEcosystem.tsx`** — Node ID `"fortress"` → `"AXVN"`, label `"FORTRESS"` → `"AXVN TECH HOLDING"`, CONNECTIONS từ `"fortress"` → `"AXVN"`, POSITIONS key đổi.
+- **`app/page.tsx`** — Metadata description/og rebrand → AXVN Tech Holding + NQ 05/2025.
 - **`app/about/page.tsx`** — Metadata + toàn bộ text body rebrand.
 - **`app/documents/page.tsx`** — Metadata rebrand.
 - **`app/investment-focus/page.tsx`**, **`app/our-approach/page.tsx`**, **`app/insights/InsightsClient.tsx`** — Href + text rebrand.
 - **`app/admin/blog/[slug]/page.tsx`** — Google preview: `fortressih.com` → `vnkr.vn`.
 
 #### API & Services
-- **`app/api/admin/ai/route.ts`** — System prompt + `page_title`/`page_content` prompts: "Fortress Investment Holdings" → "GVI Tech Holding".
-- **`app/api/whatsapp/webhook/route.ts`** — Verify token fallback `"fortress_webhook_2025"` → `"gvi_webhook_2025"`, footer texts, URLs, button labels, email `info@fortressih.com` → `info@vnkr.vn`, route `/invest-with-fortress` → `/invest-with-gvi`.
+- **`app/api/admin/ai/route.ts`** — System prompt + `page_title`/`page_content` prompts: "Fortress Investment Holdings" → "AXVN Tech Holding".
+- **`app/api/whatsapp/webhook/route.ts`** — Verify token fallback `"fortress_webhook_2025"` → `"AXVN_webhook_2025"`, footer texts, URLs, button labels, email `info@fortressih.com` → `info@vnkr.vn`, route `/invest-with-fortress` → `/invest-with-AXVN`.
 - **`constants/project.ts`** — Comment paths rebrand.
 - **`constants/brand.ts`** — Xóa `logoStatus: "placeholder"` (dead code).
 
@@ -165,7 +165,7 @@ Thêm `export const dynamic = "force-dynamic"` vào 6 route files để ngăn Ne
 
 ### 🗑️ Removed
 
-- **`src/app/invest-with-fortress/`** — Xóa thư mục route cũ sau khi migrate sang `invest-with-gvi/`.
+- **`src/app/invest-with-fortress/`** — Xóa thư mục route cũ sau khi migrate sang `invest-with-AXVN/`.
 - **`.next/types/`** — Xóa cache types cũ để loại bỏ stale references sau rename.
 
 ---

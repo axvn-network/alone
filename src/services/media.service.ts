@@ -3,7 +3,7 @@ import { uploadToCloudinary, deleteFromCloudinary, validateFile } from "@/utils/
 import { connectDB } from "@/lib/db";
 import { logger } from "@/lib/logger";
 
-export async function uploadFile(file: File, folder = "gvi") {
+export async function uploadFile(file: File, folder = "AXVN") {
   const validation = validateFile(file);
   if (!validation.valid) {
     throw new Error(validation.error || "Invalid file");
@@ -14,12 +14,12 @@ export async function uploadFile(file: File, folder = "gvi") {
   try {
     await connectDB();
     await Upload.create({
-      publicId:     result.publicId,
-      secureUrl:    result.secureUrl,
+      publicId: result.publicId,
+      secureUrl: result.secureUrl,
       folder,
       resourceType: result.resourceType,
-      fileName:     file.name,
-      fileSize:     file.size,
+      fileName: file.name,
+      fileSize: file.size,
     });
   } catch (dbErr) {
     // DB save thất bại — rollback Cloudinary để tránh orphan file

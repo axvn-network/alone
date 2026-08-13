@@ -19,10 +19,10 @@ const envSchema = z.object({
   SMTP_USER: z.string().optional(),
   SMTP_PASS: z.string().optional(),
   SMTP_FROM: z.string().optional(),
-  ADMIN_EMAIL: z.string().email().default("admin@vnkr.vn"),
+  ADMIN_EMAIL: z.string().email().default("admin@axvn.vn"),
 
   // WhatsApp
-  WHATSAPP_VERIFY_TOKEN: z.string().default("gvi_webhook_2026"),
+  WHATSAPP_VERIFY_TOKEN: z.string().default("AXVN_webhook_2026"),
   WHATSAPP_ACCESS_TOKEN: z.string().optional(),
   WHATSAPP_PHONE_NUMBER_ID: z.string().optional(),
   WHATSAPP_API_VERSION: z.string().default("v20.0"),
@@ -39,7 +39,7 @@ const envSchema = z.object({
   ADMIN_NAME: z.string().default("Admin"),
 
   // General
-  NEXT_PUBLIC_SITE_URL: z.string().url().default("https://vnkr.vn"),
+  NEXT_PUBLIC_SITE_URL: z.string().url().default("https://axvn.vn"),
   NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
   GEMINI_API_KEY: z.string().optional(),
 

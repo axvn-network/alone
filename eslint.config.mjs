@@ -21,6 +21,21 @@ const eslintConfig = [
           caughtErrorsIgnorePattern: "^_",
         },
       ],
+      "no-restricted-imports": [
+        "error",
+        {
+          paths: [
+            {
+              name: "@/components/layout",
+              message: "Import specific components from @/components/layout/* instead of the barrel.",
+            },
+            {
+              name: "@/components/ui",
+              message: "Please colocate UI components within their feature route.",
+            },
+          ],
+        },
+      ],
     },
   },
 ];

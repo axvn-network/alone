@@ -1,11 +1,11 @@
-import PageHero from "@/components/public/PageHero";
-import ProseDoc, { ProseNote } from "@/components/public/ProseSection";
+import PageHero from "@/app/(site)/components/public/PageHero";
+import ProseDoc, { ProseNote } from "@/app/(site)/components/public/ProseSection";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Tuyên Bố Miễn Trừ Trách Nhiệm",
   description:
-    "Cảnh báo rủi ro và tuyên bố miễn trừ trách nhiệm đầu tư của GVI Tech Holding.",
+    "Cảnh báo rủi ro và tuyên bố miễn trừ trách nhiệm đầu tư của AXVN Tech Holding.",
 };
 
 export default function InvestmentDisclaimerPage() {
@@ -32,7 +32,7 @@ export default function InvestmentDisclaimerPage() {
             <p className="text-amber-800/80 text-sm leading-relaxed">
               <strong className="font-semibold text-amber-900">Cảnh Báo Rủi Ro Đầu Tư:</strong>{" "}
               Mọi hình thức đầu tư đều tiềm ẩn rủi ro, bao gồm khả năng mất toàn bộ vốn.
-              Không có bất kỳ cam kết bảo đảm lợi nhuận nào từ phía GVI Tech Holding.
+              Không có bất kỳ cam kết bảo đảm lợi nhuận nào từ phía AXVN Tech Holding.
             </p>
           </div>
 
@@ -98,7 +98,7 @@ export default function InvestmentDisclaimerPage() {
                 content: (
                   <>
                     <p>
-                      GVI Tech Holding không bảo đảm lợi nhuận đầu tư, bảo vệ vốn, thu nhập,
+                      AXVN Tech Holding không bảo đảm lợi nhuận đầu tư, bảo vệ vốn, thu nhập,
                       khả năng sinh lợi, tăng giá trị tài sản, hoàn thành thành công bất kỳ giao dịch nào,
                       hay khả năng thoái vốn theo kỳ vọng.
                     </p>
@@ -115,7 +115,7 @@ export default function InvestmentDisclaimerPage() {
                 content: (
                   <p>
                     Việc đăng tải thông tin liên quan đến đầu tư trên website này không có nghĩa là
-                    GVI Tech Holding cung cấp các dịch vụ tài chính được quản lý, trừ khi
+                    AXVN Tech Holding cung cấp các dịch vụ tài chính được quản lý, trừ khi
                     các dịch vụ đó được cơ quan quản lý có thẩm quyền cấp phép cụ thể.
                   </p>
                 ),

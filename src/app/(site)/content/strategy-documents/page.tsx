@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { BookOpen, FileText, ShieldAlert } from "lucide-react";
-import PageHero from "@/components/public/PageHero";
-import { Section } from "@/components/ui/Primitives";
-import StrategyNotice from "@/components/public/StrategyNotice";
+import PageHero from "@/app/(site)/components/public/PageHero";
+import { Section } from "@/app/(site)/components/ui/Primitives";
+import StrategyNotice from "@/app/(site)/components/public/StrategyNotice";
 import { getStrategicDocumentSummaries } from "@/lib/strategic-documents";
 
 export const metadata: Metadata = {
   title: "Tài Liệu Chiến Lược",
-  description: "Tóm tắt tài liệu chiến lược, pháp lý và vận hành của GVI Tech Holding.",
+  description: "Tóm tắt tài liệu chiến lược, pháp lý và vận hành của AXVN Tech Holding.",
 };
 
 const GROUP_LABEL = { STRATEGY: "Chiến lược", LEGAL: "Pháp lý & vận hành" } as const;
@@ -21,7 +21,7 @@ export default function StrategyDocumentsPage() {
 
   return (
     <main className="min-h-screen bg-white pb-safe md:pb-0">
-      <PageHero tag="Thư Viện Tham Chiếu" heading="Tài Liệu Chiến Lược" description="Tóm tắt công khai từ bộ tài liệu GVI; không bao gồm toàn văn tài liệu nội bộ, corpus retrieval hoặc dữ liệu vector." />
+      <PageHero tag="Thư Viện Tham Chiếu" heading="Tài Liệu Chiến Lược" description="Tóm tắt công khai từ bộ tài liệu AXVN; không bao gồm toàn văn tài liệu nội bộ, corpus retrieval hoặc dữ liệu vector." />
       <Section>
         <StrategyNotice className="mx-auto mb-10 max-w-4xl" />
         <div className="mx-auto max-w-4xl rounded-sm border border-amber-300 bg-amber-50 p-4 text-sm leading-relaxed text-amber-950">
@@ -30,13 +30,13 @@ export default function StrategyDocumentsPage() {
         </div>
         {groups.map(({ group, documents: groupDocuments }) => (
           <section key={group} className="mx-auto mt-14 max-w-6xl">
-            <div className="mb-6 flex items-center gap-3"><BookOpen className="h-5 w-5 text-gvi-gold" /><h2 className="text-2xl font-semibold text-gvi-navy">{GROUP_LABEL[group]}</h2><span className="text-sm text-gvi-charcoal/50">{groupDocuments.length} tài liệu</span></div>
+            <div className="mb-6 flex items-center gap-3"><BookOpen className="h-5 w-5 text-AXVN-gold" /><h2 className="text-2xl font-semibold text-AXVN-navy">{GROUP_LABEL[group]}</h2><span className="text-sm text-AXVN-charcoal/50">{groupDocuments.length} tài liệu</span></div>
             <div className="grid gap-4 md:grid-cols-2">
               {groupDocuments.map((document) => (
-                <article key={document.slug} className="rounded-xl border border-gvi-gold/15 bg-white p-6 shadow-sm">
-                  <div className="flex items-start gap-3"><FileText className="mt-0.5 h-5 w-5 shrink-0 text-gvi-gold" /><div><h3 className="font-semibold text-gvi-navy">{document.title}</h3><p className="mt-1 text-xs uppercase tracking-wider text-gvi-charcoal/45">{document.documentType} · {document.date}</p></div></div>
-                  <p className="mt-4 text-sm leading-relaxed text-gvi-charcoal/70">{document.summary}</p>
-                  <span className="mt-5 inline-block rounded-full border border-gvi-gold/20 bg-gvi-gold/5 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-gvi-gold">{document.classification === "confidential" ? "Tóm tắt từ nguồn nội bộ" : "Tài liệu tham chiếu"}</span>
+                <article key={document.slug} className="rounded-xl border border-AXVN-gold/15 bg-white p-6 shadow-sm">
+                  <div className="flex items-start gap-3"><FileText className="mt-0.5 h-5 w-5 shrink-0 text-AXVN-gold" /><div><h3 className="font-semibold text-AXVN-navy">{document.title}</h3><p className="mt-1 text-xs uppercase tracking-wider text-AXVN-charcoal/45">{document.documentType} · {document.date}</p></div></div>
+                  <p className="mt-4 text-sm leading-relaxed text-AXVN-charcoal/70">{document.summary}</p>
+                  <span className="mt-5 inline-block rounded-full border border-AXVN-gold/20 bg-AXVN-gold/5 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-AXVN-gold">{document.classification === "confidential" ? "Tóm tắt từ nguồn nội bộ" : "Tài liệu tham chiếu"}</span>
                 </article>
               ))}
             </div>

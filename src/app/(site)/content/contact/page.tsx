@@ -1,17 +1,17 @@
 import ContactForm from "./components/ContactForm";
 import { Phone, Mail, MapPin, Clock, MessageCircle } from "lucide-react";
-import PageHero from "@/components/public/PageHero";
-import SectionHeader from "@/components/public/SectionHeader";
+import PageHero from "@/app/(site)/components/public/PageHero";
+import SectionHeader from "@/app/(site)/components/public/SectionHeader";
 import type { Metadata } from "next";
 import { getSettings } from "@/services/settings.service";
 
 export const metadata: Metadata = {
-  title: "Liên Hệ | GVI Tech Holding",
+  title: "Liên Hệ | AXVN Tech Holding",
   description:
-    "Liên hệ với GVI Tech Holding. Đội ngũ chuyên gia sẵn sàng tiếp nhận và phản hồi thông tin yêu cầu của bạn trong vòng 1–2 ngày làm việc.",
+    "Liên hệ với AXVN Tech Holding. Đội ngũ chuyên gia sẵn sàng tiếp nhận và phản hồi thông tin yêu cầu của bạn trong vòng 1–2 ngày làm việc.",
   openGraph: {
-    title: "Liên Hệ | GVI Tech Holding",
-    description: "Kết nối trực tiếp với đội ngũ đầu tư của GVI Tech Holding.",
+    title: "Liên Hệ | AXVN Tech Holding",
+    description: "Kết nối trực tiếp với đội ngũ đầu tư của AXVN Tech Holding.",
   },
 };
 
@@ -20,7 +20,7 @@ export const dynamic = "force-dynamic";
 export default async function ContactPage() {
   let whatsapp = "971500000000";
   let phoneVal = "+971 4 XXX XXXX";
-  let emailVal = "info@gvitech.vn";
+  let emailVal = "info@axvn.vn";
   let addressVal = "Dubai, Các Quốc Gia Ả Rập Thống Nhất";
   try {
     const settings = await getSettings();
@@ -69,17 +69,17 @@ export default async function ContactPage() {
         heading={
           <>
             Bắt Đầu{" "}
-            <span className="font-bold bg-gradient-to-r from-gvi-gold to-gvi-champagne bg-clip-text text-transparent">
+            <span className="font-bold bg-gradient-to-r from-AXVN-gold to-AXVN-champagne bg-clip-text text-transparent">
               Cuộc Đối Thoại
             </span>
           </>
         }
-        description="Dù bạn có thắc mắc về cơ hội đầu tư, muốn đề xuất dự án hay đơn giản muốn tìm hiểu thêm về GVI Tech Holding — đội ngũ chuyên gia luôn sẵn sàng lắng nghe và phản hồi."
+        description="Dù bạn có thắc mắc về cơ hội đầu tư, muốn đề xuất dự án hay đơn giản muốn tìm hiểu thêm về AXVN Tech Holding — đội ngũ chuyên gia luôn sẵn sàng lắng nghe và phản hồi."
       />
 
       {/* ── Thông tin liên hệ ── */}
       <section
-        className="bg-gvi-navy rounded-2xl section-mx section-my"
+        className="bg-AXVN-navy rounded-2xl section-mx section-my"
         style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}
       >
         <div className="max-w-[1400px] mx-auto section-px">
@@ -95,14 +95,14 @@ export default async function ContactPage() {
               <a
                 key={item.label}
                 href={item.href}
-                className="group flex items-center gap-4 p-5 bg-gvi-deep border border-gvi-gold/10 hover:border-gvi-gold/30 hover:-translate-y-0.5 transition-all duration-300 rounded-2xl"
+                className="group flex items-center gap-4 p-5 bg-AXVN-deep border border-AXVN-gold/10 hover:border-AXVN-gold/30 hover:-translate-y-0.5 transition-all duration-300 rounded-2xl"
               >
-                <div className="w-11 h-11 bg-gvi-gold/10 border border-gvi-gold/15 flex items-center justify-center flex-shrink-0 rounded-sm group-hover:bg-gvi-gold/20 transition-colors">
-                  <item.icon className="w-5 h-5 text-gvi-gold" />
+                <div className="w-11 h-11 bg-AXVN-gold/10 border border-AXVN-gold/15 flex items-center justify-center flex-shrink-0 rounded-sm group-hover:bg-AXVN-gold/20 transition-colors">
+                  <item.icon className="w-5 h-5 text-AXVN-gold" />
                 </div>
                 <div>
-                  <p className="text-gvi-silver/55 text-xs mb-0.5">{item.label}</p>
-                  <p className="text-gvi-ivory font-medium text-sm">{item.value}</p>
+                  <p className="text-AXVN-silver/55 text-xs mb-0.5">{item.label}</p>
+                  <p className="text-AXVN-ivory font-medium text-sm">{item.value}</p>
                 </div>
               </a>
             ))}
@@ -115,18 +115,18 @@ export default async function ContactPage() {
         <div className="max-w-[1400px] mx-auto section-px">
           <div className="grid lg:grid-cols-5 gap-8 items-start">
             {/* Form */}
-            <div className="lg:col-span-2 bg-white border border-gvi-navy/8 rounded-2xl p-7 md:p-10">
+            <div className="lg:col-span-2 bg-white border border-AXVN-navy/8 rounded-2xl p-7 md:p-10">
               <h2
-                className="font-semibold text-gvi-navy mb-2 leading-snug"
+                className="font-semibold text-AXVN-navy mb-2 leading-snug"
                 style={{ fontSize: "var(--text-h3)" }}
               >
                 Gửi Lời Nhắn Trực Tiếp
               </h2>
-              <p className="text-gvi-navy/55 mb-7" style={{ fontSize: "var(--text-body)" }}>
+              <p className="text-AXVN-navy/55 mb-7" style={{ fontSize: "var(--text-body)" }}>
                 Đội ngũ tư vấn sẽ phản hồi trong vòng 1–2 ngày làm việc.
               </p>
               <ContactForm />
-              <div className="mt-8 pt-7 border-t border-gvi-navy/8">
+              <div className="mt-8 pt-7 border-t border-AXVN-navy/8">
                 <a
                   href={`https://wa.me/${whatsapp}`}
                   target="_blank"
@@ -141,7 +141,7 @@ export default async function ContactPage() {
 
             {/* Map */}
             <div
-              className="lg:col-span-3 bg-gvi-charcoal border border-gvi-gold/10 rounded-2xl overflow-hidden min-h-[520px]"
+              className="lg:col-span-3 bg-AXVN-charcoal border border-AXVN-gold/10 rounded-2xl overflow-hidden min-h-[520px]"
               id="map"
             >
               <iframe
@@ -152,7 +152,7 @@ export default async function ContactPage() {
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Vị trí văn phòng GVI Tech Holding — Dubai, UAE"
+                title="Vị trí văn phòng AXVN Tech Holding — Dubai, UAE"
                 className="w-full h-full min-h-[520px]"
               />
             </div>

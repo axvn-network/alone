@@ -156,7 +156,6 @@ export function formatNgayISO(input: string | Date | null | undefined): string |
 
 /**
  * Human-readable relative time string in Vietnamese.
- * Prefer this over `timeAgo()` from utils/time.ts (which is deprecated).
  *
  * @example thoiGianTuongDoi("2026-08-09T12:00:00Z") → "1 ngày trước"
  */

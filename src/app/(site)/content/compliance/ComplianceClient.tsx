@@ -15,14 +15,14 @@ export default function ComplianceClient() {
       <DocSidebar toc={TOC} />
       <DocMain>
         <DocHero id="tracker">
-          <h2 className="text-[10px] font-semibold uppercase tracking-widest text-gvi-gold mb-6">
+          <h2 className="text-[10px] font-semibold uppercase tracking-widest text-AXVN-gold mb-6">
             Tiến Độ Tuân Thủ Pháp Lý
           </h2>
           <ComplianceTracker tasks={COMPLIANCE_TASKS} />
         </DocHero>
 
         <DocBody>
-          <p className="text-gvi-silver/60 text-sm">
+          <p className="text-AXVN-silver/60 text-sm">
             Hệ thống theo dõi tiến độ các đầu việc pháp lý và tuân thủ định kỳ.
           </p>
         </DocBody>

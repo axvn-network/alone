@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
     const file = formData.get("file") as File | null;
     if (!file) return errorResponse("No file provided");
-    const result = await mediaService.uploadFile(file, "fortress/blog");
+    const result = await mediaService.uploadFile(file, "AXVN/blog");
     return successResponse({ url: result.secureUrl, publicId: result.publicId }, "File uploaded", 201);
   } catch (error) {
     return serverErrorResponse(handleError(error).message);

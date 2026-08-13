@@ -20,18 +20,18 @@ const env = loadEnv(path.join(__dirname, "..", ".env.local"));
 module.exports = {
   apps: [
     {
-      name: "gvi-langding",
+      name: "AXVN-langding",
       script: ".next/standalone/server.js",
       args: "",
       cwd: "/var/lkvip/langding",
-      instances: "max",
-      exec_mode: "cluster",
+      instances: 1,
+      exec_mode: "fork",
       watch: false,
       max_memory_restart: "500M",
       kill_timeout: 30000,
       listen_timeout: 10000,
-      out_file: "/var/log/pm2/gvi-out.log",
-      err_file: "/var/log/pm2/gvi-err.log",
+      out_file: "/var/log/pm2/AXVN-out.log",
+      err_file: "/var/log/pm2/AXVN-err.log",
       merge_logs: true,
       log_date_format: "YYYY-MM-DD HH:mm:ss Z",
       env_production: {

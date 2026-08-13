@@ -4,10 +4,10 @@ import { connectDB } from "@/lib/db";
 import { logger } from "@/lib/logger";
 
 const DEFAULT_SETTINGS = {
-  companyName: "GVI Tech Holding",
+  companyName: "AXVN Tech Holding",
   logo: "/large-logo.png",
   favicon: "",
-  email: "info@gvitech.vn",
+  email: "info@axvn.vn",
   phone: "",
   address: "Việt Nam",
   whatsapp: "",
@@ -27,8 +27,8 @@ const DEFAULT_SETTINGS = {
       type: "whatsapp" as const,
       enabled: false,
       value: "",
-      messageVi: "Xin chào, tôi muốn tìm hiểu thêm về GVI Tech Holding.",
-      messageEn: "Hello, I would like to enquire about GVI Tech Holding.",
+      messageVi: "Xin chào, tôi muốn tìm hiểu thêm về AXVN Tech Holding.",
+      messageEn: "Hello, I would like to enquire about AXVN Tech Holding.",
     },
   ],
 };
@@ -60,19 +60,19 @@ export async function getSettings() {
 export async function getPublicSettings() {
   const settings = await getSettings();
   return {
-    companyName:      settings.companyName,
-    logo:             settings.logo,
-    favicon:          settings.favicon,
-    email:            settings.email,
-    phone:            settings.phone,
-    address:          settings.address,
-    whatsapp:         settings.whatsapp,
-    googleMap:        settings.googleMap,
-    socialLinks:      settings.socialLinks,
+    companyName: settings.companyName,
+    logo: settings.logo,
+    favicon: settings.favicon,
+    email: settings.email,
+    phone: settings.phone,
+    address: settings.address,
+    whatsapp: settings.whatsapp,
+    googleMap: settings.googleMap,
+    socialLinks: settings.socialLinks,
     googleAnalyticsId: settings.googleAnalyticsId,
-    metaPixelId:      settings.metaPixelId,
-    footer:           settings.footer,
-    chatButtons:      settings.chatButtons,
+    metaPixelId: settings.metaPixelId,
+    footer: settings.footer,
+    chatButtons: settings.chatButtons,
   };
 }
 

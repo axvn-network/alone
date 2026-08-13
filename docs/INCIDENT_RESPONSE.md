@@ -1,4 +1,4 @@
-# Incident Response Playbook — GVI Tech Holding Langding Platform
+# Incident Response Playbook — AXVN Tech Holding Langding Platform
 
 > **Version:** 1.0 | **Owner:** CTO / DevOps Lead | **Review cycle:** Quarterly
 
@@ -103,7 +103,7 @@ nginx -t
 curl -s https://vnkr.vn/api/health | jq .
 
 # 5. If crash loop — rollback
-cd /var/www/gvi/app
+cd /var/www/AXVN/app
 git log --oneline -5
 git stash          # or
 git checkout <prev-sha>
@@ -113,7 +113,7 @@ pm2 restart langding
 ### 4.2 Database Connectivity Failure
 ```bash
 # 1. Check DB connection (will log retries — see lib/db.ts retry logic)
-grep "MongoDB" /var/log/gvi-app.log | tail -20
+grep "MongoDB" /var/log/AXVN-app.log | tail -20
 
 # 2. Test URI directly
 mongosh "$MONGODB_URI" --eval "db.adminCommand('ping')"
@@ -163,7 +163,7 @@ bash scripts/backup.sh
 ### 4.5 WhatsApp Webhook Failure
 ```bash
 # 1. Check webhook route logs
-grep "whatsapp" /var/log/gvi-app.log | tail -50
+grep "whatsapp" /var/log/AXVN-app.log | tail -50
 
 # 2. Verify WHATSAPP_VERIFY_TOKEN env var
 grep WHATSAPP .env.local
@@ -189,7 +189,7 @@ free -m
 pm2 restart langding
 
 # 5. If SSE connections piling up
-grep "SSE" /var/log/gvi-app.log | tail -20
+grep "SSE" /var/log/AXVN-app.log | tail -20
 # SSE broker uses global heartbeat — check sse-broker.ts
 ```
 
@@ -199,7 +199,7 @@ grep "SSE" /var/log/gvi-app.log | tail -20
 
 ```bash
 # Standard rollback
-cd /var/www/gvi/app
+cd /var/www/AXVN/app
 git log --oneline -10           # identify last-known-good SHA
 git checkout <sha>
 npm ci --omit=dev
@@ -229,7 +229,7 @@ Next update: HH:MM
 We are aware of an issue affecting [feature]. Our team is actively working on a resolution.
 We apologise for any inconvenience.
 Status updates: [status page or contact email]
-— GVI Tech Holding Team
+— AXVN Tech Holding Team
 ```
 
 ---
@@ -260,7 +260,7 @@ Sections:
 | `GET /api/health` | App + DB liveness |
 | `GET /api/admin/events/sse` | Admin realtime stream |
 | PM2 `pm2 monit` | Process CPU/RAM |
-| `/var/log/gvi-backup.log` | Backup status |
+| `/var/log/AXVN-backup.log` | Backup status |
 
 ---
 
@@ -279,4 +279,4 @@ Sections:
 
 ---
 
-*Last updated: 2025 | GVI Tech Holding — Platform Engineering*
+*Last updated: 2025 | AXVN Tech Holding — Platform Engineering*

@@ -16,17 +16,17 @@ interface AuditEntry {
 }
 
 const ACTION_COLORS: Record<string, string> = {
-  create:  "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-  update:  "bg-blue-500/10 text-blue-400 border-blue-500/20",
-  delete:  "bg-red-500/10 text-red-400 border-red-500/20",
-  approve: "bg-gvi-gold/10 text-gvi-gold border-gvi-gold/20",
-  reject:  "bg-orange-500/10 text-orange-400 border-orange-500/20",
-  login:   "bg-purple-500/10 text-purple-400 border-purple-500/20",
+  create: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+  update: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+  delete: "bg-red-500/10 text-red-400 border-red-500/20",
+  approve: "bg-AXVN-gold/10 text-AXVN-gold border-AXVN-gold/20",
+  reject: "bg-orange-500/10 text-orange-400 border-orange-500/20",
+  login: "bg-purple-500/10 text-purple-400 border-purple-500/20",
 };
 
 function actionColor(action: string) {
   const keyword = Object.keys(ACTION_COLORS).find((k) => action.toLowerCase().includes(k));
-  return keyword ? ACTION_COLORS[keyword] : "bg-gvi-deep text-gvi-silver/60 border-white/10";
+  return keyword ? ACTION_COLORS[keyword] : "bg-AXVN-deep text-AXVN-silver/60 border-white/10";
 }
 
 const COLLECTIONS = [
@@ -35,17 +35,17 @@ const COLLECTIONS = [
 ];
 
 export default function AuditLogPage() {
-  const [logs, setLogs]       = useState<AuditEntry[]>([]);
-  const [total, setTotal]     = useState(0);
-  const [page, setPage]       = useState(1);
+  const [logs, setLogs] = useState<AuditEntry[]>([]);
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
 
   // Filters
-  const [action, setAction]         = useState("");
-  const [actorId, setActorId]       = useState("");
+  const [action, setAction] = useState("");
+  const [actorId, setActorId] = useState("");
   const [collection, setCollection] = useState("");
-  const [from, setFrom]             = useState("");
-  const [to, setTo]                 = useState("");
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
 
   const limit = 50;
 
@@ -53,13 +53,13 @@ export default function AuditLogPage() {
     setLoading(true);
     try {
       const params = new URLSearchParams({ page: String(p), limit: String(limit) });
-      if (action)     params.set("action",     action);
-      if (actorId)    params.set("actorId",    actorId);
+      if (action) params.set("action", action);
+      if (actorId) params.set("actorId", actorId);
       if (collection) params.set("collection", collection);
-      if (from)       params.set("from",       from);
-      if (to)         params.set("to",         to);
+      if (from) params.set("from", from);
+      if (to) params.set("to", to);
 
-      const res  = await fetch(`/api/admin/audit-log?${params}`);
+      const res = await fetch(`/api/admin/audit-log?${params}`);
       const data = await res.json();
       if (data.success) {
         setLogs(data.data.logs || []);
@@ -97,29 +97,29 @@ export default function AuditLogPage() {
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-gvi-gold/10 flex items-center justify-center">
-                <ClipboardList className="w-4 h-4 text-gvi-gold" />
+              <div className="w-9 h-9 rounded-lg bg-AXVN-gold/10 flex items-center justify-center">
+                <ClipboardList className="w-4 h-4 text-AXVN-gold" />
               </div>
               <div>
-                <h2 className="text-gvi-ivory font-semibold">Nhật ký hành động quản trị</h2>
-                <p className="text-gvi-silver/50 text-xs">{total.toLocaleString("vi-VN")} bản ghi · tự xóa sau 365 ngày</p>
+                <h2 className="text-AXVN-ivory font-semibold">Nhật ký hành động quản trị</h2>
+                <p className="text-AXVN-silver/50 text-xs">{total.toLocaleString("vi-VN")} bản ghi · tự xóa sau 365 ngày</p>
               </div>
             </div>
             <button
               onClick={() => fetchLogs(page)}
               disabled={loading}
-              className="flex items-center gap-2 px-4 py-2 text-sm border border-gvi-gold/20 text-gvi-silver rounded-xl hover:border-gvi-gold/40 hover:text-gvi-ivory transition-colors disabled:opacity-50"
+              className="flex items-center gap-2 px-4 py-2 text-sm border border-AXVN-gold/20 text-AXVN-silver rounded-xl hover:border-AXVN-gold/40 hover:text-AXVN-ivory transition-colors disabled:opacity-50"
             >
               <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} /> Làm mới
             </button>
           </div>
 
           {/* Filter Bar */}
-          <div className="bg-gvi-deep border border-gvi-gold/10 rounded-xl p-4 mb-5 space-y-3">
+          <div className="bg-AXVN-deep border border-AXVN-gold/10 rounded-xl p-4 mb-5 space-y-3">
             <div className="flex items-center justify-between">
-              <p className="text-gvi-silver/50 text-xs font-semibold uppercase tracking-wider">Bộ lọc</p>
+              <p className="text-AXVN-silver/50 text-xs font-semibold uppercase tracking-wider">Bộ lọc</p>
               {hasFilters && (
-                <button onClick={clearFilters} className="flex items-center gap-1 text-xs text-gvi-silver/40 hover:text-red-400 transition-colors">
+                <button onClick={clearFilters} className="flex items-center gap-1 text-xs text-AXVN-silver/40 hover:text-red-400 transition-colors">
                   <X className="w-3 h-3" /> Xóa bộ lọc
                 </button>
               )}
@@ -127,25 +127,25 @@ export default function AuditLogPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
               {/* Action search */}
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3 h-3 text-gvi-silver/30" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3 h-3 text-AXVN-silver/30" />
                 <input
                   type="text"
                   value={action}
                   onChange={(e) => setAction(e.target.value)}
                   placeholder="Hành động (vd: shareholder.kyc)"
-                  className="w-full pl-8 pr-3 py-2 bg-gvi-navy border border-white/10 text-gvi-ivory text-xs rounded-lg placeholder:text-gvi-silver/30 focus:outline-none focus:border-gvi-gold/40"
+                  className="w-full pl-8 pr-3 py-2 bg-AXVN-navy border border-white/10 text-AXVN-ivory text-xs rounded-lg placeholder:text-AXVN-silver/30 focus:outline-none focus:border-AXVN-gold/40"
                 />
               </div>
 
               {/* Actor ID */}
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3 h-3 text-gvi-silver/30" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3 h-3 text-AXVN-silver/30" />
                 <input
                   type="text"
                   value={actorId}
                   onChange={(e) => setActorId(e.target.value)}
                   placeholder="ID quản trị viên"
-                  className="w-full pl-8 pr-3 py-2 bg-gvi-navy border border-white/10 text-gvi-ivory text-xs rounded-lg placeholder:text-gvi-silver/30 focus:outline-none focus:border-gvi-gold/40"
+                  className="w-full pl-8 pr-3 py-2 bg-AXVN-navy border border-white/10 text-AXVN-ivory text-xs rounded-lg placeholder:text-AXVN-silver/30 focus:outline-none focus:border-AXVN-gold/40"
                 />
               </div>
 
@@ -153,7 +153,7 @@ export default function AuditLogPage() {
               <select
                 value={collection}
                 onChange={(e) => setCollection(e.target.value)}
-                className="w-full py-2 px-3 bg-gvi-navy border border-white/10 text-gvi-ivory text-xs rounded-lg focus:outline-none focus:border-gvi-gold/40"
+                className="w-full py-2 px-3 bg-AXVN-navy border border-white/10 text-AXVN-ivory text-xs rounded-lg focus:outline-none focus:border-AXVN-gold/40"
               >
                 {COLLECTIONS.map((c) => (
                   <option key={c} value={c} className="bg-[#07111D]">
@@ -168,14 +168,14 @@ export default function AuditLogPage() {
                   type="date"
                   value={from}
                   onChange={(e) => setFrom(e.target.value)}
-                  className="flex-1 py-2 px-3 bg-gvi-navy border border-white/10 text-gvi-ivory text-xs rounded-lg focus:outline-none focus:border-gvi-gold/40"
+                  className="flex-1 py-2 px-3 bg-AXVN-navy border border-white/10 text-AXVN-ivory text-xs rounded-lg focus:outline-none focus:border-AXVN-gold/40"
                   title="Từ ngày"
                 />
                 <input
                   type="date"
                   value={to}
                   onChange={(e) => setTo(e.target.value)}
-                  className="flex-1 py-2 px-3 bg-gvi-navy border border-white/10 text-gvi-ivory text-xs rounded-lg focus:outline-none focus:border-gvi-gold/40"
+                  className="flex-1 py-2 px-3 bg-AXVN-navy border border-white/10 text-AXVN-ivory text-xs rounded-lg focus:outline-none focus:border-AXVN-gold/40"
                   title="Đến ngày"
                 />
               </div>
@@ -183,20 +183,20 @@ export default function AuditLogPage() {
           </div>
 
           {/* Table */}
-          <div className="bg-gvi-deep border border-gvi-gold/10 rounded-xl overflow-hidden">
+          <div className="bg-AXVN-deep border border-AXVN-gold/10 rounded-xl overflow-hidden">
             {loading && logs.length === 0 ? (
               <div className="flex justify-center py-20">
-                <RefreshCw className="w-6 h-6 text-gvi-gold animate-spin" />
+                <RefreshCw className="w-6 h-6 text-AXVN-gold animate-spin" />
               </div>
             ) : logs.length === 0 ? (
-              <div className="text-center py-20 text-gvi-silver/40 text-sm">
+              <div className="text-center py-20 text-AXVN-silver/40 text-sm">
                 {hasFilters ? "Không tìm thấy bản ghi nào với bộ lọc hiện tại." : "Chưa có nhật ký nào."}
               </div>
             ) : (
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-gvi-gold/10 text-gvi-silver/50 text-[11px] uppercase tracking-widest">
+                    <tr className="border-b border-AXVN-gold/10 text-AXVN-silver/50 text-[11px] uppercase tracking-widest">
                       <th className="text-left px-4 py-3">Thời gian</th>
                       <th className="text-left px-4 py-3">Quản trị viên</th>
                       <th className="text-left px-4 py-3">Hành động</th>
@@ -206,13 +206,13 @@ export default function AuditLogPage() {
                   </thead>
                   <tbody>
                     {logs.map((log) => (
-                      <tr key={log._id} className="border-b border-gvi-gold/5 hover:bg-gvi-navy/30 transition-colors">
-                        <td className="px-4 py-3 text-gvi-silver/50 text-xs whitespace-nowrap">
+                      <tr key={log._id} className="border-b border-AXVN-gold/5 hover:bg-AXVN-navy/30 transition-colors">
+                        <td className="px-4 py-3 text-AXVN-silver/50 text-xs whitespace-nowrap">
                           {timeAgo(log.createdAt)}
                         </td>
                         <td className="px-4 py-3">
-                          <p className="text-gvi-ivory text-xs font-medium">{log.actor.name || "—"}</p>
-                          <p className="text-gvi-silver/40 text-[10px]">{log.actor.email}</p>
+                          <p className="text-AXVN-ivory text-xs font-medium">{log.actor.name || "—"}</p>
+                          <p className="text-AXVN-silver/40 text-[10px]">{log.actor.email}</p>
                         </td>
                         <td className="px-4 py-3">
                           <span className={`text-[11px] font-mono font-semibold px-2 py-1 border rounded-lg ${actionColor(log.action)}`}>
@@ -220,12 +220,12 @@ export default function AuditLogPage() {
                           </span>
                         </td>
                         <td className="px-4 py-3">
-                          <p className="text-gvi-silver/70 text-xs">{log.target.collection}</p>
-                          <p className="text-gvi-silver/30 text-[10px] font-mono truncate max-w-[120px]">
+                          <p className="text-AXVN-silver/70 text-xs">{log.target.collection}</p>
+                          <p className="text-AXVN-silver/30 text-[10px] font-mono truncate max-w-[120px]">
                             {log.target.id}
                           </p>
                         </td>
-                        <td className="px-4 py-3 text-gvi-silver/40 text-xs font-mono hidden md:table-cell">
+                        <td className="px-4 py-3 text-AXVN-silver/40 text-xs font-mono hidden md:table-cell">
                           {log.ip || "—"}
                         </td>
                       </tr>
@@ -238,15 +238,15 @@ export default function AuditLogPage() {
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="flex items-center justify-between mt-4 text-sm text-gvi-silver/50">
+            <div className="flex items-center justify-between mt-4 text-sm text-AXVN-silver/50">
               <p>Trang {page} / {totalPages} · {total.toLocaleString("vi-VN")} bản ghi</p>
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
                   disabled={page <= 1}
-                  className="p-2 border border-gvi-gold/20 rounded-lg hover:border-gvi-gold/40 transition-colors disabled:opacity-30"
+                  className="p-2 border border-AXVN-gold/20 rounded-lg hover:border-AXVN-gold/40 transition-colors disabled:opacity-30"
                 >
-                  <ChevronLeft className="w-4 h-4 text-gvi-silver" />
+                  <ChevronLeft className="w-4 h-4 text-AXVN-silver" />
                 </button>
                 {/* Page numbers — show up to 5 around current */}
                 {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
@@ -256,11 +256,10 @@ export default function AuditLogPage() {
                     <button
                       key={p}
                       onClick={() => setPage(p)}
-                      className={`w-8 h-8 text-xs rounded-lg border transition-colors ${
-                        p === page
-                          ? "bg-gvi-gold text-gvi-navy border-gvi-gold font-bold"
-                          : "border-gvi-gold/20 text-gvi-silver/60 hover:border-gvi-gold/40 hover:text-gvi-ivory"
-                      }`}
+                      className={`w-8 h-8 text-xs rounded-lg border transition-colors ${p === page
+                          ? "bg-AXVN-gold text-AXVN-navy border-AXVN-gold font-bold"
+                          : "border-AXVN-gold/20 text-AXVN-silver/60 hover:border-AXVN-gold/40 hover:text-AXVN-ivory"
+                        }`}
                     >
                       {p}
                     </button>
@@ -269,9 +268,9 @@ export default function AuditLogPage() {
                 <button
                   onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                   disabled={page >= totalPages}
-                  className="p-2 border border-gvi-gold/20 rounded-lg hover:border-gvi-gold/40 transition-colors disabled:opacity-30"
+                  className="p-2 border border-AXVN-gold/20 rounded-lg hover:border-AXVN-gold/40 transition-colors disabled:opacity-30"
                 >
-                  <ChevronRight className="w-4 h-4 text-gvi-silver" />
+                  <ChevronRight className="w-4 h-4 text-AXVN-silver" />
                 </button>
               </div>
             </div>

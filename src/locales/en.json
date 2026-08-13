@@ -50,7 +50,7 @@
     "licensing": {
       "tag": "Licensing Requirements — NQ 5/2025/NQ-CP",
       "heading": "This Is What We Need to Build Together",
-      "desc": "No single organisation can meet all these requirements alone — that is why GVI needs partners."
+      "desc": "No single organisation can meet all these requirements alone — that is why AXVN needs partners."
     },
     "roadmap": {
       "tag": "Legal Roadmap",
@@ -65,7 +65,7 @@
     }
   },
   "whatsapp": {
-    "greeting": "Hello! I'd like to learn about GVI partnership investment plans.",
+    "greeting": "Hello! I'd like to learn about AXVN partnership investment plans.",
     "planInquiry": "Tell me more about the partnership investment plans",
     "licensing": "Information about Resolution 5/2025 and licensing conditions"
   },
@@ -83,10 +83,10 @@
   },
   "footer": {
     "followUs": "FOLLOW US",
-    "copyright": "All rights reserved by GVI Tech Holding.",
+    "copyright": "All rights reserved by AXVN Tech Holding.",
     "docBtn": "Download Brochure",
     "desc": "A technology-focused investment group headquartered in Dubai, UAE — specialising in FinTech, digital assets, crypto asset services, EdTech and high-growth technology markets in Vietnam and Southeast Asia.",
-    "col1Heading": "About GVI",
+    "col1Heading": "About AXVN",
     "col1Link1": "Company Overview",
     "col1Link2": "Vision & Mission",
     "col1Link3": "Leadership",
@@ -100,7 +100,7 @@
     "col2Link5": "Education Technology",
     "col2Link6": "Digital Economy & E-Commerce",
     "col3Heading": "Join The Journey",
-    "col3Link1": "Partner With GVI",
+    "col3Link1": "Partner With AXVN",
     "col3Link2": "Partner Roles",
     "col4Heading": "Resources & Legal",
     "col4Link1": "Expert Insights",
@@ -117,7 +117,7 @@
     "pillar3Sub": "Rigorous due diligence and oversight of every investment"
   },
   "hero": {
-    "subtitle": "GVI Tech Holding",
+    "subtitle": "AXVN Tech Holding",
     "titleLine1": "Solid Foundation.",
     "titleLine2": "Breakthrough Vision.",
     "description": "A technology-focused investment group — with Vietnam's digital economy and crypto asset market as strategic priorities. We identify, build and scale high-potential opportunities in FinTech, crypto asset services, AI technology, digital economy infrastructure and education technology.",
@@ -128,7 +128,7 @@
     "tag": "01 — Introduction",
     "title": "Bridging Global Capital With Vietnam's Digital Economy",
     "p1": "Vietnam is entering a defining moment — with Resolution 5/2025/NQ-CP effective from 9 September 2025 launching a regulated crypto asset market pilot, a booming digital economy, and a young tech-savvy population creating an unprecedented window for responsible capital deployment.",
-    "p2": "GVI Tech Holding connects international capital with Vietnam's fastest-growing opportunities in FinTech, crypto asset infrastructure, digital transformation and education technology.",
+    "p2": "AXVN Tech Holding connects international capital with Vietnam's fastest-growing opportunities in FinTech, crypto asset infrastructure, digital transformation and education technology.",
     "p3": "From licensed crypto asset service platforms and FinTech infrastructure to AI technology and EdTech — we bring not just capital, but strategic partnership, regulatory knowledge and hands-on experience to build genuinely sustainable businesses together."
   },
   "whatWeDo": {
@@ -160,42 +160,99 @@
   "sectors": {
     "tag": "03 — Investment Sectors",
     "title": "FinTech-First. Digital Economy Growth.",
-    "desc": "GVI Tech Holding places FinTech, crypto asset services and Vietnam's digital economy as strategic priorities — aligned with Vietnam's landmark crypto pilot regulation effective 9 September 2025.",
+    "desc": "AXVN Tech Holding places FinTech, crypto asset services and Vietnam's digital economy as strategic priorities — aligned with Vietnam's landmark crypto pilot regulation effective 9 September 2025.",
     "btnText": "VIEW ALL INVESTMENT SECTORS",
     "sectorPrefix": "Sector",
     "list": [
-      { "title": "Crypto Asset Services (Regulated)", "desc": "Licensed crypto asset trading platforms, custody services, asset tokenisation and digital asset infrastructure — aligned with Vietnam's Resolution 5/2025/NQ-CP pilot framework effective 9/9/2025." },
-      { "title": "FinTech & Digital Payments", "desc": "Payment infrastructure, digital lending, insurtech and financial inclusion solutions for Vietnam's underserved market segments." },
-      { "title": "AI & Disruptive Technology", "desc": "AI platforms, SaaS, automation and technology solutions solving real problems — focused on Vietnam, expanding across Southeast Asia and globally." },
-      { "title": "Education Technology (EdTech)", "desc": "Online learning platforms, digital skills training, professional certification and workforce development technology for Vietnam and Southeast Asia." },
-      { "title": "Blockchain Infrastructure", "desc": "Blockchain networks, protocols, smart contract infrastructure and enterprise-grade distributed technology platforms." },
-      { "title": "Digital Economy & E-Commerce", "desc": "Digital marketplaces, vertical commerce platforms and data-driven retail businesses with clear growth trajectory in Vietnam." },
-      { "title": "Private Equity & Growth Capital", "desc": "Strategic investments in high-growth startups, FinTech ventures and private companies in Vietnam and Southeast Asia." },
-      { "title": "Asset Tokenisation", "desc": "Tokenisation of real-world assets including real estate, commodities and investment funds — building compliant digital asset infrastructure." },
-      { "title": "Strategic Investment Management", "desc": "Joint ventures, co-investments and strategic alliances with reputable institutional financial partners in the digital economy space." }
+      {
+        "title": "Crypto Asset Services (Regulated)",
+        "desc": "Licensed crypto asset trading platforms, custody services, asset tokenisation and digital asset infrastructure — aligned with Vietnam's Resolution 5/2025/NQ-CP pilot framework effective 9/9/2025."
+      },
+      {
+        "title": "FinTech & Digital Payments",
+        "desc": "Payment infrastructure, digital lending, insurtech and financial inclusion solutions for Vietnam's underserved market segments."
+      },
+      {
+        "title": "AI & Disruptive Technology",
+        "desc": "AI platforms, SaaS, automation and technology solutions solving real problems — focused on Vietnam, expanding across Southeast Asia and globally."
+      },
+      {
+        "title": "Education Technology (EdTech)",
+        "desc": "Online learning platforms, digital skills training, professional certification and workforce development technology for Vietnam and Southeast Asia."
+      },
+      {
+        "title": "Blockchain Infrastructure",
+        "desc": "Blockchain networks, protocols, smart contract infrastructure and enterprise-grade distributed technology platforms."
+      },
+      {
+        "title": "Digital Economy & E-Commerce",
+        "desc": "Digital marketplaces, vertical commerce platforms and data-driven retail businesses with clear growth trajectory in Vietnam."
+      },
+      {
+        "title": "Private Equity & Growth Capital",
+        "desc": "Strategic investments in high-growth startups, FinTech ventures and private companies in Vietnam and Southeast Asia."
+      },
+      {
+        "title": "Asset Tokenisation",
+        "desc": "Tokenisation of real-world assets including real estate, commodities and investment funds — building compliant digital asset infrastructure."
+      },
+      {
+        "title": "Strategic Investment Management",
+        "desc": "Joint ventures, co-investments and strategic alliances with reputable institutional financial partners in the digital economy space."
+      }
     ]
   },
   "why": {
-    "tag": "04 — Why Choose GVI",
+    "tag": "04 — Why Choose AXVN",
     "title": "Your Strategic Partner For Vietnam's Digital Economy",
     "benefits": [
-      { "title": "Vietnam Crypto Pilot Expertise", "desc": "We deeply understand Resolution 5/2025/NQ-CP — Vietnam's crypto asset pilot regulation effective 9 September 2025 — and help investors and businesses navigate this landmark regulatory window." },
-      { "title": "FinTech & Digital Asset Focus", "desc": "From licensed crypto asset platforms and FinTech infrastructure to AI and digital economy — we prioritise technology businesses with scalable models and clear regulatory compliance paths." },
-      { "title": "Disciplined Investment Process", "desc": "Every opportunity is subject to in-depth commercial, financial, regulatory and risk-management analysis. Our rigour is the reason partners place their complete trust in GVI." },
-      { "title": "Global Network, Local Action", "desc": "Headquartered in Dubai, operating in Vietnam and Southeast Asia — we connect international capital flows with local digital economy opportunities, delivering a real competitive advantage." },
-      { "title": "Deep Strategic Partnership", "desc": "Beyond capital, we contribute regulatory navigation, product direction, market strategy, partner connections and full operational capability to grow together." },
-      { "title": "Trusted & Transparent Partner", "desc": "We build relationships on transparency, absolute information security and the principle of mutual benefit. Reputation is GVI's most valuable asset." }
+      {
+        "title": "Vietnam Crypto Pilot Expertise",
+        "desc": "We deeply understand Resolution 5/2025/NQ-CP — Vietnam's crypto asset pilot regulation effective 9 September 2025 — and help investors and businesses navigate this landmark regulatory window."
+      },
+      {
+        "title": "FinTech & Digital Asset Focus",
+        "desc": "From licensed crypto asset platforms and FinTech infrastructure to AI and digital economy — we prioritise technology businesses with scalable models and clear regulatory compliance paths."
+      },
+      {
+        "title": "Disciplined Investment Process",
+        "desc": "Every opportunity is subject to in-depth commercial, financial, regulatory and risk-management analysis. Our rigour is the reason partners place their complete trust in AXVN."
+      },
+      {
+        "title": "Global Network, Local Action",
+        "desc": "Headquartered in Dubai, operating in Vietnam and Southeast Asia — we connect international capital flows with local digital economy opportunities, delivering a real competitive advantage."
+      },
+      {
+        "title": "Deep Strategic Partnership",
+        "desc": "Beyond capital, we contribute regulatory navigation, product direction, market strategy, partner connections and full operational capability to grow together."
+      },
+      {
+        "title": "Trusted & Transparent Partner",
+        "desc": "We build relationships on transparency, absolute information security and the principle of mutual benefit. Reputation is AXVN's most valuable asset."
+      }
     ]
   },
   "philosophy": {
     "tag": "05 — Our Approach",
     "title": "The Pillars of Value Creation",
     "desc": "We create long-term value through disciplined strategy, trusted partnerships and decisions made with institutional-grade rigour.",
-    "quote": "\"If we cannot add real practical value beyond capital, it is not an opportunity for GVI.\"",
+    "quote": "\"If we cannot add real practical value beyond capital, it is not an opportunity for AXVN.\"",
     "commitments": [
-      { "title": "Opportunity Identification", "desc": "Sourcing and screening the highest-potential opportunities in FinTech, crypto asset services, AI and digital economy sectors in Vietnam and the region.", "number": "01" },
-      { "title": "In-Depth Due Diligence", "desc": "Detailed assessment of risks, regulatory compliance, market strength and value-creation potential to international institutional standards.", "number": "02" },
-      { "title": "Growth & Breakthrough", "desc": "Driving capital value and long-term cash flow through active governance, regulatory expertise, technology and strategic resources.", "number": "03" }
+      {
+        "title": "Opportunity Identification",
+        "desc": "Sourcing and screening the highest-potential opportunities in FinTech, crypto asset services, AI and digital economy sectors in Vietnam and the region.",
+        "number": "01"
+      },
+      {
+        "title": "In-Depth Due Diligence",
+        "desc": "Detailed assessment of risks, regulatory compliance, market strength and value-creation potential to international institutional standards.",
+        "number": "02"
+      },
+      {
+        "title": "Growth & Breakthrough",
+        "desc": "Driving capital value and long-term cash flow through active governance, regulatory expertise, technology and strategic resources.",
+        "number": "03"
+      }
     ]
   },
   "cta": {
@@ -208,9 +265,9 @@
   },
   "newsletter": {
     "title": "Subscribe to FinTech & Digital Asset Insights",
-    "desc": "Stay updated with Vietnam's crypto asset market developments, FinTech investment opportunities and in-depth digital economy perspectives from GVI — delivered only when it truly adds value.",
+    "desc": "Stay updated with Vietnam's crypto asset market developments, FinTech investment opportunities and in-depth digital economy perspectives from AXVN — delivered only when it truly adds value.",
     "btn": "SUBSCRIBE",
-    "disclaimer": "By subscribing, you agree to receive communications from GVI Tech Holding. You may unsubscribe at any time.",
+    "disclaimer": "By subscribing, you agree to receive communications from AXVN Tech Holding. You may unsubscribe at any time.",
     "successTitle": "Thank you for subscribing.",
     "successDesc": "We will send you only the most important expert insights.",
     "placeholder": "Your Email Address"

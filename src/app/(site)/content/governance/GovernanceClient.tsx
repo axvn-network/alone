@@ -19,21 +19,21 @@ export default function GovernanceClient() {
       <DocSidebar toc={TOC} />
       <DocMain>
         <DocHero id="docs">
-          <h2 className="text-[10px] font-semibold uppercase tracking-widest text-gvi-gold mb-6">
+          <h2 className="text-[10px] font-semibold uppercase tracking-widest text-AXVN-gold mb-6">
             Tài Liệu Quản Trị Hệ Thống
           </h2>
           <GovernanceCards docs={GOVERNANCE_DOCS} />
         </DocHero>
 
         <DocBody id="shareholders">
-          <h2 className="text-[10px] font-semibold uppercase tracking-widest text-gvi-gold mb-6">
+          <h2 className="text-[10px] font-semibold uppercase tracking-widest text-AXVN-gold mb-6">
             Cổ Đông Sáng Lập & Vốn Góp
           </h2>
           <ShareholderTable shareholders={SHAREHOLDERS} />
         </DocBody>
 
         <DocBody id="advisors">
-          <h2 className="text-[10px] font-semibold uppercase tracking-widest text-gvi-gold mb-6">
+          <h2 className="text-[10px] font-semibold uppercase tracking-widest text-AXVN-gold mb-6">
             Cơ Cấu Hội Đồng Cố Vấn
           </h2>
           <AdvisorCards advisors={ADVISORS} />

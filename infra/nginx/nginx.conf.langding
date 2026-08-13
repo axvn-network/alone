@@ -68,9 +68,8 @@ server {
 
     # ── Next.js static — cache 1 năm, immutable ───────────────
     location /_next/static/ {
-        proxy_pass       http://127.0.0.1:3000;
-        proxy_set_header Host $host;
-        add_header       Cache-Control "public, max-age=31536000, immutable";
+        alias /var/lkvip/langding/.next/static/;
+        expires 1y;
         access_log off;
     }
 

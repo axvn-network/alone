@@ -4,7 +4,7 @@ slug: "langding-project-context"
 date: "2026-08-09"
 group: "GOVERNANCE"
 original_path: ""
-tags: [architecture, governance, gvi, agents]
+tags: [architecture, governance, AXVN, agents]
 lang: "vi"
 summary: "Bản đồ kỹ thuật, quy ước nội dung và ranh giới triển khai cho Langding."
 ---
@@ -12,19 +12,19 @@ summary: "Bản đồ kỹ thuật, quy ước nội dung và ranh giới triể
 # Langding — Project Context
 
 ## 1. Project overview
-Langding là website công khai, CMS quản trị và cổng cổ đông cho GVI Tech Holding. Website công bố định hướng hệ sinh thái số và nội dung tham chiếu; không phải nền tảng giao dịch hay lời chào bán tài chính.
+Langding là website công khai, CMS quản trị và cổng cổ đông cho AXVN Tech Holding. Website công bố định hướng hệ sinh thái số và nội dung tham chiếu; không phải nền tảng giao dịch hay lời chào bán tài chính.
 
 ## 2. Audience and goals
-Khách truy cập xem thông tin GVI; quản trị viên quản lý nội dung; cổ đông được phân quyền dùng portal. Mục tiêu là thông tin nhất quán, rõ nguồn và an toàn.
+Khách truy cập xem thông tin AXVN; quản trị viên quản lý nội dung; cổ đông được phân quyền dùng portal. Mục tiêu là thông tin nhất quán, rõ nguồn và an toàn.
 
 ## 3. Public brand
-Tên công khai là **GVI Tech Holding** / **GVI Group**. Canonical URL là `https://vnkr.vn`. Asset logo hiện tại chỉ là placeholder cho đến khi có brand kit GVI chính thức.
+Tên công khai là **AXVN Tech Holding** / **AXVN Group**. Canonical URL là `https://vnkr.vn`. Asset logo hiện tại chỉ là placeholder cho đến khi có brand kit AXVN chính thức.
 
 ## 4. Product strategy source
-Định hướng GVI lấy từ `_extracted/CHIEN_LUOC_2026_2031/` sau khi tìm bằng `_standardized/index.json` hoặc `chunks.jsonl`, rồi xác minh theo `original_path`. Trích dẫn: `[slug | original_path]`.
+Định hướng AXVN lấy từ `_extracted/CHIEN_LUOC_2026_2031/` sau khi tìm bằng `_standardized/index.json` hoặc `chunks.jsonl`, rồi xác minh theo `original_path`. Trích dẫn: `[slug | original_path]`.
 
 ## 5. Technical source of truth
-Sự thật kỹ thuật chỉ lấy từ mã nguồn, `package.json`, cấu hình và tài liệu này. Không suy diễn kiến trúc Langding từ tài liệu GVI/VNKR khác.
+Sự thật kỹ thuật chỉ lấy từ mã nguồn, `package.json`, cấu hình và tài liệu này. Không suy diễn kiến trúc Langding từ tài liệu AXVN/VNKR khác.
 
 ## 6. Technology stack
 Next.js 16 App Router, React 19, TypeScript 5.9, Tailwind CSS 4, Framer Motion, Mongoose/MongoDB, Zod, Nodemailer, Cloudinary, Sentry và PM2/Nginx deployment.

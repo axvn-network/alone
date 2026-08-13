@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
       return errorResponse("File quá lớn. Tối đa 50MB.");
     }
 
-    const result = await uploadToCloudinary(file, "fortress/documents");
+    const result = await uploadToCloudinary(file, "AXVN/documents");
     return successResponse(
       { url: result.secureUrl, publicId: result.publicId, resourceType: result.resourceType },
       "File uploaded successfully",

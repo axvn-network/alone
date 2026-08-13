@@ -1,4 +1,4 @@
-# Hướng Dẫn Cải Thiện Chuyên Sâu — `langding` (GVI Tech Holding)
+# Hướng Dẫn Cải Thiện Chuyên Sâu — `langding` (AXVN Tech Holding)
 
 > **Cập nhật:** 2025-08 (Revision 2) | **Dựa trên đánh giá:** Mô hình 7 Domain (ISO 31000 × NIST CSF)
 
@@ -16,9 +16,9 @@
 | 6 | `scripts/deploy.sh` | `--no-audit` bypass security scan; PM2 tên sai | Bỏ `--no-audit`, thêm `npm audit`, fix PM2 name | R1+R2 |
 | 7 | `scripts/verify.sh` | Không có security audit trong pipeline | Thêm `npm audit` bước 1/5 | R1 |
 | 8 | `src/services/shareholder.service.ts` | Default password `"fortress2026!"` là known value | Throw error khi không có password | R1 |
-| 9 | `src/services/settings.service.ts` | Defaults còn "Fortress", phone Dubai hardcode | Rebrand → GVI, phone/address để trống | R1 |
+| 9 | `src/services/settings.service.ts` | Defaults còn "Fortress", phone Dubai hardcode | Rebrand → AXVN, phone/address để trống | R1 |
 | 10 | `src/lib/email.ts` | Fallback from address còn fortressih.com | Đổi → `noreply@vnkr.vn` | R1 |
-| 11 | `.env.example` | `ADMIN_PASSWORD=123456`, tên Fortress, WA token hardcode, env var sai tên | Strong placeholders, rebrand GVI, thêm analytics section | R1+R2 |
+| 11 | `.env.example` | `ADMIN_PASSWORD=123456`, tên Fortress, WA token hardcode, env var sai tên | Strong placeholders, rebrand AXVN, thêm analytics section | R1+R2 |
 | 12 | `src/app/api/admin/documents/route.ts` | POST không dùng Zod validator | Thêm `documentSchema.safeParse()` | R1 |
 | 13 | `src/app/api/health/route.ts` | Không có health check endpoint | Tạo mới `/api/health` với DB ping | R1 |
 | 14 | `middleware.ts` | `sh_session` chỉ check presence; `Buffer.from` không dùng được trong Edge | Thêm `verifyShareholderCookie()` HMAC+exp; thay Buffer → atob | R1+R2 |
@@ -27,11 +27,11 @@
 | 17 | `src/app/api/admin-login/route.ts` | Fallback login dùng `===` (timing attack) | Rate limit + generic error | R1 |
 | 18 | `src/validators/index.ts` | `contactEnquirySchema` thiếu consent | Thêm `consentGiven` (literal true), `consentTimestamp` | R1+R2 |
 | 19 | `src/models/Enquiry.ts` | Không lưu consent | Thêm `consentGiven`, `consentTimestamp` fields | R1+R2 |
-| 20 | `src/models/Settings.ts` | Defaults còn "Fortress" | Rebrand → GVI | R1 |
-| 21 | `package.json` | `name: "fortress-website"` | Đổi → `"gvi-langding"` | R1+R2 |
-| 22 | `src/app/api/admin/ai/route.ts` | System prompt còn "Fortress" | Rebrand → GVI Tech Holding | R1 |
+| 20 | `src/models/Settings.ts` | Defaults còn "Fortress" | Rebrand → AXVN | R1 |
+| 21 | `package.json` | `name: "fortress-website"` | Đổi → `"AXVN-langding"` | R1+R2 |
+| 22 | `src/app/api/admin/ai/route.ts` | System prompt còn "Fortress" | Rebrand → AXVN Tech Holding | R1 |
 | 23 | `scripts/check-env.sh` | Check `NEXT_PUBLIC_APP_URL` (sai tên) | Fix → `NEXT_PUBLIC_SITE_URL` + thêm `SESSION_SECRET` | R1 |
-| 24 | `scripts/backup.sh` | Paths "fortress", thiếu offsite sync, thiếu log file | Rebrand → gvi, thêm S3 offsite block, thêm ghi log | R2 |
+| 24 | `scripts/backup.sh` | Paths "fortress", thiếu offsite sync, thiếu log file | Rebrand → AXVN, thêm S3 offsite block, thêm ghi log | R2 |
 | 25 | `.github/workflows/ci.yml` | Chưa có CI workflow | Thêm GitHub Actions: audit + lint + typecheck + build | R2 |
 
 ---
@@ -175,7 +175,7 @@ Scripts sẽ tự động inject sau khi restart server.
 
 | Domain | Baseline | Sau R1 | Sau R2 | Ghi chú |
 |--------|----------|--------|--------|---------|
-| 1. Quản trị | 5.5 | 5.0 | **4.5** | CI workflow thêm; package name GVI |
+| 1. Quản trị | 5.5 | 5.0 | **4.5** | CI workflow thêm; package name AXVN |
 | 2. Tài sản | 6.5 | 4.5 | **4.0** | .env.example hoàn toàn sạch, backup offsite |
 | 3. Bảo mật | 6.0 | 4.0 | **3.5** | SH auth rate limit; middleware HMAC verify |
 | 4. Lỗ hổng | 5.0 | 3.5 | **3.5** | npm audit pipeline ổn định |
@@ -189,7 +189,7 @@ Scripts sẽ tự động inject sau khi restart server.
 
 ```
 Q3 2025 (Đã xong — Revision 1):
-  ✅ Rebrand Fortress → GVI toàn bộ codebase
+  ✅ Rebrand Fortress → AXVN toàn bộ codebase
   ✅ Rate limit shareholder auth
   ✅ Fix SSE global heartbeat
   ✅ PM2 fork mode (instances: 1)
@@ -202,8 +202,8 @@ Q3 2025 (Đã xong — Revision 1):
 Q3 2025 (Revision 2 — Session này):
   ✅ ecosystem.config.js: rename + fork mode confirmed
   ✅ .env.example: hoàn toàn sạch, không còn hardcode secret
-  ✅ package.json: name → gvi-langding
-  ✅ scripts/backup.sh: paths GVI + offsite S3 block + log
+  ✅ package.json: name → AXVN-langding
+  ✅ scripts/backup.sh: paths AXVN + offsite S3 block + log
   ✅ scripts/deploy.sh: --no-audit removed, npm audit added, PM2 name fixed
   ✅ contactEnquirySchema: consentGiven (z.literal(true)) + consentTimestamp
   ✅ Enquiry model: consentGiven + consentTimestamp fields
@@ -268,5 +268,5 @@ npm audit --audit-level=high
 
 # 6. Verify backup paths
 bash scripts/backup.sh
-# Expected: /var/backups/gvi/gvi_YYYYMMDD_HHMMSS.gz
+# Expected: /var/backups/AXVN/AXVN_YYYYMMDD_HHMMSS.gz
 ```

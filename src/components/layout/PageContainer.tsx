@@ -11,7 +11,7 @@ interface PageContainerProps {
 
 const variants: Record<PageVariant, string> = {
   light: 'min-h-screen bg-white',
-  dark: 'min-h-screen bg-gvi-navy',
+  dark: 'min-h-screen bg-AXVN-navy',
   admin: 'min-h-screen bg-[#03080e]',
 };
 

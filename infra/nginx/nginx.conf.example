@@ -1,6 +1,6 @@
 # ================================================================
-# Nginx — GVI Tech Holding
-# Location: /etc/nginx/sites-available/gvi.conf
+# Nginx — AXVN Tech Holding
+# Location: /etc/nginx/sites-available/AXVN.conf
 # Replace YOURDOMAIN.COM with your actual domain before deploying.
 # ================================================================
 

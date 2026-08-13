@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
-import { ArchitectureDiagram } from "@/components/visual/ArchitectureDiagram";
+import { ArchitectureDiagram } from "@/app/(site)/components/visual/ArchitectureDiagram";
 import DocLayout, { DocMain, DocBody, DocHero } from "@/components/layout/DocLayout";
-import PageHero from "@/components/public/PageHero";
+import PageHero from "@/app/(site)/components/public/PageHero";
 import { ARCH_NODES } from "@/data/system-architecture";
 
 export const metadata: Metadata = {
-  title: "Kiến Trúc Hệ Sinh Thái | GVI Tech Holding",
+  title: "Kiến Trúc Hệ Sinh Thái | AXVN Tech Holding",
   description:
-    "Góc nhìn khái niệm về các nhóm vai trò, quan hệ tham chiếu và nguyên tắc điều phối trong hệ sinh thái GVI Tech Holding.",
+    "Góc nhìn khái niệm về các nhóm vai trò, quan hệ tham chiếu và nguyên tắc điều phối trong hệ sinh thái AXVN Tech Holding.",
 };
 
 export default function ArchitecturePage() {
   return (
-    <main className="min-h-screen bg-gvi-navy pb-safe md:pb-0">
+    <main className="min-h-screen bg-AXVN-navy pb-safe md:pb-0">
       <PageHero
         dark
         tag="Kiến trúc hệ sinh thái"
@@ -21,18 +21,18 @@ export default function ArchitecturePage() {
       />
       <DocLayout>
         <DocMain>
-            <DocHero>
-                <ArchitectureDiagram nodes={ARCH_NODES} />
-            </DocHero>
-            <DocBody>
-                <p className="text-gvi-silver/60 text-sm">
-                    Xem chi tiết tại{" "}
-                    <a href="/roadmap" className="text-gvi-gold underline hover:no-underline">
-                        Lộ trình chiến lược
-                    </a>
-                    .
-                </p>
-            </DocBody>
+          <DocHero>
+            <ArchitectureDiagram nodes={ARCH_NODES} />
+          </DocHero>
+          <DocBody>
+            <p className="text-AXVN-silver/60 text-sm">
+              Xem chi tiết tại{" "}
+              <a href="/roadmap" className="text-AXVN-gold underline hover:no-underline">
+                Lộ trình chiến lược
+              </a>
+              .
+            </p>
+          </DocBody>
         </DocMain>
       </DocLayout>
     </main>

@@ -124,4 +124,4 @@ dung corpus là nội bộ trừ khi đã có bản tóm tắt được duyệt.
 ## 9. Sự thật kỹ thuật
 
 Sự thật kỹ thuật của Langding chỉ lấy từ mã nguồn, `package.json`, cấu hình và
-`CONTEXT.md`. Không suy ra kiến trúc Langding từ tài liệu chiến lược GVI/VNKR.
+`CONTEXT.md`. Không suy ra kiến trúc Langding từ tài liệu chiến lược AXVN/VNKR.

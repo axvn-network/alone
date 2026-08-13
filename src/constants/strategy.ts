@@ -102,7 +102,7 @@ export const STRATEGY_AT_A_GLANCE = [
   {
     value: SUBSIDIARIES.length,
     label: "mảng năng lực",
-    description: "Được đặt trong cùng một mô hình điều phối định hướng của GVI Group.",
+    description: "Được đặt trong cùng một mô hình điều phối định hướng của AXVN Group.",
     icon: Building2,
   },
   {

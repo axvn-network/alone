@@ -95,9 +95,9 @@ export default function PartnerApplicationsPage() {
           {/* Filters */}
           <div className="flex flex-wrap gap-3 mb-6">
             <div className="relative flex-1 min-w-[200px]">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gvi-silver/40" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-AXVN-silver/40" />
               <input
-                className="w-full pl-9 pr-4 py-2 bg-gvi-deep border border-gvi-gold/20 rounded-lg text-sm text-white placeholder-gvi-silver/40 focus:outline-none focus:border-gvi-gold/40"
+                className="w-full pl-9 pr-4 py-2 bg-AXVN-deep border border-AXVN-gold/20 rounded-lg text-sm text-white placeholder-AXVN-silver/40 focus:outline-none focus:border-AXVN-gold/40"
                 placeholder="Tìm tên, email, công ty..."
                 value={search}
                 onChange={(e) => { setSearch(e.target.value); setPage(1); }}
@@ -105,7 +105,7 @@ export default function PartnerApplicationsPage() {
               {search && <button onClick={() => setSearch("")} className="absolute right-3 top-1/2 -translate-y-1/2"><X className="w-3 h-3" /></button>}
             </div>
             <select
-              className="px-3 py-2 bg-gvi-deep border border-gvi-gold/20 rounded-lg text-sm text-gvi-silver focus:outline-none"
+              className="px-3 py-2 bg-AXVN-deep border border-AXVN-gold/20 rounded-lg text-sm text-AXVN-silver focus:outline-none"
               value={filterStatus}
               onChange={(e) => { setFilterStatus(e.target.value); setPage(1); }}
             >
@@ -115,23 +115,23 @@ export default function PartnerApplicationsPage() {
               ))}
             </select>
             <select
-              className="px-3 py-2 bg-gvi-deep border border-gvi-gold/20 rounded-lg text-sm text-gvi-silver focus:outline-none"
+              className="px-3 py-2 bg-AXVN-deep border border-AXVN-gold/20 rounded-lg text-sm text-AXVN-silver focus:outline-none"
               value={filterRole}
               onChange={(e) => { setFilterRole(e.target.value); setPage(1); }}
             >
               <option value="">Tất cả vai trò</option>
               {Object.entries(ROLE_LABELS).map(([v, l]) => <option key={v} value={v}>{l}</option>)}
             </select>
-            <button onClick={load} className="p-2 border border-gvi-gold/20 rounded-lg hover:border-gvi-gold/40 transition-colors">
-              <RefreshCw className={`w-4 h-4 text-gvi-silver ${loading ? "animate-spin" : ""}`} />
+            <button onClick={load} className="p-2 border border-AXVN-gold/20 rounded-lg hover:border-AXVN-gold/40 transition-colors">
+              <RefreshCw className={`w-4 h-4 text-AXVN-silver ${loading ? "animate-spin" : ""}`} />
             </button>
           </div>
 
           {/* Table */}
-          <div className="bg-gvi-deep border border-gvi-gold/10 rounded-xl overflow-hidden">
+          <div className="bg-AXVN-deep border border-AXVN-gold/10 rounded-xl overflow-hidden">
             <table className="w-full text-sm">
-              <thead className="border-b border-gvi-gold/10">
-                <tr className="text-left text-gvi-silver/60 text-xs uppercase tracking-wide">
+              <thead className="border-b border-AXVN-gold/10">
+                <tr className="text-left text-AXVN-silver/60 text-xs uppercase tracking-wide">
                   <th className="px-4 py-3">Ứng viên</th>
                   <th className="px-4 py-3 hidden md:table-cell">Vai trò</th>
                   <th className="px-4 py-3 hidden lg:table-cell">Điểm TB</th>
@@ -140,39 +140,39 @@ export default function PartnerApplicationsPage() {
                   <th className="px-4 py-3 text-right">Thao tác</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gvi-gold/5">
+              <tbody className="divide-y divide-AXVN-gold/5">
                 {loading ? (
-                  <tr><td colSpan={6} className="py-12 text-center text-gvi-silver/40">Đang tải...</td></tr>
+                  <tr><td colSpan={6} className="py-12 text-center text-AXVN-silver/40">Đang tải...</td></tr>
                 ) : apps.length === 0 ? (
-                  <tr><td colSpan={6} className="py-12 text-center text-gvi-silver/40"><FileSearch className="w-8 h-8 mx-auto mb-2 opacity-30" /><p>Không có đơn nào</p></td></tr>
+                  <tr><td colSpan={6} className="py-12 text-center text-AXVN-silver/40"><FileSearch className="w-8 h-8 mx-auto mb-2 opacity-30" /><p>Không có đơn nào</p></td></tr>
                 ) : apps.map((app) => (
                   <tr key={app._id} className="hover:bg-white/[0.02] transition-colors">
                     <td className="px-4 py-3">
                       <p className="font-medium text-white">{app.fullName}</p>
-                      <p className="text-gvi-silver/50 text-xs">{app.email}</p>
-                      {app.company && <p className="text-gvi-silver/40 text-xs">{app.company}</p>}
+                      <p className="text-AXVN-silver/50 text-xs">{app.email}</p>
+                      {app.company && <p className="text-AXVN-silver/40 text-xs">{app.company}</p>}
                     </td>
                     <td className="px-4 py-3 hidden md:table-cell">
                       <span className="text-xs">{ROLE_LABELS[app.desiredRole] || app.desiredRole}</span>
                     </td>
                     <td className="px-4 py-3 hidden lg:table-cell">
-                      <span className="font-bold text-gvi-gold">{scoreAvg(app.assessmentScore)}%</span>
+                      <span className="font-bold text-AXVN-gold">{scoreAvg(app.assessmentScore)}%</span>
                     </td>
                     <td className="px-4 py-3">
                       <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs border ${STATUS_CLS[app.status] || ""}`}>
                         {STATUS_LABELS[app.status] || app.status}
                       </span>
                     </td>
-                    <td className="px-4 py-3 hidden md:table-cell text-gvi-silver/50 text-xs">
+                    <td className="px-4 py-3 hidden md:table-cell text-AXVN-silver/50 text-xs">
                       {new Date(app.createdAt).toLocaleDateString("vi-VN")}
                     </td>
                     <td className="px-4 py-3 text-right">
                       <button
                         onClick={() => { setSelected(app); setNotesDraft(app.adminNotes || ""); }}
-                        className="p-1.5 border border-gvi-gold/20 rounded-lg hover:border-gvi-gold/50 transition-colors"
+                        className="p-1.5 border border-AXVN-gold/20 rounded-lg hover:border-AXVN-gold/50 transition-colors"
                         title="Xem chi tiết"
                       >
-                        <Eye className="w-3.5 h-3.5 text-gvi-gold" />
+                        <Eye className="w-3.5 h-3.5 text-AXVN-gold" />
                       </button>
                     </td>
                   </tr>
@@ -184,12 +184,12 @@ export default function PartnerApplicationsPage() {
           {/* Pagination */}
           {totalPages > 1 && (
             <div className="flex items-center justify-center gap-2 mt-4">
-              <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page <= 1} className="p-2 border border-gvi-gold/20 rounded-lg disabled:opacity-30">
-                <ChevronLeft className="w-4 h-4 text-gvi-silver" />
+              <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page <= 1} className="p-2 border border-AXVN-gold/20 rounded-lg disabled:opacity-30">
+                <ChevronLeft className="w-4 h-4 text-AXVN-silver" />
               </button>
-              <span className="text-gvi-silver/60 text-sm">Trang {page}/{totalPages}</span>
-              <button onClick={() => setPage((p) => Math.min(totalPages, p + 1))} disabled={page >= totalPages} className="p-2 border border-gvi-gold/20 rounded-lg disabled:opacity-30">
-                <ChevronRight className="w-4 h-4 text-gvi-silver" />
+              <span className="text-AXVN-silver/60 text-sm">Trang {page}/{totalPages}</span>
+              <button onClick={() => setPage((p) => Math.min(totalPages, p + 1))} disabled={page >= totalPages} className="p-2 border border-AXVN-gold/20 rounded-lg disabled:opacity-30">
+                <ChevronRight className="w-4 h-4 text-AXVN-silver" />
               </button>
             </div>
           )}
@@ -199,41 +199,41 @@ export default function PartnerApplicationsPage() {
       {/* Detail Modal */}
       {selected && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm" onClick={() => setSelected(null)}>
-          <div className="w-full max-w-2xl bg-gvi-deep border border-gvi-gold/20 rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
-            <div className="sticky top-0 flex items-center justify-between px-6 py-4 border-b border-gvi-gold/10 bg-gvi-deep z-10">
+          <div className="w-full max-w-2xl bg-AXVN-deep border border-AXVN-gold/20 rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+            <div className="sticky top-0 flex items-center justify-between px-6 py-4 border-b border-AXVN-gold/10 bg-AXVN-deep z-10">
               <div>
                 <h3 className="font-bold text-white">{selected.fullName}</h3>
-                <p className="text-gvi-silver/60 text-xs">{selected.email} · {ROLE_LABELS[selected.desiredRole]}</p>
+                <p className="text-AXVN-silver/60 text-xs">{selected.email} · {ROLE_LABELS[selected.desiredRole]}</p>
               </div>
-              <button onClick={() => setSelected(null)} className="p-1.5 border border-gvi-gold/20 rounded-lg hover:border-gvi-gold/50">
-                <X className="w-4 h-4 text-gvi-silver" />
+              <button onClick={() => setSelected(null)} className="p-1.5 border border-AXVN-gold/20 rounded-lg hover:border-AXVN-gold/50">
+                <X className="w-4 h-4 text-AXVN-silver" />
               </button>
             </div>
             <div className="p-6 space-y-5">
               {/* Scores */}
               <div className="grid grid-cols-5 gap-3">
                 {Object.entries(selected.assessmentScore).map(([k, v]) => (
-                  <div key={k} className="text-center p-3 bg-white/[0.03] rounded-xl border border-gvi-gold/10">
-                    <p className="text-gvi-gold font-bold text-xl">{v}</p>
-                    <p className="text-gvi-silver/50 text-xs mt-1 capitalize">{k}</p>
+                  <div key={k} className="text-center p-3 bg-white/[0.03] rounded-xl border border-AXVN-gold/10">
+                    <p className="text-AXVN-gold font-bold text-xl">{v}</p>
+                    <p className="text-AXVN-silver/50 text-xs mt-1 capitalize">{k}</p>
                   </div>
                 ))}
               </div>
 
               {/* Info */}
               <div className="space-y-2 text-sm">
-                {selected.company && <p className="text-gvi-silver/70"><span className="text-gvi-silver/40">Tổ chức:</span> {selected.company} {selected.position && `— ${selected.position}`}</p>}
-                {selected.capitalRange && <p className="text-gvi-silver/70"><span className="text-gvi-silver/40">Vốn:</span> {selected.capitalRange}</p>}
+                {selected.company && <p className="text-AXVN-silver/70"><span className="text-AXVN-silver/40">Tổ chức:</span> {selected.company} {selected.position && `— ${selected.position}`}</p>}
+                {selected.capitalRange && <p className="text-AXVN-silver/70"><span className="text-AXVN-silver/40">Vốn:</span> {selected.capitalRange}</p>}
               </div>
 
               {/* Notes */}
               <div>
-                <label className="block text-xs text-gvi-silver/50 mb-1">Ghi chú admin</label>
+                <label className="block text-xs text-AXVN-silver/50 mb-1">Ghi chú admin</label>
                 <textarea
                   value={notesDraft}
                   onChange={(e) => setNotesDraft(e.target.value)}
                   rows={3}
-                  className="w-full bg-black/20 border border-gvi-gold/20 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-gvi-gold/40 resize-none"
+                  className="w-full bg-black/20 border border-AXVN-gold/20 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-AXVN-gold/40 resize-none"
                 />
               </div>
 
@@ -247,7 +247,7 @@ export default function PartnerApplicationsPage() {
                     className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs border transition-colors disabled:opacity-40
                       ${s === "approved" ? "border-emerald-500/50 text-emerald-400 hover:bg-emerald-500/10" :
                         s === "rejected" ? "border-red-500/50 text-red-400 hover:bg-red-500/10" :
-                        "border-gvi-gold/30 text-gvi-gold hover:bg-gvi-gold/10"}`}
+                          "border-AXVN-gold/30 text-AXVN-gold hover:bg-AXVN-gold/10"}`}
                   >
                     {s === "approved" ? <CheckCircle2 className="w-3.5 h-3.5" /> : s === "rejected" ? <XCircle className="w-3.5 h-3.5" /> : <Clock className="w-3.5 h-3.5" />}
                     {STATUS_LABELS[s]}
@@ -259,7 +259,7 @@ export default function PartnerApplicationsPage() {
               <button
                 disabled={saving || notesDraft === (selected.adminNotes || "")}
                 onClick={() => updateStatus(selected._id, selected.status, notesDraft)}
-                className="w-full py-2 text-sm font-medium border border-gvi-gold/30 text-gvi-gold rounded-lg hover:bg-gvi-gold/10 transition-colors disabled:opacity-40"
+                className="w-full py-2 text-sm font-medium border border-AXVN-gold/30 text-AXVN-gold rounded-lg hover:bg-AXVN-gold/10 transition-colors disabled:opacity-40"
               >
                 Lưu ghi chú
               </button>

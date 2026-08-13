@@ -54,10 +54,10 @@ const ChatButtonSchema = new Schema<IChatButton>(
 
 const SettingsSchema = new Schema<ISettings>(
   {
-    companyName: { type: String, default: "GVI Tech Holding" },
+    companyName: { type: String, default: "AXVN Tech Holding" },
     logo: { type: String, default: "/large-logo.png" },
     favicon: { type: String, default: "" },
-    email: { type: String, default: "info@gvitech.vn" },
+    email: { type: String, default: "info@axvn.vn" },
     phone: { type: String, default: "" },
     address: { type: String, default: "" },
     whatsapp: { type: String, default: "" },
@@ -66,9 +66,11 @@ const SettingsSchema = new Schema<ISettings>(
     googleAnalyticsId: { type: String, default: "" },
     metaPixelId: { type: String, default: "" },
     footer: { type: String, default: "" },
-    chatButtons: { type: [ChatButtonSchema], default: [
-      { type: "whatsapp", enabled: false, value: "", messageVi: "Xin chào, tôi muốn tìm hiểu thêm về GVI Tech Holding.", messageEn: "Hello, I would like to enquire about GVI Tech Holding." },
-    ]},
+    chatButtons: {
+      type: [ChatButtonSchema], default: [
+        { type: "whatsapp", enabled: false, value: "", messageVi: "Xin chào, tôi muốn tìm hiểu thêm về AXVN Tech Holding.", messageEn: "Hello, I would like to enquire about AXVN Tech Holding." },
+      ]
+    },
   },
   { timestamps: true }
 );

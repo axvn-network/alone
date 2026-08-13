@@ -84,8 +84,8 @@ const FALLBACK_BUTTONS: IChatButton[] = [
     type: "whatsapp",
     enabled: true,
     value: "971500000000",
-    messageVi: "Xin chào, tôi muốn tìm hiểu thêm về GVI Tech Holding.",
-    messageEn: "Hello, I would like to enquire about GVI Tech Holding.",
+    messageVi: "Xin chào, tôi muốn tìm hiểu thêm về AXVN Tech Holding.",
+    messageEn: "Hello, I would like to enquire about AXVN Tech Holding.",
   },
 ];
 
@@ -106,8 +106,8 @@ export default function FloatingChatButtons() {
             type: "whatsapp",
             enabled: true,
             value: data.data.whatsapp,
-            messageVi: "Xin chào, tôi muốn tìm hiểu thêm về GVI Tech Holding.",
-            messageEn: "Hello, I would like to enquire about GVI Tech Holding.",
+            messageVi: "Xin chào, tôi muốn tìm hiểu thêm về AXVN Tech Holding.",
+            messageEn: "Hello, I would like to enquire about AXVN Tech Holding.",
           }]);
         } else {
           setButtons(FALLBACK_BUTTONS);
@@ -141,7 +141,7 @@ export default function FloatingChatButtons() {
               className="group relative"
             >
               {/* Tooltip label */}
-              <span className="absolute right-full mr-2.5 top-1/2 -translate-y-1/2 whitespace-nowrap bg-[#07111D]/90 backdrop-blur-sm text-gvi-ivory text-[11px] font-medium px-2.5 py-1 rounded-full border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+              <span className="absolute right-full mr-2.5 top-1/2 -translate-y-1/2 whitespace-nowrap bg-[#07111D]/90 backdrop-blur-sm text-AXVN-ivory text-[11px] font-medium px-2.5 py-1 rounded-full border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
                 {cfg.label}
               </span>
               {/* Ping ring */}

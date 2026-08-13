@@ -16,11 +16,11 @@ import { logger } from "@/lib/logger";
  *  3. Subscribe events: messages
  */
 
-const VERIFY_TOKEN   = process.env.WHATSAPP_VERIFY_TOKEN   || "fortress_webhook_2025";
-const ACCESS_TOKEN   = process.env.WHATSAPP_ACCESS_TOKEN   || "";
+const VERIFY_TOKEN = process.env.WHATSAPP_VERIFY_TOKEN || "AXVN_webhook_2025";
+const ACCESS_TOKEN = process.env.WHATSAPP_ACCESS_TOKEN || "";
 const PHONE_NUMBER_ID = process.env.WHATSAPP_PHONE_NUMBER_ID || "";
-const WA_API_VERSION  = process.env.WHATSAPP_API_VERSION    || "v20.0";
-const SITE_URL        = process.env.NEXT_PUBLIC_SITE_URL    || "https://gvitech.vn";
+const WA_API_VERSION = process.env.WHATSAPP_API_VERSION || "v20.0";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://axvn.vn";
 
 // ── In-memory conversation state (resets on server restart — acceptable for webhook bot) ──
 type ConvState = {
@@ -46,8 +46,8 @@ function setState(from: string, update: Partial<ConvState>) {
 // ── GET: Webhook Verification ──────────────────────────────────────────────
 export async function GET(req: NextRequest) {
   const { searchParams } = req.nextUrl;
-  const mode      = searchParams.get("hub.mode");
-  const token     = searchParams.get("hub.verify_token");
+  const mode = searchParams.get("hub.mode");
+  const token = searchParams.get("hub.verify_token");
   const challenge = searchParams.get("hub.challenge");
 
   if (mode === "subscribe" && token === VERIFY_TOKEN) {
@@ -60,18 +60,18 @@ export async function GET(req: NextRequest) {
 // ── POST: Incoming messages ────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
   try {
-    const body   = await req.json();
-    const entry  = body?.entry?.[0];
+    const body = await req.json();
+    const entry = body?.entry?.[0];
     const change = entry?.changes?.[0];
-    const value  = change?.value;
+    const value = change?.value;
 
     // Ignore non-message events (status updates, etc.)
     if (!value?.messages?.length) {
       return NextResponse.json({ status: "no_message" });
     }
 
-    const msg     = value.messages[0];
-    const from    = msg.from as string;
+    const msg = value.messages[0];
+    const from = msg.from as string;
     const msgType = msg.type as string;
 
     // Parse incoming text or button/list interaction
@@ -83,7 +83,7 @@ export async function POST(req: NextRequest) {
     } else if (msgType === "interactive") {
       interactiveId =
         msg.interactive?.button_reply?.id ||
-        msg.interactive?.list_reply?.id   ||
+        msg.interactive?.list_reply?.id ||
         "";
       incomingText = interactiveId.toLowerCase();
     }
@@ -105,7 +105,7 @@ export async function POST(req: NextRequest) {
 // ── Build response based on state + incoming text ─────────────────────────
 
 type WAMessage =
-  | { type: "text";        text: { body: string; preview_url?: boolean } }
+  | { type: "text"; text: { body: string; preview_url?: boolean } }
   | { type: "interactive"; interactive: InteractiveMenu };
 
 interface InteractiveMenu {
@@ -188,13 +188,13 @@ function buildMainMenu(): WAMessage {
     interactive: {
       type: "button",
       body: {
-        text: `👋 *Chào mừng đến với GVI Tech Holding!*\n\nChúng tôi đang xây dựng nền tảng *Tài Sản Mã Hóa (TSMH)* đầu tiên được nhà nước cấp phép tại Việt Nam theo *Nghị quyết 05/2025/NQ-CP*.\n\nHiện chúng tôi đang tuyển *cổ đông chiến lược* để cùng xây dựng dự án. Chọn thông tin bạn quan tâm:`,
+        text: `👋 *Chào mừng đến với AXVN Tech Holding!*\n\nChúng tôi đang xây dựng nền tảng *Tài Sản Mã Hóa (TSMH)* đầu tiên được nhà nước cấp phép tại Việt Nam theo *Nghị quyết 05/2025/NQ-CP*.\n\nHiện chúng tôi đang tuyển *cổ đông chiến lược* để cùng xây dựng dự án. Chọn thông tin bạn quan tâm:`,
       },
-      footer: { text: "GVI Tech Holding · fortressih.com" },
+      footer: { text: "AXVN Tech Holding · axvn.vn" },
       action: {
         buttons: [
-          { type: "reply", reply: { id: "btn_plans",   title: "💼 Hạng Mục Hợp Tác" } },
-          { type: "reply", reply: { id: "btn_nq5",     title: "📜 Nghị Quyết 05" } },
+          { type: "reply", reply: { id: "btn_plans", title: "💼 Hạng Mục Hợp Tác" } },
+          { type: "reply", reply: { id: "btn_nq5", title: "📜 Nghị Quyết 05" } },
           { type: "reply", reply: { id: "btn_contact", title: "📞 Liên Hệ Ngay" } },
         ],
       },
@@ -218,23 +218,23 @@ function buildPlansMenu(): WAMessage {
             title: "Loại Cổ Đông",
             rows: [
               {
-                id:          "plan_individual",
-                title:       "👤 Cổ Đông Cá Nhân",
+                id: "plan_individual",
+                title: "👤 Cổ Đông Cá Nhân",
                 description: "Từ 100 triệu VNĐ · ≤35% VĐL · Quyền biểu quyết ĐHCĐ",
               },
               {
-                id:          "plan_institution",
-                title:       "🏛️ Tổ Chức Tài Chính / CN",
+                id: "plan_institution",
+                title: "🏛️ Tổ Chức Tài Chính / CN",
                 description: "Từ 1.000 tỷ VNĐ · >35% bắt buộc · Ghế HĐQT",
               },
               {
-                id:          "plan_anchor",
-                title:       "⚓ Cổ Đông Neo Chiến Lược",
+                id: "plan_anchor",
+                title: "⚓ Cổ Đông Neo Chiến Lược",
                 description: "Từ 3.000 tỷ VNĐ · Ưu tiên cấp phép · Veto quyền",
               },
               {
-                id:          "plan_foreign",
-                title:       "🌐 Nhà Đầu Tư Nước Ngoài",
+                id: "plan_foreign",
+                title: "🌐 Nhà Đầu Tư Nước Ngoài",
                 description: "Tối đa 49% VĐL · Cần IRC + IICA · Góp vốn gián tiếp",
               },
             ],
@@ -342,11 +342,11 @@ function buildPlanDetail(planKey: string): WAMessage {
   const plan = PLAN_DETAILS[planKey];
   if (!plan) return buildPlansMenu();
 
-  const rightsText  = plan.rights.map((r, i) => `  ${i + 1}. ${r}`).join("\n");
-  const obligText   = plan.obligations.map((o, _i) => `  ⚠️ ${o}`).join("\n");
-  const docsText    = plan.docs.map((d) => `  📄 ${d}`).join("\n");
+  const rightsText = plan.rights.map((r, i) => `  ${i + 1}. ${r}`).join("\n");
+  const obligText = plan.obligations.map((o, _i) => `  ⚠️ ${o}`).join("\n");
+  const docsText = plan.docs.map((d) => `  📄 ${d}`).join("\n");
 
-  const text = `${plan.icon} *${plan.name}*\n💰 Vốn góp: ${plan.min}\n📊 Cổ phần: ${plan.equity}\n\n*✅ Quyền Lợi:*\n${rightsText}\n\n*⚠️ Nghĩa Vụ:*\n${obligText}\n\n*📋 Hồ Sơ Cần Có:*\n${docsText}\n\n🔗 Chi tiết đầy đủ: ${SITE_URL}/invest-with-gvi/plans`;
+  const text = `${plan.icon} *${plan.name}*\n💰 Vốn góp: ${plan.min}\n📊 Cổ phần: ${plan.equity}\n\n*✅ Quyền Lợi:*\n${rightsText}\n\n*⚠️ Nghĩa Vụ:*\n${obligText}\n\n*📋 Hồ Sơ Cần Có:*\n${docsText}\n\n🔗 Chi tiết đầy đủ: ${SITE_URL}/invest-with-axvn/plans`;
 
   return {
     type: "interactive",
@@ -357,8 +357,8 @@ function buildPlanDetail(planKey: string): WAMessage {
       action: {
         buttons: [
           { type: "reply", reply: { id: "btn_contact", title: "📞 Đăng Ký Ngay" } },
-          { type: "reply", reply: { id: "btn_plans",   title: "🔙 Xem Gói Khác" } },
-          { type: "reply", reply: { id: "btn_nq5",     title: "📜 Về NQ 05" } },
+          { type: "reply", reply: { id: "btn_plans", title: "🔙 Xem Gói Khác" } },
+          { type: "reply", reply: { id: "btn_nq5", title: "📜 Về NQ 05" } },
         ],
       },
     },
@@ -371,14 +371,14 @@ function buildNQ5Message(): WAMessage {
     interactive: {
       type: "button",
       body: {
-        text: `📜 *Nghị Quyết 05/2025/NQ-CP — Thí Điểm Tài Sản Mã Hóa Việt Nam*\n\n*Hiệu lực:* 09/09/2025\n*Cơ quan cấp phép:* Bộ Tài Chính (BTC)\n*Nhận hồ sơ từ:* 20/01/2026\n\n*Điều kiện cốt lõi (Điều 8):*\n  📌 Vốn điều lệ tối thiểu: *10.000 tỷ VNĐ*\n  📌 ≥65% từ tổ chức (bắt buộc)\n  📌 >35% từ ≥2 tổ chức TC/CN được cấp phép\n  📌 ≤49% nhà đầu tư nước ngoài\n  📌 Đạt tiêu chuẩn CNTT cấp độ 4\n\n*Cơ hội:* Chưa có tổ chức nào được cấp phép. GVI Tech Holding đang ở giai đoạn *tích lũy vốn & tuyển cổ đông* — đây là thời điểm tốt nhất để tham gia với định giá tốt nhất.`,
+        text: `📜 *Nghị Quyết 05/2025/NQ-CP — Thí Điểm Tài Sản Mã Hóa Việt Nam*\n\n*Hiệu lực:* 09/09/2025\n*Cơ quan cấp phép:* Bộ Tài Chính (BTC)\n*Nhận hồ sơ từ:* 20/01/2026\n\n*Điều kiện cốt lõi (Điều 8):*\n  📌 Vốn điều lệ tối thiểu: *10.000 tỷ VNĐ*\n  📌 ≥65% từ tổ chức (bắt buộc)\n  📌 >35% từ ≥2 tổ chức TC/CN được cấp phép\n  📌 ≤49% nhà đầu tư nước ngoài\n  📌 Đạt tiêu chuẩn CNTT cấp độ 4\n\n*Cơ hội:* Chưa có tổ chức nào được cấp phép. AXVN Tech Holding đang ở giai đoạn *tích lũy vốn & tuyển cổ đông* — đây là thời điểm tốt nhất để tham gia với định giá tốt nhất.`,
       },
       footer: { text: "Nguồn: Nghị quyết 05/2025/NQ-CP chính thức" },
       action: {
         buttons: [
-          { type: "reply", reply: { id: "btn_plans",   title: "💼 Xem Hạng Mục Hợp Tác" } },
+          { type: "reply", reply: { id: "btn_plans", title: "💼 Xem Hạng Mục Hợp Tác" } },
           { type: "reply", reply: { id: "btn_contact", title: "📞 Liên Hệ Tư Vấn" } },
-          { type: "reply", reply: { id: "btn_about",   title: "🏢 Về GVI" } },
+          { type: "reply", reply: { id: "btn_about", title: "🏢 Về AXVN" } },
         ],
       },
     },
@@ -391,14 +391,14 @@ function buildContactMessage(): WAMessage {
     interactive: {
       type: "button",
       body: {
-        text: `📞 *Liên Hệ GVI Tech Holding*\n\n🌐 Website: ${SITE_URL}/contact\n📋 Đăng ký hợp tác: ${SITE_URL}/invest-with-gvi\n📧 Email: info@fortressih.com\n\nĐội ngũ chuyên gia sẽ phản hồi trong *2–3 ngày làm việc*.\n🔒 Mọi thông tin được bảo mật tuyệt đối.\n\nHoặc gửi trực tiếp *số điện thoại* và *tên* của bạn, chúng tôi sẽ liên hệ lại ngay!`,
+        text: `📞 *Liên Hệ AXVN Tech Holding*\n\n🌐 Website: ${SITE_URL}/contact\n📋 Đăng ký hợp tác: ${SITE_URL}/invest-with-axvn\n📧 Email: info@axvn.vn\n\nĐội ngũ chuyên gia sẽ phản hồi trong *2–3 ngày làm việc*.\n🔒 Mọi thông tin được bảo mật tuyệt đối.\n\nHoặc gửi trực tiếp *số điện thoại* và *tên* của bạn, chúng tôi sẽ liên hệ lại ngay!`,
       },
-      footer: { text: "GVI Tech Holding · Dubai, UAE" },
+      footer: { text: "AXVN Tech Holding · Dubai, UAE" },
       action: {
         buttons: [
           { type: "reply", reply: { id: "btn_plans", title: "💼 Xem Hạng Mục Hợp Tác" } },
-          { type: "reply", reply: { id: "btn_nq5",   title: "📜 Về NQ 05" } },
-          { type: "reply", reply: { id: "btn_about", title: "🏢 Về GVI Tech Holding" } },
+          { type: "reply", reply: { id: "btn_nq5", title: "📜 Về NQ 05" } },
+          { type: "reply", reply: { id: "btn_about", title: "🏢 Về AXVN Tech Holding" } },
         ],
       },
     },
@@ -411,13 +411,13 @@ function buildAboutMessage(): WAMessage {
     interactive: {
       type: "button",
       body: {
-        text: `🏰 *GVI Tech Holding*\n\nTập đoàn đầu tư công nghệ có trụ sở tại *Dubai, UAE* — chuyên đầu tư vào FinTech, tài sản mã hóa hợp pháp, AI và kinh tế số tại Việt Nam & Đông Nam Á.\n\n*Sứ mệnh:* Hiện đại hóa nền tài chính Việt Nam, xây dựng hạ tầng số tương đương eCNY của Trung Quốc — nhưng phù hợp đặc thù VN.\n\n*Trọng tâm dự án:*\n  🔑 Nền tảng giao dịch tài sản mã hóa (TSMH) được cấp phép\n  🔑 Hạ tầng FinTech & thanh toán số\n  🔑 Công nghệ AI & blockchain\n  🔑 EdTech & kinh tế số\n\n🌐 ${SITE_URL}/about`,
+        text: `🏰 *AXVN Tech Holding*\n\nTập đoàn đầu tư công nghệ có trụ sở tại *Dubai, UAE* — chuyên đầu tư vào FinTech, tài sản mã hóa hợp pháp, AI và kinh tế số tại Việt Nam & Đông Nam Á.\n\n*Sứ mệnh:* Hiện đại hóa nền tài chính Việt Nam, xây dựng hạ tầng số tương đương eCNY của Trung Quốc — nhưng phù hợp đặc thù VN.\n\n*Trọng tâm dự án:*\n  🔑 Nền tảng giao dịch tài sản mã hóa (TSMH) được cấp phép\n  🔑 Hạ tầng FinTech & thanh toán số\n  🔑 Công nghệ AI & blockchain\n  🔑 EdTech & kinh tế số\n\n🌐 ${SITE_URL}/about`,
       },
-      footer: { text: "fortressih.com" },
+      footer: { text: "axvn.vn" },
       action: {
         buttons: [
-          { type: "reply", reply: { id: "btn_plans",   title: "💼 Hạng Mục Hợp Tác" } },
-          { type: "reply", reply: { id: "btn_nq5",     title: "📜 Nghị Quyết 05" } },
+          { type: "reply", reply: { id: "btn_plans", title: "💼 Hạng Mục Hợp Tác" } },
+          { type: "reply", reply: { id: "btn_nq5", title: "📜 Nghị Quyết 05" } },
           { type: "reply", reply: { id: "btn_contact", title: "📞 Liên Hệ" } },
         ],
       },
@@ -431,15 +431,15 @@ async function sendWAMessage(to: string, message: WAMessage) {
   const url = `https://graph.facebook.com/${WA_API_VERSION}/${PHONE_NUMBER_ID}/messages`;
   const payload = {
     messaging_product: "whatsapp",
-    recipient_type:    "individual",
+    recipient_type: "individual",
     to,
     ...message,
   };
 
   const res = await fetch(url, {
-    method:  "POST",
+    method: "POST",
     headers: {
-      Authorization:  `Bearer ${ACCESS_TOKEN}`,
+      Authorization: `Bearer ${ACCESS_TOKEN}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(payload),

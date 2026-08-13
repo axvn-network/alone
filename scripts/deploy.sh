@@ -13,7 +13,7 @@ set -euo pipefail
 APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 NGINX_CONF_SRC="$APP_DIR/infra/nginx/nginx.conf.langding"
 NGINX_CONF_DST="/etc/nginx/sites-available/langding.conf"
-PM2_APP="gvi-langding"
+PM2_APP="AXVN-langding"
 ECOSYSTEM="$APP_DIR/infra/ecosystem.config.js"
 
 # ── Màu terminal ──────────────────────────────────────────────────────────────
@@ -39,7 +39,7 @@ command -v pm2 &>/dev/null     || err "pm2 không tìm thấy — cài: npm i -g
 command -v nginx &>/dev/null   || err "nginx không tìm thấy"
 
 # Kiểm tra biến env tối thiểu
-for var in MONGODB_URI SESSION_SECRET NEXT_PUBLIC_APP_URL; do
+for var in MONGODB_URI SESSION_SECRET; do
   grep -q "^${var}=" .env.local || err ".env.local thiếu biến bắt buộc: $var"
 done
 

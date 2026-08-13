@@ -5,7 +5,7 @@
  * Tất cả component render roadmap đều import từ đây.
  * constants/strategy.ts re-export STRATEGIC_ROADMAP từ file này để backward-compat.
  *
- * Nguồn gốc: tổng hợp công khai từ bộ tài liệu chiến lược GVI 2026–2031.
+ * Nguồn gốc: tổng hợp công khai từ bộ tài liệu chiến lược AXVN 2026–2031.
  * Mọi giai đoạn là kế hoạch có điều kiện, không phải kết quả đã đạt được.
  */
 
@@ -66,7 +66,7 @@ export const ROADMAP_PHASES: readonly RoadmapPhase[] = [
       "Chuẩn bị khung tuân thủ",
       "Bảo vệ sở hữu trí tuệ",
     ],
-    accentColor: "bg-gvi-gold",
+    accentColor: "bg-AXVN-gold",
   },
   {
     sequence: 2,

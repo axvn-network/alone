@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 @theme {
-  --color-gvi-navy: #07111D;
-  --color-gvi-deep: #0B1B2E;
-  --color-gvi-charcoal: #111827;
-  --color-gvi-gold: #C9A24A;
-  --color-gvi-champagne: #E6C879;
-  --color-gvi-ivory: #F4F1EA;
-  --color-gvi-silver: #AEB6C1;
+  --color-AXVN-navy: #07111D;
+  --color-AXVN-deep: #0B1B2E;
+  --color-AXVN-charcoal: #111827;
+  --color-AXVN-gold: #C9A24A;
+  --color-AXVN-champagne: #E6C879;
+  --color-AXVN-ivory: #F4F1EA;
+  --color-AXVN-silver: #AEB6C1;
 
   /* Be Vietnam Pro ưu tiên — thiết kế riêng cho tiếng Việt, fallback Plus Jakarta Sans */
   --font-sans: var(--font-be-vietnam), "Be Vietnam Pro", var(--font-plus-jakarta), "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;

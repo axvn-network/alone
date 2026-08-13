@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
-import { RiskMatrix } from "@/components/visual/RiskMatrix";
-import PageHero from "@/components/public/PageHero";
+import { RiskMatrix } from "@/app/(site)/components/visual/RiskMatrix";
+import PageHero from "@/app/(site)/components/public/PageHero";
 import { RISKS } from "@/data/risks";
 
 export const metadata: Metadata = {
-  title: "Ma Trận Rủi Ro Chiến Lược | GVI Tech Holding",
+  title: "Ma Trận Rủi Ro Chiến Lược | AXVN Tech Holding",
   description:
-    "Tổng hợp các nhóm rủi ro tham chiếu nhằm hỗ trợ rà soát và quản trị có trách nhiệm tại GVI Tech Holding.",
+    "Tổng hợp các nhóm rủi ro tham chiếu nhằm hỗ trợ rà soát và quản trị có trách nhiệm tại AXVN Tech Holding.",
 };
 
 export default function RisksPage() {
   return (
-    <main className="min-h-screen bg-gvi-navy pb-safe md:pb-0">
+    <main className="min-h-screen bg-AXVN-navy pb-safe md:pb-0">
       <PageHero
         dark
         tag="Quản trị rủi ro"

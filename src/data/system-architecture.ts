@@ -1,7 +1,7 @@
 /**
  * src/data/system-architecture.ts
  *
- * Single source of truth cho sơ đồ kiến trúc hệ sinh thái GVI Tech Holding.
+ * Single source of truth cho sơ đồ kiến trúc hệ sinh thái AXVN Tech Holding.
  * ProjectEcosystem.tsx và ArchitectureDiagram.tsx đều import từ đây.
  */
 
@@ -41,13 +41,13 @@ export interface ArchLegendItem {
 
 export const ARCH_NODES: readonly ArchNode[] = [
   {
-    id: "gvi",
-    label: "GVI TECH HOLDING",
+    id: "AXVN",
+    label: "AXVN TECH HOLDING",
     sub: "Điều phối · Pháp lý · Chiến lược",
     role: "hub",
-    color: "bg-gvi-gold/15",
-    border: "border-gvi-gold/60",
-    textColor: "text-gvi-gold",
+    color: "bg-AXVN-gold/15",
+    border: "border-AXVN-gold/60",
+    textColor: "text-AXVN-gold",
     size: "lg",
     pos: { x: 50, y: 44 },
   },
@@ -122,21 +122,21 @@ export const ARCH_NODES: readonly ArchNode[] = [
 // ─── Connections ─────────────────────────────────────────────────────────────
 
 export const ARCH_CONNECTIONS: readonly ArchConnection[] = [
-  { from: "gvi", to: "btc",         label: "Nộp hồ sơ xin cấp phép" },
-  { from: "gvi", to: "institution", label: "Kết nạp cổ đông tổ chức" },
-  { from: "gvi", to: "tech",        label: "Triển khai hạ tầng" },
-  { from: "gvi", to: "legal",       label: "Xây dựng quy trình" },
-  { from: "gvi", to: "individual",  label: "Mở đăng ký góp vốn" },
-  { from: "gvi", to: "foreign",     label: "Kết nối quốc tế" },
+  { from: "AXVN", to: "btc", label: "Nộp hồ sơ xin cấp phép" },
+  { from: "AXVN", to: "institution", label: "Kết nạp cổ đông tổ chức" },
+  { from: "AXVN", to: "tech", label: "Triển khai hạ tầng" },
+  { from: "AXVN", to: "legal", label: "Xây dựng quy trình" },
+  { from: "AXVN", to: "individual", label: "Mở đăng ký góp vốn" },
+  { from: "AXVN", to: "foreign", label: "Kết nối quốc tế" },
 ] as const;
 
 // ─── Legend ──────────────────────────────────────────────────────────────────
 
 export const ARCH_LEGEND: readonly ArchLegendItem[] = [
-  { color: "bg-gvi-gold/40",  label: "Điều phối trung tâm" },
-  { color: "bg-blue-400/40",       label: "Cơ quan quản lý" },
-  { color: "bg-emerald-400/40",    label: "Cổ đông bắt buộc (>35%)" },
-  { color: "bg-purple-400/40",     label: "Đối tác kỹ thuật" },
-  { color: "bg-sky-400/40",        label: "Cổ đông phổ thông" },
-  { color: "bg-rose-400/40",       label: "Nước ngoài (≤49%)" },
+  { color: "bg-AXVN-gold/40", label: "Điều phối trung tâm" },
+  { color: "bg-blue-400/40", label: "Cơ quan quản lý" },
+  { color: "bg-emerald-400/40", label: "Cổ đông bắt buộc (>35%)" },
+  { color: "bg-purple-400/40", label: "Đối tác kỹ thuật" },
+  { color: "bg-sky-400/40", label: "Cổ đông phổ thông" },
+  { color: "bg-rose-400/40", label: "Nước ngoài (≤49%)" },
 ] as const;

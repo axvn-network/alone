@@ -50,7 +50,7 @@ jobs:
         run: npm run build
         env:
           # Provide minimal stubs so Next.js build does not fail on missing envs
-          MONGODB_URI: "mongodb://localhost:27017/gvi_ci"
+          MONGODB_URI: "mongodb://localhost:27017/AXVN_ci"
           SESSION_SECRET: "0000000000000000000000000000000000000000000000000000000000000000"
           NEXTAUTH_SECRET: "ci-placeholder-secret"
           NEXTAUTH_URL: "http://localhost:3000"

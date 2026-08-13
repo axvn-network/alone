@@ -14,7 +14,7 @@ DOMAIN="langding.tc-gaming.live"
 APP_DIR="/var/lkvip/langding"
 REPO_URL="https://github.com/hoangbom98/alone.git"
 BRANCH="main"
-PM2_APP="gvi-langding"
+PM2_APP="AXVN-langding"
 NGINX_CONF="/etc/nginx/sites-available/langding.conf"
 FIRST_DEPLOY="${1:-}"
 

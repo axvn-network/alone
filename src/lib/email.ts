@@ -11,8 +11,8 @@
 import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
-  host:   process.env.SMTP_HOST  ?? "",
-  port:   parseInt(process.env.SMTP_PORT ?? "587", 10),
+  host: process.env.SMTP_HOST ?? "",
+  port: parseInt(process.env.SMTP_PORT ?? "587", 10),
   secure: process.env.SMTP_SECURE === "true",
   auth: {
     user: process.env.SMTP_USER ?? "",
@@ -29,10 +29,10 @@ export async function sendEmail(options: {
   if (!process.env.SMTP_HOST) return; // Email not configured — skip silently
 
   await transporter.sendMail({
-    from:    options.from ?? process.env.SMTP_FROM ?? "noreply@gvitech.vn",
-    to:      options.to,
+    from: options.from ?? process.env.SMTP_FROM ?? "noreply@axvn.vn",
+    to: options.to,
     subject: options.subject,
-    html:    options.html,
+    html: options.html,
   });
 }
 
@@ -47,7 +47,7 @@ export async function sendEnquiryNotification(data: {
   consentGiven?: boolean;
   consentTimestamp?: string;
 }): Promise<void> {
-  const adminEmail = process.env.ADMIN_EMAIL ?? "admin@gvitech.vn";
+  const adminEmail = process.env.ADMIN_EMAIL ?? "admin@axvn.vn";
 
   const consentRow = data.consentGiven
     ? `<tr>
@@ -57,10 +57,10 @@ export async function sendEnquiryNotification(data: {
     : "";
 
   await sendEmail({
-    to:      adminEmail,
-    subject: `[GVI] New ${data.type} enquiry from ${data.name}`,
+    to: adminEmail,
+    subject: `[AXVN] New ${data.type} enquiry from ${data.name}`,
     html: `
-      <h2 style="color:#1a1a2e">New ${data.type} Enquiry — GVI Tech Holding</h2>
+      <h2 style="color:#1a1a2e">New ${data.type} Enquiry — AXVN Tech Holding</h2>
       <table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:14px">
         <tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold">Name</td>   <td style="padding:8px;border:1px solid #ddd">${data.name}</td></tr>
         <tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold">Email</td>  <td style="padding:8px;border:1px solid #ddd">${data.email}</td></tr>
@@ -72,7 +72,7 @@ export async function sendEnquiryNotification(data: {
       <h3 style="color:#1a1a2e">Message</h3>
       <p style="white-space:pre-wrap;font-family:sans-serif;font-size:14px">${data.message}</p>
       <hr style="border:none;border-top:1px solid #eee;margin-top:24px"/>
-      <p style="color:#999;font-size:11px">GVI Tech Holding · vnkr.vn · Automated notification — do not reply</p>
+      <p style="color:#999;font-size:11px">AXVN Tech Holding · axvn.vn · Automated notification — do not reply</p>
     `,
   });
 }

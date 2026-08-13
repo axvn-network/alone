@@ -1,6 +1,6 @@
 'use client';
 
-import { AccordionRoot, AccordionItem } from "@/components/ui/Accordion";
+import { AccordionRoot, AccordionItem } from "@/app/(site)/components/ui/Accordion";
 import { type RoadmapPhase } from "@/data/roadmap";
 
 interface RoadmapAccordionProps {
@@ -8,7 +8,7 @@ interface RoadmapAccordionProps {
   className?: string;
 }
 
-export function RoadmapAccordion({ phases, className = "bg-gvi-deep" }: RoadmapAccordionProps) {
+export function RoadmapAccordion({ phases, className = "bg-AXVN-deep" }: RoadmapAccordionProps) {
   return (
     <AccordionRoot allowMultiple className={className}>
       {phases.map((phase) => (
@@ -21,8 +21,8 @@ export function RoadmapAccordion({ phases, className = "bg-gvi-deep" }: RoadmapA
           <p className="mb-3">{phase.detail}</p>
           <ul className="space-y-1.5">
             {phase.highlights.map((h) => (
-              <li key={h} className="flex items-start gap-2 text-xs text-gvi-silver/70">
-                <span className="mt-0.5 w-1.5 h-1.5 rounded-full bg-gvi-gold/60 shrink-0" />
+              <li key={h} className="flex items-start gap-2 text-xs text-AXVN-silver/70">
+                <span className="mt-0.5 w-1.5 h-1.5 rounded-full bg-AXVN-gold/60 shrink-0" />
                 {h}
               </li>
             ))}

@@ -15,7 +15,7 @@ export interface LLMResponse {
 const GEMINI_ENDPOINT =
   "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent";
 
-const SYSTEM_PROMPT = `Bạn là trợ lý tư vấn của GVI Tech Holding — một tập đoàn đầu tư công nghệ tập trung vào FinTech, tài sản mã hóa hợp pháp, AI và kinh tế số tại Việt Nam. Trả lời ngắn gọn, chính xác và chuyên nghiệp. Trích dẫn nội dung từ tài liệu nội bộ được cung cấp khi có liên quan. Không bịa đặt thông tin. Nếu không tìm thấy câu trả lời trong tài liệu, nói thẳng điều đó.`;
+const SYSTEM_PROMPT = `Bạn là trợ lý tư vấn của AXVN Tech Holding — một tập đoàn đầu tư công nghệ tập trung vào FinTech, tài sản mã hóa hợp pháp, AI và kinh tế số tại Việt Nam. Trả lời ngắn gọn, chính xác và chuyên nghiệp. Trích dẫn nội dung từ tài liệu nội bộ được cung cấp khi có liên quan. Không bịa đặt thông tin. Nếu không tìm thấy câu trả lời trong tài liệu, nói thẳng điều đó.`;
 
 export async function generateResponse(context: string, query: string): Promise<string> {
   const apiKey = process.env.GEMINI_API_KEY;
@@ -40,8 +40,8 @@ export async function generateResponse(context: string, query: string): Promise<
           topK: 40,
         },
         safetySettings: [
-          { category: "HARM_CATEGORY_HARASSMENT",       threshold: "BLOCK_MEDIUM_AND_ABOVE" },
-          { category: "HARM_CATEGORY_HATE_SPEECH",      threshold: "BLOCK_MEDIUM_AND_ABOVE" },
+          { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
+          { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
           { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
           { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
         ],
@@ -61,7 +61,7 @@ export async function generateResponse(context: string, query: string): Promise<
     const text = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
     if (!text) {
       logger.warn("Gemini returned empty response");
-      return "Không tìm thấy thông tin phù hợp với câu hỏi của bạn. Vui lòng liên hệ trực tiếp với đội ngũ GVI.";
+      return "Không tìm thấy thông tin phù hợp với câu hỏi của bạn. Vui lòng liên hệ trực tiếp với đội ngũ AXVN.";
     }
 
     return text;

@@ -49,20 +49,48 @@ function computeReadTime(content: string) {
   return `${Math.max(1, Math.ceil((content || "").length / 2000))} phút đọc`;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function mapPost(post: Record<string, unknown>): any {
+interface MappedPost {
+  _id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  featuredImage: string;
+  category: string;
+  tags: string[];
+  status: string;
+  publishedAt: string | null;
+  createdAt: string;
+  seo: { title?: string; description?: string; keywords?: string; ogImage?: string };
+  date: string;
+  readTime: string;
+  updatedAt: string | undefined;
+}
+
+function mapPost(post: Record<string, unknown>): MappedPost {
   return {
-    ...post,
+    _id: String(post._id ?? ""),
+    title: String(post.title ?? ""),
+    slug: String(post.slug ?? ""),
+    excerpt: String(post.excerpt ?? ""),
+    content: String(post.content ?? ""),
+    featuredImage: String(post.featuredImage ?? ""),
+    category: String(post.category ?? ""),
+    tags: Array.isArray(post.tags) ? (post.tags as string[]) : [],
+    status: String(post.status ?? ""),
+    publishedAt: post.publishedAt ? String(post.publishedAt) : null,
+    createdAt: String(post.createdAt ?? ""),
+    seo: (post.seo as MappedPost["seo"]) ?? {},
     date: formatDate((post.publishedAt as string | undefined) || (post.createdAt as string | undefined)),
-    readTime: computeReadTime(post.content as string),
-    updatedAt: post.updatedAt as string | undefined,
+    readTime: computeReadTime((post.content as string) || ""),
+    updatedAt: post.updatedAt ? String(post.updatedAt) : undefined,
   };
 }
 
 async function getPost(slug: string) {
   try {
     const post = await blogService.getBlogBySlug(slug);
-    return mapPost(post as Record<string, unknown>);
+    return mapPost(post as unknown as Record<string, unknown>);
   } catch {
     return null;
   }
@@ -71,7 +99,7 @@ async function getPost(slug: string) {
 async function getAllPosts() {
   try {
     const { posts } = await blogService.getBlogs({});
-    return posts.map((p) => mapPost(p as Record<string, unknown>));
+    return posts.map((p) => mapPost(p as unknown as Record<string, unknown>));
   } catch {
     return [];
   }
@@ -86,7 +114,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const article = await getPost(slug);
   if (!article) return { title: "Article Not Found" };
   return {
-    title: `${article.title} | GVI Tech Holding`,
+    title: `${article.title} | AXVN Tech Holding`,
     description: article.excerpt,
     openGraph: {
       title: article.title,

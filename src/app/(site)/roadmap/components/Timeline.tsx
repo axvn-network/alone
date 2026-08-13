@@ -37,13 +37,13 @@ function StatCard({
   description: string;
 }) {
   return (
-    <div className="rounded-lg border border-white/8 bg-gvi-navy/70 p-4">
-      <div className="flex items-center gap-2 text-gvi-gold">
+    <div className="rounded-lg border border-white/8 bg-AXVN-navy/70 p-4">
+      <div className="flex items-center gap-2 text-AXVN-gold">
         <Icon className="h-4 w-4" aria-hidden="true" />
         <p className="text-[10px] font-semibold uppercase tracking-wider">{label}</p>
       </div>
-      <p className="mt-3 text-xl font-semibold text-gvi-ivory">{value}</p>
-      <p className="mt-1 text-xs leading-relaxed text-gvi-silver/60">{description}</p>
+      <p className="mt-3 text-xl font-semibold text-AXVN-ivory">{value}</p>
+      <p className="mt-1 text-xs leading-relaxed text-AXVN-silver/60">{description}</p>
     </div>
   );
 }
@@ -70,13 +70,12 @@ function PhaseItem({
       {/* Year bubble */}
       <div className="relative z-10 flex flex-col items-center shrink-0 mt-1">
         <span
-          className={`w-12 h-12 bg-gvi-navy border rounded-full flex items-center justify-center text-xs font-semibold ${
-            isReference
-              ? "border-gvi-gold bg-gvi-gold/15 text-gvi-gold"
+          className={`w-12 h-12 bg-AXVN-navy border rounded-full flex items-center justify-center text-xs font-semibold ${isReference
+              ? "border-AXVN-gold bg-AXVN-gold/15 text-AXVN-gold"
               : isEarlier
-                ? "border-gvi-silver/25 text-gvi-silver/65"
-                : "border-gvi-gold/40 text-gvi-gold"
-          }`}
+                ? "border-AXVN-silver/25 text-AXVN-silver/65"
+                : "border-AXVN-gold/40 text-AXVN-gold"
+            }`}
         >
           {phase.year}
         </span>
@@ -84,11 +83,10 @@ function PhaseItem({
 
       {/* Card */}
       <article
-        className={`flex-1 rounded-xl border bg-gvi-deep transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-black/20 ${
-          isReference
-            ? "border-gvi-gold/45 shadow-lg shadow-gvi-gold/5"
-            : "border-gvi-gold/15 hover:border-gvi-gold/35"
-        }`}
+        className={`flex-1 rounded-xl border bg-AXVN-deep transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-black/20 ${isReference
+            ? "border-AXVN-gold/45 shadow-lg shadow-AXVN-gold/5"
+            : "border-AXVN-gold/15 hover:border-AXVN-gold/35"
+          }`}
       >
         {/* Header button */}
         <button
@@ -100,14 +98,14 @@ function PhaseItem({
         >
           <div className="flex items-start justify-between gap-3 mb-2">
             <div className="flex flex-wrap items-center gap-2.5">
-              <span className="text-gvi-silver/55 text-[10px] font-mono font-bold tracking-widest">
+              <span className="text-AXVN-silver/55 text-[10px] font-mono font-bold tracking-widest">
                 GIAI ĐOẠN {phase.sequence} · {phase.year}
               </span>
-              <span className="text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-full bg-gvi-gold/10 text-gvi-gold">
+              <span className="text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-full bg-AXVN-gold/10 text-AXVN-gold">
                 {phase.theme}
               </span>
               {isReference && (
-                <span className="text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-full bg-gvi-gold text-gvi-navy">
+                <span className="text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-full bg-AXVN-gold text-AXVN-navy">
                   Mốc tham chiếu
                 </span>
               )}
@@ -115,13 +113,12 @@ function PhaseItem({
           </div>
           <div className="flex items-start gap-3">
             <div className="min-w-0 flex-1">
-              <h3 className="font-semibold text-gvi-ivory text-sm mb-1.5">{phase.title}</h3>
-              <p className="text-gvi-silver/70 text-xs leading-relaxed">{phase.detail}</p>
+              <h3 className="font-semibold text-AXVN-ivory text-sm mb-1.5">{phase.title}</h3>
+              <p className="text-AXVN-silver/70 text-xs leading-relaxed">{phase.detail}</p>
             </div>
             <ChevronDown
-              className={`w-4 h-4 shrink-0 mt-1 transition-transform duration-200 ${
-                isOpen ? "rotate-180 text-gvi-gold" : "text-gvi-silver/50"
-              }`}
+              className={`w-4 h-4 shrink-0 mt-1 transition-transform duration-200 ${isOpen ? "rotate-180 text-AXVN-gold" : "text-AXVN-silver/50"
+                }`}
               aria-hidden="true"
             />
           </div>
@@ -144,10 +141,10 @@ function PhaseItem({
                   {phase.highlights.map((highlight) => (
                     <li key={highlight} className="flex items-start gap-2.5">
                       <CheckCircle2
-                        className="w-3.5 h-3.5 shrink-0 mt-0.5 text-gvi-gold"
+                        className="w-3.5 h-3.5 shrink-0 mt-0.5 text-AXVN-gold"
                         aria-hidden="true"
                       />
-                      <span className="text-gvi-silver/75 text-xs leading-relaxed">
+                      <span className="text-AXVN-silver/75 text-xs leading-relaxed">
                         {highlight}
                       </span>
                     </li>
@@ -181,7 +178,7 @@ export function Timeline({ phases = ROADMAP_PHASES, defaultOpen }: TimelineProps
     <div className="relative max-w-4xl mx-auto">
       {/* ── Summary bar ─────────────────────────────────────────────── */}
       <section
-        className="mb-8 rounded-xl border border-gvi-gold/15 bg-gvi-deep/80 p-4 sm:p-5"
+        className="mb-8 rounded-xl border border-AXVN-gold/15 bg-AXVN-deep/80 p-4 sm:p-5"
         aria-label="Tóm tắt lộ trình"
       >
         <div className="grid gap-3 sm:grid-cols-3">
@@ -215,9 +212,8 @@ export function Timeline({ phases = ROADMAP_PHASES, defaultOpen }: TimelineProps
             {phases.map((phase, index) => (
               <span
                 key={phase.year}
-                className={`h-1.5 rounded-full transition-colors duration-300 ${
-                  index < refPosition ? "bg-gvi-gold/70" : "bg-gvi-silver/20"
-                }`}
+                className={`h-1.5 rounded-full transition-colors duration-300 ${index < refPosition ? "bg-AXVN-gold/70" : "bg-AXVN-silver/20"
+                  }`}
               />
             ))}
           </div>
@@ -234,11 +230,10 @@ export function Timeline({ phases = ROADMAP_PHASES, defaultOpen }: TimelineProps
                   onClick={() => toggle(phase.year)}
                   aria-pressed={isActive}
                   aria-controls={`timeline-phase-${phase.year}`}
-                  className={`min-w-16 rounded-md border px-3 py-2 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gvi-gold ${
-                    isActive
-                      ? "border-gvi-gold bg-gvi-gold text-gvi-navy"
-                      : "border-gvi-gold/20 bg-gvi-navy text-gvi-silver hover:border-gvi-gold/50"
-                  }`}
+                  className={`min-w-16 rounded-md border px-3 py-2 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-AXVN-gold ${isActive
+                      ? "border-AXVN-gold bg-AXVN-gold text-AXVN-navy"
+                      : "border-AXVN-gold/20 bg-AXVN-navy text-AXVN-silver hover:border-AXVN-gold/50"
+                    }`}
                 >
                   {phase.year}
                 </button>
@@ -249,7 +244,7 @@ export function Timeline({ phases = ROADMAP_PHASES, defaultOpen }: TimelineProps
       </section>
 
       {/* ── Vertical guide line ─────────────────────────────────────── */}
-      <div className="absolute left-6 top-[27rem] bottom-8 w-px bg-gradient-to-b from-gvi-gold/50 via-gvi-gold/30 to-gvi-silver/10 hidden sm:block" />
+      <div className="absolute left-6 top-[27rem] bottom-8 w-px bg-gradient-to-b from-AXVN-gold/50 via-AXVN-gold/30 to-AXVN-silver/10 hidden sm:block" />
 
       {/* ── Phase list ──────────────────────────────────────────────── */}
       <ol className="space-y-4">

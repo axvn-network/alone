@@ -94,7 +94,7 @@ export default function CustomCursor() {
       {/* Inner Gold Dot */}
       <div
         ref={dotRef}
-        className="fixed top-0 left-0 w-2.5 h-2.5 rounded-full bg-gvi-gold opacity-0 transition-opacity duration-300 pointer-events-none shadow-[0_0_8px_rgba(201,162,74,0.8)]"
+        className="fixed top-0 left-0 w-2.5 h-2.5 rounded-full bg-AXVN-gold opacity-0 transition-opacity duration-300 pointer-events-none shadow-[0_0_8px_rgba(201,162,74,0.8)]"
         style={{ willChange: "transform" }}
       />
       {/* Outer Halo Ring */}

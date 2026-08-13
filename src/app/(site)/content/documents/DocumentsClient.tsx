@@ -6,7 +6,7 @@ import {
   FileText, Download, Search, Calendar, ChevronLeft, ChevronRight, FileDown,
   BookOpen, BarChart2, Users, Megaphone, ScrollText, ClipboardList,
 } from "lucide-react";
-import PageHero from "@/components/public/PageHero";
+import PageHero from "@/app/(site)/components/public/PageHero";
 
 /* ── Types ─────────────────────────────────────────────────── */
 type DocumentCategory =
@@ -312,11 +312,10 @@ function DocTable({ docs, total, page, pageSize, onPage, search, onSearch, onPag
                   <button
                     key={p}
                     onClick={() => onPage(p as number)}
-                    className={`w-8 h-8 rounded text-xs font-semibold transition-colors ${
-                      p === page
+                    className={`w-8 h-8 rounded text-xs font-semibold transition-colors ${p === page
                         ? "bg-[#07111D] text-white"
                         : "hover:bg-gray-100 text-gray-600"
-                    }`}
+                      }`}
                   >
                     {p}
                   </button>
@@ -347,11 +346,10 @@ function YearSelector({ years, selected, onChange }: { years: number[]; selected
       <div className="flex flex-wrap gap-2">
         <button
           onClick={() => onChange(null)}
-          className={`flex items-center gap-1 px-3 py-1.5 text-xs font-semibold rounded border transition-all ${
-            selected === null
+          className={`flex items-center gap-1 px-3 py-1.5 text-xs font-semibold rounded border transition-all ${selected === null
               ? "bg-[#07111D] text-white border-[#07111D]"
               : "bg-white text-gray-600 border-gray-200 hover:border-[#C9A24A] hover:text-[#C9A24A]"
-          }`}
+            }`}
         >
           Tất cả
         </button>
@@ -359,11 +357,10 @@ function YearSelector({ years, selected, onChange }: { years: number[]; selected
           <button
             key={yr}
             onClick={() => onChange(yr)}
-            className={`flex items-center gap-1 px-3 py-1.5 text-xs font-semibold rounded border transition-all ${
-              selected === yr
+            className={`flex items-center gap-1 px-3 py-1.5 text-xs font-semibold rounded border transition-all ${selected === yr
                 ? "bg-[#07111D] text-white border-[#07111D]"
                 : "bg-white text-gray-600 border-gray-200 hover:border-[#C9A24A] hover:text-[#C9A24A]"
-            }`}
+              }`}
           >
             {yr}
           </button>
@@ -452,12 +449,12 @@ export default function DocumentsClient() {
         heading={
           <>
             Minh Bạch &{" "}
-            <span className="font-bold bg-gradient-to-r from-gvi-gold to-gvi-champagne bg-clip-text text-transparent">
+            <span className="font-bold bg-gradient-to-r from-AXVN-gold to-AXVN-champagne bg-clip-text text-transparent">
               Trách Nhiệm
             </span>
           </>
         }
-        description="GVI Tech Holding cam kết công bố đầy đủ, kịp thời và minh bạch mọi thông tin liên quan đến hoạt động kinh doanh, tài chính và quản trị doanh nghiệp."
+        description="AXVN Tech Holding cam kết công bố đầy đủ, kịp thời và minh bạch mọi thông tin liên quan đến hoạt động kinh doanh, tài chính và quản trị doanh nghiệp."
       />
 
       <section className="py-12 md:py-16 bg-[#F8F9FB] min-h-screen">
@@ -470,11 +467,10 @@ export default function DocumentsClient() {
                 <button
                   key={tab.key}
                   onClick={() => handleTab(tab.key)}
-                  className={`flex items-center gap-2 px-4 py-3 text-sm font-semibold whitespace-nowrap border-b-2 transition-all -mb-px ${
-                    activeTab === tab.key
+                  className={`flex items-center gap-2 px-4 py-3 text-sm font-semibold whitespace-nowrap border-b-2 transition-all -mb-px ${activeTab === tab.key
                       ? "border-[#C9A24A] text-[#07111D]"
                       : "border-transparent text-gray-500 hover:text-gray-800 hover:border-gray-300"
-                  }`}
+                    }`}
                 >
                   <span className="shrink-0">{tab.icon}</span>
                   {tab.label}

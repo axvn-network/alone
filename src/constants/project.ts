@@ -1,13 +1,13 @@
 /**
  * Shared project constants — single source of truth used across:
- *   /invest-with-gvi
- *   /invest-with-gvi/plans
- *   /invest-with-gvi/charter
+ *   /invest-with-axvn
+ *   /invest-with-axvn/plans
+ *   /invest-with-axvn/charter
  */
 
 export const CAPITAL_AMOUNT = {
-  vnd:   "10.000 tỷ VNĐ",
-  usd:   "≈ 400 triệu USD",
+  vnd: "10.000 tỷ VNĐ",
+  usd: "≈ 400 triệu USD",
   short: "10.000 tỷ",
 } as const;
 

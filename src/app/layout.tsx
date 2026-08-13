@@ -7,13 +7,20 @@ import AnimationProvider from "@/components/layout/AnimationProvider";
 import GlobalNavbar from "@/components/layout/GlobalNavbar";
 import GlobalFooter from "@/components/layout/GlobalFooter";
 import { LangProvider } from "@/contexts/LangContext";
+import { PUBLIC_BRAND } from "@/constants/brand";
 import "./globals.css";
 
+const SITE_CONFIG = {
+  DOMAIN: new URL(PUBLIC_BRAND.canonicalUrl).hostname,
+  URL: PUBLIC_BRAND.canonicalUrl,
+  NAME: PUBLIC_BRAND.name,
+} as const;
+
 // Analytics IDs — read from env; scripts are NOT injected when value is absent or placeholder
-const GA_ID      = process.env.NEXT_PUBLIC_GA_ID;
-const PIXEL_ID   = process.env.NEXT_PUBLIC_META_PIXEL_ID;
-const GA_ACTIVE  = !!GA_ID    && GA_ID    !== "G-XXXXXXXXXX";
-const FB_ACTIVE  = !!PIXEL_ID && PIXEL_ID !== "XXXXXXXXXXXXXXX" && PIXEL_ID !== "XXXXXXXXXXXXXXXX";
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
+const GA_ACTIVE = !!GA_ID && GA_ID !== "G-XXXXXXXXXX";
+const FB_ACTIVE = !!PIXEL_ID && PIXEL_ID !== "XXXXXXXXXXXXXXX" && PIXEL_ID !== "XXXXXXXXXXXXXXXX";
 
 const beVietnamPro = Be_Vietnam_Pro({
   subsets: ["vietnamese", "latin"],
@@ -31,36 +38,36 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: "GVI Tech Holding | Tập Đoàn Đầu Tư Hàng Đầu",
-    template: "%s | GVI Tech Holding",
+    default: "AXVN Tech Holding | Tập Đoàn Đầu Tư Hàng Đầu",
+    template: "%s | AXVN Tech Holding",
   },
   description:
-    "GVI Tech Holding là tập đoàn đầu tư đa ngành hàng đầu tại Dubai và quốc tế, chuyên về bất động sản, mua bán doanh nghiệp, private equity, công nghệ AI và dịch vụ khách sạn nghỉ dưỡng.",
+    "AXVN Tech Holding là tập đoàn đầu tư đa ngành hàng đầu tại Dubai và quốc tế, chuyên về bất động sản, mua bán doanh nghiệp, private equity, công nghệ AI và dịch vụ khách sạn nghỉ dưỡng.",
   keywords: [
     "tập đoàn đầu tư Dubai",
     "đầu tư bất động sản",
     "quỹ đầu tư tư nhân",
     "mua bán doanh nghiệp M&A",
-    "GVI Tech Holding",
+    "AXVN Tech Holding",
     "đầu tư công nghệ AI",
     "hợp tác chiến lược đầu tư",
     "quản lý tài sản cao cấp",
   ],
-  authors: [{ name: "GVI Tech Holding" }],
-  creator: "GVI Tech Holding",
-  publisher: "GVI Tech Holding",
-  metadataBase: new URL("https://langding.tc-gaming.live"),
+  authors: [{ name: SITE_CONFIG.NAME }],
+  creator: SITE_CONFIG.NAME,
+  publisher: SITE_CONFIG.NAME,
+  metadataBase: new URL(SITE_CONFIG.URL),
   openGraph: {
-    title: "GVI Tech Holding - Vững Chắc Nền Tảng. Đột Phá Tầm Nhìn.",
+    title: "AXVN Tech Holding - Vững Chắc Nền Tảng. Đột Phá Tầm Nhìn.",
     description: "Tập đoàn đầu tư chiến lược đa ngành với tầm nhìn bền vững và tiềm lực vững chắc.",
     type: "website",
     locale: "vi_VN",
-    siteName: "GVI Tech Holding",
-    url: "https://langding.tc-gaming.live",
+    siteName: SITE_CONFIG.NAME,
+    url: SITE_CONFIG.URL,
   },
   twitter: {
     card: "summary_large_image",
-    title: "GVI Tech Holding",
+    title: SITE_CONFIG.NAME,
     description: "Vững Chắc Nền Tảng. Đột Phá Tầm Nhìn.",
   },
   robots: {
@@ -75,7 +82,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://langding.tc-gaming.live",
+    canonical: SITE_CONFIG.URL,
   },
 };
 
@@ -111,7 +118,7 @@ export default function RootLayout({
         )}
       </head>
       <body
-        className="antialiased bg-gvi-navy text-gvi-silver cursor-none"
+        className="antialiased bg-AXVN-navy text-AXVN-silver cursor-none"
         style={{
           paddingBottom: "calc(4.5rem + env(safe-area-inset-bottom, 0px))",
         }}

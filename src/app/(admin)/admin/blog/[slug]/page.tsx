@@ -26,8 +26,8 @@ import {
 } from "lucide-react";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import AdminNavbar from "@/components/admin/AdminNavbar";
-import RichTextEditor from "@/components/shared/RichTextEditor";
-import AiAssistPanel, { BLOG_AI_ACTIONS } from "@/components/shared/AiAssistPanel";
+import RichTextEditor from "@/app/(site)/components/ui/RichTextEditor";
+import AiAssistPanel, { BLOG_AI_ACTIONS } from "@/app/(site)/components/ui/AiAssistPanel";
 import { useCsrf } from "@/contexts/CsrfContext";
 
 import { ARTICLE_CATEGORIES as categories } from "@/constants/blog";
@@ -54,17 +54,17 @@ function DeleteModal({
       <div className="relative bg-[#07111D] border border-red-500/20 rounded-2xl shadow-2xl shadow-black/60 w-full max-w-md p-6">
         <button
           onClick={onCancel}
-          className="absolute top-4 right-4 p-1.5 text-gvi-silver/40 hover:text-gvi-ivory transition-colors rounded-lg hover:bg-white/5"
+          className="absolute top-4 right-4 p-1.5 text-AXVN-silver/40 hover:text-AXVN-ivory transition-colors rounded-lg hover:bg-white/5"
         >
           <X className="w-4 h-4" />
         </button>
         <div className="w-12 h-12 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center justify-center mb-4">
           <AlertTriangle className="w-6 h-6 text-red-400" />
         </div>
-        <h2 className="text-lg font-bold text-gvi-ivory mb-1">Xóa Bài Viết?</h2>
-        <p className="text-gvi-silver/50 text-sm mb-4 leading-relaxed">
+        <h2 className="text-lg font-bold text-AXVN-ivory mb-1">Xóa Bài Viết?</h2>
+        <p className="text-AXVN-silver/50 text-sm mb-4 leading-relaxed">
           Thao tác này sẽ xóa vĩnh viễn{" "}
-          <span className="text-gvi-ivory font-semibold">&ldquo;{title}&rdquo;</span>.
+          <span className="text-AXVN-ivory font-semibold">&ldquo;{title}&rdquo;</span>.
           Không thể hoàn tác hành động này.
         </p>
         <div className="flex items-center gap-3 p-3 bg-white/5 border border-white/5 rounded-xl mb-5">
@@ -73,17 +73,17 @@ function DeleteModal({
               <Image src={featuredImage} alt="" fill className="object-cover" sizes="56px" />
             ) : (
               <div className="w-full h-full flex items-center justify-center">
-                <ImageOff className="w-4 h-4 text-gvi-silver/30" />
+                <ImageOff className="w-4 h-4 text-AXVN-silver/30" />
               </div>
             )}
           </div>
-          <p className="text-sm font-medium text-gvi-ivory truncate">{title || "Untitled"}</p>
+          <p className="text-sm font-medium text-AXVN-ivory truncate">{title || "Untitled"}</p>
         </div>
         <div className="flex gap-2.5">
           <button
             onClick={onCancel}
             disabled={loading}
-            className="flex-1 py-2.5 border border-white/10 text-gvi-silver/70 text-sm font-semibold hover:border-white/20 hover:text-gvi-ivory transition-all rounded-xl"
+            className="flex-1 py-2.5 border border-white/10 text-AXVN-silver/70 text-sm font-semibold hover:border-white/20 hover:text-AXVN-ivory transition-all rounded-xl"
           >
             Hủy
           </button>
@@ -267,10 +267,10 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
   }
 
   return (
-    <div className="min-h-screen bg-[#03080e] flex selection:bg-gvi-gold/20 selection:text-gvi-champagne font-sans">
+    <div className="min-h-screen bg-[#03080e] flex selection:bg-AXVN-gold/20 selection:text-AXVN-champagne font-sans">
       <AdminSidebar />
       <main className="flex-1 overflow-y-auto overflow-x-hidden min-h-screen relative">
-        <div className="absolute top-0 left-1/3 w-[500px] h-[500px] bg-gvi-gold/4 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute top-0 left-1/3 w-[500px] h-[500px] bg-AXVN-gold/4 rounded-full blur-[140px] pointer-events-none" />
         <div className="absolute bottom-1/3 right-0 w-[400px] h-[400px] bg-blue-600/4 rounded-full blur-[120px] pointer-events-none" />
 
         <AdminNavbar title={isNew ? "Tạo Bài Viết Mới" : "Chỉnh Sửa Bài Viết"} />
@@ -290,15 +290,15 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
             <div className="flex items-center gap-4">
               <Link
                 href="/admin/blog"
-                className="flex items-center gap-2 px-3 py-2 border border-white/10 text-gvi-silver/60 hover:text-gvi-gold hover:border-gvi-gold/30 text-xs font-medium transition-all rounded-lg"
+                className="flex items-center gap-2 px-3 py-2 border border-white/10 text-AXVN-silver/60 hover:text-AXVN-gold hover:border-AXVN-gold/30 text-xs font-medium transition-all rounded-lg"
               >
                 <ArrowLeft className="w-3.5 h-3.5" /> Quay lại
               </Link>
               <div>
-                <h1 className="text-lg font-bold text-gvi-ivory tracking-tight">
+                <h1 className="text-lg font-bold text-AXVN-ivory tracking-tight">
                   {isNew ? "Tạo Bài Viết Mới" : "Chỉnh Sửa Bài Viết"}
                 </h1>
-                <p className="text-gvi-silver/40 text-xs mt-0.5">
+                <p className="text-AXVN-silver/40 text-xs mt-0.5">
                   {isNew ? "Viết và xuất bản bài viết mới" : `/${slug}`}
                 </p>
               </div>
@@ -309,13 +309,13 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
               <div className="hidden sm:flex items-center gap-1 bg-white/5 rounded-lg p-1">
                 <button
                   onClick={() => setStatus("draft")}
-                  className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all ${status === "draft" ? "bg-amber-500/20 text-amber-400 border border-amber-500/30" : "text-gvi-silver/50 hover:text-gvi-ivory"}`}
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all ${status === "draft" ? "bg-amber-500/20 text-amber-400 border border-amber-500/30" : "text-AXVN-silver/50 hover:text-AXVN-ivory"}`}
                 >
                   Bản Nháp
                 </button>
                 <button
                   onClick={() => setStatus("published")}
-                  className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all ${status === "published" ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" : "text-gvi-silver/50 hover:text-gvi-ivory"}`}
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all ${status === "published" ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" : "text-AXVN-silver/50 hover:text-AXVN-ivory"}`}
                 >
                   Xuất Bản
                 </button>
@@ -324,7 +324,7 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
               {!isNew && (
                 <button
                   onClick={() => setShowDeleteModal(true)}
-                  className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-gvi-silver/60 text-sm hover:border-red-500/40 hover:text-red-400 hover:bg-red-500/10 transition-all rounded-lg"
+                  className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-AXVN-silver/60 text-sm hover:border-red-500/40 hover:text-red-400 hover:bg-red-500/10 transition-all rounded-lg"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
                   <span className="hidden sm:inline">Xóa</span>
@@ -334,7 +334,7 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
               <button
                 onClick={handleSave}
                 disabled={saving || !title.trim()}
-                className="flex items-center gap-2 px-5 py-2.5 bg-gvi-gold text-gvi-navy text-sm font-bold hover:bg-gvi-champagne transition-all disabled:opacity-50 disabled:cursor-not-allowed rounded-lg shadow-lg shadow-gvi-gold/10"
+                className="flex items-center gap-2 px-5 py-2.5 bg-AXVN-gold text-AXVN-navy text-sm font-bold hover:bg-AXVN-champagne transition-all disabled:opacity-50 disabled:cursor-not-allowed rounded-lg shadow-lg shadow-AXVN-gold/10"
               >
                 <Save className="w-3.5 h-3.5" />
                 {saving ? "Đang lưu…" : "Lưu"}
@@ -350,17 +350,17 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
 
               {/* Title field */}
               <div className="bg-[#07111D]/60 backdrop-blur-xl border border-white/5 rounded-xl p-5">
-                <label className="block text-[10px] font-bold text-gvi-silver/40 uppercase tracking-widest mb-3">Tiêu Đề Bài Viết</label>
+                <label className="block text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-widest mb-3">Tiêu Đề Bài Viết</label>
                 <input
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="Nhập tiêu đề bài viết..."
-                  className="w-full bg-transparent text-gvi-ivory text-xl font-bold placeholder:text-gvi-silver/20 focus:outline-none border-b border-white/5 pb-3 focus:border-gvi-gold/30 transition-colors"
+                  className="w-full bg-transparent text-AXVN-ivory text-xl font-bold placeholder:text-AXVN-silver/20 focus:outline-none border-b border-white/5 pb-3 focus:border-AXVN-gold/30 transition-colors"
                 />
                 {title && (
-                  <p className="text-[10px] text-gvi-silver/30 mt-2.5">
-                    Slug: <span className="font-mono text-gvi-silver/50">/insights/{isNew ? generateSlug(title) : slug}</span>
+                  <p className="text-[10px] text-AXVN-silver/30 mt-2.5">
+                    Slug: <span className="font-mono text-AXVN-silver/50">/insights/{isNew ? generateSlug(title) : slug}</span>
                   </p>
                 )}
               </div>
@@ -368,15 +368,15 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
               {/* Excerpt */}
               <div className="bg-[#07111D]/60 backdrop-blur-xl border border-white/5 rounded-xl p-5">
                 <div className="flex items-center justify-between mb-3">
-                  <label className="text-[10px] font-bold text-gvi-silver/40 uppercase tracking-widest">Tóm Tắt Bài Viết</label>
-                  <span className={`text-[10px] font-medium ${excerpt.length > 200 ? "text-red-400" : "text-gvi-silver/30"}`}>{excerpt.length}/200</span>
+                  <label className="text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-widest">Tóm Tắt Bài Viết</label>
+                  <span className={`text-[10px] font-medium ${excerpt.length > 200 ? "text-red-400" : "text-AXVN-silver/30"}`}>{excerpt.length}/200</span>
                 </div>
                 <textarea
                   value={excerpt}
                   onChange={(e) => setExcerpt(e.target.value)}
                   placeholder="Mô tả ngắn hiển thị trong card và kết quả tìm kiếm..."
                   rows={3}
-                  className="w-full bg-transparent text-gvi-ivory text-sm placeholder:text-gvi-silver/20 focus:outline-none resize-none leading-relaxed"
+                  className="w-full bg-transparent text-AXVN-ivory text-sm placeholder:text-AXVN-silver/20 focus:outline-none resize-none leading-relaxed"
                 />
               </div>
 
@@ -387,19 +387,18 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                     <button
                       key={t.id}
                       onClick={() => setActiveTab(t.id)}
-                      className={`flex items-center gap-2 px-4 sm:px-5 py-3.5 text-xs font-semibold transition-all border-b-2 shrink-0 ${
-                          activeTab === t.id
-                            ? "border-gvi-gold text-gvi-gold bg-gvi-gold/5"
-                            : "border-transparent text-gvi-silver/40 hover:text-gvi-ivory hover:bg-white/5"
+                      className={`flex items-center gap-2 px-4 sm:px-5 py-3.5 text-xs font-semibold transition-all border-b-2 shrink-0 ${activeTab === t.id
+                          ? "border-AXVN-gold text-AXVN-gold bg-AXVN-gold/5"
+                          : "border-transparent text-AXVN-silver/40 hover:text-AXVN-ivory hover:bg-white/5"
                         }`}
-                      >
-                        {t.icon} {t.label}
-                      </button>
-                    ))}
-                    <div className="ml-auto flex items-center px-2 sm:px-4 gap-2 sm:gap-3 text-[9px] sm:text-[10px] text-gvi-silver/30 border-b-2 border-transparent shrink-0">
-                      <span className="whitespace-nowrap">{wordCount} từ</span>
-                      <span className="whitespace-nowrap">{charCount} ký tự</span>
-                    </div>
+                    >
+                      {t.icon} {t.label}
+                    </button>
+                  ))}
+                  <div className="ml-auto flex items-center px-2 sm:px-4 gap-2 sm:gap-3 text-[9px] sm:text-[10px] text-AXVN-silver/30 border-b-2 border-transparent shrink-0">
+                    <span className="whitespace-nowrap">{wordCount} từ</span>
+                    <span className="whitespace-nowrap">{charCount} ký tự</span>
+                  </div>
                 </div>
 
                 <div className="p-5">
@@ -415,36 +414,36 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                       </div>
                       <div>
                         <div className="flex items-center justify-between mb-2">
-                          <label className="text-[10px] font-bold text-gvi-silver/40 uppercase tracking-widest">Tiêu Đề SEO</label>
-                          <span className={`text-[10px] font-medium ${seoTitle.length > 60 ? "text-red-400" : "text-gvi-silver/30"}`}>{seoTitle.length}/60</span>
+                          <label className="text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-widest">Tiêu Đề SEO</label>
+                          <span className={`text-[10px] font-medium ${seoTitle.length > 60 ? "text-red-400" : "text-AXVN-silver/30"}`}>{seoTitle.length}/60</span>
                         </div>
                         <input
                           type="text"
                           value={seoTitle}
                           onChange={(e) => setSeoTitle(e.target.value)}
                           placeholder={title || "Nhập tiêu đề SEO…"}
-                          className="w-full bg-white/5 border border-white/10 text-gvi-ivory text-sm px-4 py-3 focus:outline-none focus:border-gvi-gold/40 transition-colors rounded-lg placeholder:text-gvi-silver/20"
+                          className="w-full bg-white/5 border border-white/10 text-AXVN-ivory text-sm px-4 py-3 focus:outline-none focus:border-AXVN-gold/40 transition-colors rounded-lg placeholder:text-AXVN-silver/20"
                         />
                       </div>
                       <div>
                         <div className="flex items-center justify-between mb-2">
-                          <label className="text-[10px] font-bold text-gvi-silver/40 uppercase tracking-widest">Mô Tả SEO</label>
-                          <span className={`text-[10px] font-medium ${seoDescription.length > 160 ? "text-red-400" : "text-gvi-silver/30"}`}>{seoDescription.length}/160</span>
+                          <label className="text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-widest">Mô Tả SEO</label>
+                          <span className={`text-[10px] font-medium ${seoDescription.length > 160 ? "text-red-400" : "text-AXVN-silver/30"}`}>{seoDescription.length}/160</span>
                         </div>
                         <textarea
                           value={seoDescription}
                           onChange={(e) => setSeoDescription(e.target.value)}
                           placeholder={excerpt || "Nhập mô tả meta…"}
                           rows={3}
-                          className="w-full bg-white/5 border border-white/10 text-gvi-ivory text-sm px-4 py-3 focus:outline-none focus:border-gvi-gold/40 transition-colors resize-none rounded-lg placeholder:text-gvi-silver/20"
+                          className="w-full bg-white/5 border border-white/10 text-AXVN-ivory text-sm px-4 py-3 focus:outline-none focus:border-AXVN-gold/40 transition-colors resize-none rounded-lg placeholder:text-AXVN-silver/20"
                         />
                       </div>
                       {(seoTitle || title) && (
                         <div className="p-4 bg-white/5 border border-white/5 rounded-lg">
-                          <p className="text-[10px] font-bold text-gvi-silver/30 uppercase tracking-widest mb-3">Xem Trước Trên Google</p>
+                          <p className="text-[10px] font-bold text-AXVN-silver/30 uppercase tracking-widest mb-3">Xem Trước Trên Google</p>
                           <p className="text-blue-400 text-base font-medium leading-snug truncate">{seoTitle || title}</p>
-                          <p className="text-green-500/70 text-xs mt-0.5">fortressih.com › insights › {isNew ? generateSlug(title) : slug}</p>
-                          <p className="text-gvi-silver/50 text-xs mt-1 line-clamp-2 leading-relaxed">{seoDescription || excerpt || "Chưa có mô tả."}</p>
+                          <p className="text-green-500/70 text-xs mt-0.5">axvn.vn › insights › {isNew ? generateSlug(title) : slug}</p>
+                          <p className="text-AXVN-silver/50 text-xs mt-1 line-clamp-2 leading-relaxed">{seoDescription || excerpt || "Chưa có mô tả."}</p>
                         </div>
                       )}
                     </div>
@@ -454,30 +453,30 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                     <div className="space-y-5">
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                         <div>
-                          <label className="flex items-center gap-1.5 text-[10px] font-bold text-gvi-silver/40 uppercase tracking-widest mb-2"><Tag className="w-3 h-3" /> Danh Mục</label>
+                          <label className="flex items-center gap-1.5 text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-widest mb-2"><Tag className="w-3 h-3" /> Danh Mục</label>
                           <select
                             value={category}
                             onChange={(e) => setCategory(e.target.value)}
-                            className="w-full bg-white/5 border border-white/10 text-gvi-ivory text-sm px-4 py-3 focus:outline-none focus:border-gvi-gold/40 transition-colors rounded-lg appearance-none"
+                            className="w-full bg-white/5 border border-white/10 text-AXVN-ivory text-sm px-4 py-3 focus:outline-none focus:border-AXVN-gold/40 transition-colors rounded-lg appearance-none"
                           >
                             {categories.map((c) => <option key={c} value={c}>{c}</option>)}
                           </select>
                         </div>
                         <div>
-                          <label className="flex items-center gap-1.5 text-[10px] font-bold text-gvi-silver/40 uppercase tracking-widest mb-2"><Clock className="w-3 h-3" /> Thời Gian Đọc</label>
+                          <label className="flex items-center gap-1.5 text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-widest mb-2"><Clock className="w-3 h-3" /> Thời Gian Đọc</label>
                           <input
                             type="text"
                             value={readTime}
                             onChange={(e) => setReadTime(e.target.value)}
-                            className="w-full bg-white/5 border border-white/10 text-gvi-ivory text-sm px-4 py-3 focus:outline-none focus:border-gvi-gold/40 transition-colors rounded-lg"
+                            className="w-full bg-white/5 border border-white/10 text-AXVN-ivory text-sm px-4 py-3 focus:outline-none focus:border-AXVN-gold/40 transition-colors rounded-lg"
                           />
                         </div>
                       </div>
                       <div>
-                        <label className="flex items-center gap-1.5 text-[10px] font-bold text-gvi-silver/40 uppercase tracking-widest mb-2"><Tag className="w-3 h-3" /> Thẻ Tags</label>
+                        <label className="flex items-center gap-1.5 text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-widest mb-2"><Tag className="w-3 h-3" /> Thẻ Tags</label>
                         <div className="flex flex-wrap gap-1.5 mb-2">
                           {tags.map((tag, i) => (
-                            <span key={i} className="flex items-center gap-1 text-[11px] bg-gvi-gold/10 text-gvi-gold border border-gvi-gold/20 px-2 py-1 rounded">
+                            <span key={i} className="flex items-center gap-1 text-[11px] bg-AXVN-gold/10 text-AXVN-gold border border-AXVN-gold/20 px-2 py-1 rounded">
                               {tag}
                               <button onClick={() => setTags(tags.filter((_, j) => j !== i))} className="hover:text-red-400 transition-colors">
                                 <X className="w-3 h-3" />
@@ -498,7 +497,7 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                               }
                             }}
                             placeholder="Nhập tag và nhấn Enter"
-                            className="flex-1 bg-white/5 border border-white/10 text-gvi-ivory text-sm px-4 py-3 focus:outline-none focus:border-gvi-gold/40 transition-colors rounded-lg placeholder:text-gvi-silver/20"
+                            className="flex-1 bg-white/5 border border-white/10 text-AXVN-ivory text-sm px-4 py-3 focus:outline-none focus:border-AXVN-gold/40 transition-colors rounded-lg placeholder:text-AXVN-silver/20"
                           />
                           <button
                             onClick={() => {
@@ -507,18 +506,18 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                                 setTagInput("");
                               }
                             }}
-                            className="px-4 py-3 bg-gvi-gold/20 text-gvi-gold text-sm font-semibold border border-gvi-gold/30 rounded-lg hover:bg-gvi-gold/30 transition-colors"
+                            className="px-4 py-3 bg-AXVN-gold/20 text-AXVN-gold text-sm font-semibold border border-AXVN-gold/30 rounded-lg hover:bg-AXVN-gold/30 transition-colors"
                           >
                             Thêm
                           </button>
                         </div>
                       </div>
                       <div className="sm:hidden">
-                        <label className="block text-[10px] font-bold text-gvi-silver/40 uppercase tracking-widest mb-2">Trạng Thái Xuất Bản</label>
+                        <label className="block text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-widest mb-2">Trạng Thái Xuất Bản</label>
                         <select
                           value={status}
                           onChange={(e) => setStatus(e.target.value as "draft" | "published")}
-                          className="w-full bg-white/5 border border-white/10 text-gvi-ivory text-sm px-4 py-3 focus:outline-none focus:border-gvi-gold/40 transition-colors rounded-lg appearance-none"
+                          className="w-full bg-white/5 border border-white/10 text-AXVN-ivory text-sm px-4 py-3 focus:outline-none focus:border-AXVN-gold/40 transition-colors rounded-lg appearance-none"
                         >
                           <option value="draft">Bản Nháp</option>
                           <option value="published">Xuất Bản</option>
@@ -574,26 +573,25 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
               {/* Publish */}
               <div className="bg-[#07111D]/60 backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden">
                 <div className="px-4 py-3 border-b border-white/5 flex items-center gap-2">
-                  <Layers className="w-3.5 h-3.5 text-gvi-gold" />
-                  <h3 className="text-xs font-bold text-gvi-ivory uppercase tracking-widest">Xuất Bản</h3>
+                  <Layers className="w-3.5 h-3.5 text-AXVN-gold" />
+                  <h3 className="text-xs font-bold text-AXVN-ivory uppercase tracking-widest">Xuất Bản</h3>
                 </div>
                 <div className="p-4 space-y-4">
                   <div className="flex items-center gap-2">
                     <div className={`w-2 h-2 rounded-full ${status === "published" ? "bg-emerald-400" : "bg-amber-400"}`} />
-                    <span className="text-sm font-semibold text-gvi-ivory">{status === "published" ? "Đã xuất bản" : "Bản nháp"}</span>
+                    <span className="text-sm font-semibold text-AXVN-ivory">{status === "published" ? "Đã xuất bản" : "Bản nháp"}</span>
                   </div>
                   <div className="flex gap-2">
                     {(["draft", "published"] as const).map((s) => (
                       <button
                         key={s}
                         onClick={() => setStatus(s)}
-                        className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-all border ${
-                          status === s
+                        className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-all border ${status === s
                             ? s === "published"
                               ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/30"
                               : "bg-amber-500/20 text-amber-400 border-amber-500/30"
-                            : "border-white/10 text-gvi-silver/50 hover:border-white/20 hover:text-gvi-ivory"
-                        }`}
+                            : "border-white/10 text-AXVN-silver/50 hover:border-white/20 hover:text-AXVN-ivory"
+                          }`}
                       >
                         {s === "draft" ? "Bản Nháp" : "Xuất Bản"}
                       </button>
@@ -602,7 +600,7 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                   <button
                     onClick={handleSave}
                     disabled={saving || !title.trim()}
-                    className="w-full flex items-center justify-center gap-2 py-3 bg-gvi-gold text-gvi-navy text-sm font-bold hover:bg-gvi-champagne transition-all disabled:opacity-50 disabled:cursor-not-allowed rounded-lg"
+                    className="w-full flex items-center justify-center gap-2 py-3 bg-AXVN-gold text-AXVN-navy text-sm font-bold hover:bg-AXVN-champagne transition-all disabled:opacity-50 disabled:cursor-not-allowed rounded-lg"
                   >
                     <Save className="w-3.5 h-3.5" />
                     {saving ? "Đang lưu…" : "Lưu Bài Viết"}
@@ -610,7 +608,7 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                   {!isNew && (
                     <button
                       onClick={() => setShowDeleteModal(true)}
-                      className="w-full flex items-center justify-center gap-2 py-2.5 border border-white/10 text-gvi-silver/50 text-xs font-medium hover:border-red-500/30 hover:text-red-400 hover:bg-red-500/5 transition-all rounded-lg"
+                      className="w-full flex items-center justify-center gap-2 py-2.5 border border-white/10 text-AXVN-silver/50 text-xs font-medium hover:border-red-500/30 hover:text-red-400 hover:bg-red-500/5 transition-all rounded-lg"
                     >
                       <Trash2 className="w-3.5 h-3.5" /> Xóa Bài Viết
                     </button>
@@ -621,8 +619,8 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
               {/* Featured Image */}
               <div className="bg-[#07111D]/60 backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden">
                 <div className="px-4 py-3 border-b border-white/5 flex items-center gap-2">
-                  <ImageIcon className="w-3.5 h-3.5 text-gvi-gold" />
-                  <h3 className="text-xs font-bold text-gvi-ivory uppercase tracking-widest">Ảnh Bìa</h3>
+                  <ImageIcon className="w-3.5 h-3.5 text-AXVN-gold" />
+                  <h3 className="text-xs font-bold text-AXVN-ivory uppercase tracking-widest">Ảnh Bìa</h3>
                 </div>
                 <div className="p-4">
                   {featuredImage ? (
@@ -643,15 +641,15 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                       </div>
                     </div>
                   ) : (
-                    <label className="flex flex-col items-center justify-center gap-3 h-36 border border-dashed border-white/10 rounded-lg hover:border-gvi-gold/30 cursor-pointer transition-colors bg-white/[0.02] hover:bg-white/5">
+                    <label className="flex flex-col items-center justify-center gap-3 h-36 border border-dashed border-white/10 rounded-lg hover:border-AXVN-gold/30 cursor-pointer transition-colors bg-white/[0.02] hover:bg-white/5">
                       {imageUploading ? (
-                        <div className="w-6 h-6 border-2 border-gvi-gold/40 border-t-gvi-gold rounded-full animate-spin" />
+                        <div className="w-6 h-6 border-2 border-AXVN-gold/40 border-t-AXVN-gold rounded-full animate-spin" />
                       ) : (
                         <>
-                          <Upload className="w-6 h-6 text-gvi-silver/30" />
+                          <Upload className="w-6 h-6 text-AXVN-silver/30" />
                           <div className="text-center">
-                            <p className="text-xs text-gvi-silver/60 font-medium">Nhấn để tải ảnh lên</p>
-                            <p className="text-[10px] text-gvi-silver/30">PNG, JPG, WebP tối đa 5MB</p>
+                            <p className="text-xs text-AXVN-silver/60 font-medium">Nhấn để tải ảnh lên</p>
+                            <p className="text-[10px] text-AXVN-silver/30">PNG, JPG, WebP tối đa 5MB</p>
                           </div>
                         </>
                       )}
@@ -662,7 +660,7 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                     <p className="text-[10px] text-red-400 mt-2">{uploadError}</p>
                   )}
                   {featuredImage && (
-                    <p className="text-[10px] text-gvi-silver/30 mt-2 truncate">{featuredImage}</p>
+                    <p className="text-[10px] text-AXVN-silver/30 mt-2 truncate">{featuredImage}</p>
                   )}
                 </div>
               </div>
@@ -670,29 +668,29 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
               {/* Category & Read Time */}
               <div className="bg-[#07111D]/60 backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden">
                 <div className="px-4 py-3 border-b border-white/5 flex items-center gap-2">
-                  <Tag className="w-3.5 h-3.5 text-gvi-gold" />
-                  <h3 className="text-xs font-bold text-gvi-ivory uppercase tracking-widest">Danh Mục & Thông Tin</h3>
+                  <Tag className="w-3.5 h-3.5 text-AXVN-gold" />
+                  <h3 className="text-xs font-bold text-AXVN-ivory uppercase tracking-widest">Danh Mục & Thông Tin</h3>
                 </div>
                 <div className="p-4 space-y-3">
                   <div className="relative">
                     <select
                       value={category}
                       onChange={(e) => setCategory(e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 text-gvi-ivory text-sm px-3 py-2.5 focus:outline-none focus:border-gvi-gold/40 transition-colors rounded-lg appearance-none cursor-pointer"
+                      className="w-full bg-white/5 border border-white/10 text-AXVN-ivory text-sm px-3 py-2.5 focus:outline-none focus:border-AXVN-gold/40 transition-colors rounded-lg appearance-none cursor-pointer"
                     >
-                      {categories.map((c) => <option key={c} value={c} className="bg-[#07111D] text-gvi-ivory">{c}</option>)}
+                      {categories.map((c) => <option key={c} value={c} className="bg-[#07111D] text-AXVN-ivory">{c}</option>)}
                     </select>
-                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gvi-silver/40 pointer-events-none" />
+                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-AXVN-silver/40 pointer-events-none" />
                   </div>
                   <div>
-                    <label className="flex items-center gap-1.5 text-[10px] font-bold text-gvi-silver/40 uppercase tracking-widest mb-2">
+                    <label className="flex items-center gap-1.5 text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-widest mb-2">
                       <Clock className="w-3 h-3" /> Read Time
                     </label>
                     <input
                       type="text"
                       value={readTime}
                       onChange={(e) => setReadTime(e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 text-gvi-ivory text-sm px-3 py-2.5 focus:outline-none focus:border-gvi-gold/40 transition-colors rounded-lg"
+                      className="w-full bg-white/5 border border-white/10 text-AXVN-ivory text-sm px-3 py-2.5 focus:outline-none focus:border-AXVN-gold/40 transition-colors rounded-lg"
                     />
                   </div>
                 </div>
@@ -703,7 +701,7 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                 <Link
                   href={`/insights/${slug}`}
                   target="_blank"
-                  className="flex items-center justify-center gap-2 py-2.5 border border-white/10 text-gvi-silver/50 text-xs font-medium hover:border-gvi-gold/30 hover:text-gvi-gold transition-all rounded-xl"
+                  className="flex items-center justify-center gap-2 py-2.5 border border-white/10 text-AXVN-silver/50 text-xs font-medium hover:border-AXVN-gold/30 hover:text-AXVN-gold transition-all rounded-xl"
                 >
                   <Eye className="w-3.5 h-3.5" /> Xem Bài Viết Trực Tiếp
                 </Link>

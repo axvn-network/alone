@@ -1,22 +1,21 @@
 /**
- * Shared time utility — used across admin pages.
- * Returns a human-readable "time ago" string in Vietnamese.
+ * src/utils/time.ts
+ *
+ * @deprecated Thin compatibility shim — new code must import directly from
+ * `@/lib/vn/format` (`thoiGianTuongDoi`, `formatNgayVN`).
+ *
+ * This file exists only so legacy admin pages continue to compile without
+ * a forced mass-migration.  Do NOT add new exports here.
  */
+
+import { thoiGianTuongDoi, formatNgayVN } from "@/lib/vn/format";
+
+/** @deprecated Use `thoiGianTuongDoi` from `@/lib/vn/format` instead. */
 export function timeAgo(dateStr: string): string {
-  const diff = Date.now() - new Date(dateStr).getTime();
-  const mins = Math.floor(diff / 60000);
-  if (mins < 1) return "vừa xong";
-  if (mins < 60) return `${mins} phút trước`;
-  const hrs = Math.floor(mins / 60);
-  if (hrs < 24) return `${hrs} giờ trước`;
-  const days = Math.floor(hrs / 24);
-  return `${days} ngày trước`;
+  return thoiGianTuongDoi(dateStr);
 }
 
-/**
- * Format a date string to dd/mm/yyyy
- */
+/** @deprecated Use `formatNgayVN` from `@/lib/vn/format` instead. */
 export function formatDate(dateStr: string): string {
-  const d = new Date(dateStr);
-  return d.toLocaleDateString("vi-VN", { day: "2-digit", month: "2-digit", year: "numeric" });
+  return formatNgayVN(dateStr);
 }

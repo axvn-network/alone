@@ -52,8 +52,8 @@ function Sidebar({ toc, className = "" }: { toc: readonly TocItem[]; className?:
       aria-label="Mục lục"
       className={`hidden lg:block w-56 xl:w-64 shrink-0 self-start sticky top-24 ${className}`}
     >
-      <div className="rounded-xl border border-gvi-gold/15 bg-gvi-deep p-4">
-        <p className="text-[10px] font-semibold uppercase tracking-widest text-gvi-gold mb-3">
+      <div className="rounded-xl border border-AXVN-gold/15 bg-AXVN-deep p-4">
+        <p className="text-[10px] font-semibold uppercase tracking-widest text-AXVN-gold mb-3">
           Mục lục
         </p>
         <nav aria-label="Mục lục trang">
@@ -62,11 +62,10 @@ function Sidebar({ toc, className = "" }: { toc: readonly TocItem[]; className?:
               <li key={item.id}>
                 <a
                   href={`#${item.id}`}
-                  className={`block rounded px-2 py-1.5 text-xs leading-snug transition-colors hover:bg-gvi-gold/10 hover:text-gvi-gold focus-visible:outline-2 focus-visible:outline-gvi-gold ${
-                    item.level === 2
-                      ? "pl-5 text-gvi-silver/55"
-                      : "text-gvi-silver/80"
-                  }`}
+                  className={`block rounded px-2 py-1.5 text-xs leading-snug transition-colors hover:bg-AXVN-gold/10 hover:text-AXVN-gold focus-visible:outline-2 focus-visible:outline-AXVN-gold ${item.level === 2
+                      ? "pl-5 text-AXVN-silver/55"
+                      : "text-AXVN-silver/80"
+                    }`}
                 >
                   {item.label}
                 </a>

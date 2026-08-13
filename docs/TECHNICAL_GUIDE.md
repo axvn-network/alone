@@ -1,6 +1,6 @@
 # Hướng dẫn Kỹ thuật (Technical Guide)
 
-Tài liệu này tổng quan về kiến trúc, bảo mật và quy trình kỹ thuật cho dự án **GVI Tech Holding Landing Page** (`vnkr.vn`).
+Tài liệu này tổng quan về kiến trúc, bảo mật và quy trình kỹ thuật cho dự án **AXVN Tech Holding Landing Page** (`vnkr.vn`).
 
 ---
 
@@ -14,7 +14,7 @@ Dự án sử dụng kiến trúc **Next.js 16 (App Router)** với mô hình `s
 - **Reverse Proxy:** Nginx (TLS 1.3, HSTS).
 - **Process Manager:** PM2 (Fork Mode — tương thích SSE in-memory).
 - **Realtime:** Server-Sent Events (SSE) qua `lib/sse-broker.ts`.
-- **Media:** Cloudinary (folder namespace: `gvi/`, `gvi/blog`, `gvi/documents`).
+- **Media:** Cloudinary (folder namespace: `AXVN/`, `AXVN/blog`, `AXVN/documents`).
 
 ### Luồng request chuẩn
 
@@ -190,8 +190,8 @@ bash scripts/backup.sh  # mongodump hàng ngày — lên lịch cron
 
 ## 9. Lưu ý quan trọng
 
-- **Legacy paths:** `/invest-with-fortress` → đã migrate sang `/invest-with-gvi`. Không sử dụng lại path cũ.
-- **Cloudinary folders:** Toàn bộ đã đổi từ `fortress/*` → `gvi/*`.
+- **Legacy paths:** `/invest-with-fortress` → đã migrate sang `/invest-with-AXVN`. Không sử dụng lại path cũ.
+- **Cloudinary folders:** Toàn bộ đã đổi từ `fortress/*` → `AXVN/*`.
 - **Zod v4:** `z.literal(true, { errorMap })` không còn hoạt động — dùng `z.boolean().refine(v => v === true, { message })`.
 - **SSE scale:** Hiện in-memory, phù hợp PM2 fork mode 1 process. Cần Redis adapter nếu scale ngang.
 - **MFA:** `mfaRequiredForLogin` phải được admin tự kích hoạt qua UI — không tự động sau khi setup.
