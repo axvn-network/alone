@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import AdminSidebar from "@/components/admin/AdminSidebar";
-import AdminNavbar from "@/components/admin/AdminNavbar";
+import AdminSidebar from "@/app/(admin)/components/AdminSidebar";
+import AdminNavbar from "@/app/(admin)/components/AdminNavbar";
 import { useAdminSession } from "@/contexts/AdminSessionContext";
 import {
   Newspaper,

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect, useRef } from "react";
+import { useState, useMemo, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -14,21 +14,21 @@ import {
 import { categories as rawCategories } from "./articles";
 
 const fadeUp = {
-  initial: { opacity: 0, y: 40 },
+  initial: false,
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, margin: "-80px" },
   transition: { duration: 0.6, ease: "easeOut" as const },
 };
 
 const fadeLeft = {
-  initial: { opacity: 0, x: -30 },
+  initial: false,
   whileInView: { opacity: 1, x: 0 },
   viewport: { once: true, margin: "-80px" },
   transition: { duration: 0.5, ease: "easeOut" as const },
 };
 
 const stagger = {
-  initial: { opacity: 0, y: 30 },
+  initial: false,
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, margin: "-60px" },
   transition: { duration: 0.5, ease: "easeOut" as const },
@@ -39,6 +39,11 @@ interface Article {
   date: string; readTime: string; tags?: string[];
   featuredImage?: string;
   updatedAt?: string;
+}
+
+export interface InsightsClientProps {
+  initialArticles: Article[];
+  initialError?: boolean;
 }
 
 /* ─── Category helpers ───────────────────────────────────────── */
@@ -80,22 +85,6 @@ const formatDate = (dateString?: string) => {
   }
 };
 
-/* ─── Skeleton ───────────────────────────────────────────────── */
-function SkeletonCard() {
-  return (
-    <div className="bg-white border border-gray-200 animate-pulse overflow-hidden">
-      <div className="h-52 bg-white/5" />
-      <div className="p-5 space-y-3">
-        <div className="h-3 bg-white/5 w-1/3" />
-        <div className="h-5 bg-white/5 w-full" />
-        <div className="h-5 bg-white/5 w-3/4" />
-        <div className="h-4 bg-white/5 w-full" />
-        <div className="h-4 bg-white/5 w-5/6" />
-      </div>
-    </div>
-  );
-}
-
 /* ─── Image map (category → public image) ───────────────────── */
 const CAT_IMAGES: Record<string, string> = {
   "Bất Động Sản": "/business.jpg",
@@ -113,33 +102,16 @@ const CAT_IMAGES: Record<string, string> = {
 /* ═══════════════════════════════════════════════════════════════
    MAIN COMPONENT
 ═══════════════════════════════════════════════════════════════ */
-export default function InsightsClient() {
-  const [articles, setArticles] = useState<Article[]>([]);
+export default function InsightsClient({ initialArticles, initialError = false }: InsightsClientProps) {
+  const [articles] = useState<Article[]>(initialArticles);
   const [search, setSearch] = useState("");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(true);
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
 
   const resultsRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    fetch("/api/blog")
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.data?.posts) {
-          setArticles(data.data.posts.map((p: Record<string, unknown>) => ({
-            ...p,
-            date: p.publishedAt || p.createdAt,
-            updatedAt: p.updatedAt as string | undefined,
-          }) as Article));
-        }
-      })
-      .catch(() => { })
-      .finally(() => setLoading(false));
-  }, []);
 
   const toggleCategory = (c: string) => { setSelectedCategories(p => p.includes(c) ? p.filter(x => x !== c) : [...p, c]); setPage(1); };
   const toggleTag = (t: string) => { setSelectedTags(p => p.includes(t) ? p.filter(x => x !== t) : [...p, t]); setPage(1); };
@@ -381,8 +353,14 @@ export default function InsightsClient() {
               </div>
             </div>
 
+            {initialError && (
+              <p className="mb-4 text-sm text-amber-700" role="status">
+                Không thể tải dữ liệu mới nhất. Vui lòng thử lại sau.
+              </p>
+            )}
+
             {/* ── LATEST ARTICLE ── */}
-            {!loading && filtered.length > 0 && (
+            {filtered.length > 0 && (
               <motion.section {...fadeUp} className="mb-8 sm:mb-10">
                 <div className="flex items-center gap-3 mb-4">
                   <span className="text-[10px] font-bold text-gray-500 tracking-widest uppercase flex items-center gap-1.5 shrink-0">
@@ -447,11 +425,7 @@ export default function InsightsClient() {
             </motion.div>
 
             {/* ── ARTICLES ── */}
-            {loading ? (
-              <div className={`grid gap-4 sm:gap-5 ${viewMode === "grid" ? "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3" : "grid-cols-1"}`}>
-                {Array.from({ length: 3 }).map((_, i) => <SkeletonCard key={i} />)}
-              </div>
-            ) : paginated.length === 0 ? (
+            {paginated.length === 0 ? (
               <motion.div {...stagger} className="flex flex-col items-center justify-center py-16 sm:py-24 text-center px-4">
                 <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white/5 flex items-center justify-center mb-4 sm:mb-5 ">
                   <Search className="w-7 h-7 sm:w-8 sm:h-8 text-gray-500/30" />
@@ -462,12 +436,12 @@ export default function InsightsClient() {
               </motion.div>
             ) : (
               <motion.div {...stagger} className={viewMode === "grid" ? "grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5" : "flex flex-col gap-3 sm:gap-4"}>
-                {paginated.map((a, i) => viewMode === "grid" ? <motion.div key={a.slug} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08, duration: 0.4 }}><GridCard article={a} /></motion.div> : <motion.div key={a.slug} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06, duration: 0.4 }}><ListCard article={a} /></motion.div>)}
+                {paginated.map((a, i) => viewMode === "grid" ? <motion.div key={a.slug} initial={false} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08, duration: 0.4 }}><GridCard article={a} /></motion.div> : <motion.div key={a.slug} initial={false} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06, duration: 0.4 }}><ListCard article={a} /></motion.div>)}
               </motion.div>
             )}
 
             {/* ── PAGINATION ── */}
-            {!loading && totalPages > 1 && (
+            {totalPages > 1 && (
               <motion.div {...stagger} className="flex items-center justify-center gap-1.5 sm:gap-2 mt-8 sm:mt-10 flex-wrap">
                 <button onClick={() => { setPage(p => Math.max(1, p - 1)); resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }); }}
                   disabled={page === 1} className="p-2.5 border border-white/10 text-gray-500 hover:border-[#C9A24A]/50 hover:text-[#C9A24A] disabled:opacity-30 disabled:cursor-not-allowed transition-all bg-white ">

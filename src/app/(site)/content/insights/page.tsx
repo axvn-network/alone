@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import InsightsClient from "./InsightsClient";
+import InsightsClient, { type InsightsClientProps } from "./InsightsClient";
+import { blogService } from "@/services";
 
 export const metadata: Metadata = {
   title: "Góc Nhìn & Báo Cáo Chuyên Sâu | AXVN Tech Holding",
@@ -13,10 +14,32 @@ export const metadata: Metadata = {
   },
 };
 
-export default function InsightsPage() {
+export const dynamic = "force-dynamic";
+
+export default async function InsightsPage() {
+  let initialArticles: InsightsClientProps["initialArticles"] = [];
+  let fetchError = false;
+
+  try {
+    const { posts } = await blogService.getBlogs({ status: "published", page: 1, limit: 100 });
+    initialArticles = posts.map((post) => ({
+      slug: post.slug,
+      title: post.title,
+      excerpt: post.excerpt || "",
+      category: post.category || "General",
+      readTime: post.readTime || "5 min read",
+      tags: post.tags || [],
+      featuredImage: post.featuredImage || undefined,
+      date: (post.publishedAt || post.createdAt).toISOString(),
+      updatedAt: post.updatedAt?.toISOString(),
+    }));
+  } catch {
+    fetchError = true;
+  }
+
   return (
     <main className="min-h-screen bg-[#F8F9FB] pb-safe md:pb-0">
-      <InsightsClient />
+      <InsightsClient initialArticles={initialArticles} initialError={fetchError} />
     </main>
   );
 }

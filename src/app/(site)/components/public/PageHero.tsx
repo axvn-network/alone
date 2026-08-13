@@ -42,7 +42,7 @@ export default function PageHero({ tag, heading, description, children, dark = f
       <div className="relative max-w-[1400px] mx-auto">
         <div className="max-w-4xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
@@ -63,7 +63,7 @@ export default function PageHero({ tag, heading, description, children, dark = f
 
             {/* Gold rule */}
             <motion.div
-              initial={{ scaleX: 0 }}
+              initial={false}
               animate={{ scaleX: 1 }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.35 }}
               className={`w-10 h-px mx-auto mb-6 origin-center ${dark ? "bg-AXVN-gold/50" : "bg-AXVN-gold/40"}`}

@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import AdminSidebar from "@/components/admin/AdminSidebar";
-import AdminNavbar from "@/components/admin/AdminNavbar";
+import AdminSidebar from "@/app/(admin)/components/AdminSidebar";
+import AdminNavbar from "@/app/(admin)/components/AdminNavbar";
 import { ClipboardList, RefreshCw, ChevronLeft, ChevronRight, Search, X } from "lucide-react";
 import { timeAgo } from "@/utils/time";
 

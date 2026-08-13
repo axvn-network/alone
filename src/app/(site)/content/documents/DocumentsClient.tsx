@@ -9,7 +9,7 @@ import {
 import PageHero from "@/app/(site)/components/public/PageHero";
 
 /* ── Types ─────────────────────────────────────────────────── */
-type DocumentCategory =
+export type DocumentCategory =
   | "financial_report"
   | "disclosure"
   | "charter"
@@ -17,7 +17,7 @@ type DocumentCategory =
   | "annual_report"
   | "governance_report";
 
-interface DocItem {
+export interface DocItem {
   _id: string;
   title: string;
   titleEn?: string;
@@ -29,6 +29,13 @@ interface DocItem {
   quarter?: 1 | 2 | 3 | 4;
   reportType?: string;
   isFeatured?: boolean;
+}
+
+export interface DocumentsClientProps {
+  initialDocuments: DocItem[];
+  initialYears: number[];
+  initialTotal: number;
+  initialError?: boolean;
 }
 
 /* ── Config ─────────────────────────────────────────────────── */
@@ -310,7 +317,7 @@ function DocTable({ docs, total, page, pageSize, onPage, search, onSearch, onPag
                   <span key={i} className="px-2 py-1 text-gray-400">…</span>
                 ) : (
                   <button
-                    key={p}
+                    key={`${p}-${i}`}
                     onClick={() => onPage(p as number)}
                     className={`w-8 h-8 rounded text-xs font-semibold transition-colors ${p === page
                         ? "bg-[#07111D] text-white"
@@ -371,17 +378,19 @@ function YearSelector({ years, selected, onChange }: { years: number[]; selected
 }
 
 /* ── Main DocumentsClient ─────────────────────────────────────── */
-export default function DocumentsClient() {
+export default function DocumentsClient({ initialDocuments, initialYears, initialTotal, initialError = false }: DocumentsClientProps) {
   const [activeTab, setActiveTab] = useState<DocumentCategory | "all">("all");
-  const [docs, setDocs] = useState<DocItem[]>([]);
-  const [years, setYears] = useState<number[]>([]);
-  const [total, setTotal] = useState(0);
+  const [docs, setDocs] = useState<DocItem[]>(initialDocuments);
+  const [years, setYears] = useState<number[]>(initialYears);
+  const [total, setTotal] = useState(initialTotal);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [search, setSearch] = useState("");
   const [selectedYear, setSelectedYear] = useState<number | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [loadError, setLoadError] = useState(initialError);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const skipInitialFetch = useRef(!initialError);
 
   const fetchDocs = useCallback(async (opts: {
     tab: DocumentCategory | "all";
@@ -391,6 +400,7 @@ export default function DocumentsClient() {
     q: string;
   }) => {
     setLoading(true);
+    setLoadError(false);
     try {
       const params = new URLSearchParams();
       if (opts.tab !== "all") params.set("category", opts.tab);
@@ -401,17 +411,23 @@ export default function DocumentsClient() {
 
       const res = await fetch(`/api/documents?${params}`);
       const json = await res.json();
-      if (json.success) {
-        setDocs(json.data?.documents || []);
-        setTotal(json.data?.total || 0);
-        setYears(json.data?.years || []);
-      }
+      if (!res.ok || !json.success) throw new Error("Unable to load documents");
+      setDocs(json.data?.documents || []);
+      setTotal(json.data?.total || 0);
+      setYears(json.data?.years || []);
+    } catch {
+      setLoadError(true);
     } finally {
       setLoading(false);
     }
   }, []);
 
   useEffect(() => {
+    if (skipInitialFetch.current) {
+      skipInitialFetch.current = false;
+      return;
+    }
+
     if (debounceRef.current) clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => {
       fetchDocs({ tab: activeTab, yr: selectedYear, pg: page, ps: pageSize, q: search });
@@ -481,6 +497,12 @@ export default function DocumentsClient() {
 
           {/* Year selector */}
           <YearSelector years={years} selected={selectedYear} onChange={handleYear} />
+
+          {loadError && (
+            <p className="mb-4 text-sm text-amber-700" role="status">
+              Không thể cập nhật dữ liệu mới nhất. Nội dung đang hiển thị có thể chưa đầy đủ.
+            </p>
+          )}
 
           {/* Content */}
           {loading ? (

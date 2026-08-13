@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import AdminSidebar from "@/components/admin/AdminSidebar";
-import AdminNavbar from "@/components/admin/AdminNavbar";
+import AdminSidebar from "@/app/(admin)/components/AdminSidebar";
+import AdminNavbar from "@/app/(admin)/components/AdminNavbar";
 import { FileText, ChevronRight } from "lucide-react";
 import { timeAgo } from "@/utils/time";
 

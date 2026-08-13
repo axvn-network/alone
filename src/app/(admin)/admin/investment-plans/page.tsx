@@ -5,8 +5,8 @@ import { toast } from "sonner";
 import {
   Plus, Pencil, Trash2, Eye, EyeOff, Star,
 } from "lucide-react";
-import AdminSidebar from "@/components/admin/AdminSidebar";
-import AdminNavbar from "@/components/admin/AdminNavbar";
+import AdminSidebar from "@/app/(admin)/components/AdminSidebar";
+import AdminNavbar from "@/app/(admin)/components/AdminNavbar";
 import { useCsrf } from "@/contexts/CsrfContext";
 import { TIER_LABELS, PLAN_STATUS_CLS as STATUS_STYLES, ADMIN_PAGE_CLS } from "@/constants/admin";
 import { formatVNDCompact } from "@/lib/vn/format";

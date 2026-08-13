@@ -1,14 +1,8 @@
 /**
  * src/components/index.ts
- * Root barrel — re-exports every component group.
- * Import directly from the subdir for clarity, e.g.:
- *   import PageHero from "@/app/(site)/components/public/PageHero"
- *   import AdminSidebar from "@/components/admin/AdminSidebar"
+ * Root barrel — re-exports shared layout components.
+ * Import route-local UI directly from its route group.
  */
 
-// ── Layout (nav, footer, providers) ─────────────────────────────────────────
 export * from "./layout";
-
-// ── Admin UI ─────────────────────────────────────────────────────────────────
-export * from "./admin";
 

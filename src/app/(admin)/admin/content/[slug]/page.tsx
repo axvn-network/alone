@@ -2,8 +2,8 @@
 
 import { useEffect, useState, use } from "react";
 import Link from "next/link";
-import AdminSidebar from "@/components/admin/AdminSidebar";
-import AdminNavbar from "@/components/admin/AdminNavbar";
+import AdminSidebar from "@/app/(admin)/components/AdminSidebar";
+import AdminNavbar from "@/app/(admin)/components/AdminNavbar";
 import { toast } from "sonner";
 import { ArrowLeft, Save, Eye } from "lucide-react";
 import RichTextEditor from "@/app/(site)/components/ui/RichTextEditor";
