@@ -4,8 +4,8 @@ import { logger } from "@/lib/logger";
 import { successResponse, unauthorizedResponse, errorResponse, serverErrorResponse } from "@/utils/api-response";
 import { handleError } from "@/utils/errors";
 
-const GEMINI_MODEL = "gemini-2.0-flash";
-const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
+const CLAUDE_MODEL = "claude-3-5-haiku-20241022";
+const CLAUDE_URL = "https://api.anthropic.com/v1/messages";
 
 const SYSTEM_PROMPT = `Bạn là trợ lý AI chuyên biệt cho AXVN Tech Holding — tập đoàn đầu tư công nghệ tập trung vào FinTech, tài sản mã hóa hợp pháp (theo NQ 5/2025/NQ-CP hiệu lực 9/9/2025), AI, EdTech và kinh tế số tại Việt Nam.
 
@@ -19,9 +19,9 @@ Quy tắc bắt buộc:
 export async function POST(request: NextRequest) {
   if (!await getCurrentUser()) return unauthorizedResponse();
 
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey || apiKey === "your_gemini_api_key_here") {
-    return errorResponse("GEMINI_API_KEY chưa được cấu hình. Vui lòng thêm vào .env.local", 503);
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey || apiKey === "your_anthropic_api_key_here") {
+    return errorResponse("ANTHROPIC_API_KEY chưa được cấu hình. Vui lòng thêm vào .env.local", 503);
   }
 
   try {
@@ -32,28 +32,31 @@ export async function POST(request: NextRequest) {
 
     const userPrompt = buildPrompt(action, context || {});
 
-    const geminiRes = await fetch(`${GEMINI_URL}?key=${apiKey}`, {
+    const claudeRes = await fetch(CLAUDE_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": apiKey,
+        "anthropic-version": "2023-06-01",
+      },
       body: JSON.stringify({
-        system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
-        contents: [{ role: "user", parts: [{ text: userPrompt }] }],
-        generationConfig: {
-          temperature: 0.7,
-          maxOutputTokens: 1024,
-          topP: 0.9,
-        },
+        model: CLAUDE_MODEL,
+        max_tokens: 1024,
+        system: SYSTEM_PROMPT,
+        messages: [{ role: "user", content: userPrompt }],
       }),
     });
 
-    if (!geminiRes.ok) {
-      const err = await geminiRes.text();
-      logger.error(`Gemini API error ${geminiRes.status}`, err);
-      return errorResponse(`Gemini API lỗi: ${geminiRes.status}`, geminiRes.status);
+    if (!claudeRes.ok) {
+      const err = await claudeRes.text();
+      logger.error(`Claude API error ${claudeRes.status}`, err);
+      return errorResponse(`Claude API lỗi: ${claudeRes.status}`, claudeRes.status);
     }
 
-    const data = await geminiRes.json();
-    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
+    const data = await claudeRes.json() as {
+      content?: { type: string; text: string }[];
+    };
+    const text = data?.content?.find((b) => b.type === "text")?.text ?? "";
 
     return successResponse({ text: text.trim() });
   } catch (error) {
