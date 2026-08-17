@@ -43,6 +43,28 @@ const nextConfig: NextConfig = {
   // ── Deployment ──────────────────────────────────────────────────────────────
   output: "standalone",
 
+  // ── Redirects — short URLs → canonical routes (308 Permanent) ──────────────
+  async redirects() {
+    return [
+      // Public short URLs → canonical /content/* or /portals/*
+      { source: "/about",                 destination: "/content/about",               permanent: true },
+      { source: "/contact",               destination: "/content/contact",             permanent: true },
+      { source: "/documents",             destination: "/content/documents",           permanent: true },
+      { source: "/insights",              destination: "/content/insights",            permanent: true },
+      { source: "/investment-disclaimer", destination: "/content/investment-disclaimer", permanent: true },
+      { source: "/investment-focus",      destination: "/content/investment-focus",    permanent: true },
+      { source: "/our-approach",          destination: "/content/our-approach",        permanent: true },
+      { source: "/privacy-policy",        destination: "/content/privacy-policy",      permanent: true },
+      { source: "/terms-of-use",          destination: "/content/terms-of-use",        permanent: true },
+      // Invest-with-axvn short → portal canonical
+      { source: "/invest-with-axvn",      destination: "/portals/invest-with-axvn",   permanent: true },
+      { source: "/invest-with-axvn/plans",destination: "/portals/invest-with-axvn/plans", permanent: true },
+      // Legacy auth path
+      { source: "/auth/admin-login",      destination: "/admin-login",                permanent: true },
+    ];
+  },
+
+
   // ── Performance ──────────────────────────────────────────────────────────────
   compress: true,
   poweredByHeader: false,
