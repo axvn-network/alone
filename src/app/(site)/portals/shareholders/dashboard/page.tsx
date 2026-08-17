@@ -3,10 +3,12 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 import {
   LayoutDashboard, CheckSquare, MessageSquare, Users, LogOut,
   CheckCircle2, Clock, AlertCircle, XCircle, Send, ChevronDown,
   Calendar, Video, FileText, ChevronRight, RefreshCw, Loader2,
+  FolderOpen, TrendingUp,
 } from "lucide-react";
 import {
   ROLE_LABELS, PRIORITY_CLS, CAT_LABELS, KYC_STATUS_CONFIG as KYC_STATUS_LABELS,
@@ -58,11 +60,14 @@ function Sidebar({ active, setActive, me, onLogout, unreadCount }: {
   active: string; setActive: (s: string) => void; me: Me | null; onLogout: () => void;
   unreadCount: number;
 }) {
-  const nav: { key: string; icon: typeof LayoutDashboard; label: string; badge?: number }[] = [
-    { key: "dashboard", icon: LayoutDashboard, label: "Tổng Quan" },
-    { key: "tasks", icon: CheckSquare, label: "Nhiệm Vụ" },
-    { key: "messages", icon: MessageSquare, label: "Nhắn Tin", badge: unreadCount },
-    { key: "meetings", icon: Users, label: "Họp Cổ Đông" },
+  const nav: { key: string; icon: typeof LayoutDashboard; label: string; badge?: number; href?: string }[] = [
+    { key: "dashboard",  icon: LayoutDashboard, label: "Tổng Quan" },
+    { key: "tasks",      icon: CheckSquare,     label: "Nhiệm Vụ" },
+    { key: "messages",   icon: MessageSquare,   label: "Nhắn Tin", badge: unreadCount },
+    { key: "meetings",   icon: Users,           label: "Họp Cổ Đông" },
+    // Trang riêng — mở bằng Link thay vì đổi tab
+    { key: "documents",  icon: FolderOpen,      label: "Tài Liệu",    href: "/portals/shareholders/dashboard/documents" },
+    { key: "reports",    icon: TrendingUp,      label: "Báo Cáo ĐT",  href: "/portals/shareholders/dashboard/reports" },
   ];
   return (
     <aside className="w-64 bg-[#03080e]/95 border-r border-AXVN-gold/10 flex flex-col shrink-0 h-screen sticky top-0">
@@ -83,21 +88,35 @@ function Sidebar({ active, setActive, me, onLogout, unreadCount }: {
         </div>
       )}
       <nav className="flex-1 p-3 space-y-1 overflow-auto">
-        {nav.map((item) => (
-          <button key={item.key} onClick={() => setActive(item.key)}
-            className={`w-full flex items-center gap-3 px-4 py-3 text-sm rounded-xl transition-all duration-200 ${active === item.key
-                ? "text-AXVN-gold font-medium bg-AXVN-gold/10 border border-AXVN-gold/15"
-                : "text-AXVN-silver hover:text-AXVN-ivory hover:bg-AXVN-gold/5"
-              }`}>
-            <item.icon className="w-4 h-4 shrink-0" />
-            <span className="flex-1 text-left">{item.label}</span>
-            {item.badge != null && item.badge > 0 && (
-              <span className="text-[10px] font-bold bg-AXVN-gold text-AXVN-navy rounded-full w-4 h-4 flex items-center justify-center">
-                {item.badge > 9 ? "9+" : item.badge}
-              </span>
-            )}
-          </button>
-        ))}
+        {nav.map((item) => {
+          // Link ra trang riêng (documents / reports)
+          if (item.href) {
+            return (
+              <Link key={item.key} href={item.href}
+                className="w-full flex items-center gap-3 px-4 py-3 text-sm rounded-xl transition-all duration-200 text-AXVN-silver hover:text-AXVN-ivory hover:bg-AXVN-gold/5">
+                <item.icon className="w-4 h-4 shrink-0" />
+                <span className="flex-1 text-left">{item.label}</span>
+                <ChevronRight className="w-3 h-3 text-AXVN-silver/25" />
+              </Link>
+            );
+          }
+          // Tab nội bộ
+          return (
+            <button key={item.key} onClick={() => setActive(item.key)}
+              className={`w-full flex items-center gap-3 px-4 py-3 text-sm rounded-xl transition-all duration-200 ${active === item.key
+                  ? "text-AXVN-gold font-medium bg-AXVN-gold/10 border border-AXVN-gold/15"
+                  : "text-AXVN-silver hover:text-AXVN-ivory hover:bg-AXVN-gold/5"
+                }`}>
+              <item.icon className="w-4 h-4 shrink-0" />
+              <span className="flex-1 text-left">{item.label}</span>
+              {item.badge != null && item.badge > 0 && (
+                <span className="text-[10px] font-bold bg-AXVN-gold text-AXVN-navy rounded-full w-4 h-4 flex items-center justify-center">
+                  {item.badge > 9 ? "9+" : item.badge}
+                </span>
+              )}
+            </button>
+          );
+        })}
       </nav>
       <div className="p-3 border-t border-AXVN-gold/10">
         <button onClick={onLogout}

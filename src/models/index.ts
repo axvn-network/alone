@@ -39,3 +39,6 @@ export type { IShareholderMeeting, MeetingStatus, MeetingType } from "./Sharehol
 
 export { default as PartnerApplication } from "./PartnerApplication";
 export type { IPartnerApplication, PartnerApplicationStatus, AssessmentDimensions } from "./PartnerApplication";
+
+export { default as PublicUser } from "./PublicUser";
+export type { IPublicUser } from "./PublicUser";

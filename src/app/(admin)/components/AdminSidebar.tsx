@@ -17,24 +17,33 @@ import {
   Layers,
   Handshake,
   Users,
+  UserCog,
   ShieldCheck,
   ClipboardList,
   FileSearch2,
+  Crown,
 } from "lucide-react";
 import { useAdminSession } from "@/contexts/AdminSessionContext";
 
-const links = [
-  { label: "Tổng Quan", icon: LayoutDashboard, href: "/admin" },
-  { label: "Visual Editor", icon: Layers, href: "/admin/visual-editor" },
-  { label: "Cổ Đông Portal", icon: Users, href: "/admin/shareholders" },
-  { label: "Quản Lý Nội Dung", icon: FileText, href: "/admin/content" },
-  { label: "Bài Viết & Tin Tức", icon: Newspaper, href: "/admin/blog" },
-  { label: "Tài Liệu & CBTT", icon: FolderOpen, href: "/admin/documents" },
-  { label: "Hạng Mục Hợp Tác", icon: Handshake, href: "/admin/investment-plans" },
-  { label: "Đơn Đăng Ký", icon: FileSearch2, href: "/admin/partner-applications" },
-  { label: "Yêu Cầu", icon: MessageCircle, href: "/admin/enquiries" },
-  { label: "Nhật Ký", icon: ClipboardList, href: "/admin/audit-log" },
-  { label: "Cài Đặt", icon: Settings, href: "/admin/settings" },
+// ── Link dùng chung cho tất cả admin ─────────────────────────────────────────
+const COMMON_LINKS = [
+  { label: "Tổng Quan",          icon: LayoutDashboard, href: "/admin" },
+  { label: "Visual Editor",       icon: Layers,          href: "/admin/visual-editor" },
+  { label: "Cổ Đông Portal",      icon: Users,           href: "/admin/shareholders" },
+  { label: "Người Dùng Công Khai",icon: UserCog,         href: "/admin/public-users" },
+  { label: "Quản Lý Nội Dung",    icon: FileText,        href: "/admin/content" },
+  { label: "Bài Viết & Tin Tức",  icon: Newspaper,       href: "/admin/blog" },
+  { label: "Tài Liệu & CBTT",     icon: FolderOpen,      href: "/admin/documents" },
+  { label: "Hạng Mục Hợp Tác",    icon: Handshake,       href: "/admin/investment-plans" },
+  { label: "Đơn Đăng Ký",         icon: FileSearch2,     href: "/admin/partner-applications" },
+  { label: "Yêu Cầu",             icon: MessageCircle,   href: "/admin/enquiries" },
+  { label: "Nhật Ký",             icon: ClipboardList,   href: "/admin/audit-log" },
+  { label: "Cài Đặt",             icon: Settings,        href: "/admin/settings" },
+];
+
+// ── Link chỉ dành cho Siêu Quản Trị Viên ─────────────────────────────────────
+const SUPERADMIN_ONLY_LINKS = [
+  { label: "Quản Lý Admin",       icon: Crown,           href: "/admin/admins" },
 ];
 
 export default function AdminSidebar() {
@@ -42,6 +51,12 @@ export default function AdminSidebar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const { adminInfo } = useAdminSession();
+
+  // Tổng hợp link theo vai trò
+  const links = [
+    ...COMMON_LINKS,
+    ...(adminInfo?.role === "superadmin" ? SUPERADMIN_ONLY_LINKS : []),
+  ];
 
   async function handleLogout() {
     setOpen(false);
