@@ -9,7 +9,7 @@ import {
   ListOrdered,
   Heading2,
   Quote,
-  Image,
+  ImageIcon,
   Undo,
   Redo,
 } from "lucide-react";
@@ -99,8 +99,7 @@ export default function RichTextEditor({ value, onChange }: RichTextEditorProps)
           className="p-1.5 text-AXVN-silver hover:text-AXVN-ivory hover:bg-AXVN-charcoal transition-colors rounded-md"
           title="Insert Image"
         >
-          {/* eslint-disable-next-line jsx-a11y/alt-text */}
-          <Image className="w-4 h-4" />
+          <ImageIcon className="w-4 h-4" aria-label="Insert Image" />
         </button>
         <span className="w-px h-5 bg-white/10 mx-1" />
         <button

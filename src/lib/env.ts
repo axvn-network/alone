@@ -41,7 +41,7 @@ const envSchema = z.object({
   // General
   NEXT_PUBLIC_SITE_URL: z.string().url().default("https://axvn.vn"),
   NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
-  GEMINI_API_KEY: z.string().optional(),
+  ANTHROPIC_API_KEY: z.string().optional(),
 
   // Analytics — optional, chỉ inject script khi có giá trị thực
   NEXT_PUBLIC_GA_ID: z.string().optional(),

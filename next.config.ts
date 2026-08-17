@@ -26,7 +26,7 @@ const securityHeaders = [
       // Media (video/audio)
       "media-src 'self' blob:",
       // Connections: self + analytics + Gemini API + Cloudflare beacon
-      "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://generativelanguage.googleapis.com https://cloudflareinsights.com",
+      "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://api.anthropic.com https://cloudflareinsights.com",
       // Frames: same origin only
       "frame-src 'none'",
       // Form actions: same origin only

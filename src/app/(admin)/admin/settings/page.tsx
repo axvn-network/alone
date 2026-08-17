@@ -512,8 +512,8 @@ export default function SettingsPage() {
                       <label className="block text-AXVN-silver text-xs font-medium mb-2 tracking-wide">Logo</label>
                       {data.logo && (
                         <div className="mb-2 p-4 bg-AXVN-deep border border-white/5 flex items-center justify-center rounded-lg">
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={data.logo} alt="" className="h-12 w-auto object-contain" />
+                          {/* eslint-disable-next-line @next/next/no-img-element -- dynamic Cloudinary URL: unknown dimensions */}
+                          <img src={data.logo} alt="Site logo preview" className="h-12 w-auto object-contain" />
                         </div>
                       )}
                       <label className="flex items-center justify-center gap-2 px-4 py-3.5 bg-AXVN-deep border border-dashed border-white/10 text-AXVN-silver text-xs hover:border-AXVN-gold/40 cursor-pointer transition-colors rounded-lg">
@@ -525,8 +525,8 @@ export default function SettingsPage() {
                       <label className="block text-AXVN-silver text-xs font-medium mb-2 tracking-wide">Favicon</label>
                       {data.favicon && (
                         <div className="mb-2 p-4 bg-AXVN-deep border border-white/5 flex items-center justify-center rounded-lg">
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={data.favicon} alt="" className="h-10 w-auto object-contain" />
+                          {/* eslint-disable-next-line @next/next/no-img-element -- dynamic Cloudinary URL: unknown dimensions */}
+                          <img src={data.favicon} alt="Favicon preview" className="h-10 w-auto object-contain" />
                         </div>
                       )}
                       <label className="flex items-center justify-center gap-2 px-4 py-3.5 bg-AXVN-deep border border-dashed border-white/10 text-AXVN-silver text-xs hover:border-AXVN-gold/40 cursor-pointer transition-colors rounded-lg">

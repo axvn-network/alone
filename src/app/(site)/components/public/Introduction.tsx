@@ -90,7 +90,7 @@ export default function Introduction() {
               transition={{ type: "spring", stiffness: 200, damping: 25 }}
             >
               <Image
-                src="/website image.png"
+                src="/website-image.png"
                 alt="AXVN Tech Holding leadership"
                 fill
                 className="object-cover"

@@ -27,8 +27,7 @@ export interface CreateDocumentDto {
   status?: "published" | "draft";
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface UpdateDocumentDto extends Partial<CreateDocumentDto> {}
+export type UpdateDocumentDto = Partial<CreateDocumentDto>;
 
 function toPlain(doc: IDocument) {
   const obj = doc.toObject ? doc.toObject() : doc;

@@ -67,8 +67,7 @@ function toSafe(doc: IShareholder) {
 
 export async function list(query: ShareholderQuery = {}) {
   await connectDB();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const filter: Record<string, any> = {
+  const filter: Record<string, unknown> = {
     ...(query.status    ? { status:    query.status }    : {}),
     ...(query.role      ? { role:      query.role }      : {}),
     ...(query.kycStatus ? { kycStatus: query.kycStatus } : {}),
@@ -123,8 +122,7 @@ export async function create(data: CreateShareholderDto) {
 
 export async function update(id: string, data: UpdateShareholderDto) {
   await connectDB();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const updateFields: Record<string, any> = { ...data };
+  const updateFields: Record<string, unknown> = { ...data as Record<string, unknown> };
   if (data.password) {
     updateFields.password = await bcrypt.hash(data.password, 12);
   } else {

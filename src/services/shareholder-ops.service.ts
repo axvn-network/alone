@@ -90,8 +90,7 @@ export interface CreateMeetingDto {
   attachmentName?: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface UpdateMeetingDto extends Partial<CreateMeetingDto> {}
+export type UpdateMeetingDto = Partial<CreateMeetingDto>;
 
 export interface MessageQuery {
   channel?: MessageChannel;
