@@ -48,6 +48,13 @@ const nextConfig: NextConfig = {
   // ── Deployment ──────────────────────────────────────────────────────────────
   output: "standalone",
 
+  // ── Turbopack root — prevent "ignored package-lock.json" warning ─────────────
+  // The project lives at /var/lkvip/langding/ inside a parent workspace.
+  // Without this, Turbopack scans /var/lkvip/ and warns about the outer lock-file.
+  turbopack: {
+    root: __dirname,
+  },
+
   // ── Redirects — short URLs → canonical routes (308 Permanent) ──────────────
   async redirects() {
     return [
