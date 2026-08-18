@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 import { getCurrentUser } from "@/core/security/auth-utils";
-import * as enquiryService from "@/modules/enquiries";
+import { updateEnquiryStatus, deleteEnquiry } from "@/modules/enquiries";
 import {
   successResponse,
   errorResponse,
@@ -13,9 +13,9 @@ import { handleError, NotFoundError } from "@/utils/errors";
 // PATCH — admin only: update enquiry status
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
-  if (!await getCurrentUser()) return unauthorizedResponse();
+  if (!(await getCurrentUser())) return unauthorizedResponse();
   try {
     const { id } = await params;
     const { status } = await request.json();
@@ -23,8 +23,8 @@ export async function PATCH(
       return errorResponse("Invalid status. Must be: new, read, or archived");
     }
     return successResponse(
-      await enquiryService.updateEnquiryStatus(id, status),
-      "Enquiry updated successfully"
+      await updateEnquiryStatus(id, status),
+      "Enquiry updated successfully",
     );
   } catch (error) {
     if (error instanceof NotFoundError) return notFoundResponse(error.message);
@@ -35,12 +35,12 @@ export async function PATCH(
 // DELETE — admin only: delete enquiry
 export async function DELETE(
   _request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
-  if (!await getCurrentUser()) return unauthorizedResponse();
+  if (!(await getCurrentUser())) return unauthorizedResponse();
   try {
     const { id } = await params;
-    await enquiryService.deleteEnquiry(id);
+    await deleteEnquiry(id);
     return successResponse(null, "Enquiry deleted successfully");
   } catch (error) {
     if (error instanceof NotFoundError) return notFoundResponse(error.message);

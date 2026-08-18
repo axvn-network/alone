@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server";
-import { documentService, DocumentQuery } from "@/modules/documents";
+import { documentService } from "@/modules/documents";
+import type { DocumentQuery } from "@/modules/documents";
 import { successResponse, serverErrorResponse } from "@/utils/api-response";
 import { handleError } from "@/utils/errors";
 
@@ -13,10 +14,8 @@ export async function GET(request: NextRequest) {
     const yearStr = url.searchParams.get("year");
     const year = yearStr ? parseInt(yearStr) : undefined;
     const search = url.searchParams.get("search") || undefined;
-    const limitStr = url.searchParams.get("limit");
-    const limit = limitStr ? parseInt(limitStr) : 50;
-    const pageStr = url.searchParams.get("page");
-    const page = pageStr ? parseInt(pageStr) : 1;
+    const limit = parseInt(url.searchParams.get("limit") || "50");
+    const page = parseInt(url.searchParams.get("page") || "1");
 
     const query: DocumentQuery = {
       category: category as DocumentQuery["category"],

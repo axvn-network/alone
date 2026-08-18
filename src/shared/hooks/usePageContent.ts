@@ -3,7 +3,10 @@
 import { useEffect, useState } from "react";
 import { useLang } from "@/contexts/LangContext";
 
-export function usePageContent<T>(slug: string, defaultContent: T): { content: T; loading: boolean; error: boolean } {
+export function usePageContent<T>(
+  slug: string,
+  defaultContent: T,
+): { content: T; loading: boolean; error: boolean } {
   const [rawData, setRawData] = useState<Record<string, unknown>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);

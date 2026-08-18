@@ -46,7 +46,13 @@ export interface TocItem {
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
 /** Sidebar mục lục thông minh — sticky khi scroll */
-function Sidebar({ toc, className = "" }: { toc: readonly TocItem[]; className?: string }) {
+function Sidebar({
+  toc,
+  className = "",
+}: {
+  toc: readonly TocItem[];
+  className?: string;
+}) {
   return (
     <aside
       aria-label="Mục lục"
@@ -62,10 +68,11 @@ function Sidebar({ toc, className = "" }: { toc: readonly TocItem[]; className?:
               <li key={item.id}>
                 <a
                   href={`#${item.id}`}
-                  className={`block rounded px-2 py-1.5 text-xs leading-snug transition-colors hover:bg-AXVN-gold/10 hover:text-AXVN-gold focus-visible:outline-2 focus-visible:outline-AXVN-gold ${item.level === 2
+                  className={`block rounded px-2 py-1.5 text-xs leading-snug transition-colors hover:bg-AXVN-gold/10 hover:text-AXVN-gold focus-visible:outline-2 focus-visible:outline-AXVN-gold ${
+                    item.level === 2
                       ? "pl-5 text-AXVN-silver/55"
                       : "text-AXVN-silver/80"
-                    }`}
+                  }`}
                 >
                   {item.label}
                 </a>
@@ -79,16 +86,36 @@ function Sidebar({ toc, className = "" }: { toc: readonly TocItem[]; className?:
 }
 
 /** Khu vực hero — chứa visual component chính */
-function Hero({ children, id = "visual", className = "" }: { children: ReactNode; id?: string; className?: string }) {
+function Hero({
+  children,
+  id = "visual",
+  className = "",
+}: {
+  children: ReactNode;
+  id?: string;
+  className?: string;
+}) {
   return (
-    <section id={id} aria-label="Trực quan hóa" className={`w-full ${className}`}>
+    <section
+      id={id}
+      aria-label="Trực quan hóa"
+      className={`w-full ${className}`}
+    >
       {children}
     </section>
   );
 }
 
 /** Khu vực body — accordion fallback chứa nội dung chi tiết */
-function Body({ children, id = "details", className = "" }: { children: ReactNode; id?: string; className?: string }) {
+function Body({
+  children,
+  id = "details",
+  className = "",
+}: {
+  children: ReactNode;
+  id?: string;
+  className?: string;
+}) {
   return (
     <section
       id={id}
@@ -117,9 +144,7 @@ export function DocLayout({ children, className = "" }: DocLayoutProps) {
     <div
       className={`max-w-7xl mx-auto px-[var(--section-px)] py-[var(--section-py)] ${className}`}
     >
-      <div className="flex gap-8 xl:gap-12 items-start">
-        {children}
-      </div>
+      <div className="flex gap-8 xl:gap-12 items-start">{children}</div>
     </div>
   );
 }
@@ -127,7 +152,13 @@ export function DocLayout({ children, className = "" }: DocLayoutProps) {
 // ─── Main content wrapper ─────────────────────────────────────────────────────
 
 /** Bao bọc Hero + Body trong cột main (flex-1) */
-export function DocMain({ children, className = "" }: { children: ReactNode; className?: string }) {
+export function DocMain({
+  children,
+  className = "",
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
   return <div className={`flex-1 min-w-0 ${className}`}>{children}</div>;
 }
 

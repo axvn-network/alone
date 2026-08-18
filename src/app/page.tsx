@@ -1,11 +1,11 @@
-import Hero from "@/modules/content/components/Hero";
-import Introduction from "@/modules/content/components/Introduction";
-import WhatWeDo from "@/modules/content/components/WhatWeDo";
-import InvestmentSectors from "@/modules/content/components/InvestmentSectors";
-import WhyChooseUs from "@/modules/content/components/WhyChooseUs";
-import Philosophy from "@/modules/content/components/Philosophy";
-import PartnershipCTA from "@/modules/content/components/PartnershipCTA";
-import Newsletter from "@/modules/content/components/Newsletter";
+import Hero from "@/shared/components/blocks/Hero";
+import Introduction from "@/shared/components/blocks/Introduction";
+import WhatWeDo from "@/shared/components/blocks/WhatWeDo";
+import InvestmentSectors from "@/shared/components/blocks/InvestmentSectors";
+import WhyChooseUs from "@/shared/components/blocks/WhyChooseUs";
+import Philosophy from "@/shared/components/blocks/Philosophy";
+import PartnershipCTA from "@/shared/components/blocks/PartnershipCTA";
+import Newsletter from "@/shared/components/blocks/Newsletter";
 
 import PageTransition from "@/shared/components/animations/PageTransition";
 import { FloatingBlobs } from "@/shared/components/animations/AnimatedBackground";
@@ -36,7 +36,6 @@ export default function Home() {
         <Philosophy />
         <PartnershipCTA />
         <Newsletter />
-
       </main>
     </PageTransition>
   );

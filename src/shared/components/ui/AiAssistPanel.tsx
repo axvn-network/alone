@@ -2,8 +2,15 @@
 
 import { useState, useRef, useEffect } from "react";
 import {
-  Sparkles, X, Send, Copy, Check, ChevronDown,
-  RefreshCw, Wand2, Loader2,
+  Sparkles,
+  X,
+  Send,
+  Copy,
+  Check,
+  ChevronDown,
+  RefreshCw,
+  Wand2,
+  Loader2,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -52,7 +59,10 @@ export default function AiAssistPanel({
   // Close dropdown on outside click
   useEffect(() => {
     function handler(e: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node)
+      ) {
         setShowActions(false);
       }
     }
@@ -69,13 +79,15 @@ export default function AiAssistPanel({
       lang,
       ...extraContext,
       ...Object.fromEntries(
-        (action.contextFields || []).map((f) => [f, formValues[f] || ""])
+        (action.contextFields || []).map((f) => [f, formValues[f] || ""]),
       ),
     };
 
     // Strip HTML tags for content_preview
     if (context.content) {
-      context.content_preview = context.content.replace(/<[^>]*>/g, "").slice(0, 500);
+      context.content_preview = context.content
+        .replace(/<[^>]*>/g, "")
+        .slice(0, 500);
     }
 
     if (prompt) context.custom_prompt = prompt;
@@ -92,7 +104,14 @@ export default function AiAssistPanel({
         return;
       }
       setResult(data.data.text);
-      setTimeout(() => resultRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" }), 100);
+      setTimeout(
+        () =>
+          resultRef.current?.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+          }),
+        100,
+      );
     } catch {
       toast.error("Lỗi kết nối. Thử lại.");
     } finally {
@@ -135,10 +154,15 @@ export default function AiAssistPanel({
             <Sparkles className="w-3.5 h-3.5 text-white" />
           </div>
           <span className="text-sm font-bold text-purple-200">AI Trợ Lý</span>
-          <span className="text-[10px] px-1.5 py-0.5 bg-purple-500/20 text-purple-400 rounded-full font-mono">Gemini</span>
+          <span className="text-[10px] px-1.5 py-0.5 bg-purple-500/20 text-purple-400 rounded-full font-mono">
+            Gemini
+          </span>
         </div>
         <button
-          onClick={() => { setState("collapsed"); setResult(""); }}
+          onClick={() => {
+            setState("collapsed");
+            setResult("");
+          }}
           className="p-1 text-purple-400/50 hover:text-purple-300 transition-colors rounded-lg hover:bg-white/5"
         >
           <X className="w-3.5 h-3.5" />
@@ -148,7 +172,9 @@ export default function AiAssistPanel({
       <div className="p-4 space-y-3">
         {/* Action selector */}
         <div ref={dropdownRef} className="relative">
-          <p className="text-[10px] font-semibold text-purple-400/70 uppercase tracking-wider mb-1.5">Chọn tác vụ</p>
+          <p className="text-[10px] font-semibold text-purple-400/70 uppercase tracking-wider mb-1.5">
+            Chọn tác vụ
+          </p>
           <button
             onClick={() => setShowActions(!showActions)}
             className="w-full flex items-center justify-between gap-2 px-3 py-2.5 bg-white/5 border border-white/10 hover:border-purple-500/40 rounded-xl text-sm text-AXVN-ivory transition-colors"
@@ -157,16 +183,25 @@ export default function AiAssistPanel({
               <span>{selectedAction.icon}</span>
               <span className="font-medium">{selectedAction.label}</span>
             </span>
-            <ChevronDown className={`w-3.5 h-3.5 text-purple-400 transition-transform ${showActions ? "rotate-180" : ""}`} />
+            <ChevronDown
+              className={`w-3.5 h-3.5 text-purple-400 transition-transform ${showActions ? "rotate-180" : ""}`}
+            />
           </button>
           {showActions && (
             <div className="absolute top-full left-0 right-0 mt-1 bg-[#07111D] border border-white/10 rounded-xl overflow-hidden z-50 shadow-xl max-h-52 overflow-y-auto">
               {actions.map((a) => (
                 <button
                   key={a.key}
-                  onClick={() => { setSelectedAction(a); setShowActions(false); setResult(""); }}
-                  className={`w-full flex items-center gap-2.5 px-3 py-2.5 text-sm transition-colors hover:bg-white/5 ${selectedAction.key === a.key ? "bg-purple-500/10 text-purple-300" : "text-AXVN-silver/80"
-                    }`}
+                  onClick={() => {
+                    setSelectedAction(a);
+                    setShowActions(false);
+                    setResult("");
+                  }}
+                  className={`w-full flex items-center gap-2.5 px-3 py-2.5 text-sm transition-colors hover:bg-white/5 ${
+                    selectedAction.key === a.key
+                      ? "bg-purple-500/10 text-purple-300"
+                      : "text-AXVN-silver/80"
+                  }`}
                 >
                   <span className="text-base">{a.icon}</span>
                   <span>{a.label}</span>
@@ -179,7 +214,9 @@ export default function AiAssistPanel({
         {/* Custom prompt (for custom action) */}
         {selectedAction.key === "custom" && (
           <div>
-            <p className="text-[10px] font-semibold text-purple-400/70 uppercase tracking-wider mb-1.5">Yêu cầu tùy chỉnh</p>
+            <p className="text-[10px] font-semibold text-purple-400/70 uppercase tracking-wider mb-1.5">
+              Yêu cầu tùy chỉnh
+            </p>
             <textarea
               value={customPrompt}
               onChange={(e) => setCustomPrompt(e.target.value)}
@@ -192,8 +229,15 @@ export default function AiAssistPanel({
 
         {/* Generate button */}
         <button
-          onClick={() => run(selectedAction, selectedAction.key === "custom" ? customPrompt : undefined)}
-          disabled={loading || (selectedAction.key === "custom" && !customPrompt.trim())}
+          onClick={() =>
+            run(
+              selectedAction,
+              selectedAction.key === "custom" ? customPrompt : undefined,
+            )
+          }
+          disabled={
+            loading || (selectedAction.key === "custom" && !customPrompt.trim())
+          }
           className="w-full flex items-center justify-center gap-2 py-2.5 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white text-sm font-bold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-purple-900/30"
         >
           {loading ? (
@@ -213,10 +257,19 @@ export default function AiAssistPanel({
         {result && (
           <div ref={resultRef} className="space-y-2">
             <div className="flex items-center justify-between">
-              <p className="text-[10px] font-semibold text-purple-400/70 uppercase tracking-wider">Kết quả</p>
+              <p className="text-[10px] font-semibold text-purple-400/70 uppercase tracking-wider">
+                Kết quả
+              </p>
               <div className="flex items-center gap-1">
                 <button
-                  onClick={() => run(selectedAction, selectedAction.key === "custom" ? customPrompt : undefined)}
+                  onClick={() =>
+                    run(
+                      selectedAction,
+                      selectedAction.key === "custom"
+                        ? customPrompt
+                        : undefined,
+                    )
+                  }
                   className="p-1.5 text-purple-400/60 hover:text-purple-300 hover:bg-white/5 rounded-lg transition-colors"
                   title="Tạo lại"
                 >
@@ -227,12 +280,18 @@ export default function AiAssistPanel({
                   className="p-1.5 text-purple-400/60 hover:text-purple-300 hover:bg-white/5 rounded-lg transition-colors"
                   title="Sao chép"
                 >
-                  {copied ? <Check className="w-3 h-3 text-green-400" /> : <Copy className="w-3 h-3" />}
+                  {copied ? (
+                    <Check className="w-3 h-3 text-green-400" />
+                  ) : (
+                    <Copy className="w-3 h-3" />
+                  )}
                 </button>
               </div>
             </div>
             <div className="bg-white/5 border border-purple-500/20 rounded-xl p-3 max-h-48 overflow-y-auto">
-              <p className="text-xs text-AXVN-silver/90 leading-relaxed whitespace-pre-wrap">{result}</p>
+              <p className="text-xs text-AXVN-silver/90 leading-relaxed whitespace-pre-wrap">
+                {result}
+              </p>
             </div>
             <button
               onClick={handleApply}
@@ -250,31 +309,121 @@ export default function AiAssistPanel({
 
 /* ── Pre-built action sets for each form ─────────────────────── */
 export const BLOG_AI_ACTIONS: AiAction[] = [
-  { key: "blog_title", icon: "✍️", label: "Gợi ý tiêu đề", contextFields: ["topic", "content", "category"] },
-  { key: "blog_excerpt", icon: "📝", label: "Viết tóm tắt", contextFields: ["title", "content"] },
-  { key: "blog_content", icon: "📄", label: "Viết nội dung", contextFields: ["title", "excerpt", "category"] },
-  { key: "blog_continue", icon: "▶️", label: "Tiếp tục viết", contextFields: ["title", "content"] },
-  { key: "blog_improve", icon: "✨", label: "Cải thiện văn phong", contextFields: ["selected_text", "content"] },
-  { key: "blog_seo_title", icon: "🔍", label: "Tạo SEO title", contextFields: ["title", "category"] },
-  { key: "blog_seo_desc", icon: "📊", label: "Tạo meta description", contextFields: ["title", "excerpt"] },
-  { key: "blog_tags", icon: "🏷️", label: "Gợi ý tags", contextFields: ["title", "category", "content"] },
-  { key: "translate_vi_en", icon: "🌐", label: "Dịch → English", contextFields: ["title"] },
-  { key: "summarize", icon: "📋", label: "Tóm tắt nội dung", contextFields: ["content"] },
+  {
+    key: "blog_title",
+    icon: "✍️",
+    label: "Gợi ý tiêu đề",
+    contextFields: ["topic", "content", "category"],
+  },
+  {
+    key: "blog_excerpt",
+    icon: "📝",
+    label: "Viết tóm tắt",
+    contextFields: ["title", "content"],
+  },
+  {
+    key: "blog_content",
+    icon: "📄",
+    label: "Viết nội dung",
+    contextFields: ["title", "excerpt", "category"],
+  },
+  {
+    key: "blog_continue",
+    icon: "▶️",
+    label: "Tiếp tục viết",
+    contextFields: ["title", "content"],
+  },
+  {
+    key: "blog_improve",
+    icon: "✨",
+    label: "Cải thiện văn phong",
+    contextFields: ["selected_text", "content"],
+  },
+  {
+    key: "blog_seo_title",
+    icon: "🔍",
+    label: "Tạo SEO title",
+    contextFields: ["title", "category"],
+  },
+  {
+    key: "blog_seo_desc",
+    icon: "📊",
+    label: "Tạo meta description",
+    contextFields: ["title", "excerpt"],
+  },
+  {
+    key: "blog_tags",
+    icon: "🏷️",
+    label: "Gợi ý tags",
+    contextFields: ["title", "category", "content"],
+  },
+  {
+    key: "translate_vi_en",
+    icon: "🌐",
+    label: "Dịch → English",
+    contextFields: ["title"],
+  },
+  {
+    key: "summarize",
+    icon: "📋",
+    label: "Tóm tắt nội dung",
+    contextFields: ["content"],
+  },
   { key: "custom", icon: "💬", label: "Yêu cầu tùy chỉnh", contextFields: [] },
 ];
 
 export const DOC_AI_ACTIONS: AiAction[] = [
-  { key: "doc_title_vi", icon: "✍️", label: "Gợi ý tên VN", contextFields: ["category", "hint"] },
-  { key: "doc_title_en", icon: "🌐", label: "Dịch tên → English", contextFields: ["title_vi", "category"] },
-  { key: "translate_vi_en", icon: "🔄", label: "Dịch văn bản", contextFields: ["title"] },
+  {
+    key: "doc_title_vi",
+    icon: "✍️",
+    label: "Gợi ý tên VN",
+    contextFields: ["category", "hint"],
+  },
+  {
+    key: "doc_title_en",
+    icon: "🌐",
+    label: "Dịch tên → English",
+    contextFields: ["title_vi", "category"],
+  },
+  {
+    key: "translate_vi_en",
+    icon: "🔄",
+    label: "Dịch văn bản",
+    contextFields: ["title"],
+  },
   { key: "custom", icon: "💬", label: "Yêu cầu tùy chỉnh", contextFields: [] },
 ];
 
 export const PAGE_AI_ACTIONS: AiAction[] = [
-  { key: "page_title", icon: "✍️", label: "Gợi ý tiêu đề", contextFields: ["page_name", "title"] },
-  { key: "page_content", icon: "📄", label: "Viết nội dung", contextFields: ["page_name", "title"] },
-  { key: "page_improve", icon: "✨", label: "Cải thiện nội dung", contextFields: ["content"] },
-  { key: "translate_vi_en", icon: "🌐", label: "Dịch → English", contextFields: ["content"] },
-  { key: "summarize", icon: "📋", label: "Tóm tắt", contextFields: ["content"] },
+  {
+    key: "page_title",
+    icon: "✍️",
+    label: "Gợi ý tiêu đề",
+    contextFields: ["page_name", "title"],
+  },
+  {
+    key: "page_content",
+    icon: "📄",
+    label: "Viết nội dung",
+    contextFields: ["page_name", "title"],
+  },
+  {
+    key: "page_improve",
+    icon: "✨",
+    label: "Cải thiện nội dung",
+    contextFields: ["content"],
+  },
+  {
+    key: "translate_vi_en",
+    icon: "🌐",
+    label: "Dịch → English",
+    contextFields: ["content"],
+  },
+  {
+    key: "summarize",
+    icon: "📋",
+    label: "Tóm tắt",
+    contextFields: ["content"],
+  },
   { key: "custom", icon: "💬", label: "Yêu cầu tùy chỉnh", contextFields: [] },
 ];

@@ -9,7 +9,7 @@
  *   Phase 3 (NQ05):  AES-256-GCM encryption for nationalId at rest
  */
 
-export { generateCsrfToken, validateCsrfToken } from "@/shared/utils/csrf";
+export { generateCsrfToken, validateCsrfToken } from "@/core/security/csrf";
 export {
   setSessionCookie,
   getSessionEmail,

@@ -37,7 +37,7 @@ export async function POST(request: Request) {
           "Retry-After": String(retryAfter),
           "X-RateLimit-Reset": String(limit.resetAt),
         },
-      }
+      },
     );
   }
 
@@ -51,14 +51,14 @@ export async function POST(request: Request) {
   } catch {
     return NextResponse.json(
       { success: false, message: "Invalid request" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
   if (!username || !password) {
     return NextResponse.json(
       { success: false, message: "Credentials required" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -96,6 +96,6 @@ export async function POST(request: Request) {
   // ── Generic failure — do not reveal whether user exists ───────────────────
   return NextResponse.json(
     { success: false, message: "Invalid credentials" },
-    { status: 401 }
+    { status: 401 },
   );
 }

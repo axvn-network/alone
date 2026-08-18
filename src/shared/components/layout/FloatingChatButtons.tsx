@@ -38,7 +38,9 @@ const CHAT_CONFIG = {
     shadow: "shadow-green-500/30",
     Icon: WhatsAppIcon,
     buildHref: (btn: IChatButton, lang: string) => {
-      const msg = encodeURIComponent(lang === "vi" ? (btn.messageVi || "") : (btn.messageEn || ""));
+      const msg = encodeURIComponent(
+        lang === "vi" ? btn.messageVi || "" : btn.messageEn || "",
+      );
       const phone = btn.value.replace(/\D/g, "");
       return `https://wa.me/${phone}${msg ? `?text=${msg}` : ""}`;
     },
@@ -50,7 +52,9 @@ const CHAT_CONFIG = {
     shadow: "shadow-sky-500/30",
     Icon: TelegramIcon,
     buildHref: (btn: IChatButton, lang: string) => {
-      const msg = encodeURIComponent(lang === "vi" ? (btn.messageVi || "") : (btn.messageEn || ""));
+      const msg = encodeURIComponent(
+        lang === "vi" ? btn.messageVi || "" : btn.messageEn || "",
+      );
       const val = btn.value.replace(/^@/, "");
       // username → t.me/username; phone number → direct link with text
       if (/^\d+$/.test(val)) return `https://t.me/+${val}`;
@@ -102,13 +106,17 @@ export default function FloatingChatButtons() {
           setButtons(btns);
         } else if (data?.data?.whatsapp) {
           // backward-compat: cũ chỉ có field whatsapp
-          setButtons([{
-            type: "whatsapp",
-            enabled: true,
-            value: data.data.whatsapp,
-            messageVi: "Xin chào, tôi muốn tìm hiểu thêm về AXVN Tech Holding.",
-            messageEn: "Hello, I would like to enquire about AXVN Tech Holding.",
-          }]);
+          setButtons([
+            {
+              type: "whatsapp",
+              enabled: true,
+              value: data.data.whatsapp,
+              messageVi:
+                "Xin chào, tôi muốn tìm hiểu thêm về AXVN Tech Holding.",
+              messageEn:
+                "Hello, I would like to enquire about AXVN Tech Holding.",
+            },
+          ]);
         } else {
           setButtons(FALLBACK_BUTTONS);
         }
@@ -145,9 +153,13 @@ export default function FloatingChatButtons() {
                 {cfg.label}
               </span>
               {/* Ping ring */}
-              <div className={`absolute inset-0 ${cfg.ping} animate-ping opacity-20 rounded-full`} />
+              <div
+                className={`absolute inset-0 ${cfg.ping} animate-ping opacity-20 rounded-full`}
+              />
               {/* Button */}
-              <div className={`relative w-12 h-12 md:w-14 md:h-14 ${cfg.bg} flex items-center justify-center shadow-lg ${cfg.shadow} transition-all duration-300 hover:scale-110 active:scale-95 rounded-full`}>
+              <div
+                className={`relative w-12 h-12 md:w-14 md:h-14 ${cfg.bg} flex items-center justify-center shadow-lg ${cfg.shadow} transition-all duration-300 hover:scale-110 active:scale-95 rounded-full`}
+              >
                 <cfg.Icon />
               </div>
             </a>

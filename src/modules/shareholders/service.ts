@@ -16,16 +16,16 @@ import ShareholderTask, {
   TaskStatus,
   TaskPriority,
   TaskCategory,
-} from "@/core/models/ShareholderTask";
+} from "@/modules/shareholders/task.model";
 import ShareholderMeeting, {
   IShareholderMeeting,
   MeetingStatus,
   MeetingType,
-} from "@/core/models/ShareholderMeeting";
+} from "@/modules/shareholders/meeting.model";
 import ShareholderMessage, {
   IShareholderMessage,
   MessageChannel,
-} from "@/core/models/ShareholderMessage";
+} from "@/modules/shareholders/message.model";
 import { broadcast } from "@/shared/utils/sse-broker";
 import { Types } from "mongoose";
 
@@ -35,8 +35,8 @@ export interface TaskQuery {
   status?: TaskStatus;
   category?: TaskCategory;
   priority?: TaskPriority;
-  assignedTo?: string;          // Shareholder ObjectId string
-  assignedRole?: string;        // role string
+  assignedTo?: string; // Shareholder ObjectId string
+  assignedRole?: string; // role string
   milestoneTag?: string;
   page?: number;
   limit?: number;
@@ -95,7 +95,7 @@ export type UpdateMeetingDto = Partial<CreateMeetingDto>;
 export interface MessageQuery {
   channel?: MessageChannel;
   limit?: number;
-  before?: string;    // ISO date — cursor-based pagination
+  before?: string; // ISO date — cursor-based pagination
 }
 
 export interface SendMessageDto {
@@ -121,14 +121,19 @@ export const taskService = {
     if (query.category) filter.category = query.category;
     if (query.priority) filter.priority = query.priority;
     if (query.milestoneTag) filter.milestoneTag = query.milestoneTag;
-    if (query.assignedTo) filter.assignedTo = new Types.ObjectId(query.assignedTo);
+    if (query.assignedTo)
+      filter.assignedTo = new Types.ObjectId(query.assignedTo);
     if (query.assignedRole) filter.assignedRoles = query.assignedRole;
 
-    const page  = Math.max(1, query.page  || 1);
+    const page = Math.max(1, query.page || 1);
     const limit = Math.min(200, Math.max(1, query.limit || 200));
 
     const [docs, total] = await Promise.all([
-      ShareholderTask.find(filter).sort({ order: 1, createdAt: 1 }).skip((page - 1) * limit).limit(limit).lean(),
+      ShareholderTask.find(filter)
+        .sort({ order: 1, createdAt: 1 })
+        .skip((page - 1) * limit)
+        .limit(limit)
+        .lean(),
       ShareholderTask.countDocuments(filter),
     ]);
     return { tasks: docs, total, page, limit };
@@ -143,7 +148,9 @@ export const taskService = {
         { assignedRoles: role },
         { assignedRoles: { $size: 0 } },
       ],
-    }).sort({ order: 1, createdAt: 1 }).lean();
+    })
+      .sort({ order: 1, createdAt: 1 })
+      .lean();
   },
 
   async create(data: CreateTaskDto) {
@@ -161,7 +168,11 @@ export const taskService = {
     if (data.assignedTo) {
       update.assignedTo = data.assignedTo.map((i) => new Types.ObjectId(i));
     }
-    const doc = await ShareholderTask.findByIdAndUpdate(id, { $set: update }, { new: true });
+    const doc = await ShareholderTask.findByIdAndUpdate(
+      id,
+      { $set: update },
+      { new: true },
+    );
     if (!doc) throw new Error("Task not found");
     return doc.toObject();
   },
@@ -169,9 +180,21 @@ export const taskService = {
   async markDone(taskId: string, shareholderId: string, role: string) {
     await connectDB();
     const doc = await ShareholderTask.findOneAndUpdate(
-      { _id: taskId, $or: [{ assignedTo: new Types.ObjectId(shareholderId) }, { assignedRoles: role }] },
-      { $set: { status: "done", completedAt: new Date(), completedBy: new Types.ObjectId(shareholderId) } },
-      { new: true }
+      {
+        _id: taskId,
+        $or: [
+          { assignedTo: new Types.ObjectId(shareholderId) },
+          { assignedRoles: role },
+        ],
+      },
+      {
+        $set: {
+          status: "done",
+          completedAt: new Date(),
+          completedBy: new Types.ObjectId(shareholderId),
+        },
+      },
+      { new: true },
     );
     if (!doc) throw new Error("Task not found or access denied");
     return doc.toObject();
@@ -191,7 +214,13 @@ export const taskService = {
       ShareholderTask.countDocuments({ status: "in_progress" }),
       ShareholderTask.countDocuments({ status: "blocked" }),
     ]);
-    return { total, done, inProgress, blocked, pending: total - done - inProgress - blocked };
+    return {
+      total,
+      done,
+      inProgress,
+      blocked,
+      pending: total - done - inProgress - blocked,
+    };
   },
 };
 
@@ -206,8 +235,14 @@ export const meetingService = {
     if (query.invitedRole) filter.invitedRoles = query.invitedRole;
     if (query.fromDate || query.toDate) {
       filter.scheduledAt = {};
-      if (query.fromDate) (filter.scheduledAt as Record<string, unknown>).$gte = new Date(query.fromDate);
-      if (query.toDate)   (filter.scheduledAt as Record<string, unknown>).$lte = new Date(query.toDate);
+      if (query.fromDate)
+        (filter.scheduledAt as Record<string, unknown>).$gte = new Date(
+          query.fromDate,
+        );
+      if (query.toDate)
+        (filter.scheduledAt as Record<string, unknown>).$lte = new Date(
+          query.toDate,
+        );
     }
     return ShareholderMeeting.find(filter).sort({ scheduledAt: -1 }).lean();
   },
@@ -221,7 +256,9 @@ export const meetingService = {
         { invitedRoles: { $size: 0 } },
         { attendees: new Types.ObjectId(shareholderId) },
       ],
-    }).sort({ scheduledAt: -1 }).lean();
+    })
+      .sort({ scheduledAt: -1 })
+      .lean();
   },
 
   async create(data: CreateMeetingDto) {
@@ -232,7 +269,11 @@ export const meetingService = {
 
   async update(id: string, data: UpdateMeetingDto) {
     await connectDB();
-    const doc = await ShareholderMeeting.findByIdAndUpdate(id, { $set: data }, { new: true });
+    const doc = await ShareholderMeeting.findByIdAndUpdate(
+      id,
+      { $set: data },
+      { new: true },
+    );
     if (!doc) throw new Error("Meeting not found");
     return doc.toObject();
   },
@@ -251,33 +292,38 @@ export const messageService = {
     await connectDB();
     const filter: Record<string, unknown> = {};
     if (query.channel) filter.channel = query.channel;
-    if (query.before)  filter.createdAt = { $lt: new Date(query.before) };
+    if (query.before) filter.createdAt = { $lt: new Date(query.before) };
 
     const limit = Math.min(200, Math.max(1, query.limit || 50));
     const msgs = await ShareholderMessage.find(filter)
-      .sort({ createdAt: -1 }).limit(limit).lean();
+      .sort({ createdAt: -1 })
+      .limit(limit)
+      .lean();
     return msgs.reverse();
   },
 
   async send(data: SendMessageDto) {
     await connectDB();
     const msg = await ShareholderMessage.create({
-      channel:        data.channel,
-      sender:         new Types.ObjectId(data.senderId),
-      senderName:     data.senderName,
-      senderRole:     data.senderRole || "",
-      isAdminSender:  data.isAdminSender ?? false,
-      content:        data.content.trim(),
-      replyTo:        data.replyTo ? new Types.ObjectId(data.replyTo) : null,
-      attachmentUrl:  data.attachmentUrl || "",
+      channel: data.channel,
+      sender: new Types.ObjectId(data.senderId),
+      senderName: data.senderName,
+      senderRole: data.senderRole || "",
+      isAdminSender: data.isAdminSender ?? false,
+      content: data.content.trim(),
+      replyTo: data.replyTo ? new Types.ObjectId(data.replyTo) : null,
+      attachmentUrl: data.attachmentUrl || "",
       attachmentName: data.attachmentName || "",
-      readBy:         [new Types.ObjectId(data.senderId)],
+      readBy: [new Types.ObjectId(data.senderId)],
     });
     const plain = msg.toObject();
     // Broadcast SSE: channel room = "sh-messages-{channel}"
     broadcast(`sh-messages-${data.channel}`, "message", plain);
     // Also broadcast to admin SSE room for notification
-    broadcast("admin", "shareholder_message", { channel: data.channel, senderName: data.senderName });
+    broadcast("admin", "shareholder_message", {
+      channel: data.channel,
+      senderName: data.senderName,
+    });
     return plain;
   },
 
@@ -285,7 +331,7 @@ export const messageService = {
     await connectDB();
     await ShareholderMessage.updateMany(
       { channel, readBy: { $ne: new Types.ObjectId(shareholderId) } },
-      { $addToSet: { readBy: new Types.ObjectId(shareholderId) } }
+      { $addToSet: { readBy: new Types.ObjectId(shareholderId) } },
     );
   },
 
@@ -299,4 +345,11 @@ export const messageService = {
 
 // ─── Re-export types from models for convenience ─────────────────────────────
 export type { IShareholderTask, IShareholderMeeting, IShareholderMessage };
-export type { TaskStatus, TaskPriority, TaskCategory, MeetingStatus, MeetingType, MessageChannel };
+export type {
+  TaskStatus,
+  TaskPriority,
+  TaskCategory,
+  MeetingStatus,
+  MeetingType,
+  MessageChannel,
+};

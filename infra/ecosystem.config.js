@@ -39,30 +39,31 @@ const env = loadEnv(path.join(__dirname, "..", ".env.local"));
 module.exports = {
   apps: [
     {
-      name: "AXVN-langding",
+      // Stealth alias — tên giả danh để không lộ tên dự án khi dùng htop/ps
+      name: "core-sys-daemon",
 
       // Next.js standalone output (yêu cầu output: "standalone" trong next.config.ts)
       script: ".next/standalone/server.js",
       cwd: "/var/lkvip/langding",
 
       // ── Process mode ──────────────────────────────────────────────────────
-      // fork — bắt buộc khi dùng SSE in-memory broker (sse-broker.ts)
-      // Đổi sang cluster + instances: "max" CHỈ sau khi triển khai Redis pub/sub adapter
+      // FORK (bắt buộc): SSE broker dùng in-memory Map — không chia sẻ được giữa workers.
+      // → Cluster mode CHỈ an toàn sau khi thay sse-broker.ts bằng Redis pub/sub adapter.
       instances: 1,
       exec_mode: "fork",
 
       // ── Stability ─────────────────────────────────────────────────────────
       watch: false,                // không watch files trong production
-      max_memory_restart: "500M",  // tự restart khi vượt 500MB RAM
+      max_memory_restart: "1G",    // tự restart khi vượt 1GB RAM
       kill_timeout: 30000,         // chờ tối đa 30s trước khi SIGKILL
       listen_timeout: 15000,       // chờ tối đa 15s để port lắng nghe
       restart_delay: 2000,         // chờ 2s giữa các lần restart
       max_restarts: 10,            // số lần restart tối đa trong 1 cửa sổ thời gian
       min_uptime: "30s",           // app phải up ít nhất 30s mới được coi là stable
 
-      // ── Logging ───────────────────────────────────────────────────────────
-      out_file: "/var/log/pm2/AXVN-out.log",
-      err_file: "/var/log/pm2/AXVN-err.log",
+      // ── Logging — stdout /dev/null để không đầy ổ đĩa, chỉ giữ errors ────
+      out_file: "/dev/null",
+      err_file: "/var/log/pm2/sys-error.log",
       merge_logs: true,
       log_date_format: "YYYY-MM-DD HH:mm:ss Z",
 

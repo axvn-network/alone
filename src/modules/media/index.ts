@@ -3,7 +3,7 @@
  * Barrel export — import from "@/modules/media"
  *
  * Wraps Cloudinary upload/delete + Upload model tracking.
- * Service lives at: @/shared/services/media.service.ts
+ * Service lives at: ./service.ts
  */
 
 export {
@@ -14,4 +14,4 @@ export {
   getUploadByPublicId,
   listByResourceType,
   getUploadStats,
-} from "@/shared/services/media.service";
+} from "./service";

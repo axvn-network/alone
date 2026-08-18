@@ -1,7 +1,11 @@
 import { NextResponse } from "next/server";
 import type { ApiResponse } from "@/types";
 
-export function successResponse<T>(data: T, message = "Operation successful", status = 200) {
+export function successResponse<T>(
+  data: T,
+  message = "Operation successful",
+  status = 200,
+) {
   const body: ApiResponse<T> = { success: true, message, data };
   return NextResponse.json(body, { status });
 }
@@ -9,7 +13,7 @@ export function successResponse<T>(data: T, message = "Operation successful", st
 export function errorResponse(
   message: string,
   status = 400,
-  errors?: Record<string, string[]>
+  errors?: Record<string, string[]>,
 ) {
   const body: ApiResponse = { success: false, message };
   if (errors) body.errors = errors;

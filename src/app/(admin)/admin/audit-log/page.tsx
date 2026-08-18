@@ -17,30 +17,30 @@ export const metadata = { title: "Nhật Ký | AXVN Admin" };
 
 interface PageProps {
   searchParams: Promise<{
-    page?:       string;
-    action?:     string;
-    actorId?:    string;
+    page?: string;
+    action?: string;
+    actorId?: string;
     collection?: string;
-    from?:       string;
-    to?:         string;
+    from?: string;
+    to?: string;
   }>;
 }
 
 export default async function AuditLogPage({ searchParams }: PageProps) {
   await requireAuth();
 
-  const sp         = await searchParams;
-  const page       = Math.max(1, Number(sp.page  ?? 1));
-  const limit      = 50;
+  const sp = await searchParams;
+  const page = Math.max(1, Number(sp.page ?? 1));
+  const limit = 50;
 
   const result = await queryLogs({
     page,
     limit,
-    action:     sp.action     || undefined,
-    actorId:    sp.actorId    || undefined,
+    action: sp.action || undefined,
+    actorId: sp.actorId || undefined,
     collection: sp.collection || undefined,
-    from:       sp.from       || undefined,
-    to:         sp.to         || undefined,
+    from: sp.from || undefined,
+    to: sp.to || undefined,
   });
 
   return (

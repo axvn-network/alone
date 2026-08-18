@@ -15,7 +15,7 @@ const CAT_IMAGES: Record<string, string> = {
   "Private Equity": "/plants-coins.jpg",
   "AI & Technology": "/businessman-reading.jpg",
   "Digital Assets & Blockchain": "/gold-coins.jpg",
-  "Hospitality": "/employees.jpg",
+  Hospitality: "/employees.jpg",
   "Trading & Distribution": "/discussing-business.jpg",
   "Market Insights": "/strategy-ideas.jpg",
   "Company News": "/african-man-black-suit.jpg",
@@ -27,8 +27,9 @@ const CAT_COLORS: Record<string, string> = {
   "Business Acquisitions": "bg-blue-50 text-blue-700 border-blue-200",
   "Private Equity": "bg-emerald-50 text-emerald-700 border-emerald-200",
   "AI & Technology": "bg-purple-50 text-purple-700 border-purple-200",
-  "Digital Assets & Blockchain": "bg-orange-50 text-orange-700 border-orange-200",
-  "Hospitality": "bg-pink-50 text-pink-700 border-pink-200",
+  "Digital Assets & Blockchain":
+    "bg-orange-50 text-orange-700 border-orange-200",
+  Hospitality: "bg-pink-50 text-pink-700 border-pink-200",
   "Trading & Distribution": "bg-cyan-50 text-cyan-700 border-cyan-200",
   "Market Insights": "bg-indigo-50 text-indigo-700 border-indigo-200",
   "Company News": "bg-red-50 text-red-700 border-red-200",
@@ -37,12 +38,22 @@ const CAT_COLORS: Record<string, string> = {
 
 function formatDate(date: Date | string | undefined) {
   if (!date) return "";
-  return new Date(date).toLocaleDateString("vi-VN", { year: "numeric", month: "long", day: "numeric" });
+  return new Date(date).toLocaleDateString("vi-VN", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 }
 
 function formatDateTime(date: Date | string | undefined) {
   if (!date) return "";
-  return new Date(date).toLocaleDateString("vi-VN", { year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" });
+  return new Date(date).toLocaleDateString("vi-VN", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 }
 
 function computeReadTime(content: string) {
@@ -61,7 +72,12 @@ interface MappedPost {
   status: string;
   publishedAt: string | null;
   createdAt: string;
-  seo: { title?: string; description?: string; keywords?: string; ogImage?: string };
+  seo: {
+    title?: string;
+    description?: string;
+    keywords?: string;
+    ogImage?: string;
+  };
   date: string;
   readTime: string;
   updatedAt: string | undefined;
@@ -81,7 +97,10 @@ function mapPost(post: Record<string, unknown>): MappedPost {
     publishedAt: post.publishedAt ? String(post.publishedAt) : null,
     createdAt: String(post.createdAt ?? ""),
     seo: (post.seo as MappedPost["seo"]) ?? {},
-    date: formatDate((post.publishedAt as string | undefined) || (post.createdAt as string | undefined)),
+    date: formatDate(
+      (post.publishedAt as string | undefined) ||
+        (post.createdAt as string | undefined),
+    ),
     readTime: computeReadTime((post.content as string) || ""),
     updatedAt: post.updatedAt ? String(post.updatedAt) : undefined,
   };
@@ -127,16 +146,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ArticlePage({ params }: Props) {
   const { slug } = await params;
   const article = await getPost(slug);
-  if (!article) { notFound(); return; }
+  if (!article) {
+    notFound();
+    return;
+  }
 
   const allPosts = await getAllPosts();
   const related = allPosts.filter((a) => a.slug !== slug).slice(0, 3);
-  const heroImage = article.featuredImage || CAT_IMAGES[article.category] || "/business.jpg";
+  const heroImage =
+    article.featuredImage || CAT_IMAGES[article.category] || "/business.jpg";
 
   return (
     <main className="min-h-screen bg-white pb-safe md:pb-0">
-
-
       <div className="relative h-[420px] md:h-[520px] w-full overflow-hidden mt-16">
         <Image
           src={heroImage}
@@ -155,7 +176,9 @@ export default async function ArticlePage({ params }: Props) {
             <ArrowLeft className="w-4 h-4" /> Quay Lại Insights
           </Link>
           <div className="flex items-center gap-3 mb-4">
-            <span className={`text-[11px] font-bold px-3 py-1.5 border backdrop-blur-sm ${CAT_COLORS[article.category] || "bg-white/90 text-gray-700 border-gray-200"}`}>
+            <span
+              className={`text-[11px] font-bold px-3 py-1.5 border backdrop-blur-sm ${CAT_COLORS[article.category] || "bg-white/90 text-gray-700 border-gray-200"}`}
+            >
               {article.category}
             </span>
             <span className="text-white/40 text-xs flex items-center gap-1.5">
@@ -170,16 +193,25 @@ export default async function ArticlePage({ params }: Props) {
 
       <div className="border-b border-gray-200 bg-white">
         <div className="max-w-[860px] mx-auto px-6 lg:px-8 py-4 flex flex-wrap items-center gap-5 text-sm text-gray-400">
-          <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5 text-[#C9A24A]" /> {article.date}</span>
-          <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-[#C9A24A]" /> {article.readTime}</span>
+          <span className="flex items-center gap-1.5">
+            <Calendar className="w-3.5 h-3.5 text-[#C9A24A]" /> {article.date}
+          </span>
+          <span className="flex items-center gap-1.5">
+            <Clock className="w-3.5 h-3.5 text-[#C9A24A]" /> {article.readTime}
+          </span>
           {article.tags && (article.tags as string[]).length > 0 && (
-            <span className="flex items-center gap-1.5"><Tag className="w-3.5 h-3.5 text-[#C9A24A]" /> {(article.tags as string[]).join(", ")}</span>
+            <span className="flex items-center gap-1.5">
+              <Tag className="w-3.5 h-3.5 text-[#C9A24A]" />{" "}
+              {(article.tags as string[]).join(", ")}
+            </span>
           )}
           {article.updatedAt && (
             <span className="flex items-center gap-1.5 text-xs border-l border-gray-200 pl-5">
               <Calendar className="w-3 h-3 text-[#C9A24A]" />
               <span className="text-gray-500">Cập nhật lần cuối:</span>
-              <span className="font-medium text-gray-700">{formatDateTime(article.updatedAt)}</span>
+              <span className="font-medium text-gray-700">
+                {formatDateTime(article.updatedAt)}
+              </span>
             </span>
           )}
         </div>
@@ -212,17 +244,27 @@ export default async function ArticlePage({ params }: Props) {
           <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
             <div className="flex items-center gap-3 mb-8">
               <div className="h-px flex-1 bg-gray-200" />
-              <p className="text-[10px] font-bold text-gray-400 tracking-widest uppercase">Tiếp Tục Đọc</p>
+              <p className="text-[10px] font-bold text-gray-400 tracking-widest uppercase">
+                Tiếp Tục Đọc
+              </p>
               <div className="h-px flex-1 bg-gray-200" />
             </div>
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8 text-center">Bài Viết Khác</h2>
+            <p aria-hidden="true" className="text-2xl md:text-3xl font-bold text-gray-900 mb-8 text-center">Bài Viết Khác</p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {related.map((a) => (
-                <Link key={a.slug} href={`/insights/${a.slug}`} className="group">
+                <Link
+                  key={a.slug}
+                  href={`/insights/${a.slug}`}
+                  className="group"
+                >
                   <article className="bg-white border border-gray-200 hover:border-[#C9A24A]/40 hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col h-full">
                     <div className="relative h-44 overflow-hidden shrink-0">
                       <Image
-                        src={a.featuredImage || CAT_IMAGES[a.category] || "/business.jpg"}
+                        src={
+                          a.featuredImage ||
+                          CAT_IMAGES[a.category] ||
+                          "/business.jpg"
+                        }
                         alt={a.title}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-700"
@@ -230,7 +272,9 @@ export default async function ArticlePage({ params }: Props) {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                       <div className="absolute top-3 left-3">
-                        <span className={`text-[10px] font-bold px-2.5 py-1 border backdrop-blur-sm ${CAT_COLORS[a.category] || "bg-white/90 text-gray-700 border-gray-200"}`}>
+                        <span
+                          className={`text-[10px] font-bold px-2.5 py-1 border backdrop-blur-sm ${CAT_COLORS[a.category] || "bg-white/90 text-gray-700 border-gray-200"}`}
+                        >
                           {a.category}
                         </span>
                       </div>
@@ -239,10 +283,16 @@ export default async function ArticlePage({ params }: Props) {
                       <h3 className="font-bold text-gray-900 text-sm leading-snug mb-2 group-hover:text-[#C9A24A] transition-colors flex-1">
                         {a.title}
                       </h3>
-                      <p className="text-gray-400 text-xs leading-relaxed mb-4 line-clamp-2">{a.excerpt}</p>
+                      <p className="text-gray-400 text-xs leading-relaxed mb-4 line-clamp-2">
+                        {a.excerpt}
+                      </p>
                       <div className="flex items-center gap-3 text-[11px] text-gray-400 pt-3 border-t border-gray-100">
-                        <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {a.date}</span>
-                        <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {a.readTime}</span>
+                        <span className="flex items-center gap-1">
+                          <Calendar className="w-3 h-3" /> {a.date}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Clock className="w-3 h-3" /> {a.readTime}
+                        </span>
                       </div>
                     </div>
                   </article>
@@ -252,8 +302,6 @@ export default async function ArticlePage({ params }: Props) {
           </div>
         </section>
       )}
-
-
     </main>
   );
 }

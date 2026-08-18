@@ -8,11 +8,7 @@ export const dynamic = "force-dynamic";
 export async function POST(req: NextRequest) {
   try {
     const { query } = (await req.json()) as { query?: string };
-
-    if (!query?.trim()) {
-      return errorResponse("Query is required");
-    }
-
+    if (!query?.trim()) return errorResponse("Query is required");
     logger.warn("Chat API: corpus not available");
     return errorResponse("Tính năng chat tạm thời không khả dụng.");
   } catch (error) {

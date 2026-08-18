@@ -1,12 +1,17 @@
 "use client";
 
 import { CalendarRange, Building2, ShieldCheck } from "lucide-react";
-import KpiDashboard from "@/modules/dashboard/components/KpiDashboard";
-import { Timeline } from "@/modules/content/components/Timeline";
-import { RoadmapAccordion } from "@/modules/content/components/RoadmapAccordion";
-import StrategyNotice from "@/modules/content/components/StrategyNotice";
-import DocLayout, { DocSidebar, DocMain, DocHero, DocBody } from "@/shared/components/layout/DocLayout";
-import { ROADMAP_PHASES, ROADMAP_META } from "@/data/roadmap";
+import { KpiDashboard } from "@/modules/dashboard";
+import { Timeline } from "@/shared/components/blocks/Timeline";
+import { RoadmapAccordion } from "@/shared/components/blocks/RoadmapAccordion";
+import StrategyNotice from "@/shared/components/blocks/StrategyNotice";
+import DocLayout, {
+  DocSidebar,
+  DocMain,
+  DocHero,
+  DocBody,
+} from "@/shared/components/layout/DocLayout";
+import { ROADMAP_PHASES, ROADMAP_META } from "@/shared/constants/roadmap";
 import type { TocItem } from "@/shared/components/layout/DocLayout";
 
 const TOC: readonly TocItem[] = [
@@ -42,23 +47,26 @@ export default function StrategyClient() {
       <DocSidebar toc={TOC} />
       <DocMain>
         <section id="kpi" aria-labelledby="kpi-heading" className="mb-12">
-          <h2 id="kpi-heading" className="text-[10px] font-semibold uppercase tracking-widest text-AXVN-gold mb-4">
+          <p
+            id="kpi-heading"
+            className="text-[10px] font-semibold uppercase tracking-widest text-AXVN-gold mb-4"
+          >
             Tổng Quan
-          </h2>
+          </p>
           <KpiDashboard items={KPI_ITEMS} columns={3} />
         </section>
 
         <DocHero id="timeline">
-          <h2 className="text-[10px] font-semibold uppercase tracking-widest text-AXVN-gold mb-6">
+          <p className="text-[10px] font-semibold uppercase tracking-widest text-AXVN-gold mb-6">
             Lộ Trình Tương Tác
-          </h2>
+          </p>
           <Timeline />
         </DocHero>
 
         <DocBody id="details">
-          <h2 className="text-[10px] font-semibold uppercase tracking-widest text-AXVN-gold mb-4">
+          <p className="text-[10px] font-semibold uppercase tracking-widest text-AXVN-gold mb-4">
             Chi Tiết Từng Giai Đoạn
-          </h2>
+          </p>
           <RoadmapAccordion phases={ROADMAP_PHASES} />
         </DocBody>
 

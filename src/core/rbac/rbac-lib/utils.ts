@@ -23,7 +23,12 @@
  * không gọi DB, không redirect. Dùng được ở mọi nơi (client, server, Edge).
  */
 
-import type { AppRole, AuthenticatedUser, Permission, PermissionCheckResult } from "./types";
+import type {
+  AppRole,
+  AuthenticatedUser,
+  Permission,
+  PermissionCheckResult,
+} from "./types";
 import { ROLE_PERMISSIONS } from "./permissions";
 
 // ─── Thứ tự phân cấp vai trò (số càng cao = quyền càng lớn) ─────────────────
@@ -33,10 +38,10 @@ import { ROLE_PERMISSIONS } from "./permissions";
  * Dùng để so sánh vai trò theo thứ tự cấp bậc.
  */
 const ROLE_HIERARCHY: Record<AppRole, number> = {
-  public: 0,       // Thấp nhất
+  public: 0, // Thấp nhất
   shareholder: 1,
   admin: 2,
-  superadmin: 3,   // Cao nhất
+  superadmin: 3, // Cao nhất
 };
 
 // ─── Kiểm tra vai trò ─────────────────────────────────────────────────────────
@@ -49,7 +54,7 @@ const ROLE_HIERARCHY: Record<AppRole, number> = {
  */
 export function hasRole(
   user: AuthenticatedUser | null | undefined,
-  role: AppRole
+  role: AppRole,
 ): boolean {
   return user?.role === role;
 }
@@ -62,7 +67,7 @@ export function hasRole(
  */
 export function hasAnyRole(
   user: AuthenticatedUser | null | undefined,
-  roles: AppRole[]
+  roles: AppRole[],
 ): boolean {
   if (!user) return false;
   return roles.includes(user.role);
@@ -78,7 +83,7 @@ export function hasAnyRole(
  */
 export function hasMinimumRole(
   user: AuthenticatedUser | null | undefined,
-  minimumRole: AppRole
+  minimumRole: AppRole,
 ): boolean {
   if (!user) return false;
   return ROLE_HIERARCHY[user.role] >= ROLE_HIERARCHY[minimumRole];
@@ -107,7 +112,7 @@ export function compareRoles(roleA: AppRole, roleB: AppRole): number {
  * Trả về mảng rỗng nếu user là null/undefined.
  */
 export function getUserPermissions(
-  user: AuthenticatedUser | null | undefined
+  user: AuthenticatedUser | null | undefined,
 ): Permission[] {
   if (!user) return [];
   return ROLE_PERMISSIONS[user.role] ?? [];
@@ -121,7 +126,7 @@ export function getUserPermissions(
  */
 export function hasPermission(
   user: AuthenticatedUser | null | undefined,
-  permission: Permission
+  permission: Permission,
 ): boolean {
   const perms = getUserPermissions(user);
   return perms.includes(permission);
@@ -136,7 +141,7 @@ export function hasPermission(
  */
 export function hasAllPermissions(
   user: AuthenticatedUser | null | undefined,
-  permissions: Permission[]
+  permissions: Permission[],
 ): boolean {
   if (permissions.length === 0) return true;
   const perms = getUserPermissions(user);
@@ -152,7 +157,7 @@ export function hasAllPermissions(
  */
 export function hasAnyPermission(
   user: AuthenticatedUser | null | undefined,
-  permissions: Permission[]
+  permissions: Permission[],
 ): boolean {
   if (permissions.length === 0) return true;
   const perms = getUserPermissions(user);
@@ -182,7 +187,7 @@ export function canAccess(
   user: AuthenticatedUser | null | undefined,
   allowedRoles: AppRole[],
   permissions: Permission[] = [],
-  requireAny = false
+  requireAny = false,
 ): PermissionCheckResult {
   // Chưa xác thực
   if (!user) {
@@ -211,7 +216,8 @@ export function canAccess(
     if (!permCheck) {
       return {
         allowed: false,
-        reason: "Tài khoản của bạn không có đủ quyền hạn để thực hiện thao tác này.",
+        reason:
+          "Tài khoản của bạn không có đủ quyền hạn để thực hiện thao tác này.",
         statusCode: 403,
       };
     }
@@ -232,7 +238,9 @@ export function isAdmin(user: AuthenticatedUser | null | undefined): boolean {
 /**
  * Kiểm tra nhanh: người dùng có phải là Siêu Quản Trị không?
  */
-export function isSuperAdmin(user: AuthenticatedUser | null | undefined): boolean {
+export function isSuperAdmin(
+  user: AuthenticatedUser | null | undefined,
+): boolean {
   return hasRole(user, "superadmin");
 }
 
@@ -240,14 +248,18 @@ export function isSuperAdmin(user: AuthenticatedUser | null | undefined): boolea
  * Kiểm tra nhanh: người dùng có phải là Cổ Đông không?
  * (Không bao gồm admin — admin truy cập cổng cổ đông theo kênh riêng)
  */
-export function isShareholder(user: AuthenticatedUser | null | undefined): boolean {
+export function isShareholder(
+  user: AuthenticatedUser | null | undefined,
+): boolean {
   return hasRole(user, "shareholder");
 }
 
 /**
  * Kiểm tra nhanh: người dùng có phải là Người Dùng Công Khai không?
  */
-export function isPublicUser(user: AuthenticatedUser | null | undefined): boolean {
+export function isPublicUser(
+  user: AuthenticatedUser | null | undefined,
+): boolean {
   return hasRole(user, "public");
 }
 
@@ -255,7 +267,9 @@ export function isPublicUser(user: AuthenticatedUser | null | undefined): boolea
  * Kiểm tra người dùng đã xác thực (có session) hay chưa.
  * Public user đã đăng ký + đăng nhập vẫn được coi là "đã xác thực".
  */
-export function isAuthenticated(user: AuthenticatedUser | null | undefined): boolean {
+export function isAuthenticated(
+  user: AuthenticatedUser | null | undefined,
+): boolean {
   return user !== null && user !== undefined;
 }
 

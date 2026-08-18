@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
-import PageHero from "@/modules/content/components/PageHero";
+import PageHero from "@/shared/components/blocks/PageHero";
 import GovernanceClient from "./GovernanceClient";
 
+// Static page — no DB queries. Cached at build time.
+export const revalidate = 86400;
 export const metadata: Metadata = {
   title: "Quản Trị Hệ Thống",
-  description: "Thông tin quản trị, điều lệ và tài liệu pháp lý của AXVN Tech Holding.",
+  description:
+    "Thông tin quản trị, điều lệ và tài liệu pháp lý của AXVN Tech Holding.",
 };
 
 export default function GovernancePage() {

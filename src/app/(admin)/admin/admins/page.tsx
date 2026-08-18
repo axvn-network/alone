@@ -46,7 +46,12 @@ interface FormState {
   role: "admin" | "superadmin";
 }
 
-const EMPTY_FORM: FormState = { name: "", email: "", password: "", role: "admin" };
+const EMPTY_FORM: FormState = {
+  name: "",
+  email: "",
+  password: "",
+  role: "admin",
+};
 
 export default function AdminsPage() {
   const { adminInfo } = useAdminSession();
@@ -73,7 +78,9 @@ export default function AdminsPage() {
     }
   }
 
-  useEffect(() => { void fetchAdmins(); }, []);
+  useEffect(() => {
+    void fetchAdmins();
+  }, []);
 
   function openCreate() {
     setForm(EMPTY_FORM);
@@ -100,7 +107,12 @@ export default function AdminsPage() {
     try {
       const method = editId ? "PUT" : "POST";
       const body = editId
-        ? { _id: editId, name: form.name, role: form.role, ...(form.password ? { password: form.password } : {}) }
+        ? {
+            _id: editId,
+            name: form.name,
+            role: form.role,
+            ...(form.password ? { password: form.password } : {}),
+          }
         : form;
 
       const res = await csrfFetch("/api/admin/admins", {
@@ -109,9 +121,14 @@ export default function AdminsPage() {
         body: JSON.stringify(body),
       });
       const data = await res.json();
-      if (!data.success) { toast.error(data.message); return; }
+      if (!data.success) {
+        toast.error(data.message);
+        return;
+      }
 
-      toast.success(editId ? "Đã cập nhật tài khoản." : "Đã tạo tài khoản admin mới.");
+      toast.success(
+        editId ? "Đã cập nhật tài khoản." : "Đã tạo tài khoản admin mới.",
+      );
       setShowModal(false);
       await fetchAdmins();
     } finally {
@@ -120,7 +137,8 @@ export default function AdminsPage() {
   }
 
   async function handleDelete(id: string, name: string) {
-    if (!confirm(`Xóa tài khoản "${name}"? Hành động này không thể hoàn tác.`)) return;
+    if (!confirm(`Xóa tài khoản "${name}"? Hành động này không thể hoàn tác.`))
+      return;
     const res = await csrfFetch(`/api/admin/admins?id=${id}`, {
       method: "DELETE",
     });
@@ -145,10 +163,15 @@ export default function AdminsPage() {
               <div className="w-14 h-14 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center mx-auto mb-4">
                 <ShieldCheck className="w-6 h-6 text-red-400" />
               </div>
-              <h2 className="text-AXVN-ivory font-semibold text-lg mb-2">Quyền truy cập bị từ chối</h2>
+              <h2 className="text-AXVN-ivory font-semibold text-lg mb-2">
+                Quyền truy cập bị từ chối
+              </h2>
               <p className="text-AXVN-silver/50 text-sm leading-relaxed">
-                Trang này chỉ dành cho <span className="text-AXVN-gold font-medium">Siêu Quản Trị Viên</span>.
-                Liên hệ superadmin để được cấp quyền.
+                Trang này chỉ dành cho{" "}
+                <span className="text-AXVN-gold font-medium">
+                  Siêu Quản Trị Viên
+                </span>
+                . Liên hệ superadmin để được cấp quyền.
               </p>
             </div>
           </div>
@@ -165,7 +188,6 @@ export default function AdminsPage() {
         <AdminNavbar title="Quản Lý Admin" />
 
         <div className="flex-1 max-w-5xl w-full mx-auto px-4 md:px-6 py-8">
-
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
@@ -173,8 +195,12 @@ export default function AdminsPage() {
                 <Crown className="w-4 h-4 text-purple-400" />
               </div>
               <div>
-                <h2 className="text-AXVN-ivory font-semibold">Tài Khoản Quản Trị</h2>
-                <p className="text-AXVN-silver/40 text-xs">{admins.length} tài khoản · Chỉ Siêu Quản Trị mới có thể sửa</p>
+                <h2 className="text-AXVN-ivory font-semibold">
+                  Tài Khoản Quản Trị
+                </h2>
+                <p className="text-AXVN-silver/40 text-xs">
+                  {admins.length} tài khoản · Chỉ Siêu Quản Trị mới có thể sửa
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -183,7 +209,9 @@ export default function AdminsPage() {
                 disabled={loading}
                 className="p-2 border border-AXVN-gold/20 text-AXVN-silver rounded-xl hover:border-AXVN-gold/40 transition-colors disabled:opacity-40"
               >
-                <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
+                <RefreshCw
+                  className={`w-4 h-4 ${loading ? "animate-spin" : ""}`}
+                />
               </button>
               <button
                 onClick={openCreate}
@@ -201,34 +229,57 @@ export default function AdminsPage() {
                 <RefreshCw className="w-5 h-5 text-AXVN-gold animate-spin" />
               </div>
             ) : admins.length === 0 ? (
-              <p className="text-center py-16 text-AXVN-silver/40 text-sm">Chưa có tài khoản admin nào.</p>
+              <p className="text-center py-16 text-AXVN-silver/40 text-sm">
+                Chưa có tài khoản admin nào.
+              </p>
             ) : (
               <div className="divide-y divide-white/4">
                 {admins.map((a) => (
-                  <div key={a._id} className="flex items-center gap-4 px-6 py-4 hover:bg-white/2 transition-colors">
+                  <div
+                    key={a._id}
+                    className="flex items-center gap-4 px-6 py-4 hover:bg-white/2 transition-colors"
+                  >
                     {/* Avatar */}
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 font-bold text-sm
-                      ${a.role === "superadmin" ? "bg-purple-500/15 border border-purple-500/30 text-purple-300" : "bg-AXVN-gold/10 border border-AXVN-gold/20 text-AXVN-gold"}`}>
+                    <div
+                      className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 font-bold text-sm
+                      ${a.role === "superadmin" ? "bg-purple-500/15 border border-purple-500/30 text-purple-300" : "bg-AXVN-gold/10 border border-AXVN-gold/20 text-AXVN-gold"}`}
+                    >
                       {a.name.charAt(0).toUpperCase()}
                     </div>
 
                     {/* Thông tin */}
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
-                        <p className="text-AXVN-ivory text-sm font-medium truncate">{a.name}</p>
-                        {a.role === "superadmin"
-                          ? <span className="text-[10px] px-1.5 py-0.5 rounded bg-purple-500/15 border border-purple-500/20 text-purple-300 font-semibold uppercase tracking-wider">Superadmin</span>
-                          : <span className="text-[10px] px-1.5 py-0.5 rounded bg-AXVN-gold/10 border border-AXVN-gold/20 text-AXVN-gold font-semibold uppercase tracking-wider">Admin</span>
-                        }
-                        {a.mfaEnabled && <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" aria-label="MFA đã bật" />}
+                        <p className="text-AXVN-ivory text-sm font-medium truncate">
+                          {a.name}
+                        </p>
+                        {a.role === "superadmin" ? (
+                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-purple-500/15 border border-purple-500/20 text-purple-300 font-semibold uppercase tracking-wider">
+                            Superadmin
+                          </span>
+                        ) : (
+                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-AXVN-gold/10 border border-AXVN-gold/20 text-AXVN-gold font-semibold uppercase tracking-wider">
+                            Admin
+                          </span>
+                        )}
+                        {a.mfaEnabled && (
+                          <ShieldCheck
+                            className="w-3.5 h-3.5 text-emerald-400"
+                            aria-label="MFA đã bật"
+                          />
+                        )}
                       </div>
-                      <p className="text-AXVN-silver/50 text-xs truncate mt-0.5">{a.email}</p>
+                      <p className="text-AXVN-silver/50 text-xs truncate mt-0.5">
+                        {a.email}
+                      </p>
                     </div>
 
                     {/* Đăng nhập cuối */}
                     <div className="hidden md:block text-right shrink-0">
                       <p className="text-AXVN-silver/30 text-xs">
-                        {a.lastLogin ? `Đăng nhập ${timeAgo(a.lastLogin)}` : "Chưa đăng nhập"}
+                        {a.lastLogin
+                          ? `Đăng nhập ${timeAgo(a.lastLogin)}`
+                          : "Chưa đăng nhập"}
                       </p>
                       <p className="text-AXVN-silver/20 text-[11px] mt-0.5">
                         Tạo {timeAgo(a.createdAt)}
@@ -270,56 +321,107 @@ export default function AdminsPage() {
               <h3 className="text-AXVN-ivory font-semibold">
                 {editId ? "Chỉnh Sửa Tài Khoản" : "Tạo Tài Khoản Admin"}
               </h3>
-              <button onClick={() => setShowModal(false)} className="text-AXVN-silver/40 hover:text-AXVN-ivory transition-colors">
+              <button
+                onClick={() => setShowModal(false)}
+                className="text-AXVN-silver/40 hover:text-AXVN-ivory transition-colors"
+              >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-AXVN-silver/70 text-xs font-medium mb-1.5">Họ tên</label>
-                <input type="text" value={form.name} onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
+                <label className="block text-AXVN-silver/70 text-xs font-medium mb-1.5">
+                  Họ tên
+                </label>
+                <input
+                  type="text"
+                  value={form.name}
+                  onChange={(e) =>
+                    setForm((p) => ({ ...p, name: e.target.value }))
+                  }
                   placeholder="Nguyễn Văn A"
-                  className="w-full bg-[#0c1a28] border border-white/10 text-AXVN-ivory text-sm px-3 py-2.5 rounded-xl focus:outline-none focus:border-AXVN-gold/50 transition-colors" />
-              </div>
-
-              <div>
-                <label className="block text-AXVN-silver/70 text-xs font-medium mb-1.5">Email</label>
-                <input type="email" value={form.email}
-                  onChange={(e) => setForm((p) => ({ ...p, email: e.target.value }))}
-                  disabled={!!editId}
-                  placeholder="admin@axvn.vn"
-                  className="w-full bg-[#0c1a28] border border-white/10 text-AXVN-ivory text-sm px-3 py-2.5 rounded-xl focus:outline-none focus:border-AXVN-gold/50 transition-colors disabled:opacity-40" />
+                  className="w-full bg-[#0c1a28] border border-white/10 text-AXVN-ivory text-sm px-3 py-2.5 rounded-xl focus:outline-none focus:border-AXVN-gold/50 transition-colors"
+                />
               </div>
 
               <div>
                 <label className="block text-AXVN-silver/70 text-xs font-medium mb-1.5">
-                  Mật khẩu {editId && <span className="text-AXVN-silver/30">(để trống = giữ nguyên)</span>}
+                  Email
                 </label>
-                <input type="password" value={form.password}
-                  onChange={(e) => setForm((p) => ({ ...p, password: e.target.value }))}
-                  placeholder={editId ? "••••••••" : "Ít nhất 8 ký tự"}
-                  className="w-full bg-[#0c1a28] border border-white/10 text-AXVN-ivory text-sm px-3 py-2.5 rounded-xl focus:outline-none focus:border-AXVN-gold/50 transition-colors" />
+                <input
+                  type="email"
+                  value={form.email}
+                  onChange={(e) =>
+                    setForm((p) => ({ ...p, email: e.target.value }))
+                  }
+                  disabled={!!editId}
+                  placeholder="admin@axvn.vn"
+                  className="w-full bg-[#0c1a28] border border-white/10 text-AXVN-ivory text-sm px-3 py-2.5 rounded-xl focus:outline-none focus:border-AXVN-gold/50 transition-colors disabled:opacity-40"
+                />
               </div>
 
               <div>
-                <label className="block text-AXVN-silver/70 text-xs font-medium mb-1.5">Vai trò</label>
-                <select value={form.role} onChange={(e) => setForm((p) => ({ ...p, role: e.target.value as "admin" | "superadmin" }))}
-                  className="w-full bg-[#0c1a28] border border-white/10 text-AXVN-ivory text-sm px-3 py-2.5 rounded-xl focus:outline-none focus:border-AXVN-gold/50 transition-colors">
-                  <option value="admin" className="bg-[#06101a]">Admin — Quản Trị Viên</option>
-                  <option value="superadmin" className="bg-[#06101a]">Superadmin — Siêu Quản Trị</option>
+                <label className="block text-AXVN-silver/70 text-xs font-medium mb-1.5">
+                  Mật khẩu{" "}
+                  {editId && (
+                    <span className="text-AXVN-silver/30">
+                      (để trống = giữ nguyên)
+                    </span>
+                  )}
+                </label>
+                <input
+                  type="password"
+                  value={form.password}
+                  onChange={(e) =>
+                    setForm((p) => ({ ...p, password: e.target.value }))
+                  }
+                  placeholder={editId ? "••••••••" : "Ít nhất 8 ký tự"}
+                  className="w-full bg-[#0c1a28] border border-white/10 text-AXVN-ivory text-sm px-3 py-2.5 rounded-xl focus:outline-none focus:border-AXVN-gold/50 transition-colors"
+                />
+              </div>
+
+              <div>
+                <label className="block text-AXVN-silver/70 text-xs font-medium mb-1.5">
+                  Vai trò
+                </label>
+                <select
+                  value={form.role}
+                  onChange={(e) =>
+                    setForm((p) => ({
+                      ...p,
+                      role: e.target.value as "admin" | "superadmin",
+                    }))
+                  }
+                  className="w-full bg-[#0c1a28] border border-white/10 text-AXVN-ivory text-sm px-3 py-2.5 rounded-xl focus:outline-none focus:border-AXVN-gold/50 transition-colors"
+                >
+                  <option value="admin" className="bg-[#06101a]">
+                    Admin — Quản Trị Viên
+                  </option>
+                  <option value="superadmin" className="bg-[#06101a]">
+                    Superadmin — Siêu Quản Trị
+                  </option>
                 </select>
               </div>
             </div>
 
             <div className="flex items-center gap-3 mt-6">
-              <button onClick={() => setShowModal(false)}
-                className="flex-1 py-2.5 border border-white/10 text-AXVN-silver text-sm rounded-xl hover:border-white/20 transition-colors">
+              <button
+                onClick={() => setShowModal(false)}
+                className="flex-1 py-2.5 border border-white/10 text-AXVN-silver text-sm rounded-xl hover:border-white/20 transition-colors"
+              >
                 Hủy
               </button>
-              <button onClick={handleSave} disabled={saving}
-                className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-AXVN-gold text-AXVN-navy text-sm font-semibold rounded-xl hover:opacity-90 disabled:opacity-50 transition-opacity">
-                {saving ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+              <button
+                onClick={handleSave}
+                disabled={saving}
+                className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-AXVN-gold text-AXVN-navy text-sm font-semibold rounded-xl hover:opacity-90 disabled:opacity-50 transition-opacity"
+              >
+                {saving ? (
+                  <RefreshCw className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Save className="w-4 h-4" />
+                )}
                 {editId ? "Lưu thay đổi" : "Tạo tài khoản"}
               </button>
             </div>

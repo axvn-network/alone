@@ -38,18 +38,19 @@ interface DocumentItem {
 
 // Tên danh mục tiếng Việt
 const CATEGORY_LABELS: Record<string, string> = {
-  financial_report:    "Báo cáo tài chính",
-  disclosure:          "Công bố thông tin",
-  charter:             "Điều lệ & Quy chế",
+  financial_report: "Báo cáo tài chính",
+  disclosure: "Công bố thông tin",
+  charter: "Điều lệ & Quy chế",
   shareholder_meeting: "Họp Đại hội cổ đông",
-  annual_report:       "Báo cáo thường niên",
-  governance_report:   "Báo cáo quản trị",
+  annual_report: "Báo cáo thường niên",
+  governance_report: "Báo cáo quản trị",
 };
 
 // Icon theo loại file
 function FileIcon({ type }: { type: string }) {
-  if (type === "xlsx") return <FileSpreadsheet className="w-4 h-4 text-emerald-400" />;
-  if (type === "pdf")  return <FileText className="w-4 h-4 text-red-400" />;
+  if (type === "xlsx")
+    return <FileSpreadsheet className="w-4 h-4 text-emerald-400" />;
+  if (type === "pdf") return <FileText className="w-4 h-4 text-red-400" />;
   return <File className="w-4 h-4 text-AXVN-silver/50" />;
 }
 
@@ -62,34 +63,39 @@ export default function ShareholderDocumentsPage() {
   const [selectedYear, setSelectedYear] = useState("");
   const [error, setError] = useState("");
 
-  const fetchDocs = useCallback(async (category = selectedCategory, year = selectedYear) => {
-    setLoading(true);
-    setError("");
-    try {
-      const params = new URLSearchParams();
-      if (category) params.set("category", category);
-      if (year)     params.set("year", year);
+  const fetchDocs = useCallback(
+    async (category = "", year = "") => {
+      setLoading(true);
+      setError("");
+      try {
+        const params = new URLSearchParams();
+        if (category) params.set("category", category);
+        if (year) params.set("year", year);
 
-      const res = await fetch(`/api/shareholders/documents?${params}`, { credentials: "include" });
-      if (res.status === 401) {
-        router.push("/portals/shareholders/login");
-        return;
+        const res = await fetch(`/api/shareholders/documents?${params}`, {
+          credentials: "include",
+        });
+        if (res.status === 401) {
+          router.push("/portals/shareholders/login");
+          return;
+        }
+        const data = await res.json();
+        if (data.success) {
+          setDocuments(data.data.documents);
+          setYears(data.data.years);
+        }
+      } catch {
+        setError("Không thể tải danh sách tài liệu. Vui lòng thử lại.");
+      } finally {
+        setLoading(false);
       }
-      const data = await res.json();
-      if (data.success) {
-        setDocuments(data.data.documents);
-        setYears(data.data.years);
-      }
-    } catch {
-      setError("Không thể tải danh sách tài liệu. Vui lòng thử lại.");
-    } finally {
-      setLoading(false);
-    }
-  // Chỉ re-create khi router thay đổi — selectedCategory/Year được truyền qua tham số
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router]);
+    },
+    [router],
+  );
 
-  useEffect(() => { void fetchDocs(); }, [fetchDocs]);
+  useEffect(() => {
+    void fetchDocs();
+  }, [fetchDocs]);
 
   function handleFilter(cat: string, yr: string) {
     setSelectedCategory(cat);
@@ -98,31 +104,39 @@ export default function ShareholderDocumentsPage() {
   }
 
   // Nhóm tài liệu theo năm để dễ đọc
-  const grouped = documents.reduce<Record<number, DocumentItem[]>>((acc, doc) => {
-    if (!acc[doc.year]) acc[doc.year] = [];
-    acc[doc.year].push(doc);
-    return acc;
-  }, {});
-  const sortedYears = Object.keys(grouped).map(Number).sort((a, b) => b - a);
+  const grouped = documents.reduce<Record<number, DocumentItem[]>>(
+    (acc, doc) => {
+      if (!acc[doc.year]) acc[doc.year] = [];
+      acc[doc.year].push(doc);
+      return acc;
+    },
+    {},
+  );
+  const sortedYears = Object.keys(grouped)
+    .map(Number)
+    .sort((a, b) => b - a);
 
   return (
     <div className="min-h-screen bg-AXVN-navy text-AXVN-ivory font-sans">
       {/* Header */}
       <div className="bg-[#06101a]/90 border-b border-AXVN-gold/10 sticky top-0 z-20">
         <div className="max-w-5xl mx-auto px-4 py-4 flex items-center gap-4">
-          <Link href="/portals/shareholders/dashboard"
-            className="flex items-center gap-2 text-AXVN-silver/60 hover:text-AXVN-gold transition-colors text-sm">
+          <Link
+            href="/portals/shareholders/dashboard"
+            className="flex items-center gap-2 text-AXVN-silver/60 hover:text-AXVN-gold transition-colors text-sm"
+          >
             <ChevronLeft className="w-4 h-4" /> Quay lại
           </Link>
           <div className="flex items-center gap-2">
             <FolderOpen className="w-4 h-4 text-AXVN-gold" />
-            <h1 className="text-sm font-semibold text-AXVN-ivory">Tài Liệu & Báo Cáo</h1>
+            <h1 className="text-sm font-semibold text-AXVN-ivory">
+              Tài Liệu & Báo Cáo
+            </h1>
           </div>
         </div>
       </div>
 
       <div className="max-w-5xl mx-auto px-4 py-8">
-
         {/* Bộ lọc */}
         <div className="bg-[#06101a] border border-AXVN-gold/10 rounded-2xl p-4 mb-6 flex flex-wrap items-center gap-3">
           <div className="flex items-center gap-2 text-AXVN-silver/50 text-xs font-medium">
@@ -135,9 +149,13 @@ export default function ShareholderDocumentsPage() {
             onChange={(e) => handleFilter(e.target.value, selectedYear)}
             className="bg-[#0c1a28] border border-white/10 text-AXVN-ivory text-xs px-3 py-2 rounded-xl focus:outline-none focus:border-AXVN-gold/50 transition-colors"
           >
-            <option value="" className="bg-[#06101a]">— Tất cả danh mục —</option>
+            <option value="" className="bg-[#06101a]">
+              — Tất cả danh mục —
+            </option>
             {Object.entries(CATEGORY_LABELS).map(([val, label]) => (
-              <option key={val} value={val} className="bg-[#06101a]">{label}</option>
+              <option key={val} value={val} className="bg-[#06101a]">
+                {label}
+              </option>
             ))}
           </select>
 
@@ -147,9 +165,13 @@ export default function ShareholderDocumentsPage() {
             onChange={(e) => handleFilter(selectedCategory, e.target.value)}
             className="bg-[#0c1a28] border border-white/10 text-AXVN-ivory text-xs px-3 py-2 rounded-xl focus:outline-none focus:border-AXVN-gold/50 transition-colors"
           >
-            <option value="" className="bg-[#06101a]">— Tất cả năm —</option>
+            <option value="" className="bg-[#06101a]">
+              — Tất cả năm —
+            </option>
             {years.map((y) => (
-              <option key={y} value={String(y)} className="bg-[#06101a]">{y}</option>
+              <option key={y} value={String(y)} className="bg-[#06101a]">
+                {y}
+              </option>
             ))}
           </select>
 
@@ -168,7 +190,9 @@ export default function ShareholderDocumentsPage() {
             disabled={loading}
             className="ml-auto p-2 border border-white/10 text-AXVN-silver/40 rounded-xl hover:border-AXVN-gold/30 transition-colors disabled:opacity-40"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
+            <RefreshCw
+              className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`}
+            />
           </button>
         </div>
 
@@ -190,71 +214,83 @@ export default function ShareholderDocumentsPage() {
         {!loading && documents.length === 0 && (
           <div className="text-center py-20">
             <FolderOpen className="w-10 h-10 text-AXVN-silver/20 mx-auto mb-4" />
-            <p className="text-AXVN-silver/40 text-sm">Chưa có tài liệu nào được công bố.</p>
+            <p className="text-AXVN-silver/40 text-sm">
+              Chưa có tài liệu nào được công bố.
+            </p>
           </div>
         )}
 
         {/* Danh sách tài liệu nhóm theo năm */}
-        {!loading && sortedYears.map((year) => (
-          <div key={year} className="mb-8">
-            <h2 className="text-AXVN-gold text-sm font-semibold mb-3 flex items-center gap-2">
-              <span className="w-1 h-4 bg-AXVN-gold rounded-full" />
-              Năm {year}
-            </h2>
+        {!loading &&
+          sortedYears.map((year) => (
+            <div key={year} className="mb-8">
+              <h2 className="text-AXVN-gold text-sm font-semibold mb-3 flex items-center gap-2">
+                <span className="w-1 h-4 bg-AXVN-gold rounded-full" />
+                Năm {year}
+              </h2>
 
-            <div className="bg-[#06101a] border border-AXVN-gold/10 rounded-2xl overflow-hidden divide-y divide-white/5">
-              {grouped[year].map((doc) => (
-                <div key={doc._id} className="flex items-center gap-4 px-5 py-4 hover:bg-white/2 transition-colors group">
-                  {/* Icon loại file */}
-                  <div className="w-9 h-9 rounded-xl bg-white/4 border border-white/8 flex items-center justify-center shrink-0">
-                    <FileIcon type={doc.fileType} />
-                  </div>
-
-                  {/* Thông tin */}
-                  <div className="flex-1 min-w-0">
-                    <p className="text-AXVN-ivory text-sm font-medium truncate">{doc.title}</p>
-                    <div className="flex items-center gap-2 mt-0.5">
-                      <span className="text-[10px] px-1.5 py-0.5 rounded bg-AXVN-gold/8 border border-AXVN-gold/15 text-AXVN-gold/70 font-medium">
-                        {CATEGORY_LABELS[doc.category] || doc.category}
-                      </span>
-                      {doc.quarter && (
-                        <span className="text-AXVN-silver/30 text-xs">Q{doc.quarter}</span>
-                      )}
-                      <span className="text-AXVN-silver/25 text-[11px]">
-                        {new Date(doc.publishedDate).toLocaleDateString("vi-VN")}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Nút tải xuống */}
-                  <a
-                    href={doc.fileUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    download
-                    className="flex items-center gap-1.5 px-3 py-2 bg-AXVN-gold/8 border border-AXVN-gold/20 text-AXVN-gold text-xs font-medium rounded-xl hover:bg-AXVN-gold/15 transition-colors shrink-0"
+              <div className="bg-[#06101a] border border-AXVN-gold/10 rounded-2xl overflow-hidden divide-y divide-white/5">
+                {grouped[year].map((doc) => (
+                  <div
+                    key={doc._id}
+                    className="flex items-center gap-4 px-5 py-4 hover:bg-white/2 transition-colors group"
                   >
-                    <Download className="w-3.5 h-3.5" />
-                    <span className="hidden sm:inline">Tải xuống</span>
-                  </a>
+                    {/* Icon loại file */}
+                    <div className="w-9 h-9 rounded-xl bg-white/4 border border-white/8 flex items-center justify-center shrink-0">
+                      <FileIcon type={doc.fileType} />
+                    </div>
 
-                  {/* Xem trực tuyến */}
-                  {doc.fileType === "pdf" && (
+                    {/* Thông tin */}
+                    <div className="flex-1 min-w-0">
+                      <p className="text-AXVN-ivory text-sm font-medium truncate">
+                        {doc.title}
+                      </p>
+                      <div className="flex items-center gap-2 mt-0.5">
+                        <span className="text-[10px] px-1.5 py-0.5 rounded bg-AXVN-gold/8 border border-AXVN-gold/15 text-AXVN-gold/70 font-medium">
+                          {CATEGORY_LABELS[doc.category] || doc.category}
+                        </span>
+                        {doc.quarter && (
+                          <span className="text-AXVN-silver/30 text-xs">
+                            Q{doc.quarter}
+                          </span>
+                        )}
+                        <span className="text-AXVN-silver/25 text-[11px]">
+                          {new Date(doc.publishedDate).toLocaleDateString(
+                            "vi-VN",
+                          )}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Nút tải xuống */}
                     <a
                       href={doc.fileUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 border border-white/10 text-AXVN-silver/40 rounded-xl hover:text-AXVN-ivory hover:border-white/20 transition-colors shrink-0"
-                      title="Xem trực tuyến"
+                      download
+                      className="flex items-center gap-1.5 px-3 py-2 bg-AXVN-gold/8 border border-AXVN-gold/20 text-AXVN-gold text-xs font-medium rounded-xl hover:bg-AXVN-gold/15 transition-colors shrink-0"
                     >
-                      <ExternalLink className="w-3.5 h-3.5" />
+                      <Download className="w-3.5 h-3.5" />
+                      <span className="hidden sm:inline">Tải xuống</span>
                     </a>
-                  )}
-                </div>
-              ))}
+
+                    {/* Xem trực tuyến */}
+                    {doc.fileType === "pdf" && (
+                      <a
+                        href={doc.fileUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2 border border-white/10 text-AXVN-silver/40 rounded-xl hover:text-AXVN-ivory hover:border-white/20 transition-colors shrink-0"
+                        title="Xem trực tuyến"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
     </div>
   );

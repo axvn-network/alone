@@ -1,8 +1,13 @@
 "use client";
 
-import { ComplianceTracker } from "@/app/(site)/compliance/components/ComplianceTracker";
-import DocLayout, { DocSidebar, DocMain, DocHero, DocBody } from "@/shared/components/layout/DocLayout";
-import { COMPLIANCE_TASKS } from "@/data/comp/compliance";
+import { ComplianceTracker } from "@/modules/compliance/components/ComplianceTracker";
+import DocLayout, {
+  DocSidebar,
+  DocMain,
+  DocHero,
+  DocBody,
+} from "@/shared/components/layout/DocLayout";
+import { COMPLIANCE_TASKS } from "@/shared/constants/compliance";
 import type { TocItem } from "@/shared/components/layout/DocLayout";
 
 const TOC: readonly TocItem[] = [
@@ -15,9 +20,9 @@ export default function ComplianceClient() {
       <DocSidebar toc={TOC} />
       <DocMain>
         <DocHero id="tracker">
-          <h2 className="text-[10px] font-semibold uppercase tracking-widest text-AXVN-gold mb-6">
+          <p className="text-[10px] font-semibold uppercase tracking-widest text-AXVN-gold mb-6">
             Tiến Độ Tuân Thủ Pháp Lý
-          </h2>
+          </p>
           <ComplianceTracker tasks={COMPLIANCE_TASKS} />
         </DocHero>
 

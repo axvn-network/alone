@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import StrategicCollaborationPage from "@/modules/content/components/StrategicCollaborationPage";
+import StrategicCollaborationPage from "@/shared/components/blocks/StrategicCollaborationPage";
 
 export const metadata: Metadata = {
   title: "Hợp Tác Cùng AXVN | AXVN Tech Holding",
@@ -7,7 +7,8 @@ export const metadata: Metadata = {
     "AXVN Tech Holding hợp tác với tổ chức, chuyên gia và nhà đầu tư có năng lực phù hợp. Tìm hiểu các phương thức tham gia vào hệ sinh thái FinTech số Việt Nam.",
   openGraph: {
     title: "Hợp Tác Cùng AXVN | AXVN Tech Holding",
-    description: "Tham gia xây dựng hạ tầng tài chính số Việt Nam cùng AXVN Tech Holding.",
+    description:
+      "Tham gia xây dựng hạ tầng tài chính số Việt Nam cùng AXVN Tech Holding.",
     url: "https://axvn.vn/invest-with-axvn",
   },
 };

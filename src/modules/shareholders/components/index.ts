@@ -1,0 +1,1 @@
+export { ShareholderTable } from "./ShareholderTable";

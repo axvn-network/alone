@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
-import PageHero from "@/modules/content/components/PageHero";
+import PageHero from "@/shared/components/blocks/PageHero";
 import RoadmapClient from "./RoadmapClient";
-import { ROADMAP_META } from "@/data/roadmap";
+import { ROADMAP_META } from "@/shared/constants/roadmap";
+
+// Static page — no DB queries. Cached at build time.
+export const revalidate = 86400;
 
 export const metadata: Metadata = {
   title: "Lộ Trình Chiến Lược",
-  description: "Tầm nhìn, giá trị cốt lõi, mô hình vận hành và lộ trình định hướng AXVN Tech Holding giai đoạn 2026–2031.",
+  description:
+    "Tầm nhìn, giá trị cốt lõi, mô hình vận hành và lộ trình định hướng AXVN Tech Holding giai đoạn 2026–2031.",
 };
 
 export default function RoadmapPage() {

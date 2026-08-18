@@ -1,7 +1,11 @@
 import { NextRequest } from "next/server";
 import { getCurrentUser } from "@/core/security/auth-utils";
-import * as investmentPlanService from "@/modules/investment-plans";
-import { investmentPlanSchema, formatZodErrors } from "@/validators";
+import {
+  updatePlan,
+  deletePlan,
+  investmentPlanSchema,
+} from "@/modules/investment-plans";
+import { formatZodErrors } from "@/utils/zod";
 import {
   successResponse,
   validationErrorResponse,
@@ -19,8 +23,9 @@ export async function PUT(req: NextRequest, { params }: Ctx) {
   try {
     const { id } = await params;
     const parsed = investmentPlanSchema.partial().safeParse(await req.json());
-    if (!parsed.success) return validationErrorResponse(formatZodErrors(parsed.error));
-    const plan = await investmentPlanService.updatePlan(id, parsed.data);
+    if (!parsed.success)
+      return validationErrorResponse(formatZodErrors(parsed.error));
+    const plan = await updatePlan(id, parsed.data);
     if (!plan) return notFoundResponse("Không tìm thấy hạng mục hợp tác");
     return successResponse(plan, "Cập nhật thành công");
   } catch (error) {
@@ -33,7 +38,7 @@ export async function DELETE(_req: NextRequest, { params }: Ctx) {
   if (!(await getCurrentUser())) return unauthorizedResponse();
   try {
     const { id } = await params;
-    const plan = await investmentPlanService.deletePlan(id);
+    const plan = await deletePlan(id);
     if (!plan) return notFoundResponse("Không tìm thấy hạng mục hợp tác");
     return successResponse(null, "Đã xóa hạng mục hợp tác");
   } catch (error) {

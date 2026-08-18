@@ -25,7 +25,7 @@ export interface PaginationResult {
  */
 export function paginate(
   opts: PaginationOptions = {},
-  defaults: { limit?: number; maxLimit?: number } = {}
+  defaults: { limit?: number; maxLimit?: number } = {},
 ): PaginationResult {
   const defaultLimit = defaults.limit ?? 50;
   const maxLimit = defaults.maxLimit ?? 200;

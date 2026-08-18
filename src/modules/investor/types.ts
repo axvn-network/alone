@@ -3,19 +3,19 @@
  */
 
 export interface IInvestor {
-  _id:       string;
+  _id: string;
   createdAt: string;
   updatedAt: string;
 }
 
 export interface InvestorQuery {
-  page?:  number;
+  page?: number;
   limit?: number;
 }
 
 export interface InvestorListResult {
-  docs:  IInvestor[];
+  docs: IInvestor[];
   total: number;
-  page:  number;
+  page: number;
   limit: number;
 }

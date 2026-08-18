@@ -41,7 +41,9 @@ export default function CustomCursor() {
           target.tagName === "INPUT" ||
           target.tagName === "TEXTAREA" ||
           target.tagName === "SELECT" ||
-          target.closest("a, button, [role='button'], input, textarea, select, .interactive"))
+          target.closest(
+            "a, button, [role='button'], input, textarea, select, .interactive",
+          ))
       ) {
         isHovering.current = true;
       } else {
@@ -60,8 +62,10 @@ export default function CustomCursor() {
       dotPos.current.x += (mousePosition.current.x - dotPos.current.x) * 0.35;
       dotPos.current.y += (mousePosition.current.y - dotPos.current.y) * 0.35;
 
-      borderPos.current.x += (mousePosition.current.x - borderPos.current.x) * 0.15;
-      borderPos.current.y += (mousePosition.current.y - borderPos.current.y) * 0.15;
+      borderPos.current.x +=
+        (mousePosition.current.x - borderPos.current.x) * 0.15;
+      borderPos.current.y +=
+        (mousePosition.current.y - borderPos.current.y) * 0.15;
 
       if (dotRef.current) {
         dotRef.current.style.transform = `translate3d(${dotPos.current.x}px, ${dotPos.current.y}px, 0) translate(-50%, -50%)`;
@@ -70,8 +74,12 @@ export default function CustomCursor() {
       if (borderRef.current) {
         const scale = isHovering.current ? 1.6 : 1;
         borderRef.current.style.transform = `translate3d(${borderPos.current.x}px, ${borderPos.current.y}px, 0) translate(-50%, -50%) scale(${scale})`;
-        borderRef.current.style.borderColor = isHovering.current ? "rgba(201, 162, 74, 0.9)" : "rgba(255, 255, 255, 0.6)";
-        borderRef.current.style.backgroundColor = isHovering.current ? "rgba(201, 162, 74, 0.15)" : "transparent";
+        borderRef.current.style.borderColor = isHovering.current
+          ? "rgba(201, 162, 74, 0.9)"
+          : "rgba(255, 255, 255, 0.6)";
+        borderRef.current.style.backgroundColor = isHovering.current
+          ? "rgba(201, 162, 74, 0.15)"
+          : "transparent";
       }
 
       animationId = requestAnimationFrame(animate);

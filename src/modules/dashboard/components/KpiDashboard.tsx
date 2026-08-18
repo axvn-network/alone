@@ -11,7 +11,13 @@
  */
 
 import { useEffect, useRef } from "react";
-import { motion, useInView, useMotionValue, useTransform, animate } from "framer-motion";
+import {
+  motion,
+  useInView,
+  useMotionValue,
+  useTransform,
+  animate,
+} from "framer-motion";
 import type { LucideIcon } from "lucide-react";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
@@ -34,7 +40,13 @@ export interface KpiItem {
 
 // ─── Animated counter ─────────────────────────────────────────────────────────
 
-function AnimatedNumber({ target, unit = "" }: { target: number; unit?: string }) {
+function AnimatedNumber({
+  target,
+  unit = "",
+}: {
+  target: number;
+  unit?: string;
+}) {
   const reduced = useReducedMotion();
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "0px 0px -40px 0px" });
@@ -46,7 +58,10 @@ function AnimatedNumber({ target, unit = "" }: { target: number; unit?: string }
       motionVal.set(target);
       return;
     }
-    const controls = animate(motionVal, target, { duration: 1.4, ease: "easeOut" });
+    const controls = animate(motionVal, target, {
+      duration: 1.4,
+      ease: "easeOut",
+    });
     return controls.stop;
   }, [inView, target, motionVal, reduced]);
 
@@ -70,8 +85,14 @@ function KpiCard({ item, index }: { item: KpiItem; index: number }) {
       initial={reduced ? false : { opacity: 0, y: 24, filter: "blur(6px)" }}
       whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
       viewport={{ once: true, margin: "0px 0px -40px 0px" }}
-      transition={{ duration: 0.7, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-      whileHover={reduced ? undefined : { y: -4, transition: { duration: 0.2 } }}
+      transition={{
+        duration: 0.7,
+        delay: index * 0.1,
+        ease: [0.16, 1, 0.3, 1],
+      }}
+      whileHover={
+        reduced ? undefined : { y: -4, transition: { duration: 0.2 } }
+      }
       className="group rounded-xl border border-AXVN-gold/15 bg-AXVN-deep p-5 hover:border-AXVN-gold/30 hover:shadow-lg hover:shadow-AXVN-gold/5 transition-colors duration-300"
     >
       {/* Icon + value row */}
@@ -86,7 +107,10 @@ function KpiCard({ item, index }: { item: KpiItem; index: number }) {
             {typeof item.value === "number" ? (
               <AnimatedNumber target={item.value} unit={item.unit} />
             ) : (
-              <span>{item.value}{item.unit}</span>
+              <span>
+                {item.value}
+                {item.unit}
+              </span>
             )}
           </dd>
           <dt className="mt-1 text-xs font-semibold uppercase tracking-wider text-AXVN-silver/70">
@@ -96,7 +120,9 @@ function KpiCard({ item, index }: { item: KpiItem; index: number }) {
       </div>
 
       {/* Description */}
-      <p className="text-xs leading-relaxed text-AXVN-silver/65">{item.description}</p>
+      <p className="text-xs leading-relaxed text-AXVN-silver/65">
+        {item.description}
+      </p>
 
       {/* Bottom accent bar */}
       <div className="mt-4 h-px bg-gradient-to-r from-AXVN-gold/30 to-transparent group-hover:from-AXVN-gold/60 transition-colors duration-300" />
@@ -113,7 +139,11 @@ interface KpiDashboardProps {
   className?: string;
 }
 
-export function KpiDashboard({ items, columns, className = "" }: KpiDashboardProps) {
+export function KpiDashboard({
+  items,
+  columns,
+  className = "",
+}: KpiDashboardProps) {
   const cols = columns ?? Math.min(items.length, 4);
   const gridCols: Record<number, string> = {
     2: "sm:grid-cols-2",

@@ -43,9 +43,13 @@ async function hmacSha256(key: string, data: string): Promise<string> {
     enc.encode(key),
     { name: "HMAC", hash: "SHA-256" },
     false,
-    ["sign"]
+    ["sign"],
   );
-  const signature = await crypto.subtle.sign("HMAC", cryptoKey, enc.encode(data));
+  const signature = await crypto.subtle.sign(
+    "HMAC",
+    cryptoKey,
+    enc.encode(data),
+  );
   return Array.from(new Uint8Array(signature))
     .map((b) => b.toString(16).padStart(2, "0"))
     .join("");
@@ -113,19 +117,14 @@ const CSRF_EXEMPT = new Set([
   "/api/admin/mfa/login-verify",
 ]);
 
-// ─── Security Headers gắn vào tất cả response ─────────────────────────────────
+// ─── Security Headers — Edge-only additions ───────────────────────────────────
+// NOTE: X-Frame-Options, X-Content-Type-Options, Referrer-Policy,
+// Permissions-Policy, CSP are already set by next.config.ts headers().
+// Proxy only needs to set HSTS (requires HTTPS context known at edge).
 
 const SECURITY_HEADERS: Record<string, string> = {
-  /** Ngăn MIME sniffing */
-  "X-Content-Type-Options": "nosniff",
-  /** Ngăn Clickjacking — chỉ cho phép frame từ cùng origin */
-  "X-Frame-Options": "SAMEORIGIN",
-  /** Bật XSS filter trình duyệt cũ */
-  "X-XSS-Protection": "1; mode=block",
-  /** Giới hạn thông tin Referrer gửi đi */
-  "Referrer-Policy": "strict-origin-when-cross-origin",
-  /** Tắt các API trình duyệt nhạy cảm */
-  "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
+  /** Enforce HTTPS for 2 years — set at edge so it applies before Next.js response */
+  "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
 };
 
 // ─── Helper: lấy secret từ biến môi trường ───────────────────────────────────
@@ -206,7 +205,7 @@ async function verifyShareholderCookie(raw: string): Promise<boolean> {
  */
 async function verifyCsrfToken(
   cookieToken: string,
-  headerToken: string
+  headerToken: string,
 ): Promise<boolean> {
   if (!cookieToken || !headerToken) return false;
   // Cookie và header phải khớp nhau
@@ -241,12 +240,12 @@ export async function proxy(request: NextRequest) {
   // ════════════════════════════════════════════════════════════════════════
   // Loại trừ /admin-login (bắt đầu bằng /admin nhưng là trang public)
   const isAdminPublic = ADMIN_PUBLIC_PATHS.some(
-    (p) => pathname === p || pathname.startsWith(p)
+    (p) => pathname === p || pathname.startsWith(p),
   );
   const isAdminProtected =
     !isAdminPublic &&
     ADMIN_PROTECTED_PREFIXES.some(
-      (p) => pathname === p || pathname.startsWith(p + "/")
+      (p) => pathname === p || pathname.startsWith(p + "/"),
     );
 
   if (isAdminProtected) {
@@ -304,8 +303,12 @@ export async function proxy(request: NextRequest) {
 
     if (!validSh && !validAdmin) {
       const res = NextResponse.json(
-        { success: false, message: "Bạn cần đăng nhập với tư cách cổ đông để thực hiện thao tác này." },
-        { status: 401 }
+        {
+          success: false,
+          message:
+            "Bạn cần đăng nhập với tư cách cổ đông để thực hiện thao tác này.",
+        },
+        { status: 401 },
       );
       applySecurityHeaders(res);
       return res;
@@ -326,7 +329,7 @@ export async function proxy(request: NextRequest) {
     if (!(await verifyCsrfToken(cookieToken, headerToken))) {
       const res = NextResponse.json(
         { success: false, message: "CSRF token không hợp lệ hoặc đã hết hạn." },
-        { status: 403 }
+        { status: 403 },
       );
       applySecurityHeaders(res);
       return res;

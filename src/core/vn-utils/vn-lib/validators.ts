@@ -8,7 +8,10 @@
  * Dependencies: libphonenumber-js
  */
 
-import { parsePhoneNumberFromString, isValidPhoneNumber } from "libphonenumber-js";
+import {
+  parsePhoneNumberFromString,
+  isValidPhoneNumber,
+} from "libphonenumber-js";
 
 import { MA_TINH_HOP_LE } from "./hanh-chinh";
 
@@ -24,8 +27,8 @@ export interface ValidationResult<T = string> {
   isValid: boolean;
   error?: string;
   normalized?: T;
-  /** @deprecated Use isValid */    hopLe?: boolean;
-  /** @deprecated Use error */      loi?: string;
+  /** @deprecated Use isValid */ hopLe?: boolean;
+  /** @deprecated Use error */ loi?: string;
   /** @deprecated Use normalized */ chuanHoa?: T;
 }
 
@@ -35,9 +38,9 @@ export interface CCCDResult {
   normalized?: string;
   /** Province code — first 3 digits of the national ID */
   provinceCode?: string;
-  /** @deprecated Use isValid */      hopLe?: boolean;
-  /** @deprecated Use error */        loi?: string;
-  /** @deprecated Use normalized */   chuanHoa?: string;
+  /** @deprecated Use isValid */ hopLe?: boolean;
+  /** @deprecated Use error */ loi?: string;
+  /** @deprecated Use normalized */ chuanHoa?: string;
   /** @deprecated Use provinceCode */ maTinh?: string;
 }
 
@@ -50,9 +53,9 @@ export interface PhoneResult {
   localFormat?: string;
   normalized?: string;
   /** @deprecated Use localFormat */ noiDia?: string;
-  /** @deprecated Use isValid */     hopLe?: boolean;
-  /** @deprecated Use error */       loi?: string;
-  /** @deprecated Use normalized */  chuanHoa?: string;
+  /** @deprecated Use isValid */ hopLe?: boolean;
+  /** @deprecated Use error */ loi?: string;
+  /** @deprecated Use normalized */ chuanHoa?: string;
 }
 
 export interface SwiftResult {
@@ -60,10 +63,10 @@ export interface SwiftResult {
   error?: string;
   normalized?: string;
   bankName?: string;
-  /** @deprecated Use isValid */    hopLe?: boolean;
-  /** @deprecated Use error */      loi?: string;
+  /** @deprecated Use isValid */ hopLe?: boolean;
+  /** @deprecated Use error */ loi?: string;
   /** @deprecated Use normalized */ chuanHoa?: string;
-  /** @deprecated Use bankName */   nganHang?: string;
+  /** @deprecated Use bankName */ nganHang?: string;
 }
 
 export interface DateResult {
@@ -74,8 +77,8 @@ export interface DateResult {
   /** Vietnamese display format: dd/MM/yyyy */
   displayVN?: string;
   normalized?: string;
-  /** @deprecated Use isValid */    hopLe?: boolean;
-  /** @deprecated Use error */      loi?: string;
+  /** @deprecated Use isValid */ hopLe?: boolean;
+  /** @deprecated Use error */ loi?: string;
   /** @deprecated Use normalized */ chuanHoa?: string;
 }
 
@@ -83,8 +86,8 @@ export interface TaxCodeResult {
   isValid: boolean;
   error?: string;
   normalized?: string;
-  /** @deprecated Use isValid */    hopLe?: boolean;
-  /** @deprecated Use error */      loi?: string;
+  /** @deprecated Use isValid */ hopLe?: boolean;
+  /** @deprecated Use error */ loi?: string;
   /** @deprecated Use normalized */ chuanHoa?: string;
 }
 
@@ -94,17 +97,17 @@ export interface AmountResult {
   /** Amount as a non-negative integer (đồng) */
   integer?: number;
   normalized?: string;
-  /** @deprecated Use integer */  soNguyen?: number;
-  /** @deprecated Use isValid */  hopLe?: boolean;
-  /** @deprecated Use error */    loi?: string;
+  /** @deprecated Use integer */ soNguyen?: number;
+  /** @deprecated Use isValid */ hopLe?: boolean;
+  /** @deprecated Use error */ loi?: string;
 }
 
 export interface BarcodeResult {
   isValid: boolean;
   error?: string;
   normalized?: string;
-  /** @deprecated Use isValid */    hopLe?: boolean;
-  /** @deprecated Use error */      loi?: string;
+  /** @deprecated Use isValid */ hopLe?: boolean;
+  /** @deprecated Use error */ loi?: string;
   /** @deprecated Use normalized */ chuanHoa?: string;
 }
 
@@ -112,15 +115,15 @@ export interface AddressResult {
   isValid: boolean;
   error?: string;
   normalized?: string;
-  /** @deprecated Use isValid */    hopLe?: boolean;
-  /** @deprecated Use error */      loi?: string;
+  /** @deprecated Use isValid */ hopLe?: boolean;
+  /** @deprecated Use error */ loi?: string;
   /** @deprecated Use normalized */ chuanHoa?: string;
 }
 
 // Backward-compat type aliases
-export type SDTResult    = PhoneResult;
-export type NgayResult   = DateResult;
-export type MSTResult    = TaxCodeResult;
+export type SDTResult = PhoneResult;
+export type NgayResult = DateResult;
+export type MSTResult = TaxCodeResult;
 export type SoTienResult = AmountResult;
 export type DiaChiResult = AddressResult;
 
@@ -129,13 +132,13 @@ export type MSTLoai = "doanh-nghiep" | "don-vi-phu-thuoc" | "ca-nhan";
 
 /** Structured address input — each administrative level as a separate field. */
 export interface AddressComponents {
-  streetNumber?: string;  // Số nhà
-  alley?: string;         // Ngõ / Hẻm
-  street?: string;        // Tên đường
-  ward?: string;          // Phường / Xã / Thị trấn
-  district?: string;      // Quận / Huyện
-  city?: string;          // Tỉnh / Thành phố
-  countryCode?: string;   // ISO 3166-1 alpha-2 (default: "VN")
+  streetNumber?: string; // Số nhà
+  alley?: string; // Ngõ / Hẻm
+  street?: string; // Tên đường
+  ward?: string; // Phường / Xã / Thị trấn
+  district?: string; // Quận / Huyện
+  city?: string; // Tỉnh / Thành phố
+  countryCode?: string; // ISO 3166-1 alpha-2 (default: "VN")
 }
 
 /** @deprecated Use AddressComponents */
@@ -167,7 +170,14 @@ export function validateCCCD(raw: string): CCCDResult {
     const msg = `Province code "${provinceCode}" is not valid per Circular 59/2021/TT-BCA.`;
     return { isValid: false, hopLe: false, error: msg, loi: msg };
   }
-  return { isValid: true, hopLe: true, normalized: s, chuanHoa: s, provinceCode, maTinh: provinceCode };
+  return {
+    isValid: true,
+    hopLe: true,
+    normalized: s,
+    chuanHoa: s,
+    provinceCode,
+    maTinh: provinceCode,
+  };
 }
 
 /**
@@ -176,11 +186,15 @@ export function validateCCCD(raw: string): CCCDResult {
  * - Branch/dependent unit: 10 digits + "-" + 3 digits (e.g. 0123456789-001)
  * - Individual: same as national ID (12 digits)
  */
-export function validateMaSoThue(raw: string, loai: MSTLoai = "doanh-nghiep"): TaxCodeResult {
+export function validateMaSoThue(
+  raw: string,
+  loai: MSTLoai = "doanh-nghiep",
+): TaxCodeResult {
   const s = raw.replace(/\s/g, "").trim();
   if (loai === "don-vi-phu-thuoc") {
     if (!/^\d{10}-\d{3}$/.test(s)) {
-      const msg = "Branch TIN must be: 10 digits + '-' + 3 digits (e.g. 0123456789-001).";
+      const msg =
+        "Branch TIN must be: 10 digits + '-' + 3 digits (e.g. 0123456789-001).";
       return { isValid: false, hopLe: false, error: msg, loi: msg };
     }
     return { isValid: true, hopLe: true, normalized: s, chuanHoa: s };
@@ -200,9 +214,17 @@ export function validateSDT(raw: string): PhoneResult {
   const cleaned = raw.replace(/[\s\-().]/g, "");
   const phone = parsePhoneNumberFromString(cleaned, "VN");
   if (phone && isValidPhoneNumber(phone.number, "VN")) {
-    const e164        = phone.format("E.164");
+    const e164 = phone.format("E.164");
     const localFormat = "0" + e164.slice(3);
-    return { isValid: true, hopLe: true, e164, localFormat, noiDia: localFormat, normalized: e164, chuanHoa: e164 };
+    return {
+      isValid: true,
+      hopLe: true,
+      e164,
+      localFormat,
+      noiDia: localFormat,
+      normalized: e164,
+      chuanHoa: e164,
+    };
   }
   const msg = "Invalid Vietnamese phone number.";
   return { isValid: false, hopLe: false, error: msg, loi: msg };
@@ -247,7 +269,9 @@ export function validateNgayThang(raw: string): DateResult {
     return { isValid: false, hopLe: false, error: msg, loi: msg };
   }
   let date: Date | null = null;
-  const vnMatch = raw.trim().match(/^(\d{2})\/(\d{2})\/(\d{4})(?:\s+(\d{2}:\d{2}:\d{2}))?$/);
+  const vnMatch = raw
+    .trim()
+    .match(/^(\d{2})\/(\d{2})\/(\d{4})(?:\s+(\d{2}:\d{2}:\d{2}))?$/);
   if (vnMatch) {
     const iso = `${vnMatch[3]}-${vnMatch[2]}-${vnMatch[1]}${vnMatch[4] ? "T" + vnMatch[4] : ""}`;
     const d = new Date(iso);
@@ -264,7 +288,14 @@ export function validateNgayThang(raw: string): DateResult {
   const dd = String(date.getDate()).padStart(2, "0");
   const mm = String(date.getMonth() + 1).padStart(2, "0");
   const displayVN = `${dd}/${mm}/${date.getFullYear()}`;
-  return { isValid: true, hopLe: true, isoString, displayVN, normalized: isoString, chuanHoa: isoString };
+  return {
+    isValid: true,
+    hopLe: true,
+    isoString,
+    displayVN,
+    normalized: isoString,
+    chuanHoa: isoString,
+  };
 }
 
 /**
@@ -302,7 +333,11 @@ export function validateSoTienVND(raw: number | string): AmountResult {
     num = Math.floor(raw);
   } else {
     num = Math.floor(
-      parseFloat(String(raw).replace(/[\u20abVND\s.]/g, "").replace(/,/g, ""))
+      parseFloat(
+        String(raw)
+          .replace(/[\u20abVND\s.]/g, "")
+          .replace(/,/g, ""),
+      ),
     );
   }
   if (isNaN(num)) {
@@ -313,15 +348,24 @@ export function validateSoTienVND(raw: number | string): AmountResult {
     const msg = "Amount must not be negative.";
     return { isValid: false, hopLe: false, error: msg, loi: msg };
   }
-  return { isValid: true, hopLe: true, integer: num, soNguyen: num, normalized: num.toLocaleString("vi-VN") + " ₫" };
+  return {
+    isValid: true,
+    hopLe: true,
+    integer: num,
+    soNguyen: num,
+    normalized: num.toLocaleString("vi-VN") + " ₫",
+  };
 }
 
 /**
  * Validate a structured Vietnamese address.
  * Only city/province is required.
  */
-export function validateDiaChi(input: AddressComponents | DiaChiInput): AddressResult {
-  const city = (input as AddressComponents).city ?? (input as DiaChiInput).tinhThanhPho;
+export function validateDiaChi(
+  input: AddressComponents | DiaChiInput,
+): AddressResult {
+  const city =
+    (input as AddressComponents).city ?? (input as DiaChiInput).tinhThanhPho;
   if (!city?.trim()) {
     const msg = "City / Province is required.";
     return { isValid: false, hopLe: false, error: msg, loi: msg };
@@ -330,10 +374,10 @@ export function validateDiaChi(input: AddressComponents | DiaChiInput): AddressR
   const d = input as DiaChiInput;
   const parts = [
     c.streetNumber ?? d.soNha,
-    c.alley        ?? d.ngoHem,
-    c.street       ?? d.tenDuong,
-    c.ward         ?? d.phuongXa,
-    c.district     ?? d.quanHuyen,
+    c.alley ?? d.ngoHem,
+    c.street ?? d.tenDuong,
+    c.ward ?? d.phuongXa,
+    c.district ?? d.quanHuyen,
     city,
   ].filter(Boolean);
   const normalized = parts.join(", ");

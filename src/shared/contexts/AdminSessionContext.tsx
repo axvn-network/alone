@@ -37,7 +37,9 @@ export function AdminSessionProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     fetch("/api/admin/session")
       .then((r) => r.json())
-      .then((d) => { if (d.success) setAdminInfo(d.data as AdminInfo); })
+      .then((d) => {
+        if (d.success) setAdminInfo(d.data as AdminInfo);
+      })
       .catch(() => {});
   }, []);
 
@@ -54,7 +56,7 @@ export function usePermissions() {
     can: (_permission: string) => {
       // Logic để kiểm tra permission dựa trên roles/permissions trong adminInfo
       return !!adminInfo && (adminInfo.role === "superadmin" || true); // Placeholder logic
-    }
+    },
   };
 }
 

@@ -32,24 +32,6 @@
       "@/db": [
         "./src/core/database/index.ts"
       ],
-      "@/validators": [
-        "./src/shared/validators/index.ts"
-      ],
-      "@/validators/*": [
-        "./src/shared/validators/*"
-      ],
-      "@/models": [
-        "./src/core/models/index.ts"
-      ],
-      "@/models/*": [
-        "./src/core/models/*"
-      ],
-      "@/services": [
-        "./src/shared/services/index.ts"
-      ],
-      "@/services/*": [
-        "./src/shared/services/*"
-      ],
       "@/hooks": [
         "./src/shared/hooks/index.ts"
       ],
@@ -76,6 +58,18 @@
       ],
       "@/contexts/*": [
         "./src/shared/contexts/*"
+      ],
+      "@/blocks": [
+        "./src/shared/components/blocks/index.ts"
+      ],
+      "@/blocks/*": [
+        "./src/shared/components/blocks/*"
+      ],
+      "@/i18n": [
+        "./src/i18n/index.ts"
+      ],
+      "@/i18n/*": [
+        "./src/i18n/*"
       ]
     }
   },
@@ -89,6 +83,6 @@
   "exclude": [
     "node_modules",
     "scripts",
-    "src/cli"
+    "infra"
   ]
 }

@@ -18,7 +18,10 @@ export async function createInvestorAction(raw: CreateInvestorInput) {
 
   const parsed = createInvestorSchema.safeParse(raw);
   if (!parsed.success) {
-    return { success: false as const, errors: parsed.error.flatten().fieldErrors };
+    return {
+      success: false as const,
+      errors: parsed.error.flatten().fieldErrors,
+    };
   }
 
   try {

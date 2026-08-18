@@ -5,7 +5,12 @@
 
 // ── Model ─────────────────────────────────────────────────────────────────────
 export { default as Settings } from "./model";
-export type { ISettings, ISocialLink, IChatButton, ChatButtonType } from "./model";
+export type {
+  ISettings,
+  ISocialLink,
+  IChatButton,
+  ChatButtonType,
+} from "./model";
 
 // ── Service ───────────────────────────────────────────────────────────────────
 export { getSettings, getPublicSettings, updateSettings } from "./service";

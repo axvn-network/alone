@@ -11,13 +11,17 @@ import { handleError } from "@/utils/errors";
 
 // POST — admin only: upload a file (blog images, etc.)
 export async function POST(request: NextRequest) {
-  if (!await getCurrentUser()) return unauthorizedResponse();
+  if (!(await getCurrentUser())) return unauthorizedResponse();
   try {
     const formData = await request.formData();
     const file = formData.get("file") as File | null;
     if (!file) return errorResponse("No file provided");
     const result = await mediaService.uploadFile(file, "AXVN/blog");
-    return successResponse({ url: result.secureUrl, publicId: result.publicId }, "File uploaded", 201);
+    return successResponse(
+      { url: result.secureUrl, publicId: result.publicId },
+      "File uploaded",
+      201,
+    );
   } catch (error) {
     return serverErrorResponse(handleError(error).message);
   }

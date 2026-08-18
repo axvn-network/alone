@@ -27,16 +27,18 @@ import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import type { NextResponse } from "next/server";
 import { connectDB } from "@/core/database";
-import Admin from "@/core/models/Admin";
-import Shareholder from "@/core/models/Shareholder";
+import Admin from "@/modules/auth/model";
+import Shareholder from "@/modules/shareholders/model";
 import { getSessionEmail } from "@/core/security/session";
 import { parseShareholderToken, SH_COOKIE } from "@/modules/auth/sh-session";
-import {
-  forbiddenResponse,
-  unauthorizedResponse,
-} from "@/utils/api-response";
+import { forbiddenResponse, unauthorizedResponse } from "@/utils/api-response";
 import type { AppRole, AuthenticatedUser, Permission } from "./types";
-import { canAccess, hasAllPermissions, hasAnyPermission, isAdmin } from "./utils";
+import {
+  canAccess,
+  hasAllPermissions,
+  hasAnyPermission,
+  isAdmin,
+} from "./utils";
 
 // ─── Resolver người dùng hiện tại ─────────────────────────────────────────────
 
@@ -105,12 +107,13 @@ async function resolvePublicUserFromCookie(): Promise<AuthenticatedUser | null> 
     if (!raw) return null;
 
     // Import động để tránh vòng tròn
-    const { parsePublicUserToken } = await import("@/core/rbac/rbac-lib/public-session");
+    const { parsePublicUserToken } =
+      await import("@/core/rbac/rbac-lib/public-session");
     const parsed = parsePublicUserToken(raw);
     if (!parsed) return null;
 
     // Lấy thông tin từ DB
-    const PublicUser = (await import("@/core/models/PublicUser")).default;
+    const PublicUser = (await import("@/modules/public-users/model")).default;
     const u = await PublicUser.findById(parsed.id).lean();
     if (!u || !u.isActive) return null;
 
@@ -232,7 +235,7 @@ export async function requireAuthGuard(): Promise<AuthenticatedUser> {
 export async function requirePermissionGuard(
   permissions: Permission[],
   requireAll = true,
-  redirectPath?: string
+  redirectPath?: string,
 ): Promise<AuthenticatedUser> {
   const user = await resolveCurrentUser();
 
@@ -274,7 +277,9 @@ function getFallbackPath(role: AppRole): string {
  */
 export interface APIGuardResult {
   user: AuthenticatedUser | null;
-  response: ReturnType<typeof unauthorizedResponse | typeof forbiddenResponse> | null;
+  response: ReturnType<
+    typeof unauthorizedResponse | typeof forbiddenResponse
+  > | null;
 }
 
 /**
@@ -293,11 +298,17 @@ export async function checkAdminAPI(): Promise<APIGuardResult> {
   const user = await resolveCurrentUser();
 
   if (!user) {
-    return { user: null, response: unauthorizedResponse("Bạn cần đăng nhập để truy cập.") };
+    return {
+      user: null,
+      response: unauthorizedResponse("Bạn cần đăng nhập để truy cập."),
+    };
   }
 
   if (!isAdmin(user)) {
-    return { user: null, response: forbiddenResponse("Khu vực này chỉ dành cho Quản Trị Viên.") };
+    return {
+      user: null,
+      response: forbiddenResponse("Khu vực này chỉ dành cho Quản Trị Viên."),
+    };
   }
 
   return { user, response: null };
@@ -318,7 +329,12 @@ export async function checkSuperAdminAPI(): Promise<APIGuardResult> {
   }
 
   if (user.role !== "superadmin") {
-    return { user: null, response: forbiddenResponse("Chỉ Siêu Quản Trị Viên mới có quyền thực hiện thao tác này.") };
+    return {
+      user: null,
+      response: forbiddenResponse(
+        "Chỉ Siêu Quản Trị Viên mới có quyền thực hiện thao tác này.",
+      ),
+    };
   }
 
   return { user, response: null };
@@ -335,12 +351,20 @@ export async function checkShareholderAPI(): Promise<APIGuardResult> {
   const user = await resolveCurrentUser();
 
   if (!user) {
-    return { user: null, response: unauthorizedResponse("Bạn cần đăng nhập với tài khoản cổ đông.") };
+    return {
+      user: null,
+      response: unauthorizedResponse(
+        "Bạn cần đăng nhập với tài khoản cổ đông.",
+      ),
+    };
   }
 
   const allowed = canAccess(user, ["shareholder", "admin", "superadmin"]);
   if (!allowed.allowed) {
-    return { user: null, response: forbiddenResponse(allowed.reason ?? "Không có quyền truy cập.") };
+    return {
+      user: null,
+      response: forbiddenResponse(allowed.reason ?? "Không có quyền truy cập."),
+    };
   }
 
   return { user, response: null };
@@ -358,7 +382,7 @@ export async function checkShareholderAPI(): Promise<APIGuardResult> {
  */
 export async function checkPermissionAPI(
   permissions: Permission[],
-  requireAll = true
+  requireAll = true,
 ): Promise<APIGuardResult> {
   const user = await resolveCurrentUser();
 
@@ -373,7 +397,9 @@ export async function checkPermissionAPI(
   if (!hasPerms) {
     return {
       user: null,
-      response: forbiddenResponse("Tài khoản không có đủ quyền hạn để thực hiện thao tác này."),
+      response: forbiddenResponse(
+        "Tài khoản không có đủ quyền hạn để thực hiện thao tác này.",
+      ),
     };
   }
 

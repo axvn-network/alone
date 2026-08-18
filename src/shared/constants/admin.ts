@@ -22,7 +22,9 @@ export const ROLE_LABELS: Record<string, string> = {
   foreign: "🌐 Nước Ngoài",
 };
 
-export const ALL_ROLES = Object.keys(ROLE_LABELS) as Array<keyof typeof ROLE_LABELS>;
+export const ALL_ROLES = Object.keys(ROLE_LABELS) as Array<
+  keyof typeof ROLE_LABELS
+>;
 
 // ─── Shareholder account status ───────────────────────────────────────────────
 export const SHAREHOLDER_STATUS_CLS: Record<string, string> = {
@@ -76,7 +78,14 @@ export const TASK_STATUS_LABELS: Record<string, string> = {
 
 // ─── Task / action categories ─────────────────────────────────────────────────
 export const TASK_CATEGORIES = [
-  "legal", "capital", "tech", "hr", "docs", "compliance", "meeting", "other",
+  "legal",
+  "capital",
+  "tech",
+  "hr",
+  "docs",
+  "compliance",
+  "meeting",
+  "other",
 ] as const;
 
 export const CAT_LABELS: Record<string, string> = {
@@ -92,7 +101,11 @@ export const CAT_LABELS: Record<string, string> = {
 
 // ─── Meeting types ────────────────────────────────────────────────────────────
 export const MEETING_TYPES = [
-  "general", "emergency", "technical", "legal", "progress",
+  "general",
+  "emergency",
+  "technical",
+  "legal",
+  "progress",
 ] as const;
 
 export const MEETING_TYPE_LABELS: Record<string, string> = {
@@ -104,12 +117,22 @@ export const MEETING_TYPE_LABELS: Record<string, string> = {
 };
 
 // ─── KYC status ───────────────────────────────────────────────────────────────
-export const KYC_STATUS_CONFIG: Record<string, { label: string; cls: string }> = {
-  not_started: { label: "KYC: Chưa bắt đầu", cls: "text-AXVN-silver/40 bg-AXVN-navy/60" },
-  pending: { label: "KYC: Chờ xét duyệt", cls: "text-yellow-400 bg-yellow-500/10" },
-  approved: { label: "KYC: Đã xác minh ✓", cls: "text-emerald-400 bg-emerald-500/10" },
-  rejected: { label: "KYC: Bị từ chối", cls: "text-red-400 bg-red-500/10" },
-};
+export const KYC_STATUS_CONFIG: Record<string, { label: string; cls: string }> =
+  {
+    not_started: {
+      label: "KYC: Chưa bắt đầu",
+      cls: "text-AXVN-silver/40 bg-AXVN-navy/60",
+    },
+    pending: {
+      label: "KYC: Chờ xét duyệt",
+      cls: "text-yellow-400 bg-yellow-500/10",
+    },
+    approved: {
+      label: "KYC: Đã xác minh ✓",
+      cls: "text-emerald-400 bg-emerald-500/10",
+    },
+    rejected: { label: "KYC: Bị từ chối", cls: "text-red-400 bg-red-500/10" },
+  };
 
 // ─── Investment plan tiers ────────────────────────────────────────────────────
 export const TIER_LABELS: Record<string, string> = {
@@ -128,17 +151,36 @@ export const PLAN_STATUS_CLS: Record<string, string> = {
 
 // ─── Capital transaction types & statuses ─────────────────────────────────────
 export const TX_TYPE_LABEL: Record<string, string> = {
-  capital_call:    "Yêu cầu góp vốn",
-  deposit:         "Chuyển khoản",
+  capital_call: "Yêu cầu góp vốn",
+  deposit: "Chuyển khoản",
   payment_confirm: "Xác nhận nhận vốn",
-  adjustment:      "Điều chỉnh",
+  adjustment: "Điều chỉnh",
 };
 
-export const CAPITAL_TX_STATUS_CONFIG: Record<string, { label: string; cls: string; icon: ElementType }> = {
-  pending:   { label: "Chờ xác nhận", cls: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20",   icon: Clock },
-  confirmed: { label: "Đã xác nhận",  cls: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20", icon: CheckCircle2 },
-  rejected:  { label: "Từ chối",      cls: "bg-red-500/10 text-red-400 border-red-500/20",             icon: XCircle },
-  cancelled: { label: "Đã hủy",       cls: "bg-AXVN-silver/10 text-AXVN-silver/50 border-white/10",   icon: AlertCircle },
+export const CAPITAL_TX_STATUS_CONFIG: Record<
+  string,
+  { label: string; cls: string; icon: ElementType }
+> = {
+  pending: {
+    label: "Chờ xác nhận",
+    cls: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20",
+    icon: Clock,
+  },
+  confirmed: {
+    label: "Đã xác nhận",
+    cls: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+    icon: CheckCircle2,
+  },
+  rejected: {
+    label: "Từ chối",
+    cls: "bg-red-500/10 text-red-400 border-red-500/20",
+    icon: XCircle,
+  },
+  cancelled: {
+    label: "Đã hủy",
+    cls: "bg-AXVN-silver/10 text-AXVN-silver/50 border-white/10",
+    icon: AlertCircle,
+  },
 };
 
 // ─── Standard admin page root className ──────────────────────────────────────

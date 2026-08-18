@@ -29,7 +29,6 @@ import type { AppRole, Permission, RouteConfig } from "./types";
  * Không hard-code quyền ở nơi khác — luôn tham chiếu bảng này.
  */
 export const ROLE_PERMISSIONS: Record<AppRole, Permission[]> = {
-
   // ── Siêu Quản Trị Viên ────────────────────────────────────────────────────
   // Có toàn bộ quyền hạn trong hệ thống
   superadmin: [
@@ -202,7 +201,6 @@ export const ROLE_PERMISSIONS: Record<AppRole, Permission[]> = {
  *   - guards.ts (Server-side — kiểm tra đầy đủ với quyền hạn)
  */
 export const ROUTE_ACCESS_MAP: Record<string, RouteConfig> = {
-
   // ── Trang Quản Trị ────────────────────────────────────────────────────────
   "/admin": {
     allowedRoles: ["admin", "superadmin"],
@@ -308,8 +306,8 @@ export const PUBLIC_ROUTE_PREFIXES: string[] = [
   "/admin-login",
   "/auth/admin-login",
   "/portals/shareholders/login",
-  "/register",      // Đăng ký public user
-  "/login",         // Đăng nhập public user
+  "/register", // Đăng ký public user
+  "/login", // Đăng nhập public user
 
   // Nội dung công khai
   "/",
@@ -341,9 +339,9 @@ export const PUBLIC_ROUTE_PREFIXES: string[] = [
   "/api/partner-application",
   "/api/investment-plans",
   "/api/whatsapp",
-  "/api/auth",               // Đăng ký / đăng nhập public user
-  "/api/shareholders/auth",  // Đăng nhập cổ đông
-  "/api/enquiries",          // Form liên hệ công khai
+  "/api/auth", // Đăng ký / đăng nhập public user
+  "/api/shareholders/auth", // Đăng nhập cổ đông
+  "/api/enquiries", // Form liên hệ công khai
 ];
 
 // ─── Hằng số route quan trọng ─────────────────────────────────────────────────

@@ -27,10 +27,10 @@
  * Thứ tự: từ cao nhất đến thấp nhất về quyền hạn.
  */
 export type AppRole =
-  | "superadmin"   // Siêu quản trị viên — quyền tuyệt đối
-  | "admin"        // Quản trị viên — quản lý hệ thống
-  | "shareholder"  // Cổ đông dự án — cổng nội bộ
-  | "public";      // Người dùng công khai
+  | "superadmin" // Siêu quản trị viên — quyền tuyệt đối
+  | "admin" // Quản trị viên — quản lý hệ thống
+  | "shareholder" // Cổ đông dự án — cổng nội bộ
+  | "public"; // Người dùng công khai
 
 // ─── Định danh người dùng đã xác thực ────────────────────────────────────────
 
@@ -68,64 +68,64 @@ export interface AuthenticatedUser {
  */
 export type Permission =
   // ── Quản lý tài khoản Admin ──────────────────────────────────────────────
-  | "admin_accounts:manage"     // Tạo / sửa / xóa tài khoản admin (superadmin only)
+  | "admin_accounts:manage" // Tạo / sửa / xóa tài khoản admin (superadmin only)
 
   // ── Quản lý nội dung ────────────────────────────────────────────────────
-  | "content:read"              // Đọc nội dung landing page
-  | "content:write"             // Soạn / sửa nội dung
-  | "content:publish"           // Xuất bản / gỡ xuống nội dung
-  | "content:delete"            // Xóa nội dung
+  | "content:read" // Đọc nội dung landing page
+  | "content:write" // Soạn / sửa nội dung
+  | "content:publish" // Xuất bản / gỡ xuống nội dung
+  | "content:delete" // Xóa nội dung
 
   // ── Cổ đông ──────────────────────────────────────────────────────────────
-  | "shareholders:read"         // Xem danh sách cổ đông
-  | "shareholders:write"        // Sửa thông tin cổ đông
-  | "shareholders:manage"       // Toàn quyền CRUD cổ đông
+  | "shareholders:read" // Xem danh sách cổ đông
+  | "shareholders:write" // Sửa thông tin cổ đông
+  | "shareholders:manage" // Toàn quyền CRUD cổ đông
 
   // ── Tài liệu ─────────────────────────────────────────────────────────────
-  | "documents:read"            // Xem tài liệu
-  | "documents:download"        // Tải xuống tài liệu
-  | "documents:manage"          // Upload / xóa tài liệu
+  | "documents:read" // Xem tài liệu
+  | "documents:download" // Tải xuống tài liệu
+  | "documents:manage" // Upload / xóa tài liệu
 
   // ── Kế hoạch đầu tư ──────────────────────────────────────────────────────
-  | "investment_plans:read"     // Xem kế hoạch
-  | "investment_plans:manage"   // Quản lý kế hoạch đầu tư
+  | "investment_plans:read" // Xem kế hoạch
+  | "investment_plans:manage" // Quản lý kế hoạch đầu tư
 
   // ── Báo cáo & Thống kê ────────────────────────────────────────────────────
-  | "reports:read"              // Xem báo cáo nội bộ
-  | "reports:read_all"          // Xem toàn bộ báo cáo + log hệ thống
+  | "reports:read" // Xem báo cáo nội bộ
+  | "reports:read_all" // Xem toàn bộ báo cáo + log hệ thống
 
   // ── Enquiry / Liên hệ ─────────────────────────────────────────────────────
-  | "enquiries:read"            // Xem yêu cầu liên hệ
-  | "enquiries:manage"          // Quản lý yêu cầu liên hệ
+  | "enquiries:read" // Xem yêu cầu liên hệ
+  | "enquiries:manage" // Quản lý yêu cầu liên hệ
 
   // ── Đối tác ──────────────────────────────────────────────────────────────
-  | "partner_applications:read"    // Xem đơn đối tác
-  | "partner_applications:manage"  // Quản lý đơn đối tác
+  | "partner_applications:read" // Xem đơn đối tác
+  | "partner_applications:manage" // Quản lý đơn đối tác
 
   // ── Cài đặt hệ thống ──────────────────────────────────────────────────────
-  | "settings:read"             // Xem cài đặt
-  | "settings:manage"           // Thay đổi cài đặt hệ thống
+  | "settings:read" // Xem cài đặt
+  | "settings:manage" // Thay đổi cài đặt hệ thống
 
   // ── Audit Log ─────────────────────────────────────────────────────────────
-  | "audit_log:read"            // Xem log kiểm toán
+  | "audit_log:read" // Xem log kiểm toán
 
   // ── Cuộc họp cổ đông ─────────────────────────────────────────────────────
-  | "sh_meetings:read"          // Xem lịch họp cổ đông
-  | "sh_meetings:manage"        // Quản lý cuộc họp
+  | "sh_meetings:read" // Xem lịch họp cổ đông
+  | "sh_meetings:manage" // Quản lý cuộc họp
 
   // ── Tin nhắn nội bộ ──────────────────────────────────────────────────────
-  | "sh_messages:read"          // Xem tin nhắn nội bộ
-  | "sh_messages:write"         // Gửi tin nhắn
+  | "sh_messages:read" // Xem tin nhắn nội bộ
+  | "sh_messages:write" // Gửi tin nhắn
 
   // ── Nhiệm vụ cổ đông ─────────────────────────────────────────────────────
-  | "sh_tasks:read"             // Xem danh sách nhiệm vụ
-  | "sh_tasks:manage"           // Quản lý nhiệm vụ
+  | "sh_tasks:read" // Xem danh sách nhiệm vụ
+  | "sh_tasks:manage" // Quản lý nhiệm vụ
 
   // ── Cổng công khai ────────────────────────────────────────────────────────
-  | "public:access"             // Truy cập trang công khai
-  | "public:contact"            // Gửi form liên hệ
-  | "public:register"           // Đăng ký tài khoản
-  | "public:newsletter";        // Đăng ký nhận bản tin
+  | "public:access" // Truy cập trang công khai
+  | "public:contact" // Gửi form liên hệ
+  | "public:register" // Đăng ký tài khoản
+  | "public:newsletter"; // Đăng ký nhận bản tin
 
 // ─── Kết quả kiểm tra quyền ──────────────────────────────────────────────────
 

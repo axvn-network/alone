@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Cpu, Layers, ShieldCheck, Code2 } from "lucide-react";
 
+// Static page — no DB queries. Cached at build time.
+export const revalidate = 86400;
+
 export const metadata: Metadata = {
   title: "IP & Công Nghệ | AXVN Tech Holding",
   description:
@@ -63,7 +66,9 @@ export default function IPTechPage() {
                 <Icon className="w-5 h-5 text-AXVN-gold" />
               </div>
               <h3 className="font-bold text-white mb-2">{title}</h3>
-              <p className="text-AXVN-silver/60 text-sm leading-relaxed">{desc}</p>
+              <p className="text-AXVN-silver/60 text-sm leading-relaxed">
+                {desc}
+              </p>
             </div>
           ))}
         </div>
@@ -71,7 +76,8 @@ export default function IPTechPage() {
         {/* Notice */}
         <div className="p-5 border border-AXVN-gold/20 rounded-xl bg-AXVN-gold/5 text-center">
           <p className="text-AXVN-silver/70 text-sm">
-            Chi tiết kỹ thuật và kiến trúc hệ thống được cung cấp theo yêu cầu, sau khi hoàn tất quy trình đánh giá đối tác.
+            Chi tiết kỹ thuật và kiến trúc hệ thống được cung cấp theo yêu cầu,
+            sau khi hoàn tất quy trình đánh giá đối tác.
           </p>
         </div>
       </div>

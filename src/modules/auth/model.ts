@@ -19,7 +19,13 @@ export interface IAdmin extends Document {
 const AdminSchema = new Schema<IAdmin>(
   {
     name: { type: String, required: true, trim: true },
-    email: { type: String, required: true, unique: true, lowercase: true, trim: true },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+      trim: true,
+    },
     password: { type: String, required: true },
     role: { type: String, enum: ["admin", "superadmin"], default: "admin" },
     lastLogin: { type: Date, default: null },
@@ -27,9 +33,10 @@ const AdminSchema = new Schema<IAdmin>(
     mfaEnabled: { type: Boolean, default: false },
     mfaRequiredForLogin: { type: Boolean, default: false },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-const Admin = mongoose.models.Admin || mongoose.model<IAdmin>("Admin", AdminSchema);
+const Admin =
+  mongoose.models.Admin || mongoose.model<IAdmin>("Admin", AdminSchema);
 
 export default Admin;

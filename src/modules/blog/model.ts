@@ -10,7 +10,6 @@ export interface IBlogSEO {
 
 export interface IBlog extends Document {
   title: string;
-  slug: string;
   excerpt: string;
   content: string;
   featuredImage: string;
@@ -24,55 +23,36 @@ export interface IBlog extends Document {
   updatedAt: Date;
 }
 
-const BlogSEOSchema = new Schema<IBlogSEO>({
-  title: { type: String, default: "" },
-  description: { type: String, default: "" },
-  keywords: { type: String, default: "" },
-  ogImage: { type: String, default: "" },
-  canonicalUrl: { type: String, default: "" },
-});
-
-function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .trim()
-    .replace(/[^\w\s-]/g, "")
-    .replace(/[\s_]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
+const BlogSEOSchema = new Schema<IBlogSEO>(
+  {
+    title: { type: String, default: "" },
+    description: { type: String, default: "" },
+    keywords: { type: String, default: "" },
+    ogImage: { type: String, default: "" },
+    canonicalUrl: { type: String, default: "" },
+  },
+  { _id: false },
+);
 
 const BlogSchema = new Schema<IBlog>(
   {
     title: { type: String, required: true, trim: true },
-    slug: { type: String, unique: true, trim: true },
     excerpt: { type: String, default: "" },
     content: { type: String, default: "" },
     featuredImage: { type: String, default: "" },
     category: { type: String, default: "General" },
     readTime: { type: String, default: "5 min read" },
-    tags: [{ type: String }],
+    tags: { type: [String], default: [] },
     status: { type: String, enum: ["draft", "published"], default: "draft" },
     publishedAt: { type: Date, default: null },
     seo: { type: BlogSEOSchema, default: () => ({}) },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-BlogSchema.index({ status: 1, publishedAt: -1 });
+BlogSchema.index({ status: 1, createdAt: -1 });
 BlogSchema.index({ category: 1 });
-
-BlogSchema.pre("save", async function () {
-  if (!this.slug || this.isModified("title")) {
-    const baseSlug = slugify(this.title);
-    let slug = baseSlug;
-    let counter = 1;
-    while (await mongoose.models.Blog.findOne({ slug, _id: { $ne: this._id } })) {
-      slug = `${baseSlug}-${counter}`;
-      counter++;
-    }
-    this.slug = slug;
-  }
-});
+BlogSchema.index({ tags: 1 });
 
 const Blog = mongoose.models.Blog || mongoose.model<IBlog>("Blog", BlogSchema);
 

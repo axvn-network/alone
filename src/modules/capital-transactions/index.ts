@@ -10,3 +10,7 @@ export * from "./schema";
 export * as service from "./service";
 export * as actions from "./actions";
 export { default as CapitalTransaction } from "./model";
+
+// ── UI components ─────────────────────────────────────────────────────────────
+export { CapTxTable } from "./components/CapTxTable";
+export { CapCallModal, ReviewModal } from "./components/CapTxActions";

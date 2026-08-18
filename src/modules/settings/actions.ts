@@ -8,8 +8,8 @@
 import { revalidatePath } from "next/cache";
 import { requireAuth } from "@/core/security/auth-utils";
 import { handleError } from "@/utils/errors";
-import { settingsSchema, formatZodErrors } from "@/validators";
-import type { SettingsInput } from "@/validators";
+import { settingsSchema, type SettingsInput } from "@/modules/settings/schema";
+import { formatZodErrors } from "@/shared/utils/zod";
 import { updateSettings } from "./service";
 
 export async function updateSettingsAction(data: SettingsInput) {

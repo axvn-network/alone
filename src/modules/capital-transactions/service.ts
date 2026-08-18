@@ -14,7 +14,7 @@
  */
 
 import { connectDB } from "@/core/database";
-import Shareholder from "@/core/models/Shareholder";
+import Shareholder from "@/modules/shareholders/model";
 import { Types } from "mongoose";
 import { paginate } from "@/utils/pagination";
 import CapitalTransaction from "./model";
@@ -31,28 +31,31 @@ import type {
 
 function toSafe(doc: Record<string, unknown>): CapitalTx {
   return {
-    _id:              String(doc._id),
-    shareholderId:    String(doc.shareholderId),
-    shareholderName:  String(doc.shareholderName  ?? ""),
+    _id: String(doc._id),
+    shareholderId: String(doc.shareholderId),
+    shareholderName: String(doc.shareholderName ?? ""),
     shareholderEmail: String(doc.shareholderEmail ?? ""),
-    type:             doc.type             as CapitalTx["type"],
-    status:           doc.status           as CapitalTx["status"],
-    amount:           doc.amount           as number,
-    currency:         String(doc.currency  ?? "VND"),
-    description:      String(doc.description ?? ""),
-    referenceNo:      String(doc.referenceNo  ?? ""),
-    proofUrl:         String(doc.proofUrl     ?? ""),
-    adminNote:        String(doc.adminNote    ?? ""),
-    processedBy:      doc.processedBy ? String(doc.processedBy) : null,
-    processedAt:      doc.processedAt instanceof Date
-                        ? doc.processedAt.toISOString()
-                        : (doc.processedAt as string | null) ?? null,
-    createdAt:        doc.createdAt instanceof Date
-                        ? doc.createdAt.toISOString()
-                        : String(doc.createdAt),
-    updatedAt:        doc.updatedAt instanceof Date
-                        ? doc.updatedAt.toISOString()
-                        : String(doc.updatedAt),
+    type: doc.type as CapitalTx["type"],
+    status: doc.status as CapitalTx["status"],
+    amount: doc.amount as number,
+    currency: String(doc.currency ?? "VND"),
+    description: String(doc.description ?? ""),
+    referenceNo: String(doc.referenceNo ?? ""),
+    proofUrl: String(doc.proofUrl ?? ""),
+    adminNote: String(doc.adminNote ?? ""),
+    processedBy: doc.processedBy ? String(doc.processedBy) : null,
+    processedAt:
+      doc.processedAt instanceof Date
+        ? doc.processedAt.toISOString()
+        : ((doc.processedAt as string | null) ?? null),
+    createdAt:
+      doc.createdAt instanceof Date
+        ? doc.createdAt.toISOString()
+        : String(doc.createdAt),
+    updatedAt:
+      doc.updatedAt instanceof Date
+        ? doc.updatedAt.toISOString()
+        : String(doc.updatedAt),
   };
 }
 
@@ -65,18 +68,28 @@ export async function list(query: CapTxQuery = {}): Promise<CapTxListResult> {
   await connectDB();
 
   const filter: Record<string, unknown> = {};
-  if (query.shareholderId) filter.shareholderId = new Types.ObjectId(query.shareholderId);
-  if (query.type)          filter.type          = query.type;
-  if (query.status)        filter.status        = query.status;
+  if (query.shareholderId)
+    filter.shareholderId = new Types.ObjectId(query.shareholderId);
+  if (query.type) filter.type = query.type;
+  if (query.status) filter.status = query.status;
 
   const { page, limit, skip } = paginate(query, { limit: 20, maxLimit: 100 });
 
   const [docs, total] = await Promise.all([
-    CapitalTransaction.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
+    CapitalTransaction.find(filter)
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .lean(),
     CapitalTransaction.countDocuments(filter),
   ]);
 
-  return { docs: docs.map((d) => toSafe(d as Record<string, unknown>)), total, page, limit };
+  return {
+    docs: docs.map((d) => toSafe(d as Record<string, unknown>)),
+    total,
+    page,
+    limit,
+  };
 }
 
 /**
@@ -90,16 +103,16 @@ export async function create(data: CreateCapTxDto): Promise<CapitalTx> {
   if (!sh) throw new Error("Cổ đông không tồn tại");
 
   const doc = await CapitalTransaction.create({
-    shareholderId:    new Types.ObjectId(data.shareholderId),
-    shareholderName:  sh.name,
+    shareholderId: new Types.ObjectId(data.shareholderId),
+    shareholderName: sh.name,
     shareholderEmail: sh.email,
-    type:             data.type,
-    status:           "pending",
-    amount:           Math.round(data.amount),
-    description:      data.description ?? "",
-    referenceNo:      data.referenceNo  ?? "",
-    adminNote:        data.adminNote    ?? "",
-    proofUrl:         data.proofUrl     ?? "",
+    type: data.type,
+    status: "pending",
+    amount: Math.round(data.amount),
+    description: data.description ?? "",
+    referenceNo: data.referenceNo ?? "",
+    adminNote: data.adminNote ?? "",
+    proofUrl: data.proofUrl ?? "",
   });
 
   return toSafe(doc.toObject() as Record<string, unknown>);
@@ -122,8 +135,8 @@ export async function updateStatus(data: UpdateCapTxDto): Promise<CapitalTx> {
   try {
     session.startTransaction();
 
-    tx.status      = data.status;
-    tx.adminNote   = data.adminNote ?? tx.adminNote;
+    tx.status = data.status;
+    tx.adminNote = data.adminNote ?? tx.adminNote;
     tx.processedBy = new Types.ObjectId(data.processedBy);
     tx.processedAt = new Date();
     await tx.save({ session });
@@ -132,7 +145,7 @@ export async function updateStatus(data: UpdateCapTxDto): Promise<CapitalTx> {
       await Shareholder.findByIdAndUpdate(
         tx.shareholderId,
         { $inc: { capitalPaid: tx.amount } },
-        { session }
+        { session },
       );
     }
 
@@ -152,11 +165,17 @@ export async function updateStatus(data: UpdateCapTxDto): Promise<CapitalTx> {
  */
 export async function submitDeposit(
   shareholderId: string,
-  amount:        number,
-  proofUrl:      string,
-  description?:  string
+  amount: number,
+  proofUrl: string,
+  description?: string,
 ): Promise<CapitalTx> {
-  return create({ shareholderId, type: "deposit", amount, proofUrl, description });
+  return create({
+    shareholderId,
+    type: "deposit",
+    amount,
+    proofUrl,
+    description,
+  });
 }
 
 /**
@@ -165,26 +184,31 @@ export async function submitDeposit(
 export async function getStats(): Promise<CapTxStats> {
   await connectDB();
 
-  const [totalPending, totalConfirmed, totalRejected, pendingAgg, confirmedAgg] =
-    await Promise.all([
-      CapitalTransaction.countDocuments({ status: "pending" }),
-      CapitalTransaction.countDocuments({ status: "confirmed" }),
-      CapitalTransaction.countDocuments({ status: "rejected" }),
-      CapitalTransaction.aggregate([
-        { $match: { status: "pending" } },
-        { $group: { _id: null, total: { $sum: "$amount" } } },
-      ]),
-      CapitalTransaction.aggregate([
-        { $match: { status: "confirmed" } },
-        { $group: { _id: null, total: { $sum: "$amount" } } },
-      ]),
-    ]);
+  const [
+    totalPending,
+    totalConfirmed,
+    totalRejected,
+    pendingAgg,
+    confirmedAgg,
+  ] = await Promise.all([
+    CapitalTransaction.countDocuments({ status: "pending" }),
+    CapitalTransaction.countDocuments({ status: "confirmed" }),
+    CapitalTransaction.countDocuments({ status: "rejected" }),
+    CapitalTransaction.aggregate([
+      { $match: { status: "pending" } },
+      { $group: { _id: null, total: { $sum: "$amount" } } },
+    ]),
+    CapitalTransaction.aggregate([
+      { $match: { status: "confirmed" } },
+      { $group: { _id: null, total: { $sum: "$amount" } } },
+    ]),
+  ]);
 
   return {
     totalPending,
     totalConfirmed,
     totalRejected,
-    pendingAmount:   pendingAgg[0]?.total   ?? 0,
+    pendingAmount: pendingAgg[0]?.total ?? 0,
     confirmedAmount: confirmedAgg[0]?.total ?? 0,
   };
 }

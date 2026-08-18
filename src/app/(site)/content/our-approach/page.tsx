@@ -6,7 +6,7 @@ import PageTransition from "@/shared/components/animations/PageTransition";
 import Reveal from "@/shared/components/animations/Reveal";
 import Stagger from "@/shared/components/animations/Stagger";
 import StaggerItem from "@/shared/components/animations/StaggerItem";
-import PageHero from "@/modules/content/components/PageHero";
+import PageHero from "@/shared/components/blocks/PageHero";
 import {
   Search,
   ClipboardCheck,
@@ -47,13 +47,31 @@ const processSteps = [
       "Mọi doanh nghiệp đều trông hấp dẫn trong bản thuyết trình. Công việc của chúng tôi là hiểu nó trông như thế nào vào một ngày Thứ Ba khó khăn trong một quý đầy thách thức.",
     checklist: [
       { label: "Mô hình kinh doanh", desc: "cách công ty thực sự kiếm tiền" },
-      { label: "Nhu cầu thị trường", desc: "bằng chứng về nhu cầu khách hàng thực sự và bền vững" },
-      { label: "Vị thế cạnh tranh", desc: "lý do doanh nghiệp này chiến thắng" },
-      { label: "Lãnh đạo và ban quản lý", desc: "những người sẽ thực hiện kế hoạch" },
-      { label: "Hiệu suất tài chính lịch sử", desc: "những gì con số thực sự cho thấy" },
-      { label: "Chất lượng doanh thu và dòng tiền", desc: "sự khác biệt giữa tăng trưởng và sức khỏe" },
+      {
+        label: "Nhu cầu thị trường",
+        desc: "bằng chứng về nhu cầu khách hàng thực sự và bền vững",
+      },
+      {
+        label: "Vị thế cạnh tranh",
+        desc: "lý do doanh nghiệp này chiến thắng",
+      },
+      {
+        label: "Lãnh đạo và ban quản lý",
+        desc: "những người sẽ thực hiện kế hoạch",
+      },
+      {
+        label: "Hiệu suất tài chính lịch sử",
+        desc: "những gì con số thực sự cho thấy",
+      },
+      {
+        label: "Chất lượng doanh thu và dòng tiền",
+        desc: "sự khác biệt giữa tăng trưởng và sức khỏe",
+      },
       { label: "Cấu trúc pháp lý", desc: "nền tảng pháp lý sạch sẽ" },
-      { label: "Yêu cầu vận hành", desc: "những gì cần thiết để vận hành và mở rộng" },
+      {
+        label: "Yêu cầu vận hành",
+        desc: "những gì cần thiết để vận hành và mở rộng",
+      },
       { label: "Định giá", desc: "mức giá để tất cả các bên cùng thành công" },
     ],
   },
@@ -66,11 +84,26 @@ const processSteps = [
       "Khi cơ hội đáp ứng các tiêu chí của chúng tôi, chúng tôi thiết kế cấu trúc đầu tư phù hợp với nhu cầu doanh nghiệp và lợi ích của tất cả các bên. Mục tiêu trong mọi trường hợp: cấu trúc rõ ràng, có trách nhiệm với quản trị phù hợp, trách nhiệm giải trình và sự liên kết. Sự mơ hồ là nguyên nhân thất bại của các mối quan hệ – nên chúng tôi loại bỏ nó ngay từ đầu.",
     structures: [
       { label: "Thâu tóm toàn bộ", desc: "chuyển giao quyền sở hữu hoàn toàn" },
-      { label: "Đầu tư cổ phần kiểm soát hoặc thiểu số", desc: "vị thế vốn linh hoạt" },
-      { label: "Vốn tăng trưởng", desc: "tài trợ gắn với kế hoạch mở rộng rõ ràng" },
-      { label: "Liên doanh hoặc đồng đầu tư", desc: "sở hữu chung với đối tác liên kết" },
-      { label: "Mua lại tài sản", desc: "mua tài sản cụ thể thay vì toàn bộ pháp nhân" },
-      { label: "Tài chính có cấu trúc", desc: "giải pháp tùy chỉnh cho các tình huống phức tạp" },
+      {
+        label: "Đầu tư cổ phần kiểm soát hoặc thiểu số",
+        desc: "vị thế vốn linh hoạt",
+      },
+      {
+        label: "Vốn tăng trưởng",
+        desc: "tài trợ gắn với kế hoạch mở rộng rõ ràng",
+      },
+      {
+        label: "Liên doanh hoặc đồng đầu tư",
+        desc: "sở hữu chung với đối tác liên kết",
+      },
+      {
+        label: "Mua lại tài sản",
+        desc: "mua tài sản cụ thể thay vì toàn bộ pháp nhân",
+      },
+      {
+        label: "Tài chính có cấu trúc",
+        desc: "giải pháp tùy chỉnh cho các tình huống phức tạp",
+      },
     ],
   },
   {
@@ -81,8 +114,14 @@ const processSteps = [
     description:
       "Ký kết thỏa thuận là nơi công việc của chúng tôi bắt đầu – không phải kết thúc. AXVN Tech Holding tích cực hỗ trợ phát triển thông qua lập kế hoạch chiến lược, giám sát tài chính, hỗ trợ quản lý, phát triển kinh doanh, xây dựng thương hiệu, triển khai công nghệ, cải thiện vận hành, quản trị và phát triển quan hệ đối tác.",
     supportAreas: [
-      { label: "Lập kế hoạch chiến lược", desc: "định hướng rõ ràng và mục tiêu đo lường được" },
-      { label: "Giám sát tài chính", desc: "báo cáo kỷ luật và quản lý hiệu suất" },
+      {
+        label: "Lập kế hoạch chiến lược",
+        desc: "định hướng rõ ràng và mục tiêu đo lường được",
+      },
+      {
+        label: "Giám sát tài chính",
+        desc: "báo cáo kỷ luật và quản lý hiệu suất",
+      },
       { label: "Hỗ trợ quản lý", desc: "củng cố đội ngũ" },
       { label: "Phát triển kinh doanh", desc: "mở cửa, mở rộng thị trường" },
       { label: "Xây dựng thương hiệu", desc: "tạo dựng nhận diện và niềm tin" },
@@ -103,15 +142,60 @@ const processSteps = [
 ];
 
 const evaluationPrinciples = [
-  { number: "01", title: "Lãnh đạo mạnh mẽ và có đạo đức", desc: "tính cách đến trước năng lực", icon: Star },
-  { number: "02", title: "Nhu cầu khách hàng thực sự", desc: "doanh thu thực từ khách hàng thực", icon: Users },
-  { number: "03", title: "Thông tin tài chính minh bạch", desc: "sự rõ ràng là điều kiện xuất phát", icon: BarChart2 },
-  { number: "04", title: "Định giá thực tế", desc: "mức giá phản ánh bằng chứng, không phải nhiệt tình", icon: Target },
-  { number: "05", title: "Vận hành có thể mở rộng", desc: "tăng trưởng không gãy vỡ cấu trúc", icon: TrendingUp },
-  { number: "06", title: "Khác biệt hóa cạnh tranh", desc: "lý do để chiến thắng và duy trì vị thế", icon: Zap },
-  { number: "07", title: "Quản trị có trách nhiệm", desc: "cấu trúc bảo vệ tất cả các bên liên quan", icon: Shield },
-  { number: "08", title: "Rủi ro có thể quản lý", desc: "mức rủi ro chúng tôi có thể hiểu và hấp thụ", icon: Activity },
-  { number: "09", title: "Tiềm năng tăng trưởng bền vững", desc: "giá trị tích lũy theo thời gian", icon: Leaf },
+  {
+    number: "01",
+    title: "Lãnh đạo mạnh mẽ và có đạo đức",
+    desc: "tính cách đến trước năng lực",
+    icon: Star,
+  },
+  {
+    number: "02",
+    title: "Nhu cầu khách hàng thực sự",
+    desc: "doanh thu thực từ khách hàng thực",
+    icon: Users,
+  },
+  {
+    number: "03",
+    title: "Thông tin tài chính minh bạch",
+    desc: "sự rõ ràng là điều kiện xuất phát",
+    icon: BarChart2,
+  },
+  {
+    number: "04",
+    title: "Định giá thực tế",
+    desc: "mức giá phản ánh bằng chứng, không phải nhiệt tình",
+    icon: Target,
+  },
+  {
+    number: "05",
+    title: "Vận hành có thể mở rộng",
+    desc: "tăng trưởng không gãy vỡ cấu trúc",
+    icon: TrendingUp,
+  },
+  {
+    number: "06",
+    title: "Khác biệt hóa cạnh tranh",
+    desc: "lý do để chiến thắng và duy trì vị thế",
+    icon: Zap,
+  },
+  {
+    number: "07",
+    title: "Quản trị có trách nhiệm",
+    desc: "cấu trúc bảo vệ tất cả các bên liên quan",
+    icon: Shield,
+  },
+  {
+    number: "08",
+    title: "Rủi ro có thể quản lý",
+    desc: "mức rủi ro chúng tôi có thể hiểu và hấp thụ",
+    icon: Activity,
+  },
+  {
+    number: "09",
+    title: "Tiềm năng tăng trưởng bền vững",
+    desc: "giá trị tích lũy theo thời gian",
+    icon: Leaf,
+  },
 ];
 
 export default function OurApproachPage() {
@@ -153,10 +237,12 @@ export default function OurApproachPage() {
         <section
           id="process"
           className="bg-AXVN-navy rounded-2xl section-mx section-my"
-          style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}
+          style={{
+            paddingTop: "var(--section-py)",
+            paddingBottom: "var(--section-py)",
+          }}
         >
           <div className="max-w-[1400px] mx-auto section-px">
-
             {/* Section Header */}
             <Reveal className="text-center max-w-3xl mx-auto mb-10 md:mb-20">
               <div className="flex items-center justify-center gap-3 mb-4">
@@ -166,15 +252,28 @@ export default function OurApproachPage() {
               </div>
               <h2
                 className="font-light text-AXVN-ivory uppercase leading-[1.28] mb-3 sm:mb-4"
-                style={{ fontSize: "var(--text-h2)", letterSpacing: "var(--tracking-heading)" }}
+                style={{
+                  fontSize: "var(--text-h2)",
+                  letterSpacing: "var(--tracking-heading)",
+                }}
               >
-                Quy Trình <span className="font-semibold text-AXVN-gold">Thực Hiện</span>
+                Quy Trình{" "}
+                <span className="font-semibold text-AXVN-gold">Thực Hiện</span>
               </h2>
-              <p className="text-AXVN-gold font-semibold mb-3 sm:mb-4" style={{ fontSize: "var(--text-lead)" }}>
+              <p
+                className="text-AXVN-gold font-semibold mb-3 sm:mb-4"
+                style={{ fontSize: "var(--text-lead)" }}
+              >
                 Mỗi cơ hội là duy nhất. Tiêu chuẩn của chúng tôi thì không.
               </p>
-              <p className="text-AXVN-silver/80 leading-[1.8] font-light" style={{ fontSize: "var(--text-body)" }}>
-                Không phải quy trình để trấn an nhà đầu tư trên PowerPoint — đây là cách AXVN Tech Holding thực sự vận hành. Từ nhận diện cơ hội đến quản lý giá trị dài hạn, mỗi bước đều có mục đích rõ ràng và có thể kiểm chứng được.
+              <p
+                className="text-AXVN-silver/80 leading-[1.8] font-light"
+                style={{ fontSize: "var(--text-body)" }}
+              >
+                Không phải quy trình để trấn an nhà đầu tư trên PowerPoint — đây
+                là cách AXVN Tech Holding thực sự vận hành. Từ nhận diện cơ hội
+                đến quản lý giá trị dài hạn, mỗi bước đều có mục đích rõ ràng và
+                có thể kiểm chứng được.
               </p>
             </Reveal>
 
@@ -184,7 +283,6 @@ export default function OurApproachPage() {
                 return (
                   <Reveal key={i}>
                     <div className="group relative bg-AXVN-deep border border-AXVN-gold/15 hover:border-AXVN-gold/40 rounded-xl sm:rounded-2xl p-5 sm:p-8 md:p-10 transition-all duration-300">
-
                       {/* Top bar */}
                       <div className="flex items-center justify-between gap-3 mb-5 border-b border-AXVN-gold/10 pb-5">
                         <div className="flex items-center gap-3 sm:gap-4 min-w-0">
@@ -210,9 +308,11 @@ export default function OurApproachPage() {
                       </p>
 
                       <div className="text-AXVN-silver/80 text-sm leading-relaxed mb-4 space-y-3 sm:space-y-4">
-                        {stepItem.description.split("\n\n").map((paragraph, idx) => (
-                          <p key={idx}>{paragraph}</p>
-                        ))}
+                        {stepItem.description
+                          .split("\n\n")
+                          .map((paragraph, idx) => (
+                            <p key={idx}>{paragraph}</p>
+                          ))}
                       </div>
 
                       {/* Bước 02 – danh sách kiểm tra */}
@@ -289,7 +389,6 @@ export default function OurApproachPage() {
                           </div>
                         </div>
                       )}
-
                     </div>
                   </Reveal>
                 );
@@ -302,24 +401,37 @@ export default function OurApproachPage() {
         <section
           id="principles"
           className="bg-AXVN-navy rounded-2xl section-mx section-my"
-          style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}
+          style={{
+            paddingTop: "var(--section-py)",
+            paddingBottom: "var(--section-py)",
+          }}
         >
           <div className="max-w-[1400px] mx-auto section-px">
-
             <Reveal className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
               <div className="flex items-center justify-center gap-3 mb-4">
                 <div className="w-8 h-px bg-AXVN-gold/40" />
-                <span className="section-tag">9 Tiêu Chí Không Thể Thỏa Hiệp</span>
+                <span className="section-tag">
+                  9 Tiêu Chí Không Thể Thỏa Hiệp
+                </span>
                 <div className="w-8 h-px bg-AXVN-gold/40" />
               </div>
               <h2
                 className="font-light text-AXVN-ivory uppercase leading-[1.28] mb-3 sm:mb-4"
-                style={{ fontSize: "var(--text-h2)", letterSpacing: "var(--tracking-heading)" }}
+                style={{
+                  fontSize: "var(--text-h2)",
+                  letterSpacing: "var(--tracking-heading)",
+                }}
               >
-                Tiêu Chuẩn <span className="font-semibold text-AXVN-gold">Đánh Giá</span>
+                Tiêu Chuẩn{" "}
+                <span className="font-semibold text-AXVN-gold">Đánh Giá</span>
               </h2>
-              <p className="text-AXVN-silver/80 leading-[1.8] font-light" style={{ fontSize: "var(--text-body)" }}>
-                Đây không phải checklist marketing. Đây là 9 điều kiện thực sự mà AXVN Tech Holding dùng để quyết định có tiến tới hay không — áp dụng cho mọi cơ hội, không có ngoại lệ.
+              <p
+                className="text-AXVN-silver/80 leading-[1.8] font-light"
+                style={{ fontSize: "var(--text-body)" }}
+              >
+                Đây không phải checklist marketing. Đây là 9 điều kiện thực sự
+                mà AXVN Tech Holding dùng để quyết định có tiến tới hay không —
+                áp dụng cho mọi cơ hội, không có ngoại lệ.
               </p>
             </Reveal>
 
@@ -329,7 +441,10 @@ export default function OurApproachPage() {
                 return (
                   <StaggerItem key={i}>
                     <motion.div
-                      whileHover={{ y: -6, borderColor: "rgba(201,162,74,0.4)" }}
+                      whileHover={{
+                        y: -6,
+                        borderColor: "rgba(201,162,74,0.4)",
+                      }}
                       className="group p-5 sm:p-8 rounded-xl sm:rounded-2xl bg-AXVN-deep border border-AXVN-gold/15 transition-all duration-300 h-full flex flex-col justify-between"
                     >
                       <div>
@@ -354,14 +469,16 @@ export default function OurApproachPage() {
                 );
               })}
             </Stagger>
-
           </div>
         </section>
 
         {/* ── 4. CTA ─────────────────────────────────────────────────────── */}
         <section
           className="bg-AXVN-navy rounded-2xl section-mx section-my"
-          style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}
+          style={{
+            paddingTop: "var(--section-py)",
+            paddingBottom: "var(--section-py)",
+          }}
         >
           <div className="max-w-[1400px] mx-auto section-px text-center">
             <Reveal>
@@ -372,12 +489,20 @@ export default function OurApproachPage() {
               </div>
               <h2
                 className="font-light text-AXVN-ivory mb-4 md:mb-6 uppercase leading-[1.28]"
-                style={{ fontSize: "var(--text-h2)", letterSpacing: "var(--tracking-heading)" }}
+                style={{
+                  fontSize: "var(--text-h2)",
+                  letterSpacing: "var(--tracking-heading)",
+                }}
               >
                 Bạn Thấy Cùng Một Lý Tưởng?
               </h2>
-              <p className="text-AXVN-silver/80 leading-[1.8] max-w-2xl mx-auto mb-8" style={{ fontSize: "var(--text-lead)" }}>
-                AXVN Tech Holding xây dựng theo đúng quy trình này — công khai, có thể kiểm chứng. Nếu bạn tin vào cách tiếp cận này và muốn là một phần của hành trình, chúng tôi muốn nói chuyện với bạn.
+              <p
+                className="text-AXVN-silver/80 leading-[1.8] max-w-2xl mx-auto mb-8"
+                style={{ fontSize: "var(--text-lead)" }}
+              >
+                AXVN Tech Holding xây dựng theo đúng quy trình này — công khai,
+                có thể kiểm chứng. Nếu bạn tin vào cách tiếp cận này và muốn là
+                một phần của hành trình, chúng tôi muốn nói chuyện với bạn.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link
@@ -397,7 +522,6 @@ export default function OurApproachPage() {
             </Reveal>
           </div>
         </section>
-
       </main>
     </PageTransition>
   );

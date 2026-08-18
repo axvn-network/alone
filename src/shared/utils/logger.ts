@@ -10,7 +10,12 @@ import { env } from "@/core/env";
 
 type LogLevel = "debug" | "info" | "warn" | "error";
 
-const LEVEL_RANK: Record<LogLevel, number> = { debug: 0, info: 1, warn: 2, error: 3 };
+const LEVEL_RANK: Record<LogLevel, number> = {
+  debug: 0,
+  info: 1,
+  warn: 2,
+  error: 3,
+};
 
 const shouldLog = (level: LogLevel) => {
   const configured = env.LOG_LEVEL as LogLevel;

@@ -11,17 +11,24 @@
  * No separate key is needed; the existing secret has sufficient entropy.
  */
 
-import { createCipheriv, createDecipheriv, createHash, randomBytes } from "crypto";
+import {
+  createCipheriv,
+  createDecipheriv,
+  createHash,
+  randomBytes,
+} from "crypto";
 
-const ALGO    = "aes-256-gcm";
-const IV_LEN  = 12;
+const ALGO = "aes-256-gcm";
+const IV_LEN = 12;
 const TAG_LEN = 16;
 
 function getDerivedKey(): Buffer {
   const secret = process.env.SESSION_SECRET;
   if (!secret || secret.length < 32) {
     if (process.env.NODE_ENV === "production") {
-      throw new Error("SESSION_SECRET must be at least 32 characters for AES-256 encryption.");
+      throw new Error(
+        "SESSION_SECRET must be at least 32 characters for AES-256 encryption.",
+      );
     }
     // Development-only fallback — never used in production
     return createHash("sha256").update("dev-only-insecure-fallback").digest();
@@ -35,9 +42,9 @@ function getDerivedKey(): Buffer {
  * @returns Base64 string containing iv + authTag + ciphertext.
  */
 export function encryptAES(plaintext: string): string {
-  const key     = getDerivedKey();
-  const iv      = randomBytes(IV_LEN);
-  const cipher  = createCipheriv(ALGO, key, iv);
+  const key = getDerivedKey();
+  const iv = randomBytes(IV_LEN);
+  const cipher = createCipheriv(ALGO, key, iv);
 
   const encrypted = Buffer.concat([
     cipher.update(plaintext, "utf8"),
@@ -61,8 +68,8 @@ export function decryptAES(encoded: string): string | null {
 
     if (buf.length < IV_LEN + TAG_LEN + 1) return null;
 
-    const iv         = buf.subarray(0, IV_LEN);
-    const authTag    = buf.subarray(IV_LEN, IV_LEN + TAG_LEN);
+    const iv = buf.subarray(0, IV_LEN);
+    const authTag = buf.subarray(IV_LEN, IV_LEN + TAG_LEN);
     const ciphertext = buf.subarray(IV_LEN + TAG_LEN);
 
     const decipher = createDecipheriv(ALGO, key, iv);

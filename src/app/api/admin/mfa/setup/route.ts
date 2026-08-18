@@ -18,7 +18,12 @@ export async function GET() {
   if (!admin) return notFoundResponse("Admin not found");
 
   const secret = generateSecret();
-  const otpauth = await generateURI({ secret, label: admin.email, issuer: "AXVN Tech Holding", strategy: "totp" });
+  const otpauth = await generateURI({
+    secret,
+    label: admin.email,
+    issuer: "AXVN Tech Holding",
+    strategy: "totp",
+  });
   const qrCode = await QRCode.toDataURL(otpauth);
 
   admin.mfaSecret = secret;

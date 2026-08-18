@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { getCurrentUser } from "@/core/security/auth-utils";
-import * as contentService from "@/modules/content";
-import { seoSchema, formatZodErrors } from "@/validators";
+import { getPage, updatePage, seoSchema } from "@/modules/content";
+import { formatZodErrors } from "@/utils/zod";
 import {
   successResponse,
   validationErrorResponse,
@@ -15,8 +15,9 @@ import { handleError, NotFoundError } from "@/utils/errors";
 export async function GET(request: NextRequest) {
   try {
     const slug = request.nextUrl.searchParams.get("slug");
-    if (!slug) return successResponse({ message: "Provide a ?slug= parameter" });
-    const page = await contentService.getPage(slug);
+    if (!slug)
+      return successResponse({ message: "Provide a ?slug= parameter" });
+    const page = await getPage(slug);
     return successResponse({ slug: page.slug, seo: page.seo || {} });
   } catch (error) {
     if (error instanceof NotFoundError) return notFoundResponse(error.message);
@@ -26,12 +27,13 @@ export async function GET(request: NextRequest) {
 
 // PUT — admin only: update SEO metadata
 export async function PUT(request: NextRequest) {
-  if (!await getCurrentUser()) return unauthorizedResponse();
+  if (!(await getCurrentUser())) return unauthorizedResponse();
   try {
     const parsed = seoSchema.safeParse(await request.json());
-    if (!parsed.success) return validationErrorResponse(formatZodErrors(parsed.error));
+    if (!parsed.success)
+      return validationErrorResponse(formatZodErrors(parsed.error));
     const { pageSlug, ...seoData } = parsed.data;
-    const page = await contentService.updatePage(pageSlug, {
+    const page = await updatePage(pageSlug, {
       seo: {
         title: seoData.title || "",
         description: seoData.description || "",

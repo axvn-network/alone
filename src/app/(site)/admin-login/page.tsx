@@ -22,7 +22,7 @@ export default function AdminLoginPage() {
           router.replace("/admin");
         }
       })
-      .catch(() => { })
+      .catch(() => {})
       .finally(() => setChecking(false));
   }, [router]);
 
@@ -61,8 +61,14 @@ export default function AdminLoginPage() {
       <div className="hidden md:flex md:w-1/2 lg:w-[55%] bg-AXVN-navy relative flex-col justify-between p-12 lg:p-24 border-r border-AXVN-gold/10 overflow-hidden">
         {/* Subtle background decoration */}
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-AXVN-deep to-AXVN-navy" />
-        <div className="absolute -left-[10%] -top-[10%] w-[120%] h-[120%] opacity-[0.03] pointer-events-none"
-          style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+        <div
+          className="absolute -left-[10%] -top-[10%] w-[120%] h-[120%] opacity-[0.03] pointer-events-none"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 2px 2px, white 1px, transparent 0)",
+            backgroundSize: "40px 40px",
+          }}
+        />
 
         <div className="relative z-10">
           <Image
@@ -74,10 +80,13 @@ export default function AdminLoginPage() {
           />
           <h1 className="text-4xl lg:text-5xl font-bold text-AXVN-ivory leading-[1.1] tracking-tight max-w-xl">
             Cổng Thông Tin Bảo Mật <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-AXVN-champagne to-AXVN-gold">Dành Cho Ban Quản Trị</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-AXVN-champagne to-AXVN-gold">
+              Dành Cho Ban Quản Trị
+            </span>
           </h1>
           <p className="text-AXVN-silver/80 mt-6 text-lg max-w-md leading-relaxed font-light">
-            Truy cập hệ thống nội bộ, quản lý các yêu cầu và theo dõi hoạt động đầu tư thông qua giao diện quản trị bảo mật.
+            Truy cập hệ thống nội bộ, quản lý các yêu cầu và theo dõi hoạt động
+            đầu tư thông qua giao diện quản trị bảo mật.
           </p>
         </div>
 
@@ -102,14 +111,27 @@ export default function AdminLoginPage() {
           </div>
 
           <div className="mb-8">
-            <h2 className="text-2xl font-bold text-AXVN-ivory tracking-tight">Đăng Nhập</h2>
-            <p className="text-AXVN-silver/60 text-sm mt-1.5 font-medium">Vui lòng nhập thông tin đăng nhập để tiếp tục</p>
+            <h2 className="text-2xl font-bold text-AXVN-ivory tracking-tight">
+              Đăng Nhập
+            </h2>
+            <p className="text-AXVN-silver/60 text-sm mt-1.5 font-medium">
+              Vui lòng nhập thông tin đăng nhập để tiếp tục
+            </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {error && (
               <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-sm px-4 py-3 rounded-lg flex items-center gap-2">
-                <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><path d="M12 8v4M12 16h.01" /></svg>
+                <svg
+                  className="w-4 h-4 shrink-0"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 8v4M12 16h.01" />
+                </svg>
                 {error}
               </div>
             )}
@@ -209,8 +231,18 @@ export default function AdminLoginPage() {
               &copy; {new Date().getFullYear()} AXVN Tech Holding.
             </p>
             <div className="flex gap-4 mt-2">
-              <a href="/privacy-policy" className="text-AXVN-silver/30 hover:text-AXVN-silver/60 text-[10px] uppercase tracking-wider transition-colors">Chính sách bảo mật</a>
-              <a href="/terms-of-use" className="text-AXVN-silver/30 hover:text-AXVN-silver/60 text-[10px] uppercase tracking-wider transition-colors">Điều khoản dịch vụ</a>
+              <a
+                href="/privacy-policy"
+                className="text-AXVN-silver/30 hover:text-AXVN-silver/60 text-[10px] uppercase tracking-wider transition-colors"
+              >
+                Chính sách bảo mật
+              </a>
+              <a
+                href="/terms-of-use"
+                className="text-AXVN-silver/30 hover:text-AXVN-silver/60 text-[10px] uppercase tracking-wider transition-colors"
+              >
+                Điều khoản dịch vụ
+              </a>
             </div>
           </div>
         </div>

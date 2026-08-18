@@ -16,7 +16,11 @@ import { parseShareholderToken, SH_COOKIE } from "@/core/security/session";
 import Shareholder from "@/modules/shareholders/model";
 import type { IShareholder } from "@/modules/shareholders/model";
 
-export type ActiveShareholder = IShareholder & { _id: import("mongoose").Types.ObjectId; name: string; role: string; };
+export type ActiveShareholder = IShareholder & {
+  _id: import("mongoose").Types.ObjectId;
+  name: string;
+  role: string;
+};
 
 /**
  * Reads the shareholder session cookie, validates the token, and returns the

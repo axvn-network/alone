@@ -9,10 +9,17 @@ export async function POST(req: NextRequest) {
   const { email, token } = await req.json();
 
   await connectDB();
-  const admin = await Admin.findOne({ email: email.toLowerCase() }).select("+mfaSecret");
-  if (!admin || !admin.mfaEnabled || !admin.mfaSecret) return errorResponse("Invalid request");
+  const admin = await Admin.findOne({ email: email.toLowerCase() }).select(
+    "+mfaSecret",
+  );
+  if (!admin || !admin.mfaEnabled || !admin.mfaSecret)
+    return errorResponse("Invalid request");
 
-  const result = await verify({ token, secret: admin.mfaSecret, strategy: "totp" });
+  const result = await verify({
+    token,
+    secret: admin.mfaSecret,
+    strategy: "totp",
+  });
   const verified = result.valid;
   if (verified) {
     await setSessionCookie(admin.email);

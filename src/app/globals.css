@@ -1,17 +1,21 @@
 @import "tailwindcss";
 
 @theme {
-  --color-AXVN-navy: #07111D;
-  --color-AXVN-deep: #0B1B2E;
+  --color-AXVN-navy: #07111d;
+  --color-AXVN-deep: #0b1b2e;
   --color-AXVN-charcoal: #111827;
-  --color-AXVN-gold: #C9A24A;
-  --color-AXVN-champagne: #E6C879;
-  --color-AXVN-ivory: #F4F1EA;
-  --color-AXVN-silver: #AEB6C1;
+  --color-AXVN-gold: #c9a24a;
+  --color-AXVN-champagne: #e6c879;
+  --color-AXVN-ivory: #f4f1ea;
+  --color-AXVN-silver: #aeb6c1;
 
   /* Be Vietnam Pro ưu tiên — thiết kế riêng cho tiếng Việt, fallback Plus Jakarta Sans */
-  --font-sans: var(--font-be-vietnam), "Be Vietnam Pro", var(--font-plus-jakarta), "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-heading: var(--font-be-vietnam), "Be Vietnam Pro", var(--font-plus-jakarta), "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-sans:
+    var(--font-be-vietnam), "Be Vietnam Pro", var(--font-plus-jakarta),
+    "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-heading:
+    var(--font-be-vietnam), "Be Vietnam Pro", var(--font-plus-jakarta),
+    "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
 }
 
 /* ─── Fluid typography scale ────────────────────────────────────────────────
@@ -88,43 +92,74 @@
   ───────────────────────────────────────────────────────────────── */
   --tracking-display: 0.025em;
   --tracking-heading: 0.015em;
-  --tracking-tag:     0.18em;
-  --tracking-btn:     0.10em;
+  --tracking-tag: 0.18em;
+  --tracking-btn: 0.1em;
 }
 
 /* ─── Utility classes derived from CSS vars ────────────────────────────────── */
-.section-py   { padding-top: var(--section-py); padding-bottom: var(--section-py); }
-.section-px   { padding-left: var(--section-px); padding-right: var(--section-px); }
-.section-mx   { margin-left: var(--section-mx); margin-right: var(--section-mx); }
-.section-my   { margin-top: 2.5rem; margin-bottom: 2.5rem; }
+.section-py {
+  padding-top: var(--section-py);
+  padding-bottom: var(--section-py);
+}
+.section-px {
+  padding-left: var(--section-px);
+  padding-right: var(--section-px);
+}
+.section-mx {
+  margin-left: var(--section-mx);
+  margin-right: var(--section-mx);
+}
+.section-my {
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+}
 @media (min-width: 768px) {
-  .section-my { margin-top: 4rem; margin-bottom: 4rem; }
+  .section-my {
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+  }
 }
 
 /* Content container — single max-width used across all public sections */
-.content-container { max-width: var(--max-w-content); margin-left: auto; margin-right: auto; }
+.content-container {
+  max-width: var(--max-w-content);
+  margin-left: auto;
+  margin-right: auto;
+}
 
-.text-display { font-size: var(--text-display); }
-.text-h2      { font-size: var(--text-h2); }
-.text-h3      { font-size: var(--text-h3); }
-.text-lead    { font-size: var(--text-lead); }
-.text-body    { font-size: var(--text-body); }
-.text-caption { font-size: var(--text-caption); }
+.text-display {
+  font-size: var(--text-display);
+}
+.text-h2 {
+  font-size: var(--text-h2);
+}
+.text-h3 {
+  font-size: var(--text-h3);
+}
+.text-lead {
+  font-size: var(--text-lead);
+}
+.text-body {
+  font-size: var(--text-body);
+}
+.text-caption {
+  font-size: var(--text-caption);
+}
 
 /* ─── Tag label chuẩn hoá — dùng cho tất cả section eyebrow ────────────────── */
 .section-tag {
-  font-size: var(--text-caption);
+  font-size: 0.875rem; /* ~14px */
   letter-spacing: var(--tracking-tag);
   font-weight: 600;
   text-transform: uppercase;
-  color: #C9A24A;
+  color: #8b6b23; /* Darker gold for better contrast */
 }
 
 /* ─── Display heading style ─────────────────────────────────────────────────── */
 .heading-display {
   font-size: var(--text-display);
-  font-weight: 400;          /* light → regular: dễ đọc hơn ở kích cỡ lớn */
-  line-height: 1.2;          /* tăng để dấu thanh không bị cắt */
+  font-weight: 400; /* light → regular: dễ đọc hơn ở kích cỡ lớn */
+  line-height: 1.2; /* tăng để dấu thanh không bị cắt */
   letter-spacing: var(--tracking-display);
   text-transform: uppercase;
 }
@@ -148,8 +183,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
-  line-height: 1.75;  /* tiếng Việt có dấu trên/dưới — cần line-height rộng hơn */
+  font-feature-settings:
+    "kern" 1,
+    "liga" 1,
+    "calt" 1;
+  line-height: 1.75; /* tiếng Việt có dấu trên/dưới — cần line-height rộng hơn */
   word-break: break-word;
   overflow-wrap: break-word;
 }
@@ -184,7 +222,9 @@ body {
 
 /* ─── Reduce motion ────────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  *, ::before, ::after {
+  *,
+  ::before,
+  ::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -195,24 +235,37 @@ body {
 /* ─── Thin gold section dividers ────────────────────────────────────────────── */
 .section-divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(201,162,74,0.35), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(201, 162, 74, 0.35),
+    transparent
+  );
 }
 
 /* ─── Custom scrollbar ──────────────────────────────────────────────────────── */
-::-webkit-scrollbar       { width: 6px; }
-::-webkit-scrollbar-track { background: #07111D; }
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #07111d;
+}
 ::-webkit-scrollbar-thumb {
   background: #1a2840;
   border-radius: 3px;
   border: 1px solid rgba(201, 162, 74, 0.15);
 }
-::-webkit-scrollbar-thumb:hover { background: #C9A24A; }
+::-webkit-scrollbar-thumb:hover {
+  background: #c9a24a;
+}
 
 /* ─── Selection highlight ───────────────────────────────────────────────────── */
 ::selection {
   background: rgba(201, 162, 74, 0.22);
-  color: #F4F1EA;
+  color: #f4f1ea;
 }
 
 /* ─── Smooth image rendering ────────────────────────────────────────────────── */
-img { image-rendering: -webkit-optimize-contrast; }
+img {
+  image-rendering: -webkit-optimize-contrast;
+}

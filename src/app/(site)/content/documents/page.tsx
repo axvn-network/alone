@@ -22,29 +22,38 @@ export default async function DocumentsPage() {
     documentService.getYears(),
   ]);
 
-  const initialDocuments: DocItem[] = documentsResult.status === "fulfilled"
-    ? documentsResult.value.documents.map((document) => ({
-      _id: String(document._id),
-      title: document.title,
-      category: document.category,
-      fileUrl: document.fileUrl,
-      fileType: document.fileType,
-      publishedDate: new Date(document.publishedDate).toISOString(),
-      year: document.year,
-      quarter: document.quarter ?? undefined,
-      reportType: document.reportType || undefined,
-      isFeatured: document.isFeatured,
-    }))
-    : [];
-  const initialYears = yearsResult.status === "fulfilled" ? yearsResult.value : [];
+  const initialDocuments: DocItem[] =
+    documentsResult.status === "fulfilled"
+      ? documentsResult.value.documents.map((document) => ({
+          _id: String(document._id),
+          title: document.title,
+          category: document.category,
+          fileUrl: document.fileUrl,
+          fileType: document.fileType,
+          publishedDate: new Date(document.publishedDate).toISOString(),
+          year: document.year,
+          quarter: document.quarter ?? undefined,
+          reportType: document.reportType || undefined,
+          isFeatured: document.isFeatured,
+        }))
+      : [];
+  const initialYears =
+    yearsResult.status === "fulfilled" ? yearsResult.value : [];
 
   return (
     <main className="min-h-screen bg-white pb-safe md:pb-0">
       <DocumentsClient
         initialDocuments={initialDocuments}
         initialYears={initialYears}
-        initialTotal={documentsResult.status === "fulfilled" ? documentsResult.value.total : 0}
-        initialError={documentsResult.status === "rejected" || yearsResult.status === "rejected"}
+        initialTotal={
+          documentsResult.status === "fulfilled"
+            ? documentsResult.value.total
+            : 0
+        }
+        initialError={
+          documentsResult.status === "rejected" ||
+          yearsResult.status === "rejected"
+        }
       />
     </main>
   );

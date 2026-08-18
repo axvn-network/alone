@@ -1,9 +1,19 @@
 import { NextRequest } from "next/server";
-import { successResponse, errorResponse, serverErrorResponse, unauthorizedResponse } from "@/utils/api-response";
 import { getCurrentUser } from "@/core/security/auth-utils";
-import { taskService, meetingService, messageService } from "@/modules/shareholders";
+import {
+  taskService,
+  meetingService,
+  messageService,
+} from "@/modules/shareholders";
 import { broadcast } from "@/shared/utils/sse-broker";
+import {
+  successResponse,
+  errorResponse,
+  serverErrorResponse,
+  unauthorizedResponse,
+} from "@/utils/api-response";
 import { handleError } from "@/utils/errors";
+import type { MessageChannel } from "@/modules/shareholders";
 
 // GET /api/admin/shareholder-ops?type=tasks|meetings|messages&channel=general
 export async function GET(req: NextRequest) {
@@ -11,8 +21,9 @@ export async function GET(req: NextRequest) {
     const user = await getCurrentUser();
     if (!user) return unauthorizedResponse();
 
-    const type    = req.nextUrl.searchParams.get("type") || "tasks";
-    const channel = (req.nextUrl.searchParams.get("channel") || "general") as import("@/core/models/ShareholderMessage").MessageChannel;
+    const type = req.nextUrl.searchParams.get("type") || "tasks";
+    const channel = (req.nextUrl.searchParams.get("channel") ||
+      "general") as MessageChannel;
 
     if (type === "tasks") {
       const { tasks } = await taskService.list();
@@ -27,7 +38,9 @@ export async function GET(req: NextRequest) {
       return successResponse(msgs);
     }
     return errorResponse("Unknown type");
-  } catch (e) { return serverErrorResponse(handleError(e).message); }
+  } catch (e) {
+    return serverErrorResponse(handleError(e).message);
+  }
 }
 
 // POST /api/admin/shareholder-ops — create task | meeting | admin message
@@ -48,21 +61,24 @@ export async function POST(req: NextRequest) {
     }
     if (type === "message") {
       const { channel, content } = body as { channel: string; content: string };
-      // Admin sender — use a virtual senderId from admin session
       const msg = await messageService.send({
-        channel:       (channel || "general") as import("@/core/models/ShareholderMessage").MessageChannel,
+        channel: (channel || "general") as MessageChannel,
         content,
-        senderId:      user.id,
-        senderName:    user.name,
-        senderRole:    user.role,
+        senderId: user.id,
+        senderName: user.name,
+        senderRole: user.role,
         isAdminSender: true,
       });
-      // Also broadcast admin message to the admin SSE room so other tabs update
-      broadcast("admin", "shareholder_message", { channel, senderName: user.name });
+      broadcast("admin", "shareholder_message", {
+        channel,
+        senderName: user.name,
+      });
       return successResponse(msg);
     }
     return errorResponse("Unknown type");
-  } catch (e) { return serverErrorResponse(handleError(e).message); }
+  } catch (e) {
+    return serverErrorResponse(handleError(e).message);
+  }
 }
 
 // PUT /api/admin/shareholder-ops — update task or meeting
@@ -83,21 +99,7 @@ export async function PUT(req: NextRequest) {
       return successResponse(doc);
     }
     return errorResponse("Unknown type");
-  } catch (e) { return serverErrorResponse(handleError(e).message); }
-}
-
-// DELETE /api/admin/shareholder-ops?type=task|meeting&id=xxx
-export async function DELETE(req: NextRequest) {
-  try {
-    const user = await getCurrentUser();
-    if (!user) return unauthorizedResponse();
-
-    const type = req.nextUrl.searchParams.get("type");
-    const id   = req.nextUrl.searchParams.get("id");
-    if (!id) return errorResponse("ID required");
-
-    if (type === "task")    await taskService.remove(id);
-    else if (type === "meeting") await meetingService.remove(id);
-    return successResponse({ ok: true });
-  } catch (e) { return serverErrorResponse(handleError(e).message); }
+  } catch (e) {
+    return serverErrorResponse(handleError(e).message);
+  }
 }

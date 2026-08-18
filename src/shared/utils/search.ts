@@ -16,7 +16,7 @@
  */
 export function buildSearchFilter(
   term: string | undefined,
-  fields: string[]
+  fields: string[],
 ): Record<string, unknown> {
   if (!term) return {};
   return {

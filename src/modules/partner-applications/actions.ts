@@ -8,11 +8,18 @@
 import { revalidatePath } from "next/cache";
 import { requireAuth } from "@/core/security/auth-utils";
 import { handleError } from "@/utils/errors";
-import { partnerApplicationSchema, partnerApplicationUpdateSchema, formatZodErrors } from "@/validators";
-import type { PartnerApplicationInput, PartnerApplicationUpdateInput } from "@/validators";
+import {
+  partnerApplicationSchema,
+  partnerApplicationUpdateSchema,
+  type PartnerApplicationInput,
+  type PartnerApplicationUpdateInput,
+} from "@/modules/partner-applications/schema";
+import { formatZodErrors } from "@/shared/utils/zod";
 import { createApplication, updateApplication } from "./service";
 
-export async function submitPartnerApplicationAction(data: PartnerApplicationInput) {
+export async function submitPartnerApplicationAction(
+  data: PartnerApplicationInput,
+) {
   const parsed = partnerApplicationSchema.safeParse(data);
   if (!parsed.success) {
     return { success: false as const, errors: formatZodErrors(parsed.error) };
@@ -26,7 +33,10 @@ export async function submitPartnerApplicationAction(data: PartnerApplicationInp
   }
 }
 
-export async function updateApplicationStatusAction(id: string, data: PartnerApplicationUpdateInput) {
+export async function updateApplicationStatusAction(
+  id: string,
+  data: PartnerApplicationUpdateInput,
+) {
   await requireAuth();
   const parsed = partnerApplicationUpdateSchema.safeParse(data);
   if (!parsed.success) {

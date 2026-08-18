@@ -29,12 +29,15 @@ interface RateRecord {
 const store = new Map<string, RateRecord>();
 
 // Auto-clean stale entries every 5 minutes to prevent memory growth
-setInterval(() => {
-  const now = Date.now();
-  for (const [key, rec] of store) {
-    if (now > rec.resetAt) store.delete(key);
-  }
-}, 5 * 60 * 1000).unref();
+setInterval(
+  () => {
+    const now = Date.now();
+    for (const [key, rec] of store) {
+      if (now > rec.resetAt) store.delete(key);
+    }
+  },
+  5 * 60 * 1000,
+).unref();
 
 /**
  * @param key       Unique key (e.g. `login:127.0.0.1`)
@@ -44,27 +47,44 @@ setInterval(() => {
 export function rateLimit(
   key: string,
   limit = 5,
-  windowMs = 60_000
+  windowMs = 60_000,
 ): RateLimitResult {
   const now = Date.now();
   const rec = store.get(key);
 
   // First request or window expired
   if (!rec || now > rec.resetAt) {
-    store.set(key, { count: 1, resetAt: now + windowMs, violations: rec?.violations ?? 0 });
-    return { allowed: true, remaining: limit - 1, resetAt: now + windowMs, locked: false };
+    store.set(key, {
+      count: 1,
+      resetAt: now + windowMs,
+      violations: rec?.violations ?? 0,
+    });
+    return {
+      allowed: true,
+      remaining: limit - 1,
+      resetAt: now + windowMs,
+      locked: false,
+    };
   }
 
   // Within window and under limit
   if (rec.count < limit) {
     rec.count++;
-    return { allowed: true, remaining: limit - rec.count, resetAt: rec.resetAt, locked: false };
+    return {
+      allowed: true,
+      remaining: limit - rec.count,
+      resetAt: rec.resetAt,
+      locked: false,
+    };
   }
 
   // Limit reached — record violation, apply progressive lockout window
   rec.violations++;
   // Each violation doubles the lockout window (capped at 24 h)
-  const lockoutMs = Math.min(windowMs * Math.pow(2, rec.violations - 1), 24 * 60 * 60 * 1000);
+  const lockoutMs = Math.min(
+    windowMs * Math.pow(2, rec.violations - 1),
+    24 * 60 * 60 * 1000,
+  );
   rec.resetAt = now + lockoutMs;
 
   return { allowed: false, remaining: 0, resetAt: rec.resetAt, locked: true };

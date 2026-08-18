@@ -107,7 +107,7 @@ export interface UsePermissionReturn {
  *   - "admin": không fetch (admin dùng server-side auth)
  */
 export function usePermission(
-  source: "public" | "shareholder" | "admin" | "auto" = "auto"
+  source: "public" | "shareholder" | "admin" | "auto" = "auto",
 ): UsePermissionReturn {
   const [user, setUser] = useState<AuthenticatedUser | null>(null);
   const [loading, setLoading] = useState(true);
@@ -137,7 +137,9 @@ export function usePermission(
 
       if (!resolved && (source === "shareholder" || source === "auto")) {
         // Thử Cổ Đông session
-        const res = await fetch("/api/shareholders/auth", { credentials: "include" });
+        const res = await fetch("/api/shareholders/auth", {
+          credentials: "include",
+        });
         if (res.ok) {
           const data = await res.json();
           if (data.success && data.data) {
@@ -194,7 +196,9 @@ export function usePermission(
 
     // Hiển thị
     roleDisplayName: user ? getRoleDisplayName(user.role) : "Khách",
-    roleBadgeClass: user ? getRoleBadgeClass(user.role) : "bg-gray-100 text-gray-500",
+    roleBadgeClass: user
+      ? getRoleBadgeClass(user.role)
+      : "bg-gray-100 text-gray-500",
 
     refresh: fetchSession,
   };

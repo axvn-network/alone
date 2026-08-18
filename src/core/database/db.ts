@@ -8,7 +8,7 @@
 
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
-import Admin from "@/core/models/Admin";
+import Admin from "@/modules/auth/model";
 
 interface MongooseCache {
   conn: typeof mongoose | null;
@@ -17,14 +17,21 @@ interface MongooseCache {
 }
 
 const g = globalThis as typeof globalThis & { _mongoose?: MongooseCache };
-const cached: MongooseCache = g._mongoose ?? { conn: null, promise: null, seeded: false };
+const cached: MongooseCache = g._mongoose ?? {
+  conn: null,
+  promise: null,
+  seeded: false,
+};
 if (!g._mongoose) g._mongoose = cached;
 
 async function seedAdmin() {
   if (cached.seeded) return;
   try {
     const count = await Admin.countDocuments();
-    if (count > 0) { cached.seeded = true; return; }
+    if (count > 0) {
+      cached.seeded = true;
+      return;
+    }
 
     const email = process.env.ADMIN_EMAIL || "admin@axvn.vn";
     const password = process.env.ADMIN_PASSWORD;
@@ -32,7 +39,12 @@ async function seedAdmin() {
 
     if (!password) return; // No password set — skip seeding
 
-    await Admin.create({ name, email, password: await bcrypt.hash(password, 12), role: "superadmin" });
+    await Admin.create({
+      name,
+      email,
+      password: await bcrypt.hash(password, 12),
+      role: "superadmin",
+    });
     cached.seeded = true;
   } catch {
     // Seed errors are non-fatal — primary DB may handle auth separately
@@ -46,7 +58,15 @@ export async function connectDB(): Promise<typeof mongoose | null> {
   if (cached.conn) return cached.conn;
 
   if (!cached.promise) {
-    cached.promise = mongoose.connect(uri, { bufferCommands: false });
+    cached.promise = mongoose.connect(uri, {
+      bufferCommands: false,
+      connectTimeoutMS: 10_000, // Abort if connection takes > 10s
+      serverSelectionTimeoutMS: 10_000, // Abort server discovery after 10s
+      socketTimeoutMS: 45_000, // Close idle sockets after 45s
+      maxPoolSize: 10, // Max 10 concurrent connections
+      minPoolSize: 2, // Keep 2 warm connections alive
+      heartbeatFrequencyMS: 10_000, // Check connection health every 10s
+    });
   }
 
   try {

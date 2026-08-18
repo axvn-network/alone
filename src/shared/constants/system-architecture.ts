@@ -8,7 +8,14 @@
 // ─── Types ───────────────────────────────────────────────────────────────────
 
 export type NodeSize = "lg" | "md" | "sm";
-export type NodeRole = "hub" | "regulator" | "institutional" | "tech" | "legal" | "retail" | "foreign";
+export type NodeRole =
+  | "hub"
+  | "regulator"
+  | "institutional"
+  | "tech"
+  | "legal"
+  | "retail"
+  | "foreign";
 
 export interface ArchNode {
   id: string;

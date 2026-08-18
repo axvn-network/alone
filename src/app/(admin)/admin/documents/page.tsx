@@ -3,13 +3,26 @@
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import {
-  FileText, Plus, Trash2, Search, RefreshCw,
-  AlertTriangle, X, ExternalLink, Edit3, Download,
-  Upload, Link2, CheckCircle2, Loader2,
+  FileText,
+  Plus,
+  Trash2,
+  Search,
+  RefreshCw,
+  AlertTriangle,
+  X,
+  ExternalLink,
+  Edit3,
+  Download,
+  Upload,
+  Link2,
+  CheckCircle2,
+  Loader2,
 } from "lucide-react";
 import AdminSidebar from "@/shared/components/admin/AdminSidebar";
 import AdminNavbar from "@/shared/components/admin/AdminNavbar";
-import AiAssistPanel, { DOC_AI_ACTIONS } from "@/shared/components/ui/AiAssistPanel";
+import AiAssistPanel, {
+  DOC_AI_ACTIONS,
+} from "@/shared/components/ui/AiAssistPanel";
 import { useCsrf } from "@/contexts/CsrfContext";
 
 type DocumentCategory =
@@ -44,11 +57,17 @@ const CATEGORY_LABELS: Record<DocumentCategory, string> = {
   governance_report: "Báo cáo quản trị",
 };
 
-const CATEGORIES = Object.entries(CATEGORY_LABELS) as [DocumentCategory, string][];
+const CATEGORIES = Object.entries(CATEGORY_LABELS) as [
+  DocumentCategory,
+  string,
+][];
 
 const REPORT_TYPES = [
   { value: "", label: "— Không có —" },
-  { value: "consolidated_audited", label: "Báo Cáo Hợp Nhất Kiểm Toán/Soát Xét" },
+  {
+    value: "consolidated_audited",
+    label: "Báo Cáo Hợp Nhất Kiểm Toán/Soát Xét",
+  },
   { value: "separate_audited", label: "Báo Cáo Riêng Kiểm Toán/Soát Xét" },
   { value: "consolidated", label: "Báo Cáo Hợp Nhất" },
   { value: "separate", label: "Báo Cáo Riêng" },
@@ -74,29 +93,61 @@ const defaultForm = (): Partial<DocItem> => ({
 });
 
 /* ── Delete Modal ────────────────────────────────────────────── */
-function DeleteModal({ doc, onConfirm, onCancel, loading }: {
-  doc: DocItem; onConfirm: () => void; onCancel: () => void; loading: boolean;
+function DeleteModal({
+  doc,
+  onConfirm,
+  onCancel,
+  loading,
+}: {
+  doc: DocItem;
+  onConfirm: () => void;
+  onCancel: () => void;
+  loading: boolean;
 }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onCancel} />
+      <div
+        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+        onClick={onCancel}
+      />
       <div className="relative bg-[#07111D] border border-red-500/20 rounded-2xl shadow-2xl w-full max-w-md p-6">
-        <button onClick={onCancel} className="absolute top-4 right-4 p-1.5 text-AXVN-silver/40 hover:text-AXVN-ivory transition-colors rounded-lg hover:bg-white/5">
+        <button
+          onClick={onCancel}
+          className="absolute top-4 right-4 p-1.5 text-AXVN-silver/40 hover:text-AXVN-ivory transition-colors rounded-lg hover:bg-white/5"
+        >
           <X className="w-4 h-4" />
         </button>
         <div className="w-12 h-12 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center justify-center mb-4">
           <AlertTriangle className="w-6 h-6 text-red-400" />
         </div>
-        <h2 className="text-lg font-bold text-AXVN-ivory mb-1">Xóa tài liệu?</h2>
+        <h2 className="text-lg font-bold text-AXVN-ivory mb-1">
+          Xóa tài liệu?
+        </h2>
         <p className="text-AXVN-silver/50 text-sm mb-5 leading-relaxed">
-          Xóa vĩnh viễn <span className="text-AXVN-ivory font-semibold">&ldquo;{doc.title}&rdquo;</span>. Không thể hoàn tác.
+          Xóa vĩnh viễn{" "}
+          <span className="text-AXVN-ivory font-semibold">
+            &ldquo;{doc.title}&rdquo;
+          </span>
+          . Không thể hoàn tác.
         </p>
         <div className="flex gap-2.5">
-          <button onClick={onCancel} disabled={loading} className="flex-1 py-2.5 border border-white/10 text-AXVN-silver/70 text-sm font-semibold hover:border-white/20 hover:text-AXVN-ivory transition-all rounded-xl">
+          <button
+            onClick={onCancel}
+            disabled={loading}
+            className="flex-1 py-2.5 border border-white/10 text-AXVN-silver/70 text-sm font-semibold hover:border-white/20 hover:text-AXVN-ivory transition-all rounded-xl"
+          >
             Hủy
           </button>
-          <button onClick={onConfirm} disabled={loading} className="flex-1 py-2.5 bg-red-500/90 hover:bg-red-500 text-white text-sm font-bold transition-all rounded-xl disabled:opacity-50 flex items-center justify-center gap-2">
-            {loading ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Trash2 className="w-4 h-4" />}
+          <button
+            onClick={onConfirm}
+            disabled={loading}
+            className="flex-1 py-2.5 bg-red-500/90 hover:bg-red-500 text-white text-sm font-bold transition-all rounded-xl disabled:opacity-50 flex items-center justify-center gap-2"
+          >
+            {loading ? (
+              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+            ) : (
+              <Trash2 className="w-4 h-4" />
+            )}
             {loading ? "Đang xóa…" : "Xóa"}
           </button>
         </div>
@@ -106,7 +157,12 @@ function DeleteModal({ doc, onConfirm, onCancel, loading }: {
 }
 
 /* ── Document Form Modal ─────────────────────────────────────── */
-function DocFormModal({ initial, onSave, onCancel, saving }: {
+function DocFormModal({
+  initial,
+  onSave,
+  onCancel,
+  saving,
+}: {
   initial: Partial<DocItem>;
   onSave: (data: Partial<DocItem>) => void;
   onCancel: () => void;
@@ -114,10 +170,13 @@ function DocFormModal({ initial, onSave, onCancel, saving }: {
 }) {
   const { csrfFetch } = useCsrf();
   const [form, setForm] = useState<Partial<DocItem>>(initial);
-  const set = (k: keyof DocItem, v: unknown) => setForm((prev) => ({ ...prev, [k]: v }));
+  const set = (k: keyof DocItem, v: unknown) =>
+    setForm((prev) => ({ ...prev, [k]: v }));
 
   // File upload state
-  const [fileTab, setFileTab] = useState<"upload" | "url">(initial.fileUrl ? "url" : "upload");
+  const [fileTab, setFileTab] = useState<"upload" | "url">(
+    initial.fileUrl ? "url" : "upload",
+  );
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploadedFileName, setUploadedFileName] = useState<string>("");
@@ -133,10 +192,14 @@ function DocFormModal({ initial, onSave, onCancel, saving }: {
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       "application/vnd.ms-excel",
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      "image/jpeg", "image/png", "image/webp",
+      "image/jpeg",
+      "image/png",
+      "image/webp",
     ];
     if (!ALLOWED.includes(file.type)) {
-      toast.error("Loại file không hỗ trợ. Chấp nhận: PDF, DOC, DOCX, XLS, XLSX, JPG, PNG");
+      toast.error(
+        "Loại file không hỗ trợ. Chấp nhận: PDF, DOC, DOCX, XLS, XLSX, JPG, PNG",
+      );
       return;
     }
     if (file.size > MAX) {
@@ -155,7 +218,10 @@ function DocFormModal({ initial, onSave, onCancel, saving }: {
     try {
       const fd = new FormData();
       fd.append("file", file);
-      const res = await csrfFetch("/api/admin/documents/upload", { method: "POST", body: fd });
+      const res = await csrfFetch("/api/admin/documents/upload", {
+        method: "POST",
+        body: fd,
+      });
       const data = await res.json();
       clearInterval(interval);
       if (!res.ok || !data.success) {
@@ -169,7 +235,8 @@ function DocFormModal({ initial, onSave, onCancel, saving }: {
       // auto-detect fileType
       if (file.type === "application/pdf") set("fileType", "pdf");
       else if (file.type.includes("word")) set("fileType", "doc");
-      else if (file.type.includes("excel") || file.type.includes("spreadsheet")) set("fileType", "xlsx");
+      else if (file.type.includes("excel") || file.type.includes("spreadsheet"))
+        set("fileType", "xlsx");
       else set("fileType", "other");
       toast.success("Tải file lên thành công!");
     } catch {
@@ -190,9 +257,15 @@ function DocFormModal({ initial, onSave, onCancel, saving }: {
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center p-4 overflow-y-auto">
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onCancel} />
+      <div
+        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+        onClick={onCancel}
+      />
       <div className="relative bg-[#07111D] border border-white/10 rounded-2xl shadow-2xl w-full max-w-lg p-6 my-8">
-        <button onClick={onCancel} className="absolute top-4 right-4 p-1.5 text-AXVN-silver/40 hover:text-AXVN-ivory transition-colors rounded-lg hover:bg-white/5">
+        <button
+          onClick={onCancel}
+          className="absolute top-4 right-4 p-1.5 text-AXVN-silver/40 hover:text-AXVN-ivory transition-colors rounded-lg hover:bg-white/5"
+        >
           <X className="w-4 h-4" />
         </button>
         <h2 className="text-lg font-bold text-AXVN-ivory mb-5">
@@ -235,11 +308,15 @@ function DocFormModal({ initial, onSave, onCancel, saving }: {
             </label>
             <select
               value={form.category || ""}
-              onChange={(e) => set("category", e.target.value as DocumentCategory)}
+              onChange={(e) =>
+                set("category", e.target.value as DocumentCategory)
+              }
               className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-AXVN-ivory focus:outline-none focus:border-AXVN-gold/40"
             >
               {CATEGORIES.map(([k, v]) => (
-                <option key={k} value={k} className="bg-[#07111D]">{v}</option>
+                <option key={k} value={k} className="bg-[#07111D]">
+                  {v}
+                </option>
               ))}
             </select>
           </div>
@@ -255,10 +332,11 @@ function DocFormModal({ initial, onSave, onCancel, saving }: {
               <button
                 type="button"
                 onClick={() => setFileTab("upload")}
-                className={`flex-1 flex items-center justify-center gap-2 py-2 text-xs font-semibold transition-colors ${fileTab === "upload"
+                className={`flex-1 flex items-center justify-center gap-2 py-2 text-xs font-semibold transition-colors ${
+                  fileTab === "upload"
                     ? "bg-AXVN-gold/20 text-AXVN-gold border-r border-AXVN-gold/20"
                     : "text-AXVN-silver/50 hover:text-AXVN-silver border-r border-white/10"
-                  }`}
+                }`}
               >
                 <Upload className="w-3.5 h-3.5" />
                 Tải file lên
@@ -266,10 +344,11 @@ function DocFormModal({ initial, onSave, onCancel, saving }: {
               <button
                 type="button"
                 onClick={() => setFileTab("url")}
-                className={`flex-1 flex items-center justify-center gap-2 py-2 text-xs font-semibold transition-colors ${fileTab === "url"
+                className={`flex-1 flex items-center justify-center gap-2 py-2 text-xs font-semibold transition-colors ${
+                  fileTab === "url"
                     ? "bg-AXVN-gold/20 text-AXVN-gold"
                     : "text-AXVN-silver/50 hover:text-AXVN-silver"
-                  }`}
+                }`}
               >
                 <Link2 className="w-3.5 h-3.5" />
                 Nhập URL
@@ -282,38 +361,55 @@ function DocFormModal({ initial, onSave, onCancel, saving }: {
                 {/* Drop zone */}
                 <div
                   onClick={() => fileInputRef.current?.click()}
-                  onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+                  onDragOver={(e) => {
+                    e.preventDefault();
+                    setDragOver(true);
+                  }}
                   onDragLeave={() => setDragOver(false)}
                   onDrop={onDrop}
-                  className={`relative flex flex-col items-center justify-center gap-2 border-2 border-dashed rounded-xl p-6 cursor-pointer transition-colors ${dragOver
+                  className={`relative flex flex-col items-center justify-center gap-2 border-2 border-dashed rounded-xl p-6 cursor-pointer transition-colors ${
+                    dragOver
                       ? "border-AXVN-gold bg-AXVN-gold/5"
                       : uploading
                         ? "border-white/10 bg-white/3 cursor-not-allowed"
                         : form.fileUrl && uploadedFileName
                           ? "border-green-500/40 bg-green-500/5"
                           : "border-white/15 hover:border-AXVN-gold/40 hover:bg-white/3"
-                    }`}
+                  }`}
                 >
                   {uploading ? (
                     <div className="flex flex-col items-center gap-2 w-full">
                       <Loader2 className="w-8 h-8 text-AXVN-gold animate-spin" />
-                      <p className="text-xs text-AXVN-silver/70">Đang tải lên…</p>
+                      <p className="text-xs text-AXVN-silver/70">
+                        Đang tải lên…
+                      </p>
                       <div className="w-full bg-white/10 rounded-full h-1.5 mt-1">
                         <div
                           className="bg-AXVN-gold h-1.5 rounded-full transition-all duration-300"
                           style={{ width: `${uploadProgress}%` }}
                         />
                       </div>
-                      <p className="text-[10px] text-AXVN-silver/50">{Math.round(uploadProgress)}%</p>
+                      <p className="text-[10px] text-AXVN-silver/50">
+                        {Math.round(uploadProgress)}%
+                      </p>
                     </div>
                   ) : form.fileUrl && uploadedFileName ? (
                     <div className="flex flex-col items-center gap-1.5">
                       <CheckCircle2 className="w-8 h-8 text-green-400" />
-                      <p className="text-sm font-semibold text-green-400">Tải lên thành công</p>
-                      <p className="text-xs text-AXVN-silver/60 text-center break-all max-w-xs">{uploadedFileName}</p>
+                      <p className="text-sm font-semibold text-green-400">
+                        Tải lên thành công
+                      </p>
+                      <p className="text-xs text-AXVN-silver/60 text-center break-all max-w-xs">
+                        {uploadedFileName}
+                      </p>
                       <button
                         type="button"
-                        onClick={(e) => { e.stopPropagation(); set("fileUrl", ""); setUploadedFileName(""); setUploadProgress(0); }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          set("fileUrl", "");
+                          setUploadedFileName("");
+                          setUploadProgress(0);
+                        }}
                         className="text-[10px] text-red-400/70 hover:text-red-400 mt-1"
                       >
                         Xóa và chọn lại
@@ -323,8 +419,11 @@ function DocFormModal({ initial, onSave, onCancel, saving }: {
                     <>
                       <Upload className="w-8 h-8 text-AXVN-silver/40" />
                       <p className="text-sm text-AXVN-silver/70 font-medium text-center">
-                        Kéo thả file vào đây<br />
-                        <span className="text-AXVN-silver/40">hoặc nhấn để chọn file</span>
+                        Kéo thả file vào đây
+                        <br />
+                        <span className="text-AXVN-silver/40">
+                          hoặc nhấn để chọn file
+                        </span>
                       </p>
                       <p className="text-[10px] text-AXVN-silver/30 text-center">
                         PDF, DOC, DOCX, XLS, XLSX, JPG, PNG · Tối đa 50MB
@@ -373,7 +472,9 @@ function DocFormModal({ initial, onSave, onCancel, saving }: {
                 className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-AXVN-ivory focus:outline-none focus:border-AXVN-gold/40"
               >
                 {FILE_TYPES.map((ft) => (
-                  <option key={ft} value={ft} className="bg-[#07111D]">{ft.toUpperCase()}</option>
+                  <option key={ft} value={ft} className="bg-[#07111D]">
+                    {ft.toUpperCase()}
+                  </option>
                 ))}
               </select>
             </div>
@@ -385,11 +486,17 @@ function DocFormModal({ initial, onSave, onCancel, saving }: {
               </label>
               <select
                 value={form.status || "published"}
-                onChange={(e) => set("status", e.target.value as "published" | "draft")}
+                onChange={(e) =>
+                  set("status", e.target.value as "published" | "draft")
+                }
                 className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-AXVN-ivory focus:outline-none focus:border-AXVN-gold/40"
               >
-                <option value="published" className="bg-[#07111D]">Công bố</option>
-                <option value="draft" className="bg-[#07111D]">Bản nháp</option>
+                <option value="published" className="bg-[#07111D]">
+                  Công bố
+                </option>
+                <option value="draft" className="bg-[#07111D]">
+                  Bản nháp
+                </option>
               </select>
             </div>
           </div>
@@ -402,7 +509,9 @@ function DocFormModal({ initial, onSave, onCancel, saving }: {
               </label>
               <input
                 type="date"
-                value={form.publishedDate ? form.publishedDate.slice(0, 10) : ""}
+                value={
+                  form.publishedDate ? form.publishedDate.slice(0, 10) : ""
+                }
                 onChange={(e) => set("publishedDate", e.target.value)}
                 className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-AXVN-ivory focus:outline-none focus:border-AXVN-gold/40"
               />
@@ -418,7 +527,8 @@ function DocFormModal({ initial, onSave, onCancel, saving }: {
                 value={form.year || ""}
                 onChange={(e) => set("year", parseInt(e.target.value))}
                 className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-AXVN-ivory focus:outline-none focus:border-AXVN-gold/40"
-                min={2000} max={2099}
+                min={2000}
+                max={2099}
               />
             </div>
           </div>
@@ -432,12 +542,21 @@ function DocFormModal({ initial, onSave, onCancel, saving }: {
                 </label>
                 <select
                   value={form.quarter || ""}
-                  onChange={(e) => set("quarter", e.target.value ? parseInt(e.target.value) : undefined)}
+                  onChange={(e) =>
+                    set(
+                      "quarter",
+                      e.target.value ? parseInt(e.target.value) : undefined,
+                    )
+                  }
                   className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-AXVN-ivory focus:outline-none focus:border-AXVN-gold/40"
                 >
-                  <option value="" className="bg-[#07111D]">— Chọn quý —</option>
+                  <option value="" className="bg-[#07111D]">
+                    — Chọn quý —
+                  </option>
                   {QUARTERS.map((q) => (
-                    <option key={q} value={q} className="bg-[#07111D]">Quý {q}</option>
+                    <option key={q} value={q} className="bg-[#07111D]">
+                      Quý {q}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -451,7 +570,13 @@ function DocFormModal({ initial, onSave, onCancel, saving }: {
                   className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-AXVN-ivory focus:outline-none focus:border-AXVN-gold/40"
                 >
                   {REPORT_TYPES.map((rt) => (
-                    <option key={rt.value} value={rt.value} className="bg-[#07111D]">{rt.label}</option>
+                    <option
+                      key={rt.value}
+                      value={rt.value}
+                      className="bg-[#07111D]"
+                    >
+                      {rt.label}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -475,15 +600,24 @@ function DocFormModal({ initial, onSave, onCancel, saving }: {
               actions={DOC_AI_ACTIONS}
               formValues={{
                 title_vi: form.title || "",
-                category: CATEGORY_LABELS[form.category as DocumentCategory] || form.category || "",
+                category:
+                  CATEGORY_LABELS[form.category as DocumentCategory] ||
+                  form.category ||
+                  "",
                 hint: form.titleEn || "",
               }}
               lang="vi"
               onApply={(action, result) => {
                 if (action === "doc_title_vi") {
-                  const first = result.split("\n")[0].replace(/^[-•*\d.]\s*/, "").trim();
+                  const first = result
+                    .split("\n")[0]
+                    .replace(/^[-•*\d.]\s*/, "")
+                    .trim();
                   set("title", first);
-                } else if (action === "doc_title_en" || action === "translate_vi_en") {
+                } else if (
+                  action === "doc_title_en" ||
+                  action === "translate_vi_en"
+                ) {
                   set("titleEn", result.trim());
                 } else {
                   navigator.clipboard.writeText(result);
@@ -495,7 +629,11 @@ function DocFormModal({ initial, onSave, onCancel, saving }: {
 
         {/* Actions */}
         <div className="flex gap-2.5 mt-6">
-          <button onClick={onCancel} disabled={saving} className="flex-1 py-2.5 border border-white/10 text-AXVN-silver/70 text-sm font-semibold hover:border-white/20 hover:text-AXVN-ivory transition-all rounded-xl">
+          <button
+            onClick={onCancel}
+            disabled={saving}
+            className="flex-1 py-2.5 border border-white/10 text-AXVN-silver/70 text-sm font-semibold hover:border-white/20 hover:text-AXVN-ivory transition-all rounded-xl"
+          >
             Hủy
           </button>
           <button
@@ -503,7 +641,9 @@ function DocFormModal({ initial, onSave, onCancel, saving }: {
             disabled={saving}
             className="flex-1 py-2.5 bg-AXVN-gold hover:bg-AXVN-champagne text-AXVN-navy text-sm font-bold transition-all rounded-xl disabled:opacity-50 flex items-center justify-center gap-2"
           >
-            {saving ? <div className="w-4 h-4 border-2 border-AXVN-navy/30 border-t-AXVN-navy rounded-full animate-spin" /> : null}
+            {saving ? (
+              <div className="w-4 h-4 border-2 border-AXVN-navy/30 border-t-AXVN-navy rounded-full animate-spin" />
+            ) : null}
             {saving ? "Đang lưu…" : "Lưu"}
           </button>
         </div>
@@ -528,8 +668,10 @@ export default function AdminDocumentsPage() {
     setLoading(true);
     fetch("/api/admin/documents")
       .then((r) => r.json())
-      .then((res) => { setDocs(Array.isArray(res.data?.documents) ? res.data.documents : []); })
-      .catch(() => { })
+      .then((res) => {
+        setDocs(Array.isArray(res.data?.documents) ? res.data.documents : []);
+      })
+      .catch(() => {})
       .finally(() => setLoading(false));
   }
 
@@ -539,7 +681,9 @@ export default function AdminDocumentsPage() {
     if (!deleteTarget) return;
     setDeleteLoading(true);
     try {
-      const res = await csrfFetch(`/api/admin/documents/${deleteTarget._id}`, { method: "DELETE" });
+      const res = await csrfFetch(`/api/admin/documents/${deleteTarget._id}`, {
+        method: "DELETE",
+      });
       if (!res.ok) throw new Error("Xóa thất bại");
       toast.success("Đã xóa tài liệu");
       load();
@@ -559,11 +703,19 @@ export default function AdminDocumentsPage() {
     setSaving(true);
     try {
       const isEdit = !!data._id;
-      const url = isEdit ? `/api/admin/documents/${data._id}` : "/api/admin/documents";
+      const url = isEdit
+        ? `/api/admin/documents/${data._id}`
+        : "/api/admin/documents";
       const method = isEdit ? "PUT" : "POST";
-      const res = await csrfFetch(url, { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
+      const res = await csrfFetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
       if (!res.ok) throw new Error("Lưu thất bại");
-      toast.success(isEdit ? "Cập nhật thành công" : "Thêm tài liệu thành công");
+      toast.success(
+        isEdit ? "Cập nhật thành công" : "Thêm tài liệu thành công",
+      );
       setFormTarget(null);
       load();
     } catch {
@@ -575,7 +727,10 @@ export default function AdminDocumentsPage() {
 
   const filtered = docs.filter((d) => {
     const matchCat = filterCat === "all" || d.category === filterCat;
-    const matchSearch = !search || d.title.toLowerCase().includes(search.toLowerCase()) || (d.titleEn || "").toLowerCase().includes(search.toLowerCase());
+    const matchSearch =
+      !search ||
+      d.title.toLowerCase().includes(search.toLowerCase()) ||
+      (d.titleEn || "").toLowerCase().includes(search.toLowerCase());
     return matchCat && matchSearch;
   });
 
@@ -595,15 +750,21 @@ export default function AdminDocumentsPage() {
         <AdminNavbar title="Tài Liệu & Công Bố Thông Tin" />
 
         <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 relative z-10 space-y-6">
-
           {/* Header */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <h1 className="text-lg sm:text-xl font-bold text-AXVN-ivory">Quản lý tài liệu</h1>
-              <p className="text-AXVN-silver/50 text-xs sm:text-sm mt-0.5">Báo cáo, công bố thông tin, điều lệ và đại hội cổ đông</p>
+              <h1 className="text-lg sm:text-xl font-bold text-AXVN-ivory">
+                Quản lý tài liệu
+              </h1>
+              <p className="text-AXVN-silver/50 text-xs sm:text-sm mt-0.5">
+                Báo cáo, công bố thông tin, điều lệ và đại hội cổ đông
+              </p>
             </div>
             <div className="flex items-center gap-2">
-              <button onClick={load} className="p-2.5 border border-white/10 text-AXVN-silver/50 hover:text-AXVN-gold hover:border-AXVN-gold/30 transition-all rounded-lg">
+              <button
+                onClick={load}
+                className="p-2.5 border border-white/10 text-AXVN-silver/50 hover:text-AXVN-gold hover:border-AXVN-gold/30 transition-all rounded-lg"
+              >
                 <RefreshCw className="w-4 h-4" />
               </button>
               <button
@@ -652,7 +813,10 @@ export default function AdminDocumentsPage() {
             {loading ? (
               <div className="p-6 space-y-3">
                 {Array.from({ length: 5 }).map((_, i) => (
-                  <div key={i} className="animate-pulse h-12 bg-white/5 rounded-xl" />
+                  <div
+                    key={i}
+                    className="animate-pulse h-12 bg-white/5 rounded-xl"
+                  />
                 ))}
               </div>
             ) : filtered.length === 0 ? (
@@ -660,8 +824,12 @@ export default function AdminDocumentsPage() {
                 <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mb-4">
                   <FileText className="w-7 h-7 text-AXVN-silver/20" />
                 </div>
-                <p className="text-AXVN-ivory/60 font-medium mb-1">Không có tài liệu nào</p>
-                <p className="text-AXVN-silver/30 text-sm mb-5">Thêm tài liệu đầu tiên để bắt đầu.</p>
+                <p className="text-AXVN-ivory/60 font-medium mb-1">
+                  Không có tài liệu nào
+                </p>
+                <p className="text-AXVN-silver/30 text-sm mb-5">
+                  Thêm tài liệu đầu tiên để bắt đầu.
+                </p>
                 <button
                   onClick={() => setFormTarget(defaultForm())}
                   className="px-4 py-2 bg-AXVN-gold text-AXVN-navy text-sm font-bold hover:bg-AXVN-champagne transition-all rounded-lg"
@@ -674,25 +842,46 @@ export default function AdminDocumentsPage() {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/5">
-                      <th className="text-left px-5 py-3 text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-wider">Tên tài liệu</th>
-                      <th className="text-left px-4 py-3 text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-wider hidden sm:table-cell">Danh mục</th>
-                      <th className="text-left px-4 py-3 text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-wider hidden md:table-cell">Năm</th>
-                      <th className="text-left px-4 py-3 text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-wider hidden lg:table-cell">Ngày công bố</th>
-                      <th className="text-center px-4 py-3 text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-wider hidden sm:table-cell">Trạng thái</th>
-                      <th className="text-right px-4 py-3 text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-wider">Thao tác</th>
+                      <th className="text-left px-5 py-3 text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-wider">
+                        Tên tài liệu
+                      </th>
+                      <th className="text-left px-4 py-3 text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-wider hidden sm:table-cell">
+                        Danh mục
+                      </th>
+                      <th className="text-left px-4 py-3 text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-wider hidden md:table-cell">
+                        Năm
+                      </th>
+                      <th className="text-left px-4 py-3 text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-wider hidden lg:table-cell">
+                        Ngày công bố
+                      </th>
+                      <th className="text-center px-4 py-3 text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-wider hidden sm:table-cell">
+                        Trạng thái
+                      </th>
+                      <th className="text-right px-4 py-3 text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-wider">
+                        Thao tác
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
                     {filtered.map((doc) => (
-                      <tr key={doc._id} className="border-b border-white/5 hover:bg-white/[0.03] transition-colors group">
+                      <tr
+                        key={doc._id}
+                        className="border-b border-white/5 hover:bg-white/[0.03] transition-colors group"
+                      >
                         <td className="px-5 py-4">
                           <div className="flex items-center gap-2">
-                            {doc.isFeatured && <span className="text-[#C9A24A] text-xs shrink-0">⭐</span>}
+                            {doc.isFeatured && (
+                              <span className="text-[#C9A24A] text-xs shrink-0">
+                                ⭐
+                              </span>
+                            )}
                             <div className="min-w-0">
                               <p className="font-medium text-AXVN-ivory truncate max-w-[200px] sm:max-w-[280px] group-hover:text-AXVN-gold transition-colors">
                                 {doc.title}
                               </p>
-                              <p className="text-[10px] text-AXVN-silver/30 mt-0.5 uppercase">{doc.fileType}</p>
+                              <p className="text-[10px] text-AXVN-silver/30 mt-0.5 uppercase">
+                                {doc.fileType}
+                              </p>
                             </div>
                           </div>
                         </td>
@@ -701,25 +890,49 @@ export default function AdminDocumentsPage() {
                             {CATEGORY_LABELS[doc.category]}
                           </span>
                         </td>
-                        <td className="px-4 py-4 text-AXVN-silver/50 text-sm hidden md:table-cell">{doc.year}{doc.quarter ? ` Q${doc.quarter}` : ""}</td>
-                        <td className="px-4 py-4 text-AXVN-silver/50 text-sm hidden lg:table-cell">{doc.publishedDate ? fmtDate(doc.publishedDate) : "—"}</td>
+                        <td className="px-4 py-4 text-AXVN-silver/50 text-sm hidden md:table-cell">
+                          {doc.year}
+                          {doc.quarter ? ` Q${doc.quarter}` : ""}
+                        </td>
+                        <td className="px-4 py-4 text-AXVN-silver/50 text-sm hidden lg:table-cell">
+                          {doc.publishedDate ? fmtDate(doc.publishedDate) : "—"}
+                        </td>
                         <td className="px-4 py-4 text-center hidden sm:table-cell">
-                          <span className={`text-[10px] font-semibold px-2 py-0.5 border rounded-full ${doc.status === "published"
-                              ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/30"
-                              : "bg-amber-500/20 text-amber-300 border-amber-500/30"
-                            }`}>
-                            {doc.status === "published" ? "Công bố" : "Bản nháp"}
+                          <span
+                            className={`text-[10px] font-semibold px-2 py-0.5 border rounded-full ${
+                              doc.status === "published"
+                                ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/30"
+                                : "bg-amber-500/20 text-amber-300 border-amber-500/30"
+                            }`}
+                          >
+                            {doc.status === "published"
+                              ? "Công bố"
+                              : "Bản nháp"}
                           </span>
                         </td>
                         <td className="px-4 py-4 text-right">
                           <div className="flex items-center justify-end gap-0.5">
-                            <a href={doc.fileUrl} target="_blank" rel="noopener noreferrer" className="p-1.5 text-AXVN-silver/30 hover:text-AXVN-ivory transition-colors rounded-lg hover:bg-white/5" title="Xem">
+                            <a
+                              href={doc.fileUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="p-1.5 text-AXVN-silver/30 hover:text-AXVN-ivory transition-colors rounded-lg hover:bg-white/5"
+                              title="Xem"
+                            >
                               <ExternalLink className="w-3.5 h-3.5" />
                             </a>
-                            <button onClick={() => setFormTarget({ ...doc })} className="p-1.5 text-AXVN-silver/30 hover:text-AXVN-gold transition-colors rounded-lg hover:bg-AXVN-gold/10" title="Sửa">
+                            <button
+                              onClick={() => setFormTarget({ ...doc })}
+                              className="p-1.5 text-AXVN-silver/30 hover:text-AXVN-gold transition-colors rounded-lg hover:bg-AXVN-gold/10"
+                              title="Sửa"
+                            >
                               <Edit3 className="w-3.5 h-3.5" />
                             </button>
-                            <button onClick={() => setDeleteTarget(doc)} className="p-1.5 text-AXVN-silver/30 hover:text-red-400 transition-colors rounded-lg hover:bg-red-500/10" title="Xóa">
+                            <button
+                              onClick={() => setDeleteTarget(doc)}
+                              className="p-1.5 text-AXVN-silver/30 hover:text-red-400 transition-colors rounded-lg hover:bg-red-500/10"
+                              title="Xóa"
+                            >
                               <Trash2 className="w-3.5 h-3.5" />
                             </button>
                           </div>
@@ -735,7 +948,15 @@ export default function AdminDocumentsPage() {
             {filtered.length > 0 && (
               <div className="px-5 py-3 border-t border-white/5">
                 <p className="text-xs text-AXVN-silver/30">
-                  Hiển thị <span className="text-AXVN-ivory font-medium">{filtered.length}</span> / <span className="text-AXVN-ivory font-medium">{docs.length}</span> tài liệu
+                  Hiển thị{" "}
+                  <span className="text-AXVN-ivory font-medium">
+                    {filtered.length}
+                  </span>{" "}
+                  /{" "}
+                  <span className="text-AXVN-ivory font-medium">
+                    {docs.length}
+                  </span>{" "}
+                  tài liệu
                 </p>
               </div>
             )}
@@ -745,10 +966,20 @@ export default function AdminDocumentsPage() {
 
       {/* Modals */}
       {deleteTarget && (
-        <DeleteModal doc={deleteTarget} onConfirm={confirmDelete} onCancel={() => setDeleteTarget(null)} loading={deleteLoading} />
+        <DeleteModal
+          doc={deleteTarget}
+          onConfirm={confirmDelete}
+          onCancel={() => setDeleteTarget(null)}
+          loading={deleteLoading}
+        />
       )}
       {formTarget && (
-        <DocFormModal initial={formTarget} onSave={handleSave} onCancel={() => setFormTarget(null)} saving={saving} />
+        <DocFormModal
+          initial={formTarget}
+          onSave={handleSave}
+          onCancel={() => setFormTarget(null)}
+          saving={saving}
+        />
       )}
 
       {/* Preview link */}

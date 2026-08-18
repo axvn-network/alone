@@ -14,10 +14,19 @@ export type { IShareholder, ShareholderRole, ShareholderStatus } from "./model";
 
 // ── Sub-models ────────────────────────────────────────────────────────────────
 export { default as ShareholderTask } from "./task.model";
-export type { IShareholderTask, TaskStatus, TaskPriority, TaskCategory } from "./task.model";
+export type {
+  IShareholderTask,
+  TaskStatus,
+  TaskPriority,
+  TaskCategory,
+} from "./task.model";
 
 export { default as ShareholderMeeting } from "./meeting.model";
-export type { IShareholderMeeting, MeetingStatus, MeetingType } from "./meeting.model";
+export type {
+  IShareholderMeeting,
+  MeetingStatus,
+  MeetingType,
+} from "./meeting.model";
 
 export { default as ShareholderMessage } from "./message.model";
 export type { IShareholderMessage, MessageChannel } from "./message.model";

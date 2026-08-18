@@ -1,10 +1,19 @@
 "use client";
 
-import { createContext, useContext, useEffect, useRef, useCallback } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useCallback,
+} from "react";
 
 interface CsrfContextValue {
   /** Performs a fetch() with x-csrf-token injected on mutating methods */
-  csrfFetch: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+  csrfFetch: (
+    input: RequestInfo | URL,
+    init?: RequestInit,
+  ) => Promise<Response>;
 }
 
 const CsrfContext = createContext<CsrfContextValue>({
@@ -48,7 +57,7 @@ export function CsrfProvider({ children }: { children: React.ReactNode }) {
       }
       return fetch(input, init);
     },
-    [refresh]
+    [refresh],
   );
 
   return (

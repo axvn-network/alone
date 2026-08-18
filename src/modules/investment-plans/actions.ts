@@ -8,8 +8,11 @@
 import { revalidatePath } from "next/cache";
 import { requireAuth } from "@/core/security/auth-utils";
 import { handleError } from "@/utils/errors";
-import { investmentPlanSchema, formatZodErrors } from "@/validators";
-import type { InvestmentPlanInput } from "@/validators";
+import {
+  investmentPlanSchema,
+  type InvestmentPlanInput,
+} from "@/modules/investment-plans/schema";
+import { formatZodErrors } from "@/shared/utils/zod";
 import * as planService from "@/modules/investment-plans/service";
 
 export async function createPlanAction(data: InvestmentPlanInput) {
@@ -29,7 +32,10 @@ export async function createPlanAction(data: InvestmentPlanInput) {
   }
 }
 
-export async function updatePlanAction(id: string, data: Partial<InvestmentPlanInput>) {
+export async function updatePlanAction(
+  id: string,
+  data: Partial<InvestmentPlanInput>,
+) {
   await requireAuth();
 
   const parsed = investmentPlanSchema.partial().safeParse(data);

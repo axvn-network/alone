@@ -7,7 +7,9 @@ import AdminNavbar from "@/shared/components/admin/AdminNavbar";
 import { toast } from "sonner";
 import { ArrowLeft, Save, Eye } from "lucide-react";
 import RichTextEditor from "@/shared/components/ui/RichTextEditor";
-import AiAssistPanel, { PAGE_AI_ACTIONS } from "@/shared/components/ui/AiAssistPanel";
+import AiAssistPanel, {
+  PAGE_AI_ACTIONS,
+} from "@/shared/components/ui/AiAssistPanel";
 import { useCsrf } from "@/contexts/CsrfContext";
 
 const pageLabels: Record<string, string> = {
@@ -22,7 +24,11 @@ const pageLabels: Record<string, string> = {
   "investment-disclaimer": "Miễn trừ trách nhiệm",
 };
 
-export default function PageEditor({ params }: { params: Promise<{ slug: string }> }) {
+export default function PageEditor({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = use(params);
   const { csrfFetch } = useCsrf();
   const [title, setTitle] = useState("");
@@ -50,7 +56,9 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
       }
       setJsonError("");
     } catch {
-      setJsonError("Cú pháp JSON cấu hình không hợp lệ. Vui lòng kiểm tra lại.");
+      setJsonError(
+        "Cú pháp JSON cấu hình không hợp lệ. Vui lòng kiểm tra lại.",
+      );
       toast.error("Lỗi định dạng JSON");
       return;
     }
@@ -83,7 +91,10 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 relative z-10">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <Link href="/admin/content" className="flex items-center gap-1.5 text-AXVN-silver/50 hover:text-AXVN-gold text-xs transition-colors mb-2">
+              <Link
+                href="/admin/content"
+                className="flex items-center gap-1.5 text-AXVN-silver/50 hover:text-AXVN-gold text-xs transition-colors mb-2"
+              >
                 <ArrowLeft className="w-3.5 h-3.5" /> Quay lại danh sách
               </Link>
             </div>
@@ -100,7 +111,6 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
           </div>
 
           <div className="space-y-6">
-
             {/* AI Assistant — full width banner at top */}
             <div className="bg-[#070e1a] border border-purple-500/20 rounded-xl p-4">
               <AiAssistPanel
@@ -115,7 +125,10 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
                 onApply={(action, result) => {
                   if (action === "page_title") {
                     setTitle(result.trim());
-                  } else if (action === "page_content" || action === "page_improve") {
+                  } else if (
+                    action === "page_content" ||
+                    action === "page_improve"
+                  ) {
                     setContent(result);
                   } else if (action === "translate_vi_en") {
                     navigator.clipboard.writeText(result);
@@ -129,7 +142,9 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
             </div>
 
             <div className="bg-AXVN-navy border-t-2 border-t-AXVN-gold/30 p-5 rounded-lg">
-              <label className="block text-AXVN-silver text-xs font-medium mb-2 tracking-wide">Tiêu đề trang</label>
+              <label className="block text-AXVN-silver text-xs font-medium mb-2 tracking-wide">
+                Tiêu đề trang
+              </label>
               <input
                 type="text"
                 value={title}
@@ -140,8 +155,12 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
 
             <div className="bg-AXVN-navy border-t-2 border-t-AXVN-gold/30 p-5 rounded-lg">
               <div className="flex items-center justify-between mb-2">
-                <label className="block text-AXVN-silver text-xs font-medium tracking-wide">Biến nội dung cấu trúc (Trường dữ liệu tĩnh)</label>
-                <span className="text-[11px] text-AXVN-silver/40">Thay đổi trực tiếp các câu chữ hiển thị trên website</span>
+                <label className="block text-AXVN-silver text-xs font-medium tracking-wide">
+                  Biến nội dung cấu trúc (Trường dữ liệu tĩnh)
+                </label>
+                <span className="text-[11px] text-AXVN-silver/40">
+                  Thay đổi trực tiếp các câu chữ hiển thị trên website
+                </span>
               </div>
               <textarea
                 rows={10}
@@ -150,21 +169,30 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
                 className="w-full bg-AXVN-deep border border-white/10 text-AXVN-champagne font-mono text-xs p-4 focus:outline-none focus:border-AXVN-gold/50 transition-colors rounded-lg leading-relaxed"
                 placeholder="{}"
               />
-              {jsonError && <p className="text-red-400 text-xs mt-2">{jsonError}</p>}
+              {jsonError && (
+                <p className="text-red-400 text-xs mt-2">{jsonError}</p>
+              )}
             </div>
 
             <div className="bg-AXVN-navy border-t-2 border-t-AXVN-gold/30 p-5 rounded-lg">
-              <label className="block text-AXVN-silver text-xs font-medium mb-2 tracking-wide">Nội dung chi tiết (Rich Text)</label>
+              <label className="block text-AXVN-silver text-xs font-medium mb-2 tracking-wide">
+                Nội dung chi tiết (Rich Text)
+              </label>
               <RichTextEditor value={content} onChange={setContent} />
             </div>
 
             <div className="bg-AXVN-navy border-t-2 border-t-AXVN-gold/30 p-5 rounded-lg">
               <div className="flex items-center gap-2 mb-3">
                 <Eye className="w-4 h-4 text-AXVN-gold" />
-                <label className="text-AXVN-silver text-xs font-medium tracking-wide">Xem trước nội dung chi tiết</label>
+                <label className="text-AXVN-silver text-xs font-medium tracking-wide">
+                  Xem trước nội dung chi tiết
+                </label>
               </div>
               <div className="border border-white/5 p-5 bg-AXVN-deep rounded-lg">
-                <div className="prose max-w-none text-AXVN-ivory text-sm" dangerouslySetInnerHTML={{ __html: content }} />
+                <div
+                  className="prose max-w-none text-AXVN-ivory text-sm"
+                  dangerouslySetInnerHTML={{ __html: content }}
+                />
               </div>
             </div>
           </div>

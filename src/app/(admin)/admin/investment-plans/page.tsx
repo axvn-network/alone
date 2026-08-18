@@ -2,13 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import {
-  Plus, Pencil, Trash2, Eye, EyeOff, Star,
-} from "lucide-react";
+import { Plus, Pencil, Trash2, Eye, EyeOff, Star } from "lucide-react";
 import AdminSidebar from "@/shared/components/admin/AdminSidebar";
 import AdminNavbar from "@/shared/components/admin/AdminNavbar";
 import { useCsrf } from "@/contexts/CsrfContext";
-import { TIER_LABELS, PLAN_STATUS_CLS as STATUS_STYLES, ADMIN_PAGE_CLS } from "@/constants/admin";
+import {
+  TIER_LABELS,
+  PLAN_STATUS_CLS as STATUS_STYLES,
+  ADMIN_PAGE_CLS,
+} from "@/constants/admin";
 import { formatVNDCompact } from "@/core/vn-utils/vn-lib/format";
 
 interface Plan {
@@ -46,16 +48,41 @@ function formatVND(n: number) {
 }
 
 const EMPTY: Partial<Plan> = {
-  tier: "seed", name: "", nameEn: "", tagline: "", taglineEn: "",
-  minCommitment: 500000000, maxCommitment: 0, currency: "VND",
-  equityRange: "", equityRangeEn: "", duration: "", durationEn: "",
-  benefits: [], benefitsEn: [], conditions: [], conditionsEn: [],
-  rights: [], obligations: [], documents: [],
+  tier: "seed",
+  name: "",
+  nameEn: "",
+  tagline: "",
+  taglineEn: "",
+  minCommitment: 500000000,
+  maxCommitment: 0,
+  currency: "VND",
+  equityRange: "",
+  equityRangeEn: "",
+  duration: "",
+  durationEn: "",
+  benefits: [],
+  benefitsEn: [],
+  conditions: [],
+  conditionsEn: [],
+  rights: [],
+  obligations: [],
+  documents: [],
   shareholderType: "",
-  highlighted: false, badge: "", badgeEn: "", order: 1, status: "draft",
+  highlighted: false,
+  badge: "",
+  badgeEn: "",
+  order: 1,
+  status: "draft",
 };
 
-type TextArrayField = "benefits" | "benefitsEn" | "conditions" | "conditionsEn" | "rights" | "obligations" | "documents";
+type TextArrayField =
+  | "benefits"
+  | "benefitsEn"
+  | "conditions"
+  | "conditionsEn"
+  | "rights"
+  | "obligations"
+  | "documents";
 
 export default function InvestmentPlansAdmin() {
   const { csrfFetch } = useCsrf();
@@ -70,7 +97,10 @@ export default function InvestmentPlansAdmin() {
     setLoading(true);
     fetch("/api/admin/investment-plans")
       .then((r) => r.json())
-      .then((res) => { setPlans(Array.isArray(res.data) ? res.data : []); setLoading(false); })
+      .then((res) => {
+        setPlans(Array.isArray(res.data) ? res.data : []);
+        setLoading(false);
+      })
       .catch(() => setLoading(false));
   }
 
@@ -80,7 +110,9 @@ export default function InvestmentPlansAdmin() {
     if (!editing) return;
     setSaving(true);
     try {
-      const url = isNew ? "/api/admin/investment-plans" : `/api/admin/investment-plans/${editing._id}`;
+      const url = isNew
+        ? "/api/admin/investment-plans"
+        : `/api/admin/investment-plans/${editing._id}`;
       const method = isNew ? "POST" : "PUT";
       const res = await csrfFetch(url, {
         method,
@@ -101,7 +133,9 @@ export default function InvestmentPlansAdmin() {
   async function handleDelete(id: string, name: string) {
     if (!confirm(`Xóa gói "${name}"?`)) return;
     try {
-      const res = await csrfFetch(`/api/admin/investment-plans/${id}`, { method: "DELETE" });
+      const res = await csrfFetch(`/api/admin/investment-plans/${id}`, {
+        method: "DELETE",
+      });
       if (!res.ok) throw new Error("Failed");
       toast.success("Đã xóa hạng mục hợp tác");
       load();
@@ -127,10 +161,16 @@ export default function InvestmentPlansAdmin() {
   }
 
   const set = (field: keyof Plan, value: unknown) =>
-    setEditing((prev) => prev ? { ...prev, [field]: value } : prev);
+    setEditing((prev) => (prev ? { ...prev, [field]: value } : prev));
 
   const setArr = (field: TextArrayField, raw: string) =>
-    set(field, raw.split("\n").map((s) => s.trim()).filter(Boolean));
+    set(
+      field,
+      raw
+        .split("\n")
+        .map((s) => s.trim())
+        .filter(Boolean),
+    );
 
   function openNew() {
     setEditing({ ...EMPTY });
@@ -144,7 +184,8 @@ export default function InvestmentPlansAdmin() {
     setTab("basic");
   }
 
-  const inputCls = "w-full px-3 py-2.5 bg-AXVN-navy border border-AXVN-gold/20 text-AXVN-ivory text-sm rounded-lg focus:outline-none focus:border-AXVN-gold/50";
+  const inputCls =
+    "w-full px-3 py-2.5 bg-AXVN-navy border border-AXVN-gold/20 text-AXVN-ivory text-sm rounded-lg focus:outline-none focus:border-AXVN-gold/50";
   const labelCls = "block text-AXVN-silver/70 text-xs mb-1.5";
   const areaCls = `${inputCls} resize-none`;
 
@@ -158,9 +199,12 @@ export default function InvestmentPlansAdmin() {
           {/* Header */}
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-AXVN-ivory font-bold text-xl">Quản Lý Hạng Mục Hợp Tác</h1>
+              <h1 className="text-AXVN-ivory font-bold text-xl">
+                Quản Lý Hạng Mục Hợp Tác
+              </h1>
               <p className="text-AXVN-silver/60 text-xs mt-1">
-                {plans.filter((p) => p.status === "active").length} gói đang hoạt động · {plans.length} tổng cộng
+                {plans.filter((p) => p.status === "active").length} gói đang
+                hoạt động · {plans.length} tổng cộng
               </p>
             </div>
             <button
@@ -174,36 +218,61 @@ export default function InvestmentPlansAdmin() {
 
           {/* Plans table */}
           {loading ? (
-            <div className="text-AXVN-silver text-center py-20">Đang tải...</div>
+            <div className="text-AXVN-silver text-center py-20">
+              Đang tải...
+            </div>
           ) : (
             <div className="bg-AXVN-navy border border-AXVN-gold/10 rounded-2xl overflow-hidden">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-AXVN-gold/10 text-AXVN-silver/60 text-[11px] uppercase tracking-widest">
                     <th className="text-left p-4">Gói</th>
-                    <th className="text-left p-4 hidden md:table-cell">Tối thiểu</th>
-                    <th className="text-left p-4 hidden lg:table-cell">Cổ phần</th>
+                    <th className="text-left p-4 hidden md:table-cell">
+                      Tối thiểu
+                    </th>
+                    <th className="text-left p-4 hidden lg:table-cell">
+                      Cổ phần
+                    </th>
                     <th className="text-left p-4">Trạng thái</th>
                     <th className="text-right p-4">Thao tác</th>
                   </tr>
                 </thead>
                 <tbody>
                   {plans.map((plan) => (
-                    <tr key={plan._id} className="border-b border-AXVN-gold/5 hover:bg-AXVN-deep/30 transition-colors">
+                    <tr
+                      key={plan._id}
+                      className="border-b border-AXVN-gold/5 hover:bg-AXVN-deep/30 transition-colors"
+                    >
                       <td className="p-4">
                         <div className="flex items-center gap-2">
-                          {plan.highlighted && <Star className="w-3 h-3 text-AXVN-gold shrink-0" />}
+                          {plan.highlighted && (
+                            <Star className="w-3 h-3 text-AXVN-gold shrink-0" />
+                          )}
                           <div>
-                            <p className="font-medium text-AXVN-ivory text-sm">{plan.name}</p>
-                            <p className="text-AXVN-silver/50 text-[11px] font-mono">{TIER_LABELS[plan.tier] || plan.tier}</p>
+                            <p className="font-medium text-AXVN-ivory text-sm">
+                              {plan.name}
+                            </p>
+                            <p className="text-AXVN-silver/50 text-[11px] font-mono">
+                              {TIER_LABELS[plan.tier] || plan.tier}
+                            </p>
                           </div>
                         </div>
                       </td>
-                      <td className="p-4 hidden md:table-cell text-AXVN-silver text-xs">{formatVND(plan.minCommitment)}</td>
-                      <td className="p-4 hidden lg:table-cell text-AXVN-silver text-xs">{plan.equityRange}</td>
+                      <td className="p-4 hidden md:table-cell text-AXVN-silver text-xs">
+                        {formatVND(plan.minCommitment)}
+                      </td>
+                      <td className="p-4 hidden lg:table-cell text-AXVN-silver text-xs">
+                        {plan.equityRange}
+                      </td>
                       <td className="p-4">
-                        <span className={`px-2 py-1 text-[10px] font-semibold rounded-full border ${STATUS_STYLES[plan.status]}`}>
-                          {plan.status === "active" ? "Hoạt động" : plan.status === "draft" ? "Nháp" : "Đóng"}
+                        <span
+                          className={`px-2 py-1 text-[10px] font-semibold rounded-full border ${STATUS_STYLES[plan.status]}`}
+                        >
+                          {plan.status === "active"
+                            ? "Hoạt động"
+                            : plan.status === "draft"
+                              ? "Nháp"
+                              : "Đóng"}
                         </span>
                       </td>
                       <td className="p-4">
@@ -211,9 +280,15 @@ export default function InvestmentPlansAdmin() {
                           <button
                             onClick={() => toggleStatus(plan)}
                             className="p-2 text-AXVN-silver/60 hover:text-AXVN-champagne transition-colors rounded-lg hover:bg-AXVN-charcoal"
-                            title={plan.status === "active" ? "Ẩn gói" : "Kích hoạt"}
+                            title={
+                              plan.status === "active" ? "Ẩn gói" : "Kích hoạt"
+                            }
                           >
-                            {plan.status === "active" ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                            {plan.status === "active" ? (
+                              <EyeOff className="w-4 h-4" />
+                            ) : (
+                              <Eye className="w-4 h-4" />
+                            )}
                           </button>
                           <button
                             onClick={() => openEdit(plan)}
@@ -234,7 +309,15 @@ export default function InvestmentPlansAdmin() {
                     </tr>
                   ))}
                   {plans.length === 0 && (
-                    <tr><td colSpan={5} className="text-center py-16 text-AXVN-silver/40">Chưa có gói nào. Nhấn &quot;Thêm Gói Mới&quot; để bắt đầu.</td></tr>
+                    <tr>
+                      <td
+                        colSpan={5}
+                        className="text-center py-16 text-AXVN-silver/40"
+                      >
+                        Chưa có gói nào. Nhấn &quot;Thêm Gói Mới&quot; để bắt
+                        đầu.
+                      </td>
+                    </tr>
                   )}
                 </tbody>
               </table>
@@ -249,22 +332,35 @@ export default function InvestmentPlansAdmin() {
           <div className="w-full max-w-3xl max-h-[95vh] overflow-hidden flex flex-col bg-[#07111D] border border-AXVN-gold/20 rounded-2xl shadow-2xl">
             {/* Modal header */}
             <div className="flex items-center justify-between p-6 border-b border-AXVN-gold/10 shrink-0">
-              <h2 className="text-AXVN-ivory font-bold">{isNew ? "Thêm Gói Mới" : `Chỉnh sửa: ${editing.name}`}</h2>
-              <button onClick={() => setEditing(null)} className="w-8 h-8 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-AXVN-silver hover:text-white transition-colors">✕</button>
+              <h2 className="text-AXVN-ivory font-bold">
+                {isNew ? "Thêm Gói Mới" : `Chỉnh sửa: ${editing.name}`}
+              </h2>
+              <button
+                onClick={() => setEditing(null)}
+                className="w-8 h-8 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-AXVN-silver hover:text-white transition-colors"
+              >
+                ✕
+              </button>
             </div>
 
             {/* Tabs */}
             <div className="flex border-b border-AXVN-gold/10 shrink-0">
-              {([
-                { key: "basic", label: "Thông tin cơ bản" },
-                { key: "content", label: "Nội dung (VI)" },
-                { key: "en", label: "English (EN)" },
-              ] as const).map((t) => (
-                <button key={t.key} onClick={() => setTab(t.key)}
-                  className={`px-5 py-3 text-sm font-medium border-b-2 transition-colors ${tab === t.key
+              {(
+                [
+                  { key: "basic", label: "Thông tin cơ bản" },
+                  { key: "content", label: "Nội dung (VI)" },
+                  { key: "en", label: "English (EN)" },
+                ] as const
+              ).map((t) => (
+                <button
+                  key={t.key}
+                  onClick={() => setTab(t.key)}
+                  className={`px-5 py-3 text-sm font-medium border-b-2 transition-colors ${
+                    tab === t.key
                       ? "border-AXVN-gold text-AXVN-gold"
                       : "border-transparent text-AXVN-silver/60 hover:text-AXVN-ivory"
-                    }`}>
+                  }`}
+                >
                   {t.label}
                 </button>
               ))}
@@ -272,7 +368,6 @@ export default function InvestmentPlansAdmin() {
 
             {/* Scrollable content */}
             <div className="flex-1 overflow-y-auto p-6 space-y-5">
-
               {/* ── Tab: basic ─────────────────────────────────────── */}
               {tab === "basic" && (
                 <>
@@ -280,13 +375,27 @@ export default function InvestmentPlansAdmin() {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className={labelCls}>Tier *</label>
-                      <select value={editing.tier} onChange={(e) => set("tier", e.target.value)} className={inputCls}>
-                        {Object.entries(TIER_LABELS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
+                      <select
+                        value={editing.tier}
+                        onChange={(e) => set("tier", e.target.value)}
+                        className={inputCls}
+                      >
+                        {Object.entries(TIER_LABELS).map(([k, v]) => (
+                          <option key={k} value={k}>
+                            {v}
+                          </option>
+                        ))}
                       </select>
                     </div>
                     <div>
                       <label className={labelCls}>Trạng thái</label>
-                      <select value={editing.status} onChange={(e) => set("status", e.target.value as Plan["status"])} className={inputCls}>
+                      <select
+                        value={editing.status}
+                        onChange={(e) =>
+                          set("status", e.target.value as Plan["status"])
+                        }
+                        className={inputCls}
+                      >
                         <option value="draft">Nháp</option>
                         <option value="active">Hoạt động</option>
                         <option value="closed">Đóng</option>
@@ -298,29 +407,62 @@ export default function InvestmentPlansAdmin() {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className={labelCls}>Tên (VI) *</label>
-                      <input value={editing.name || ""} onChange={(e) => set("name", e.target.value)} className={inputCls} />
+                      <input
+                        value={editing.name || ""}
+                        onChange={(e) => set("name", e.target.value)}
+                        className={inputCls}
+                      />
                     </div>
                     <div>
                       <label className={labelCls}>Tên (EN) *</label>
-                      <input value={editing.nameEn || ""} onChange={(e) => set("nameEn", e.target.value)} className={inputCls} />
+                      <input
+                        value={editing.nameEn || ""}
+                        onChange={(e) => set("nameEn", e.target.value)}
+                        className={inputCls}
+                      />
                     </div>
                   </div>
 
                   {/* Loại cổ đông */}
                   <div>
-                    <label className={labelCls}>Loại cổ đông (shareholderType)</label>
-                    <input value={editing.shareholderType || ""} onChange={(e) => set("shareholderType", e.target.value)} placeholder="VD: Cổ đông Cá nhân" className={inputCls} />
+                    <label className={labelCls}>
+                      Loại cổ đông (shareholderType)
+                    </label>
+                    <input
+                      value={editing.shareholderType || ""}
+                      onChange={(e) => set("shareholderType", e.target.value)}
+                      placeholder="VD: Cổ đông Cá nhân"
+                      className={inputCls}
+                    />
                   </div>
 
                   {/* Commitment */}
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className={labelCls}>Cam kết tối thiểu (VNĐ) *</label>
-                      <input type="number" value={editing.minCommitment || 0} onChange={(e) => set("minCommitment", Number(e.target.value))} className={inputCls} />
+                      <label className={labelCls}>
+                        Cam kết tối thiểu (VNĐ) *
+                      </label>
+                      <input
+                        type="number"
+                        value={editing.minCommitment || 0}
+                        onChange={(e) =>
+                          set("minCommitment", Number(e.target.value))
+                        }
+                        className={inputCls}
+                      />
                     </div>
                     <div>
-                      <label className={labelCls}>Tối đa (0 = không giới hạn)</label>
-                      <input type="number" value={editing.maxCommitment || 0} onChange={(e) => set("maxCommitment", Number(e.target.value))} className={inputCls} />
+                      <label className={labelCls}>
+                        Tối đa (0 = không giới hạn)
+                      </label>
+                      <input
+                        type="number"
+                        value={editing.maxCommitment || 0}
+                        onChange={(e) =>
+                          set("maxCommitment", Number(e.target.value))
+                        }
+                        className={inputCls}
+                      />
                     </div>
                   </div>
 
@@ -328,11 +470,21 @@ export default function InvestmentPlansAdmin() {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className={labelCls}>Cổ phần (VI)</label>
-                      <input value={editing.equityRange || ""} onChange={(e) => set("equityRange", e.target.value)} placeholder="VD: 2% – 5% cổ phần" className={inputCls} />
+                      <input
+                        value={editing.equityRange || ""}
+                        onChange={(e) => set("equityRange", e.target.value)}
+                        placeholder="VD: 2% – 5% cổ phần"
+                        className={inputCls}
+                      />
                     </div>
                     <div>
                       <label className={labelCls}>Thời hạn (VI)</label>
-                      <input value={editing.duration || ""} onChange={(e) => set("duration", e.target.value)} placeholder="VD: 24 – 36 tháng" className={inputCls} />
+                      <input
+                        value={editing.duration || ""}
+                        onChange={(e) => set("duration", e.target.value)}
+                        placeholder="VD: 24 – 36 tháng"
+                        className={inputCls}
+                      />
                     </div>
                   </div>
 
@@ -340,16 +492,33 @@ export default function InvestmentPlansAdmin() {
                   <div className="grid grid-cols-3 gap-4">
                     <div>
                       <label className={labelCls}>Badge (VI)</label>
-                      <input value={editing.badge || ""} onChange={(e) => set("badge", e.target.value)} placeholder="VD: Phổ Biến Nhất" className={inputCls} />
+                      <input
+                        value={editing.badge || ""}
+                        onChange={(e) => set("badge", e.target.value)}
+                        placeholder="VD: Phổ Biến Nhất"
+                        className={inputCls}
+                      />
                     </div>
                     <div>
                       <label className={labelCls}>Thứ tự</label>
-                      <input type="number" value={editing.order || 1} onChange={(e) => set("order", Number(e.target.value))} className={inputCls} />
+                      <input
+                        type="number"
+                        value={editing.order || 1}
+                        onChange={(e) => set("order", Number(e.target.value))}
+                        className={inputCls}
+                      />
                     </div>
                     <div className="flex flex-col justify-end pb-1">
                       <label className="flex items-center gap-2 cursor-pointer">
-                        <input type="checkbox" checked={editing.highlighted || false} onChange={(e) => set("highlighted", e.target.checked)} className="w-4 h-4 accent-AXVN-gold" />
-                        <span className="text-AXVN-silver/70 text-xs">Nổi bật (highlighted)</span>
+                        <input
+                          type="checkbox"
+                          checked={editing.highlighted || false}
+                          onChange={(e) => set("highlighted", e.target.checked)}
+                          className="w-4 h-4 accent-AXVN-gold"
+                        />
+                        <span className="text-AXVN-silver/70 text-xs">
+                          Nổi bật (highlighted)
+                        </span>
                       </label>
                     </div>
                   </div>
@@ -361,32 +530,71 @@ export default function InvestmentPlansAdmin() {
                 <>
                   <div>
                     <label className={labelCls}>Tagline (VI)</label>
-                    <input value={editing.tagline || ""} onChange={(e) => set("tagline", e.target.value)} className={inputCls} />
+                    <input
+                      value={editing.tagline || ""}
+                      onChange={(e) => set("tagline", e.target.value)}
+                      className={inputCls}
+                    />
                   </div>
 
                   <div>
-                    <label className={labelCls}>Quyền lợi / Benefits VI (mỗi dòng = 1 mục)</label>
-                    <textarea rows={5} value={(editing.benefits || []).join("\n")} onChange={(e) => setArr("benefits", e.target.value)} className={areaCls} />
+                    <label className={labelCls}>
+                      Quyền lợi / Benefits VI (mỗi dòng = 1 mục)
+                    </label>
+                    <textarea
+                      rows={5}
+                      value={(editing.benefits || []).join("\n")}
+                      onChange={(e) => setArr("benefits", e.target.value)}
+                      className={areaCls}
+                    />
                   </div>
 
                   <div>
-                    <label className={labelCls}>Điều kiện / Conditions VI (mỗi dòng = 1 mục)</label>
-                    <textarea rows={4} value={(editing.conditions || []).join("\n")} onChange={(e) => setArr("conditions", e.target.value)} className={areaCls} />
+                    <label className={labelCls}>
+                      Điều kiện / Conditions VI (mỗi dòng = 1 mục)
+                    </label>
+                    <textarea
+                      rows={4}
+                      value={(editing.conditions || []).join("\n")}
+                      onChange={(e) => setArr("conditions", e.target.value)}
+                      className={areaCls}
+                    />
                   </div>
 
                   <div>
-                    <label className={labelCls}>Quyền cổ đông / Rights VI (mỗi dòng = 1 mục)</label>
-                    <textarea rows={5} value={(editing.rights || []).join("\n")} onChange={(e) => setArr("rights", e.target.value)} className={areaCls} />
+                    <label className={labelCls}>
+                      Quyền cổ đông / Rights VI (mỗi dòng = 1 mục)
+                    </label>
+                    <textarea
+                      rows={5}
+                      value={(editing.rights || []).join("\n")}
+                      onChange={(e) => setArr("rights", e.target.value)}
+                      className={areaCls}
+                    />
                   </div>
 
                   <div>
-                    <label className={labelCls}>Nghĩa vụ / Obligations VI (mỗi dòng = 1 mục)</label>
-                    <textarea rows={4} value={(editing.obligations || []).join("\n")} onChange={(e) => setArr("obligations", e.target.value)} className={areaCls} />
+                    <label className={labelCls}>
+                      Nghĩa vụ / Obligations VI (mỗi dòng = 1 mục)
+                    </label>
+                    <textarea
+                      rows={4}
+                      value={(editing.obligations || []).join("\n")}
+                      onChange={(e) => setArr("obligations", e.target.value)}
+                      className={areaCls}
+                    />
                   </div>
 
                   <div>
-                    <label className={labelCls}>Hồ sơ cần chuẩn bị / Documents (mỗi dòng = 1 mục)</label>
-                    <textarea rows={4} value={(editing.documents || []).join("\n")} onChange={(e) => setArr("documents", e.target.value)} className={areaCls} />
+                    <label className={labelCls}>
+                      Hồ sơ cần chuẩn bị / Documents (mỗi dòng = 1 mục)
+                    </label>
+                    <textarea
+                      rows={4}
+                      value={(editing.documents || []).join("\n")}
+                      onChange={(e) => setArr("documents", e.target.value)}
+                      className={areaCls}
+                    />
                   </div>
                 </>
               )}
@@ -396,33 +604,63 @@ export default function InvestmentPlansAdmin() {
                 <>
                   <div>
                     <label className={labelCls}>Tagline (EN)</label>
-                    <input value={editing.taglineEn || ""} onChange={(e) => set("taglineEn", e.target.value)} className={inputCls} />
+                    <input
+                      value={editing.taglineEn || ""}
+                      onChange={(e) => set("taglineEn", e.target.value)}
+                      className={inputCls}
+                    />
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className={labelCls}>Cổ phần (EN)</label>
-                      <input value={editing.equityRangeEn || ""} onChange={(e) => set("equityRangeEn", e.target.value)} className={inputCls} />
+                      <input
+                        value={editing.equityRangeEn || ""}
+                        onChange={(e) => set("equityRangeEn", e.target.value)}
+                        className={inputCls}
+                      />
                     </div>
                     <div>
                       <label className={labelCls}>Thời hạn (EN)</label>
-                      <input value={editing.durationEn || ""} onChange={(e) => set("durationEn", e.target.value)} className={inputCls} />
+                      <input
+                        value={editing.durationEn || ""}
+                        onChange={(e) => set("durationEn", e.target.value)}
+                        className={inputCls}
+                      />
                     </div>
                   </div>
 
                   <div>
                     <label className={labelCls}>Badge (EN)</label>
-                    <input value={editing.badgeEn || ""} onChange={(e) => set("badgeEn", e.target.value)} className={inputCls} />
+                    <input
+                      value={editing.badgeEn || ""}
+                      onChange={(e) => set("badgeEn", e.target.value)}
+                      className={inputCls}
+                    />
                   </div>
 
                   <div>
-                    <label className={labelCls}>Benefits EN (mỗi dòng = 1 mục)</label>
-                    <textarea rows={5} value={(editing.benefitsEn || []).join("\n")} onChange={(e) => setArr("benefitsEn", e.target.value)} className={areaCls} />
+                    <label className={labelCls}>
+                      Benefits EN (mỗi dòng = 1 mục)
+                    </label>
+                    <textarea
+                      rows={5}
+                      value={(editing.benefitsEn || []).join("\n")}
+                      onChange={(e) => setArr("benefitsEn", e.target.value)}
+                      className={areaCls}
+                    />
                   </div>
 
                   <div>
-                    <label className={labelCls}>Conditions EN (mỗi dòng = 1 mục)</label>
-                    <textarea rows={4} value={(editing.conditionsEn || []).join("\n")} onChange={(e) => setArr("conditionsEn", e.target.value)} className={areaCls} />
+                    <label className={labelCls}>
+                      Conditions EN (mỗi dòng = 1 mục)
+                    </label>
+                    <textarea
+                      rows={4}
+                      value={(editing.conditionsEn || []).join("\n")}
+                      onChange={(e) => setArr("conditionsEn", e.target.value)}
+                      className={areaCls}
+                    />
                   </div>
                 </>
               )}
@@ -430,12 +668,17 @@ export default function InvestmentPlansAdmin() {
 
             {/* Actions */}
             <div className="p-6 border-t border-AXVN-gold/10 flex gap-3 shrink-0">
-              <button onClick={handleSave} disabled={saving}
-                className="flex-1 py-3 bg-AXVN-gold text-AXVN-navy font-bold text-sm rounded-xl hover:bg-AXVN-champagne transition-colors disabled:opacity-50">
+              <button
+                onClick={handleSave}
+                disabled={saving}
+                className="flex-1 py-3 bg-AXVN-gold text-AXVN-navy font-bold text-sm rounded-xl hover:bg-AXVN-champagne transition-colors disabled:opacity-50"
+              >
                 {saving ? "Đang lưu..." : isNew ? "Tạo Gói" : "Lưu Thay Đổi"}
               </button>
-              <button onClick={() => setEditing(null)}
-                className="px-5 py-3 border border-AXVN-gold/20 text-AXVN-silver text-sm rounded-xl hover:bg-AXVN-deep transition-colors">
+              <button
+                onClick={() => setEditing(null)}
+                className="px-5 py-3 border border-AXVN-gold/20 text-AXVN-silver text-sm rounded-xl hover:bg-AXVN-deep transition-colors"
+              >
                 Hủy
               </button>
             </div>

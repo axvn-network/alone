@@ -1,7 +1,13 @@
-import type { ShareholderRole, ShareholderStatus } from "@/core/models";
-import type { PlanStatus } from "@/core/models";
-import type { DocumentCategory } from "@/core/models";
-import type { PartnerApplicationStatus, AssessmentDimensions } from "@/core/models";
+import type {
+  ShareholderRole,
+  ShareholderStatus,
+} from "@/modules/shareholders";
+import type { PlanStatus } from "@/modules/investment-plans";
+import type { DocumentCategory } from "@/modules/documents";
+import type {
+  PartnerApplicationStatus,
+  AssessmentDimensions,
+} from "@/modules/partner-applications";
 
 // ─── Shared primitives ────────────────────────────────────────────────────────
 
@@ -181,8 +187,11 @@ export interface AdminUser {
 
 // ─── Shareholder ──────────────────────────────────────────────────────────────
 
-// Canonical types live in @/core/models; re-exported here so consumers only need "@/types".
-export type { ShareholderRole, ShareholderStatus } from "@/core/models";
+// Re-exported here so consumers only need "@/types".
+export type {
+  ShareholderRole,
+  ShareholderStatus,
+} from "@/modules/shareholders";
 
 export interface ShareholderUser {
   _id: string;
@@ -204,8 +213,8 @@ export interface ShareholderUser {
 // ─── Investment Plan ──────────────────────────────────────────────────────────
 
 export type PlanTier = "seed" | "growth" | "expansion" | "strategic" | "anchor";
-// Canonical type lives in @/core/models; re-exported here so consumers only need "@/types".
-export type { PlanStatus } from "@/core/models";
+// Re-exported here so consumers only need "@/types".
+export type { PlanStatus } from "@/modules/investment-plans";
 
 export interface InvestmentPlanItem {
   _id: string;
@@ -240,8 +249,8 @@ export interface InvestmentPlanItem {
 
 // ─── Document ─────────────────────────────────────────────────────────────────
 
-// Canonical type lives in @/core/models; re-exported here so consumers only need "@/types".
-export type { DocumentCategory } from "@/core/models";
+// Re-exported here so consumers only need "@/types".
+export type { DocumentCategory } from "@/modules/documents";
 
 export interface DocumentItem {
   _id: string;
@@ -262,8 +271,11 @@ export interface DocumentItem {
 
 // ─── Partner Application ──────────────────────────────────────────────────────
 
-// Canonical types live in @/core/models; re-exported here so consumers only need "@/types".
-export type { PartnerApplicationStatus, AssessmentDimensions } from "@/core/models";
+// Re-exported here so consumers only need "@/types".
+export type {
+  PartnerApplicationStatus,
+  AssessmentDimensions,
+} from "@/modules/partner-applications";
 
 export interface PartnerApplicationItem {
   _id: string;

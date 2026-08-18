@@ -52,7 +52,7 @@ export function AccordionRoot({
   className = "",
 }: AccordionRootProps) {
   const [openIds, setOpenIds] = useState<Set<string>>(
-    defaultOpen ? new Set([defaultOpen]) : new Set()
+    defaultOpen ? new Set([defaultOpen]) : new Set(),
   );
 
   const toggle = (id: string) => {
@@ -70,7 +70,9 @@ export function AccordionRoot({
 
   return (
     <Ctx.Provider value={{ openIds, toggle }}>
-      <div className={`divide-y divide-AXVN-gold/10 rounded-xl border border-AXVN-gold/15 overflow-hidden ${className}`}>
+      <div
+        className={`divide-y divide-AXVN-gold/10 rounded-xl border border-AXVN-gold/15 overflow-hidden ${className}`}
+      >
         {children}
       </div>
     </Ctx.Provider>
@@ -89,7 +91,13 @@ interface AccordionItemProps {
   className?: string;
 }
 
-export function AccordionItem({ id, title, badge, children, className = "" }: AccordionItemProps) {
+export function AccordionItem({
+  id,
+  title,
+  badge,
+  children,
+  className = "",
+}: AccordionItemProps) {
   const autoId = useId();
   const itemId = id ?? autoId;
   const panelId = `accordion-panel-${itemId}`;
@@ -108,7 +116,9 @@ export function AccordionItem({ id, title, badge, children, className = "" }: Ac
         className="w-full flex items-center justify-between gap-3 px-5 py-4 text-left bg-AXVN-deep hover:bg-AXVN-navy/50 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-AXVN-gold"
       >
         <span className="flex items-center gap-3 min-w-0">
-          <span className="text-sm font-semibold text-AXVN-ivory leading-snug">{title}</span>
+          <span className="text-sm font-semibold text-AXVN-ivory leading-snug">
+            {title}
+          </span>
           {badge && (
             <span className="text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-full bg-AXVN-gold/10 text-AXVN-gold shrink-0">
               {badge}
@@ -116,8 +126,9 @@ export function AccordionItem({ id, title, badge, children, className = "" }: Ac
           )}
         </span>
         <ChevronDown
-          className={`w-4 h-4 shrink-0 transition-transform duration-200 ${isOpen ? "rotate-180 text-AXVN-gold" : "text-AXVN-silver/50"
-            }`}
+          className={`w-4 h-4 shrink-0 transition-transform duration-200 ${
+            isOpen ? "rotate-180 text-AXVN-gold" : "text-AXVN-silver/50"
+          }`}
           aria-hidden="true"
         />
       </button>
@@ -158,9 +169,18 @@ interface AccordionProps {
  * Shorthand cho trường hợp chỉ có 1 item accordion độc lập.
  * Không cần AccordionRoot.
  */
-export function Accordion({ title, badge, children, defaultOpen = false, className }: AccordionProps) {
+export function Accordion({
+  title,
+  badge,
+  children,
+  defaultOpen = false,
+  className,
+}: AccordionProps) {
   return (
-    <AccordionRoot defaultOpen={defaultOpen ? "single" : undefined} className={className}>
+    <AccordionRoot
+      defaultOpen={defaultOpen ? "single" : undefined}
+      className={className}
+    >
       <AccordionItem id="single" title={title} badge={badge}>
         {children}
       </AccordionItem>

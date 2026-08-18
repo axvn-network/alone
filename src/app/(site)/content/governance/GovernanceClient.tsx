@@ -1,10 +1,19 @@
 "use client";
 
-import { GovernanceCards } from "@/app/(site)/governance/components/GovernanceCards";
-import { ShareholderTable } from "@/app/(site)/governance/components/ShareholderTable";
-import { AdvisorCards } from "@/app/(site)/governance/components/AdvisorCards";
-import DocLayout, { DocSidebar, DocMain, DocHero, DocBody } from "@/shared/components/layout/DocLayout";
-import { GOVERNANCE_DOCS, SHAREHOLDERS, ADVISORS } from "@/data/gov/governance";
+import { GovernanceCards } from "@/modules/governance/components/GovernanceCards";
+import { ShareholderTable } from "@/modules/shareholders/components/ShareholderTable";
+import { AdvisorCards } from "@/modules/governance/components/AdvisorCards";
+import DocLayout, {
+  DocSidebar,
+  DocMain,
+  DocHero,
+  DocBody,
+} from "@/shared/components/layout/DocLayout";
+import {
+  GOVERNANCE_DOCS,
+  SHAREHOLDERS,
+  ADVISORS,
+} from "@/shared/constants/governance";
 import type { TocItem } from "@/shared/components/layout/DocLayout";
 
 const TOC: readonly TocItem[] = [
@@ -19,23 +28,23 @@ export default function GovernanceClient() {
       <DocSidebar toc={TOC} />
       <DocMain>
         <DocHero id="docs">
-          <h2 className="text-[10px] font-semibold uppercase tracking-widest text-AXVN-gold mb-6">
+          <p className="text-[10px] font-semibold uppercase tracking-widest text-AXVN-gold mb-6">
             Tài Liệu Quản Trị Hệ Thống
-          </h2>
+          </p>
           <GovernanceCards docs={GOVERNANCE_DOCS} />
         </DocHero>
 
         <DocBody id="shareholders">
-          <h2 className="text-[10px] font-semibold uppercase tracking-widest text-AXVN-gold mb-6">
+          <p className="text-[10px] font-semibold uppercase tracking-widest text-AXVN-gold mb-6">
             Cổ Đông Sáng Lập & Vốn Góp
-          </h2>
+          </p>
           <ShareholderTable shareholders={SHAREHOLDERS} />
         </DocBody>
 
         <DocBody id="advisors">
-          <h2 className="text-[10px] font-semibold uppercase tracking-widest text-AXVN-gold mb-6">
+          <p className="text-[10px] font-semibold uppercase tracking-widest text-AXVN-gold mb-6">
             Cơ Cấu Hội Đồng Cố Vấn
-          </h2>
+          </p>
           <AdvisorCards advisors={ADVISORS} />
         </DocBody>
       </DocMain>

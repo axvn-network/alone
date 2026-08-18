@@ -9,7 +9,8 @@ import { usePageContent } from "@/hooks/usePageContent";
 import { useLang } from "@/contexts/LangContext";
 import { t } from "@/shared/i18n";
 const SOCIAL_LINKS = {
-  LINKEDIN: "https://www.linkedin.com/company/135716850/admin/dashboard/?editPageActiveTab=info",
+  LINKEDIN:
+    "https://www.linkedin.com/company/135716850/admin/dashboard/?editPageActiveTab=info",
   INSTAGRAM: "https://www.instagram.com/vnkrdubai/",
   FACEBOOK: "https://www.facebook.com/profile.php?id=61591930895552",
   THREADS: "https://www.threads.com/@vnkrdubai",
@@ -18,24 +19,61 @@ const SOCIAL_LINKS = {
 } as const;
 
 const PillarIcon0 = () => (
-  <svg viewBox="0 0 32 32" className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="1.5">
-    <path d="M16 3 L28 8 V17 C28 23.627 22.627 29 16 29 C9.373 29 4 23.627 4 17 V8 Z" strokeLinejoin="round" />
-    <path d="M11 16.5 L14.5 20 L21 13" strokeLinecap="round" strokeLinejoin="round" />
+  <svg
+    viewBox="0 0 32 32"
+    className="w-8 h-8"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+  >
+    <path
+      d="M16 3 L28 8 V17 C28 23.627 22.627 29 16 29 C9.373 29 4 23.627 4 17 V8 Z"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M11 16.5 L14.5 20 L21 13"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   </svg>
 );
 const PillarIcon1 = () => (
-  <svg viewBox="0 0 32 32" className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="1.5">
+  <svg
+    viewBox="0 0 32 32"
+    className="w-8 h-8"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+  >
     <rect x="4" y="18" width="5" height="10" rx="1" />
     <rect x="13" y="12" width="5" height="16" rx="1" />
     <rect x="22" y="6" width="5" height="22" rx="1" />
-    <path d="M6 14 L14 9 L21 13 L28 5" strokeLinecap="round" strokeLinejoin="round" />
+    <path
+      d="M6 14 L14 9 L21 13 L28 5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
     <path d="M24 5 L28 5 L28 9" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 const PillarIcon2 = () => (
-  <svg viewBox="0 0 32 32" className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="1.5">
-    <path d="M4 18 C4 18 7 14 11 15 L16 16 C18 16.5 20 15.5 20 14 C20 12.5 18.5 12 17 12.5 L14 13.5" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M20 14 L26 10 C27.5 9 28.5 10.5 27.5 12 L21 17 C19.5 18.5 17 19 15 18.5 L10 17 C8 16.5 6 17.5 4 18" strokeLinecap="round" strokeLinejoin="round" />
+  <svg
+    viewBox="0 0 32 32"
+    className="w-8 h-8"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+  >
+    <path
+      d="M4 18 C4 18 7 14 11 15 L16 16 C18 16.5 20 15.5 20 14 C20 12.5 18.5 12 17 12.5 L14 13.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M20 14 L26 10 C27.5 9 28.5 10.5 27.5 12 L21 17 C19.5 18.5 17 19 15 18.5 L10 17 C8 16.5 6 17.5 4 18"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
     <path d="M3 22 L7 18" strokeLinecap="round" />
     <path d="M9 9 C9 9 11 6 14 8 C17 10 14 13 16 14" strokeLinecap="round" />
   </svg>
@@ -100,7 +138,11 @@ const socialLinks = [
 
 const sectionReveal = {
   hidden: { opacity: 0, y: 60 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const } },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const },
+  },
 };
 
 const defaultFooterData = {
@@ -127,11 +169,26 @@ export default function Footer() {
       heading: t("footer.col2Heading", lang),
       links: [
         { label: t("footer.col2Link1", lang), href: "/investment-focus" },
-        { label: t("footer.col2Link2", lang), href: "/investment-focus#crypto-asset-services" },
-        { label: t("footer.col2Link3", lang), href: "/investment-focus#fintech-payments" },
-        { label: t("footer.col2Link4", lang), href: "/investment-focus#ai-technology" },
-        { label: t("footer.col2Link5", lang), href: "/investment-focus#edtech" },
-        { label: t("footer.col2Link6", lang), href: "/investment-focus#digital-economy" },
+        {
+          label: t("footer.col2Link2", lang),
+          href: "/investment-focus#crypto-asset-services",
+        },
+        {
+          label: t("footer.col2Link3", lang),
+          href: "/investment-focus#fintech-payments",
+        },
+        {
+          label: t("footer.col2Link4", lang),
+          href: "/investment-focus#ai-technology",
+        },
+        {
+          label: t("footer.col2Link5", lang),
+          href: "/investment-focus#edtech",
+        },
+        {
+          label: t("footer.col2Link6", lang),
+          href: "/investment-focus#digital-economy",
+        },
       ],
     },
     {
@@ -155,9 +212,21 @@ export default function Footer() {
   ];
 
   const pillars = [
-    { title: t("footer.pillar1Title", lang), sub: t("footer.pillar1Sub", lang), Icon: PillarIcon0 },
-    { title: t("footer.pillar2Title", lang), sub: t("footer.pillar2Sub", lang), Icon: PillarIcon1 },
-    { title: t("footer.pillar3Title", lang), sub: t("footer.pillar3Sub", lang), Icon: PillarIcon2 },
+    {
+      title: t("footer.pillar1Title", lang),
+      sub: t("footer.pillar1Sub", lang),
+      Icon: PillarIcon0,
+    },
+    {
+      title: t("footer.pillar2Title", lang),
+      sub: t("footer.pillar2Sub", lang),
+      Icon: PillarIcon1,
+    },
+    {
+      title: t("footer.pillar3Title", lang),
+      sub: t("footer.pillar3Sub", lang),
+      Icon: PillarIcon2,
+    },
   ];
 
   const footerDesc = content.footerDesc || t("footer.desc", lang);
@@ -218,7 +287,15 @@ export default function Footer() {
                   whileHover={{ borderColor: "rgba(201,162,74,0.9)" }}
                   transition={{ duration: 0.2 }}
                 >
-                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    className="w-4 h-4"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
                     <polyline points="14 2 14 8 20 8" />
                     <line x1="9" y1="13" x2="15" y2="13" />
@@ -231,9 +308,9 @@ export default function Footer() {
                 {columns.map((col) => (
                   <div key={col.heading} className="flex flex-col gap-4">
                     <div>
-                      <h4 className="text-white text-xs font-bold tracking-[3px] uppercase mb-2">
+                      <h3 className="text-white text-xs font-bold tracking-[3px] uppercase mb-2">
                         {col.heading}
-                      </h4>
+                      </h3>
                       <div className="h-[1.5px] w-8 bg-[#C9A24A]" />
                     </div>
                     <ul className="flex flex-col gap-2.5">
@@ -285,7 +362,9 @@ export default function Footer() {
                 {/* Copyright */}
                 <div className="flex flex-col gap-1 shrink-0">
                   <Link href="/" className="flex items-baseline gap-1.5">
-                    <span className="text-white text-sm font-bold tracking-[5px] uppercase">AXVN</span>
+                    <span className="text-white text-sm font-bold tracking-[5px] uppercase">
+                      AXVN
+                    </span>
                     <span className="text-[#C9A24A] text-sm font-bold tracking-[5px] uppercase"></span>
                   </Link>
                   <p className="text-[#8fa0b8]/50 text-[11px] leading-snug">
@@ -298,7 +377,10 @@ export default function Footer() {
                 {/* Pillars — ẩn trên mobile nhỏ để tiết kiệm không gian */}
                 <div className="hidden sm:flex flex-row gap-6 sm:gap-10 lg:gap-14">
                   {pillars.map((p) => (
-                    <div key={p.title} className="group relative flex items-center justify-center">
+                    <div
+                      key={p.title}
+                      className="group relative flex items-center justify-center"
+                    >
                       <div className="absolute bottom-full mb-3 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-20">
                         <div className="bg-[#0f1a2e] border border-[#C9A24A]/30 rounded px-3 py-2 shadow-xl whitespace-nowrap">
                           <p className="text-white text-[11px] font-bold tracking-[2px] uppercase leading-tight text-center">
@@ -311,7 +393,11 @@ export default function Footer() {
                         <div className="w-2 h-2 bg-[#0f1a2e] border-r border-b border-[#C9A24A]/30 rotate-45 mx-auto -mt-1" />
                       </div>
                       <div className="relative flex items-center justify-center w-11 h-11 shrink-0">
-                        <svg viewBox="0 0 44 44" className="absolute inset-0 w-full h-full" fill="none">
+                        <svg
+                          viewBox="0 0 44 44"
+                          className="absolute inset-0 w-full h-full"
+                          fill="none"
+                        >
                           <polygon
                             points="22,2 40,12 40,32 22,42 4,32 4,12"
                             stroke="#C9A24A"
@@ -319,7 +405,9 @@ export default function Footer() {
                             strokeWidth="1"
                           />
                         </svg>
-                        <span className="text-[#C9A24A]/80"><p.Icon /></span>
+                        <span className="text-[#C9A24A]/80">
+                          <p.Icon />
+                        </span>
                       </div>
                     </div>
                   ))}
@@ -339,7 +427,11 @@ export default function Footer() {
                         className="w-8 h-8 rounded-full border border-[#8fa0b8]/25 flex items-center justify-center text-[#8fa0b8]/60 hover:border-[#C9A24A]/60 hover:text-[#C9A24A] transition-colors"
                         whileHover={{ scale: 1.12, y: -2 }}
                         whileTap={{ scale: 0.9 }}
-                        transition={{ type: "spring", stiffness: 450, damping: 18 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 450,
+                          damping: 18,
+                        }}
                       >
                         {s.icon}
                       </motion.a>

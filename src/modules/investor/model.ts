@@ -23,9 +23,13 @@ const InvestorSchema = new Schema<IInvestorDoc>(
     phone: { type: String, required: true },
     company: { type: String, required: true },
     capitalCommitted: { type: Number, required: true },
-    status: { type: String, enum: ["pending", "active", "rejected"], default: "pending" },
+    status: {
+      type: String,
+      enum: ["pending", "active", "rejected"],
+      default: "pending",
+    },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const Investor =

@@ -21,7 +21,11 @@ export default async function InsightsPage() {
   let fetchError = false;
 
   try {
-    const { posts } = await blogService.getBlogs({ status: "published", page: 1, limit: 100 });
+    const { posts } = await blogService.getBlogs({
+      status: "published",
+      page: 1,
+      limit: 100,
+    });
     initialArticles = posts.map((post) => ({
       slug: post.slug,
       title: post.title,
@@ -39,7 +43,10 @@ export default async function InsightsPage() {
 
   return (
     <main className="min-h-screen bg-[#F8F9FB] pb-safe md:pb-0">
-      <InsightsClient initialArticles={initialArticles} initialError={fetchError} />
+      <InsightsClient
+        initialArticles={initialArticles}
+        initialError={fetchError}
+      />
     </main>
   );
 }

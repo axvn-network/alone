@@ -81,8 +81,8 @@ export function formatVNDInternational(amount: number): string {
 export function parseVND(input: string): number | null {
   const cleaned = input
     .replace(/[₫VND\s]/gi, "") // strip currency symbols
-    .replace(/\./g, "")         // strip VN thousands separator
-    .replace(/,/g, "");         // strip international thousands separator
+    .replace(/\./g, "") // strip VN thousands separator
+    .replace(/,/g, ""); // strip international thousands separator
   const n = parseInt(cleaned, 10);
   return isNaN(n) ? null : n;
 }
@@ -113,7 +113,9 @@ export function formatNgayVN(input: string | Date | null | undefined): string {
  *
  * @example formatNgayGioVN("2026-08-10T07:00:00Z") → "10/08/2026 14:00:00"
  */
-export function formatNgayGioVN(input: string | Date | null | undefined): string {
+export function formatNgayGioVN(
+  input: string | Date | null | undefined,
+): string {
   if (!input) return "—";
   const date = typeof input === "string" ? parseISO(input) : input;
   if (!isValid(date)) return "Invalid date/time";
@@ -135,7 +137,9 @@ export function formatNgayGioVN(input: string | Date | null | undefined): string
  *
  * @example formatNgayGioVNDayOfWeek("2026-08-10T07:00:00Z") → "Thứ Hai, 10/08/2026 14:00 (ICT)"
  */
-export function formatNgayGioVNDayOfWeek(input: string | Date | null | undefined): string {
+export function formatNgayGioVNDayOfWeek(
+  input: string | Date | null | undefined,
+): string {
   if (!input) return "—";
   const date = typeof input === "string" ? parseISO(input) : input;
   if (!isValid(date)) return "Invalid date/time";
@@ -147,7 +151,9 @@ export function formatNgayGioVNDayOfWeek(input: string | Date | null | undefined
  *
  * @example formatNgayISO(new Date()) → "2026-08-10T07:00:00.000Z"
  */
-export function formatNgayISO(input: string | Date | null | undefined): string | null {
+export function formatNgayISO(
+  input: string | Date | null | undefined,
+): string | null {
   if (!input) return null;
   const date = typeof input === "string" ? parseISO(input) : input;
   if (!isValid(date)) return null;
@@ -159,16 +165,19 @@ export function formatNgayISO(input: string | Date | null | undefined): string |
  *
  * @example thoiGianTuongDoi("2026-08-09T12:00:00Z") → "1 ngày trước"
  */
-export function thoiGianTuongDoi(input: string | Date | null | undefined): string {
+export function thoiGianTuongDoi(
+  input: string | Date | null | undefined,
+): string {
   if (!input) return "—";
   const date = typeof input === "string" ? parseISO(input) : input;
   if (!isValid(date)) return "—";
   const diffSec = Math.floor((Date.now() - date.getTime()) / 1000);
-  if (diffSec < 60)        return "vừa xong";
-  if (diffSec < 3_600)     return `${Math.floor(diffSec / 60)} phút trước`;
-  if (diffSec < 86_400)    return `${Math.floor(diffSec / 3_600)} giờ trước`;
+  if (diffSec < 60) return "vừa xong";
+  if (diffSec < 3_600) return `${Math.floor(diffSec / 60)} phút trước`;
+  if (diffSec < 86_400) return `${Math.floor(diffSec / 3_600)} giờ trước`;
   if (diffSec < 2_592_000) return `${Math.floor(diffSec / 86_400)} ngày trước`;
-  if (diffSec < 31_536_000) return `${Math.floor(diffSec / 2_592_000)} tháng trước`;
+  if (diffSec < 31_536_000)
+    return `${Math.floor(diffSec / 2_592_000)} tháng trước`;
   return `${Math.floor(diffSec / 31_536_000)} năm trước`;
 }
 

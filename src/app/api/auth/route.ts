@@ -79,7 +79,16 @@ type AuthBody = RegisterBody | LoginBody | LogoutBody;
 
 // ─── Helper: shape trả về sau khi xác thực ────────────────────────────────────
 
-function safeUser(doc: { _id: { toString(): string }; name: string; email: string; phone: string; emailVerified: boolean; newsletterSubscribed: boolean; lastLogin: Date | null; createdAt: Date }) {
+function safeUser(doc: {
+  _id: { toString(): string };
+  name: string;
+  email: string;
+  phone: string;
+  emailVerified: boolean;
+  newsletterSubscribed: boolean;
+  lastLogin: Date | null;
+  createdAt: Date;
+}) {
   return {
     id: doc._id.toString(),
     name: doc.name,
@@ -99,11 +108,11 @@ async function writeSessionCookie(id: string, email: string): Promise<void> {
   const token = makePublicUserToken(id, email);
   const cookieStore = await cookies();
   cookieStore.set(PUB_COOKIE, token, {
-    httpOnly: true,                                                  // Ngăn JavaScript đọc cookie
-    secure: process.env.NODE_ENV === "production",                  // HTTPS only trong production
+    httpOnly: true, // Ngăn JavaScript đọc cookie
+    secure: process.env.NODE_ENV === "production", // HTTPS only trong production
     sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
     path: "/",
-    maxAge: PUB_MAX_AGE,                                             // 7 ngày
+    maxAge: PUB_MAX_AGE, // 7 ngày
   });
 }
 
@@ -125,15 +134,20 @@ async function clearSessionCookie(): Promise<void> {
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json() as AuthBody;
+    const body = (await req.json()) as AuthBody;
     const { action } = body;
 
     await connectDB();
 
     // ── Đăng ký tài khoản mới ─────────────────────────────────────────────
     if (action === "register") {
-      const { name, email, password, phone = "", newsletterSubscribed = false } =
-        body as RegisterBody;
+      const {
+        name,
+        email,
+        password,
+        phone = "",
+        newsletterSubscribed = false,
+      } = body as RegisterBody;
 
       // Kiểm tra dữ liệu đầu vào
       if (!name?.trim()) return errorResponse("Vui lòng nhập họ tên.");
@@ -153,7 +167,7 @@ export async function POST(req: NextRequest) {
       const user = await PublicUser.create({
         name: name.trim(),
         email: email.toLowerCase().trim(),
-        password,          // Schema middleware sẽ hash tự động
+        password, // Schema middleware sẽ hash tự động
         phone: phone.trim(),
         newsletterSubscribed,
         emailVerified: false, // Mặc định chưa xác thực email
@@ -163,7 +177,11 @@ export async function POST(req: NextRequest) {
       // Ghi cookie session ngay sau khi đăng ký
       await writeSessionCookie(user._id.toString(), user.email);
 
-      return successResponse(safeUser(user.toObject()), "Đăng ký thành công!", 201);
+      return successResponse(
+        safeUser(user.toObject()),
+        "Đăng ký thành công!",
+        201,
+      );
     }
 
     // ── Đăng nhập ─────────────────────────────────────────────────────────
@@ -197,7 +215,10 @@ export async function POST(req: NextRequest) {
       // Ghi cookie session
       await writeSessionCookie(user._id.toString(), user.email);
 
-      return successResponse(safeUser(user.toObject()), "Đăng nhập thành công!");
+      return successResponse(
+        safeUser(user.toObject()),
+        "Đăng nhập thành công!",
+      );
     }
 
     // ── Đăng xuất ─────────────────────────────────────────────────────────
@@ -232,7 +253,9 @@ export async function GET() {
     if (!parsed) {
       // Token hết hạn hoặc bị giả mạo — xóa cookie rác
       await clearSessionCookie();
-      return unauthorizedResponse("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.");
+      return unauthorizedResponse(
+        "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.",
+      );
     }
 
     await connectDB();
@@ -240,7 +263,9 @@ export async function GET() {
 
     if (!user || !user.isActive) {
       await clearSessionCookie();
-      return unauthorizedResponse("Tài khoản không tồn tại hoặc đã bị vô hiệu hoá.");
+      return unauthorizedResponse(
+        "Tài khoản không tồn tại hoặc đã bị vô hiệu hoá.",
+      );
     }
 
     return successResponse(safeUser(user as Parameters<typeof safeUser>[0]));
