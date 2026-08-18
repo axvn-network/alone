@@ -26,7 +26,7 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     "infra/**",
     "scripts/**",
-    ".lintstagedrc.js",
+    ".lintstagedrc.mjs",
   ]),
 ]);
 
