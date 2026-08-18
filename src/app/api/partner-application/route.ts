@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { partnerApplicationService } from "@/services";
+import * as partnerApplicationService from "@/modules/partner-applications";
 import { partnerApplicationSchema, formatZodErrors } from "@/validators";
 import { rateLimit } from "@/utils/rate-limit";
 import { sanitizeText, sanitizeEmail, sanitizeMessage } from "@/utils/sanitize";

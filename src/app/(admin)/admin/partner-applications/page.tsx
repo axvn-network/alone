@@ -3,8 +3,8 @@
 import { useEffect, useState, useCallback } from "react";
 import { toast } from "sonner";
 import { RefreshCw, CheckCircle2, XCircle, Clock, FileSearch, ChevronLeft, ChevronRight, Search, X, Eye } from "lucide-react";
-import AdminSidebar from "@/app/(admin)/components/AdminSidebar";
-import AdminNavbar from "@/app/(admin)/components/AdminNavbar";
+import AdminSidebar from "@/shared/components/admin/AdminSidebar";
+import AdminNavbar from "@/shared/components/admin/AdminNavbar";
 import { useCsrf } from "@/contexts/CsrfContext";
 import {
   ROLE_LABELS, APPLICATION_STATUS_LABELS as STATUS_LABELS,

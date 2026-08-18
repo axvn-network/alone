@@ -1,6 +1,7 @@
 # Incident Response Playbook — AXVN Tech Holding Langding Platform
 
-> **Version:** 1.0 | **Owner:** CTO / DevOps Lead | **Review cycle:** Quarterly
+> **Version:** 1.1 | **Owner:** CTO / DevOps Lead | **Review cycle:** Quarterly
+> **Last updated:** 2025-Q3
 
 ---
 
@@ -36,7 +37,7 @@ Detected → Triaged → Contained → Eradicated → Recovered → Post-mortem
 
 ### 3.1 Detection Sources
 - Uptime monitor alerts (`/api/health` endpoint)
-- PM2 crash logs: `pm2 logs langding --err`
+- PM2 crash logs: `pm2 logs AXVN-langding --err`
 - MongoDB Atlas / server alerts
 - User-reported via support channel
 - Automated audit-log anomaly (≥10 failed logins in 5 min)
@@ -93,7 +94,7 @@ Prevention:
 pm2 status
 
 # 2. Check recent crash logs
-pm2 logs langding --err --lines 100
+pm2 logs AXVN-langding --err --lines 100
 
 # 3. Check Nginx
 systemctl status nginx
@@ -103,40 +104,39 @@ nginx -t
 curl -s https://vnkr.vn/api/health | jq .
 
 # 5. If crash loop — rollback
-cd /var/www/AXVN/app
-git log --oneline -5
-git stash          # or
-git checkout <prev-sha>
-pm2 restart langding
+cd /var/lkvip/langding
+bash scripts/rollback.sh
 ```
 
 ### 4.2 Database Connectivity Failure
 ```bash
-# 1. Check DB connection (will log retries — see lib/db.ts retry logic)
-grep "MongoDB" /var/log/AXVN-app.log | tail -20
+# 1. Check DB connection logs
+pm2 logs AXVN-langding --lines 50 | grep -i mongo
 
 # 2. Test URI directly
 mongosh "$MONGODB_URI" --eval "db.adminCommand('ping')"
 
 # 3. If Atlas — check Atlas status page + IP whitelist
-# 4. Rotate MONGODB_URI if credentials compromised — update .env.local + pm2 restart
+# 4. Rotate MONGODB_URI if credentials compromised:
+#    Edit .env.local → new MONGODB_URI
+pm2 restart AXVN-langding
 ```
 
 ### 4.3 Authentication Bypass / Session Compromise
 ```bash
 # 1. IMMEDIATE — rotate SESSION_SECRET
-#    Edit .env.local → new SESSION_SECRET (≥64 random hex chars)
 openssl rand -hex 64
+# Edit .env.local → update SESSION_SECRET
 
 # 2. Restart to invalidate all existing sessions
-pm2 restart langding
+pm2 restart AXVN-langding
 
 # 3. Audit recent admin logins
 # Query AuditLog for action: "admin_login" last 24h
 # Query AuditLog for action: "login_failed" spikes
 
 # 4. Check middleware.ts HMAC validation is active
-grep "verifyShareholderCookie" src/middleware.ts
+grep "verifyShareholderCookie" /var/lkvip/langding/src/middleware.ts
 
 # 5. Force-invalidate shareholder sessions
 #    (update lastPasswordChange on all shareholders in DB)
@@ -146,11 +146,13 @@ grep "verifyShareholderCookie" src/middleware.ts
 ```bash
 # 1. IMMEDIATELY notify Security Lead + COO
 # 2. Preserve logs — do NOT wipe:
-cp -r /var/log/nginx /tmp/incident-$(date +%Y%m%d)/nginx
-pm2 logs langding --lines 5000 > /tmp/incident-$(date +%Y%m%d)/pm2.log
+INCIDENT_DIR="/tmp/incident-$(date +%Y%m%d)"
+mkdir -p "$INCIDENT_DIR"
+cp -r /var/log/nginx "$INCIDENT_DIR/"
+pm2 logs AXVN-langding --lines 5000 > "$INCIDENT_DIR/pm2.log"
 
-# 3. If database: take snapshot before any changes
-bash scripts/backup.sh
+# 3. Take DB snapshot before any changes
+bash /var/lkvip/langding/scripts/backup.sh
 
 # 4. Identify affected records via AuditLog
 #    (capital events, shareholder ops have 7-year retention)
@@ -163,12 +165,13 @@ bash scripts/backup.sh
 ### 4.5 WhatsApp Webhook Failure
 ```bash
 # 1. Check webhook route logs
-grep "whatsapp" /var/log/AXVN-app.log | tail -50
+pm2 logs AXVN-langding --lines 50 | grep -i whatsapp
 
 # 2. Verify WHATSAPP_VERIFY_TOKEN env var
-grep WHATSAPP .env.local
+grep WHATSAPP /var/lkvip/langding/.env.local
 
 # 3. Test webhook manually
+TOKEN=$(grep WHATSAPP_VERIFY_TOKEN /var/lkvip/langding/.env.local | cut -d= -f2)
 curl -X GET "https://vnkr.vn/api/whatsapp/webhook?hub.mode=subscribe&hub.verify_token=$TOKEN&hub.challenge=test"
 
 # 4. Check Meta Business Manager webhook status
@@ -186,11 +189,43 @@ free -m
 # 3. Check for missing indexes — especially on AuditLog, Enquiry, Blog
 
 # 4. Restart app if memory leak
-pm2 restart langding
+pm2 restart AXVN-langding
 
-# 5. If SSE connections piling up
-grep "SSE" /var/log/AXVN-app.log | tail -20
-# SSE broker uses global heartbeat — check sse-broker.ts
+# 5. If SSE connections piling up — check global heartbeat
+pm2 logs AXVN-langding --lines 50 | grep -i sse
+# SSE broker uses global heartbeat — không có per-connection timer (sse-broker.ts)
+```
+
+### 4.7 SSL Certificate Expired or Near Expiry
+```bash
+# 1. Check cert expiry
+openssl x509 -enddate -noout -in /etc/letsencrypt/live/vnkr.vn/fullchain.pem
+
+# 2. Manual renew
+certbot renew --nginx
+
+# 3. If renew fails — check DNS, firewall port 80
+ufw status
+curl -I http://vnkr.vn  # phải 200 hoặc redirect
+
+# 4. Reload Nginx sau khi renew thành công
+systemctl reload nginx
+```
+
+### 4.8 Nginx Down
+```bash
+# 1. Check status
+systemctl status nginx
+
+# 2. Test config
+nginx -t
+
+# 3. Restart
+systemctl restart nginx
+
+# 4. Check logs nếu vẫn fail
+journalctl -u nginx -n 50
+tail -n 50 /var/log/nginx/langding_error.log
 ```
 
 ---
@@ -198,16 +233,22 @@ grep "SSE" /var/log/AXVN-app.log | tail -20
 ## 5. Rollback Procedure
 
 ```bash
-# Standard rollback
-cd /var/www/AXVN/app
+# Interactive rollback (recommended)
+cd /var/lkvip/langding
+bash scripts/rollback.sh
+
+# Manual rollback nếu cần
+cd /var/lkvip/langding
 git log --oneline -10           # identify last-known-good SHA
 git checkout <sha>
 npm ci --omit=dev
 npm run build
-pm2 restart langding
+cp -r .next/static .next/standalone/.next/static
+cp -r public .next/standalone/public
+pm2 reload AXVN-langding
 
 # Verify
-curl -sf https://vnkr.vn/api/health && echo "OK"
+bash scripts/health-check.sh
 ```
 
 ---
@@ -259,8 +300,10 @@ Sections:
 |----------|---------|
 | `GET /api/health` | App + DB liveness |
 | `GET /api/admin/events/sse` | Admin realtime stream |
-| PM2 `pm2 monit` | Process CPU/RAM |
+| `pm2 monit` | Process CPU/RAM |
 | `/var/log/AXVN-backup.log` | Backup status |
+| `bash scripts/health-check.sh` | Full smoke test |
+| `bash infra/lkvip_holding/scripts/server-health.sh` | VPS system health |
 
 ---
 
@@ -275,8 +318,40 @@ Sections:
 [ ] WhatsApp webhook responding
 [ ] Latest backup exists and < 24h old
 [ ] No new error spikes in PM2 logs
+[ ] SSL cert valid > 14 days
+[ ] Nginx config test passes (nginx -t)
 ```
 
 ---
 
-*Last updated: 2025 | AXVN Tech Holding — Platform Engineering*
+## 10. Quick Reference Commands
+
+```bash
+# App status
+pm2 status
+pm2 show AXVN-langding
+
+# Logs
+pm2 logs AXVN-langding --lines 100
+pm2 logs AXVN-langding --err --lines 50
+tail -f /var/log/nginx/langding_error.log
+
+# Restart/reload
+pm2 reload AXVN-langding          # zero-downtime
+pm2 restart AXVN-langding         # full restart
+systemctl reload nginx             # nginx reload
+
+# Health
+bash /var/lkvip/langding/scripts/health-check.sh
+bash /var/lkvip/langding/infra/lkvip_holding/scripts/server-health.sh
+
+# Backup on-demand
+bash /var/lkvip/langding/scripts/backup.sh
+
+# Rollback
+bash /var/lkvip/langding/scripts/rollback.sh
+```
+
+---
+
+*Last updated: 2025-Q3 | AXVN Tech Holding — Platform Engineering · vnkr.vn*

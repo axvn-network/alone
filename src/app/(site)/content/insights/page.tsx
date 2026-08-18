@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import InsightsClient, { type InsightsClientProps } from "./InsightsClient";
-import { blogService } from "@/services";
+import * as blogService from "@/modules/blog";
 
 export const metadata: Metadata = {
   title: "Góc Nhìn & Báo Cáo Chuyên Sâu | AXVN Tech Holding",

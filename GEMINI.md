@@ -1,50 +1,104 @@
-@AGENTS.md
+# Project Architecture & Conventions
 
-# Project Standards & Workflows
+This project follows a modular, feature-centric architecture to ensure scalability and maintainability.
 
-Read `.ai/manifest.yaml`, `.ai/work-queue.yaml`, and `.ai/locks.yaml` before claiming work. Use the UTF-8 source/retrieval contract in `KNOWLEDGE_BASE.md`.
+## Directory Structure
 
-## Absolute Perfection Mandate
+```
+src/
+├── app/          # Next.js routing only — page.tsx, layout.tsx, route.ts, error.tsx
+│   ├── (admin)/  # Admin portal pages (session-protected)
+│   ├── (site)/   # Public site pages
+│   └── api/      # Route handlers: admin/*, shareholders/*, public/*
+├── core/         # Infrastructure brain — no React, no UI
+│   ├── database/ # MongoDB connection + connectDB()
+│   ├── models/   # Mongoose models (canonical source for non-module models)
+│   ├── rbac/     # Role-based access control: guards, permissions, types
+│   ├── security/ # Session, CSRF, auth-utils
+│   └── vn-utils/ # Vietnamese business logic: currency, CCCD, hanh-chinh, Zod schemas
+├── modules/      # Business domain logic — one folder per domain
+│   ├── audit-log/
+│   ├── auth/
+│   ├── blog/
+│   ├── capital-transactions/
+│   ├── content/
+│   ├── dashboard/
+│   ├── documents/
+│   ├── enquiries/
+│   ├── investment-plans/
+│   ├── investor/
+│   ├── media/
+│   ├── partner-applications/
+│   ├── public-users/
+│   ├── settings/
+│   └── shareholders/
+├── shared/       # Cross-cutting — used by both app/ and modules/
+│   ├── components/
+│   │   ├── admin/      # AdminNavbar, AdminSidebar
+│   │   ├── animations/ # Framer Motion primitives
+│   │   ├── layout/     # GlobalNavbar, GlobalFooter, PageContainer…
+│   │   └── ui/         # Accordion, Primitives, RichTextEditor, AiAssistPanel…
+│   ├── constants/      # Brand, colors, strategy, API endpoint constants
+│   ├── contexts/       # AdminSessionContext, CsrfContext, LangContext
+│   ├── hooks/          # useDebounce, usePermission, useSmoothScroll…
+│   ├── services/       # Canonical service implementations (shared across modules)
+│   ├── types/          # Global TypeScript interfaces
+│   ├── utils/          # api-response, errors, logger, pagination, search…
+│   └── validators/     # Zod schemas (Vietnamese error messages)
+├── data/         # Static JSON (roadmap, governance, compliance…)
+└── locales/      # i18n translation files (vi, en)
+```
 
-This project operates under a zero-tolerance policy for technical debt, warnings, or linting imperfections.
-- **1 warning = 1 failure.** 
-- Codebase must achieve 100% compliance with type safety and linting rules at all times.
-- If a warning is triggered, it MUST be resolved before any new task is initiated.
-- No `eslint-disable` or `any` types are permitted without explicit architectural justification.
-- **Mongoose 9 Convention**: `pre("save")` middleware must use `async function()` and return `Promise<void>`, NO `next` callback.
-- **ESLint Convention**: Unused variables prefixed with `_` are explicitly allowed (`varsIgnorePattern: "^_"`).
-- **SEO/Metadata**: Metadata must be exported in Server Component layout/page files; Client Components are exclusively for interactivity.
+## Import Conventions
 
-## Langding Agent Contract
+| Import | Resolves to |
+|--------|------------|
+| `@/core/database` | `src/core/database/index.ts` |
+| `@/core/models/Xxx` | `src/core/models/Xxx.ts` |
+| `@/core/rbac/rbac-lib` | `src/core/rbac/rbac-lib/index.ts` |
+| `@/core/security/session` | `src/core/security/session.ts` |
+| `@/modules/blog` | `src/modules/blog/index.ts` |
+| `@/shared/services/audit.service` | `src/shared/services/audit.service.ts` |
+| `@/shared/components/ui/Accordion` | `src/shared/components/ui/Accordion.tsx` |
+| `@/shared/utils/api-response` | `src/shared/utils/api-response.ts` |
+| `@/validators` | `src/shared/validators/index.ts` |
+| `@/types` | `src/shared/types/index.ts` |
+| `@/constants` | `src/shared/constants/index.ts` |
+| `@/hooks` | `src/shared/hooks/index.ts` |
+| `@/contexts` | `src/shared/contexts/index.ts` |
 
-Before changing application code, read the relevant Next.js 16 documentation under `node_modules/next/dist/docs/`.
+**Rules:**
+- Always use alias imports (`@/core/…`, `@/modules/…`, `@/shared/…`) — never relative paths for cross-folder references.
+- `core/` may not import from `modules/`, `app/`, or `shared/components/`.
+- `modules/` may import from `core/` and `shared/` but not from other `modules/` directly.
+- `shared/services/` imports only from `@/core/models/` and `@/core/database`.
 
-Read [CONTEXT.md](CONTEXT.md), [KNOWLEDGE_BASE.md](KNOWLEDGE_BASE.md), and `.ai/manifest.yaml` before work. Then check `.ai/work-queue.yaml` and `.ai/locks.yaml` before claiming a task.
+## Naming Conventions
 
-For strategy, legal, finance, governance, roadmap, infrastructure, KPI, risk, or corporate claims, locate material with `_standardized/index.json` or `_standardized/chunks.jsonl`, then verify it in the relevant `_extracted/` Markdown named by `original_path`. Do not edit `_extracted/`, alter valid Vietnamese UTF-8, invent source-backed facts, or transmit confidential corpus content to external services without authorization. Cite source-backed output as `[slug | original_path]`.
+- **Folders:** `kebab-case`
+- **Components:** `PascalCase.tsx`
+- **Services / utils:** `camelCase.ts` or `kebab-case.service.ts`
+- **Mongoose models:** `PascalCase.ts`
 
-## Multi-Agent Workflow
+## Module Structure
 
-Use the shared repo-native protocol in `.ai/manifest.yaml`. Work on one small, unlocked scope at a time; record the file scope in `.ai/locks.yaml` before editing and leave a UTF-8 handoff in `.ai/handoffs/` when releasing it. Never overwrite another agent's in-progress changes, generated corpus artifacts, or CMS data without explicit review.
+Each `src/modules/<domain>/` should contain:
 
-<!-- BEGIN:nextjs-agent-rules -->
-# This is NOT the Next.js you know
+```
+index.ts        — barrel export (public API)
+model.ts        — Mongoose model re-export shim → @/core/models/Xxx
+service.ts      — re-export shim → @/shared/services/xxx.service
+schema.ts       — Zod input validation schema
+actions.ts      — Next.js Server Actions (optional)
+types.ts        — domain-specific TypeScript types (optional)
+components/     — domain-specific React components (optional)
+```
 
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+## Standards
 
-This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
-
-## Zero-Garbage Architectural Policy
-
-To maintain long-term codebase health, the following rules are mandatory:
-
-- **Feature-Based Colocation (Mandatory):** All new features, components, hooks, styles, and types MUST be created within their respective route subdirectories (`src/app/(admin)/...` or `src/app/(site)/...`). No new top-level components or utils are permitted.
-- **Cleanup Requirement:** After every task, the assigned agent MUST perform a cleanup check:
-    - Delete unused files, components, and deprecated assets.
-    - Move legacy or non-operational scripts to `archived/`.
-    - Do not allow empty directories to persist.
-- **Script Organization:**
-    - `scripts/`: Only for active, daily operational scripts (deployment, backup, verification).
-    - `archived/`: For all legacy, historic, or inactive scripts.
-    - Never add new scripts to the project root.
-
+1. New business features **must** be implemented within `src/modules/`.
+2. Shared UI components **must** live in `src/shared/components/`.
+3. All canonical Mongoose models live in `src/core/models/` (for cross-domain models) or `src/modules/<domain>/model.ts` (for single-domain models).
+4. All canonical service logic lives in `src/shared/services/*.service.ts`.
+5. Do not introduce new top-level `src/` directories without architectural review.
+6. `app/` contains **only** routing files: `page.tsx`, `layout.tsx`, `route.ts`, `error.tsx`, `loading.tsx`, `not-found.tsx`.

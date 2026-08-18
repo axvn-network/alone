@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import AdminSidebar from "@/app/(admin)/components/AdminSidebar";
-import AdminNavbar from "@/app/(admin)/components/AdminNavbar";
+import AdminSidebar from "@/shared/components/admin/AdminSidebar";
+import AdminNavbar from "@/shared/components/admin/AdminNavbar";
 import { toast } from "sonner";
 import {
   Save, RefreshCw, ChevronDown, ChevronUp, Plus, Trash2, Globe, Eye, EyeOff,

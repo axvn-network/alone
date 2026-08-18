@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
-import { getCurrentUser } from "@/lib/auth-utils";
-import { investmentPlanService } from "@/services";
+import { getCurrentUser } from "@/core/security/auth-utils";
+import * as investmentPlanService from "@/modules/investment-plans";
 import { investmentPlanSchema, formatZodErrors } from "@/validators";
 import {
   successResponse,

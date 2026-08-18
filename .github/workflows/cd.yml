@@ -1,0 +1,65 @@
+name: CD — Deploy to Production
+
+on:
+  # Trigger only after CI passes on main
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+    branches: ["main"]
+  # Allow manual trigger from GitHub UI
+  workflow_dispatch:
+    inputs:
+      skip_build:
+        description: "Skip build (use existing .next on server)"
+        required: false
+        default: "false"
+        type: boolean
+
+concurrency:
+  group: cd-production
+  cancel-in-progress: false  # never cancel an in-flight deploy
+
+jobs:
+  deploy:
+    name: Deploy → langding.tc-gaming.live
+    runs-on: ubuntu-latest
+    # Only deploy when CI succeeded (not on failure/cancellation)
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+
+    environment:
+      name: production
+      url: https://langding.tc-gaming.live
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          port: ${{ secrets.DEPLOY_PORT || 22 }}
+          # Keep connection alive over long builds
+          command_timeout: 20m
+          script: |
+            set -euo pipefail
+            cd /var/lkvip/langding
+
+            SKIP_FLAG=""
+            if [[ "${{ inputs.skip_build }}" == "true" ]]; then
+              SKIP_FLAG="--skip-build"
+            fi
+
+            # Run the existing zero-downtime deploy script
+            bash scripts/deploy.sh $SKIP_FLAG
+
+      - name: Notify success
+        if: success()
+        run: |
+          echo "✅ Deployed commit ${{ github.sha }} to production"
+          echo "   URL: https://langding.tc-gaming.live"
+
+      - name: Notify failure
+        if: failure()
+        run: |
+          echo "❌ Deployment failed for commit ${{ github.sha }}"
+          echo "   Check SSH logs or run: pm2 logs AXVN-langding --lines 50"

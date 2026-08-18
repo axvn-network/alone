@@ -6,7 +6,7 @@ import {
   FileText, Download, Search, Calendar, ChevronLeft, ChevronRight, FileDown,
   BookOpen, BarChart2, Users, Megaphone, ScrollText, ClipboardList,
 } from "lucide-react";
-import PageHero from "@/app/(site)/components/public/PageHero";
+import PageHero from "@/modules/content/components/PageHero";
 
 /* ── Types ─────────────────────────────────────────────────── */
 export type DocumentCategory =

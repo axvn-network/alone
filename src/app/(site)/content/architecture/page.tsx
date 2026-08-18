@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { ArchitectureDiagram } from "@/app/(site)/components/visual/ArchitectureDiagram";
-import DocLayout, { DocMain, DocBody, DocHero } from "@/components/layout/DocLayout";
-import PageHero from "@/app/(site)/components/public/PageHero";
+import { ArchitectureDiagram } from "@/modules/dashboard/components/ArchitectureDiagram";
+import DocLayout, { DocMain, DocBody, DocHero } from "@/shared/components/layout/DocLayout";
+import PageHero from "@/modules/content/components/PageHero";
 import { ARCH_NODES } from "@/data/system-architecture";
 
 export const metadata: Metadata = {

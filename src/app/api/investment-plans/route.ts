@@ -1,4 +1,4 @@
-import { investmentPlanService } from "@/services";
+import * as investmentPlanService from "@/modules/investment-plans";
 import { successResponse, serverErrorResponse } from "@/utils/api-response";
 import { handleError } from "@/utils/errors";
 

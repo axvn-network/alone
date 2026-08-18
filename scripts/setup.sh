@@ -1,121 +1,158 @@
 #!/usr/bin/env bash
-# ============================================================
-# scripts/setup.sh — Run ONCE as root on a fresh Ubuntu VPS
-# Usage: sudo bash scripts/setup.sh
-# ============================================================
+# =============================================================================
+# scripts/setup.sh — First-time VPS provisioning for AXVN Tech Holding
+#
+# Sử dụng (chạy 1 lần duy nhất trên server mới):
+#   sudo bash scripts/setup.sh
+#
+# Script này sẽ:
+#   1. Kiểm tra và cài đặt Node.js (LTS), PM2, Nginx, MongoDB Tools
+#   2. Tạo cấu trúc thư mục cần thiết (/var/backups, /var/log/pm2)
+#   3. Cài đặt pm2-logrotate
+#   4. Cấu hình Nginx site
+#   5. Hướng dẫn bước tiếp theo
+#
+# Yêu cầu: Ubuntu 20.04/22.04/24.04 · Quyền root/sudo
+# =============================================================================
 set -euo pipefail
 
-NODEJS_VERSION="20"
 APP_DIR="/var/lkvip/langding"
-LOG_DIR="/var/log/pm2"
-SWAP_SIZE="2G"
+PM2_APP="AXVN-langding"
+NODE_VERSION="22"   # LTS version
 
-print_step() { echo -e "\n\033[1;34m==>\033[0m $1"; }
-print_ok()   { echo -e "  \033[1;32m✓\033[0m $1"; }
-print_warn() { echo -e "  \033[1;33m!\033[0m $1"; }
+# ── Màu terminal ──────────────────────────────────────────────────────────────
+GREEN='\033[0;32m'; YELLOW='\033[1;33m'; RED='\033[0;31m'; CYAN='\033[0;36m'; NC='\033[0m'
+ok()    { echo -e "${GREEN}✓${NC}  $*"; }
+warn()  { echo -e "${YELLOW}!${NC}  $*"; }
+err()   { echo -e "${RED}✗${NC}  $*"; exit 1; }
+step()  { echo -e "\n${CYAN}▶${NC}  $*"; }
+info()  { echo -e "   $*"; }
 
-# ── Must be root ─────────────────────────────────────────────
-if [[ $EUID -ne 0 ]]; then
-  echo "This script must be run as root: sudo bash $0"
-  exit 1
+# ── Kiểm tra quyền root ───────────────────────────────────────────────────────
+if [[ "$EUID" -ne 0 ]]; then
+  err "Script này phải chạy với quyền root/sudo: sudo bash scripts/setup.sh"
 fi
 
-# ── Update system ────────────────────────────────────────────
-print_step "Updating system packages"
-apt-get update -qq
-apt-get upgrade -y -qq
-apt-get install -y -qq curl git unzip wget gnupg2 ca-certificates lsb-release ufw fail2ban
-
-# ── Swap (helps on low-RAM VPS) ──────────────────────────────
-print_step "Configuring swap ($SWAP_SIZE)"
-if ! swapon --show | grep -q /swapfile; then
-  fallocate -l "$SWAP_SIZE" /swapfile
-  chmod 600 /swapfile
-  mkswap /swapfile
-  swapon /swapfile
-  echo '/swapfile none swap sw 0 0' >> /etc/fstab
-  sysctl vm.swappiness=10
-  echo 'vm.swappiness=10' >> /etc/sysctl.conf
-  print_ok "Swap created"
-else
-  print_warn "Swap already exists, skipping"
-fi
-
-# ── Node.js ──────────────────────────────────────────────────
-print_step "Installing Node.js $NODEJS_VERSION"
-if ! command -v node &>/dev/null || [[ $(node -e "process.stdout.write(process.version)" | cut -d. -f1 | tr -d 'v') -lt $NODEJS_VERSION ]]; then
-  curl -fsSL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash -
-  apt-get install -y nodejs
-  print_ok "Node.js $(node -v) installed"
-else
-  print_warn "Node.js $(node -v) already installed"
-fi
-
-# ── PM2 ──────────────────────────────────────────────────────
-print_step "Installing PM2"
-npm install -g pm2 --quiet
-print_ok "PM2 $(pm2 -v) installed"
-
-# ── MongoDB ──────────────────────────────────────────────────
-print_step "Installing MongoDB 7"
-if ! command -v mongod &>/dev/null; then
-  curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | gpg --dearmor -o /etc/apt/trusted.gpg.d/mongodb-server-7.0.gpg
-  echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu $(lsb_release -cs)/mongodb-org/7.0 multiverse" > /etc/apt/sources.list.d/mongodb-org-7.0.list
-  apt-get update -qq
-  apt-get install -y mongodb-org
-  systemctl daemon-reload
-  systemctl enable mongod
-  systemctl start mongod
-  print_ok "MongoDB $(mongod --version | head -1) installed & started"
-else
-  print_warn "MongoDB already installed"
-fi
-
-# ── Nginx ────────────────────────────────────────────────────
-print_step "Installing Nginx"
-apt-get install -y nginx
-systemctl enable nginx
-systemctl start nginx
-print_ok "Nginx installed"
-
-# ── Certbot ──────────────────────────────────────────────────
-print_step "Installing Certbot"
-apt-get install -y certbot python3-certbot-nginx
-print_ok "Certbot installed"
-
-# ── UFW Firewall ─────────────────────────────────────────────
-print_step "Configuring UFW firewall"
-ufw --force reset
-ufw default deny incoming
-ufw default allow outgoing
-ufw allow 22/tcp    comment "SSH"
-ufw allow 80/tcp    comment "HTTP"
-ufw allow 443/tcp   comment "HTTPS"
-ufw --force enable
-print_ok "UFW configured: ports 22, 80, 443 open"
-
-# ── Fail2Ban ─────────────────────────────────────────────────
-print_step "Configuring Fail2Ban"
-systemctl enable fail2ban
-systemctl start fail2ban
-print_ok "Fail2Ban running"
-
-# ── App directories ──────────────────────────────────────────
-print_step "Creating application directories"
-mkdir -p "$APP_DIR"
-mkdir -p "$LOG_DIR"
-mkdir -p /var/backups/AXVN
-print_ok "Directories created: $APP_DIR, $LOG_DIR"
-
-# ── PM2 startup ──────────────────────────────────────────────
-print_step "Registering PM2 startup hook"
-pm2 startup systemd -u root --hp /root | tail -1 | bash || true
-print_ok "PM2 will auto-start on reboot"
-
-print_step "✅ Setup complete!"
 echo ""
-echo "  Next steps:"
-echo "  1. Copy your code to $APP_DIR"
-echo "  2. Copy .env.example → .env.local and fill in values"
-echo "  3. Run: bash scripts/first-deploy.sh"
+echo -e "${CYAN}═══════════════════════════════════════════════════${NC}"
+echo -e "${CYAN}  AXVN Tech Holding — First-time VPS Setup${NC}"
+echo -e "${CYAN}  App dir: $APP_DIR${NC}"
+echo -e "${CYAN}═══════════════════════════════════════════════════${NC}"
+echo ""
+
+# ── 1. Cập nhật package list ──────────────────────────────────────────────────
+step "[1/7] Cập nhật package list"
+apt-get update -qq
+ok "apt-get update"
+
+# ── 2. Cài đặt Node.js ───────────────────────────────────────────────────────
+step "[2/7] Node.js ${NODE_VERSION}.x"
+if command -v node &>/dev/null; then
+  NODE_VER=$(node --version)
+  ok "Node.js đã được cài: $NODE_VER"
+else
+  info "Cài đặt Node.js ${NODE_VERSION}.x via NodeSource..."
+  curl -fsSL "https://deb.nodesource.com/setup_${NODE_VERSION}.x" | bash - &>/dev/null
+  apt-get install -y nodejs &>/dev/null
+  ok "Node.js $(node --version) đã được cài"
+fi
+
+# ── 3. Cài đặt PM2 ───────────────────────────────────────────────────────────
+step "[3/7] PM2"
+if command -v pm2 &>/dev/null; then
+  ok "PM2 đã được cài: $(pm2 --version)"
+else
+  npm install -g pm2 &>/dev/null
+  ok "PM2 $(pm2 --version) đã được cài"
+fi
+
+# Cấu hình pm2-logrotate
+pm2 install pm2-logrotate &>/dev/null || true
+pm2 set pm2-logrotate:max_size 10M &>/dev/null || true
+pm2 set pm2-logrotate:retain 7 &>/dev/null || true
+pm2 set pm2-logrotate:compress true &>/dev/null || true
+ok "pm2-logrotate đã được cấu hình (10M/7 rotations)"
+
+# PM2 startup
+info "Cấu hình PM2 startup..."
+pm2_startup=$(pm2 startup 2>&1 | grep "sudo" | head -1 || true)
+if [[ -n "$pm2_startup" ]]; then
+  eval "$pm2_startup" &>/dev/null || true
+  ok "PM2 startup configured"
+else
+  warn "Không thể auto-configure PM2 startup — chạy thủ công: pm2 startup"
+fi
+
+# ── 4. Cài đặt Nginx ─────────────────────────────────────────────────────────
+step "[4/7] Nginx"
+if command -v nginx &>/dev/null; then
+  ok "Nginx đã được cài: $(nginx -v 2>&1 | head -1)"
+else
+  apt-get install -y nginx &>/dev/null
+  ok "Nginx $(nginx -v 2>&1 | head -1) đã được cài"
+fi
+
+systemctl enable nginx &>/dev/null || true
+systemctl start nginx || true
+ok "Nginx service enabled + started"
+
+# ── 5. Cài đặt MongoDB Tools (mongodump/mongorestore) ─────────────────────────
+step "[5/7] MongoDB Database Tools"
+if command -v mongodump &>/dev/null; then
+  ok "mongodump đã được cài"
+else
+  warn "mongodump chưa có — cài thủ công từ https://www.mongodb.com/docs/database-tools/"
+  info "Ubuntu 22.04: wget https://fastdl.mongodb.org/tools/db/mongodb-database-tools-ubuntu2204-x86_64-100.9.4.deb"
+  info "             dpkg -i mongodb-database-tools-ubuntu2204-x86_64-100.9.4.deb"
+fi
+
+# ── 6. Tạo thư mục cần thiết ──────────────────────────────────────────────────
+step "[6/7] Tạo cấu trúc thư mục"
+mkdir -p /var/backups/AXVN
+mkdir -p /var/log/pm2
+mkdir -p /tmp/incidents
+ok "Directories created: /var/backups/AXVN, /var/log/pm2, /tmp/incidents"
+
+# ── 7. Cấu hình Nginx site ────────────────────────────────────────────────────
+step "[7/7] Nginx site config"
+NGINX_CONF_SRC="$APP_DIR/infra/nginx/nginx.conf.langding"
+NGINX_CONF_DST="/etc/nginx/sites-available/langding.conf"
+
+if [[ -f "$NGINX_CONF_SRC" ]]; then
+  cp "$NGINX_CONF_SRC" "$NGINX_CONF_DST"
+  ln -sf "$NGINX_CONF_DST" /etc/nginx/sites-enabled/langding.conf
+  rm -f /etc/nginx/sites-enabled/default 2>/dev/null || true
+  nginx -t 2>&1 | grep -q "ok" && ok "Nginx config deployed + tested" || warn "nginx -t có cảnh báo — kiểm tra lại"
+else
+  warn "Nginx config không tìm thấy tại $NGINX_CONF_SRC — cấu hình thủ công sau"
+fi
+
+# ── Done ──────────────────────────────────────────────────────────────────────
+echo ""
+echo -e "${GREEN}═══════════════════════════════════════════════════${NC}"
+echo -e "${GREEN}  ✓ VPS Setup hoàn tất!${NC}"
+echo -e "${GREEN}═══════════════════════════════════════════════════${NC}"
+echo ""
+echo "  Các bước tiếp theo:"
+echo ""
+echo "  1. Điền .env.local:"
+echo "     cp $APP_DIR/.env.example $APP_DIR/.env.local"
+echo "     nano $APP_DIR/.env.local"
+echo ""
+echo "  2. Cài dependencies:"
+echo "     cd $APP_DIR && npm ci"
+echo ""
+echo "  3. Lấy SSL cert (sau khi DNS đã trỏ về server):"
+echo "     apt-get install -y certbot python3-certbot-nginx"
+echo "     certbot --nginx -d langding.tc-gaming.live"
+echo ""
+echo "  4. Deploy lần đầu:"
+echo "     cd $APP_DIR && bash scripts/deploy.sh"
+echo ""
+echo "  5. Verify:"
+echo "     bash scripts/health-check.sh"
+echo ""
+echo "  6. Setup cron backup:"
+echo "     crontab -e"
+echo "     # Thêm: 0 2 * * * /var/lkvip/langding/scripts/backup.sh >> /var/log/AXVN-backup.log 2>&1"
 echo ""

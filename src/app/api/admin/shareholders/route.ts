@@ -1,9 +1,9 @@
 import { NextRequest } from "next/server";
 import { successResponse, serverErrorResponse, unauthorizedResponse, errorResponse, notFoundResponse } from "@/utils/api-response";
-import { getCurrentUser } from "@/lib/auth-utils";
-import { shareholderService } from "@/services";
+import { getCurrentUser } from "@/core/security/auth-utils";
+import { shareholderService } from "@/modules/shareholders";
 import { handleError, NotFoundError } from "@/utils/errors";
-import { logAudit } from "@/services/audit.service";
+import { logAudit } from "@/modules/audit-log";
 
 // GET /api/admin/shareholders?search=&role=&status=&kycStatus=
 export async function GET(req: NextRequest) {
@@ -14,9 +14,9 @@ export async function GET(req: NextRequest) {
     const { searchParams } = req.nextUrl;
     const result = await shareholderService.list({
       search:    searchParams.get("search")    || undefined,
-      role:      (searchParams.get("role")     || undefined) as import("@/models/Shareholder").ShareholderRole | undefined,
-      status:    (searchParams.get("status")   || undefined) as import("@/models/Shareholder").ShareholderStatus | undefined,
-      kycStatus: (searchParams.get("kycStatus")|| undefined) as import("@/models/Shareholder").IShareholder["kycStatus"] | undefined,
+      role:      (searchParams.get("role")     || undefined) as import("@/core/models/Shareholder").ShareholderRole | undefined,
+      status:    (searchParams.get("status")   || undefined) as import("@/core/models/Shareholder").ShareholderStatus | undefined,
+      kycStatus: (searchParams.get("kycStatus")|| undefined) as import("@/core/models/Shareholder").IShareholder["kycStatus"] | undefined,
     });
     return successResponse(result);
   } catch (e) { return serverErrorResponse(handleError(e).message); }

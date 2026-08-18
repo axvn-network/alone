@@ -1,5 +1,5 @@
-import { getCurrentUser } from "@/lib/auth-utils";
-import { dashboardService } from "@/services";
+import { getCurrentUser } from "@/core/security/auth-utils";
+import * as dashboardService from "@/modules/dashboard";
 import {
   successResponse,
   serverErrorResponse,

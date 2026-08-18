@@ -4,10 +4,10 @@
  */
 
 import { NextRequest } from "next/server";
-import ShareholderMessage from "@/models/ShareholderMessage";
+import { ShareholderMessage } from "@/modules/shareholders";
 import { successResponse, serverErrorResponse, unauthorizedResponse } from "@/utils/api-response";
 import { handleError } from "@/utils/errors";
-import { getActiveShareholder } from "@/lib/sh-auth";
+import { getActiveShareholder } from "@/modules/auth/sh-auth";
 
 export async function POST(
   _req: NextRequest,

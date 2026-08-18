@@ -78,7 +78,7 @@ Trích dẫn định dạng: `[slug | original_path]`.
 | Process Manager | PM2 — **Fork Mode** (instances: 1) |
 | Realtime | Server-Sent Events — `lib/sse-broker.ts` |
 | Media | Cloudinary — namespace `AXVN/`, `AXVN/blog`, `AXVN/documents` |
-| AI Assist | Google Gemini (`GEMINI_API_KEY`) |
+| AI Assist | Anthropic Claude (`ANTHROPIC_API_KEY`) |
 | Auth | HMAC-SHA256 signed cookie — Edge-compatible Web Crypto |
 | Validation | Zod v4 |
 | Email | Nodemailer (`noreply@vnkr.vn`) |
@@ -108,34 +108,46 @@ Browser
 
 ```
 langding/
-├── config/                # Third-party service clients (mongodb, email, cloudinary, gemini, whatsapp)
-├── docs/                  # Tài liệu (file này)
-├── infra/                 # Nginx config, PM2 ecosystem
-├── scripts/               # Vận hành: deploy, backup, verify, seed, corpus
+├── docs/                  # Tài liệu kỹ thuật & vận hành
+├── infra/                 # PM2, Nginx configs, lkvip_holding server configs
+├── scripts/               # Vận hành: deploy, rollback, setup, backup, health, seed
 ├── public/                # Static assets
+├── GEMINI.md              # Agent contract + Architecture (AI entry point)
 └── src/
-    ├── app/               # Routes + pages (Next.js App Router)
-    │   ├── (admin)/       # Admin module (CMS, shareholders, audit, settings)
-    │   │   └── admin/
-    │   ├── (site)/        # Site routes
-    │   │   ├── components/# Canonical layout components (GlobalNavbar, GlobalFooter, DocLayout, ...)
-    │   │   ├── content/   # CMS pages (about, privacy, strategy, ...)
+    ├── app/               # Next.js App Router (routes, pages, API handlers)
+    │   ├── (admin)/admin/ # Admin CMS pages (server-protected)
+    │   ├── (site)/        # Public site + portals
+    │   │   ├── content/   # CMS pages (about, strategy, compliance, ...)
     │   │   └── portals/   # Shareholders portal, investment portal
-    │   └── api/           # Route handlers (backend)
-    ├── components/        # Shared UI components
-    ├── constants/         # brand.ts, project.ts
-    ├── data/              # Static data (compliance tasks, gov, ip, ...)
-    ├── hooks/             # React hooks
-    ├── lib/               # Infrastructure (db, session, email, SSE, logger, CSRF, ...)
-    ├── models/            # Mongoose schemas
-    ├── services/          # Business logic layer
-    ├── types/             # TypeScript types/interfaces
-    ├── utils/             # Helpers (sanitize, rate-limit, errors, cloudinary)
-    └── validators/        # Zod schemas
+    │   └── api/           # Route handlers
+    │       ├── admin/     # Admin API (checkAdminAPI + CSRF)
+    │       ├── shareholders/ # Shareholder API (checkShareholderAPI)
+    │       └── ...        # Public routes
+    │
+    ├── core/              # Infrastructure — KHÔNG chứa business logic
+    │   ├── database/      # MongoDB singleton + admin seed
+    │   ├── models/        # Mongoose schemas canonical
+    │   ├── rbac/          # requireAdminGuard, checkAdminAPI, permissions
+    │   ├── security/      # Session HMAC, CSRF
+    │   └── vn-utils/      # VN-specific utils (hanh-chinh, validators)
+    │
+    ├── modules/           # Business logic — Feature-Sliced
+    │   ├── auth/          # auth-utils, sh-session
+    │   ├── audit-log/     # AuditLog + logAudit()
+    │   ├── blog/          # Blog CRUD
+    │   ├── shareholders/  # Shareholder + task/meeting/message models
+    │   ├── documents/     # Documents service + schema + actions
+    │   ├── enquiries/     # Enquiries + consent fields
+    │   ├── settings/      # Settings + actions
+    │   └── ...            # capital-transactions, content, investment-plans, ...
+    │
+    └── shared/            # Cross-cutting (dùng ≥ 2 modules)
+        ├── components/    # Shared UI components
+        ├── hooks/         # Shared React hooks
+        ├── services/      # Proxy services
+        ├── types/         # Global TypeScript types
+        └── utils/         # logger, api-response, errors, pagination, rate-limit
 ```
-
-**Canonical layout components** nằm tại `src/app/(site)/components/` — không di chuyển.
-`layout.tsx` import từ `@/app/(site)/components/...`.
 
 ---
 
@@ -272,7 +284,7 @@ TTL tự động qua MongoDB TTL index trên field `retainUntil`.
 | `SMTP_HOST` / `SMTP_PORT` / `SMTP_USER` / `SMTP_PASS` | ✅ | Email notification |
 | `NEXT_PUBLIC_SITE_URL` | ✅ | `https://vnkr.vn` (production) |
 | `WHATSAPP_VERIFY_TOKEN` | ✅ | WhatsApp webhook token |
-| `GEMINI_API_KEY` | ⚪ | AI assist (optional) |
+| `ANTHROPIC_API_KEY` | ⚪ | AI assist — Anthropic Claude (optional) |
 | `NEXT_PUBLIC_GA_ID` | ⚪ | Google Analytics (optional) |
 | `NEXT_PUBLIC_META_PIXEL_ID` | ⚪ | Meta Pixel (optional) |
 
@@ -788,9 +800,9 @@ Sections: Summary → Timeline → Root Cause (5 Whys) → Impact → What went 
 - **Build fail:** `npx tsc --noEmit` để phát hiện lỗi TypeScript trước
 - **PM2 reload không thành công:** `pm2 logs langding --lines 200` — kiểm tra env vars đầy đủ chưa
 
-### AI / Gemini
+### AI / Anthropic Claude
 
-- **Không phản hồi:** Kiểm tra `GEMINI_API_KEY` trong `.env.local` và quota trên Google AI Studio
+- **Không phản hồi:** Kiểm tra `ANTHROPIC_API_KEY` trong `.env.local` và billing tại `console.anthropic.com`
 
 ### Các lỗi khác
 

@@ -24,10 +24,10 @@ import {
   ImageOff,
   ChevronDown,
 } from "lucide-react";
-import AdminSidebar from "@/app/(admin)/components/AdminSidebar";
-import AdminNavbar from "@/app/(admin)/components/AdminNavbar";
-import RichTextEditor from "@/app/(site)/components/ui/RichTextEditor";
-import AiAssistPanel, { BLOG_AI_ACTIONS } from "@/app/(site)/components/ui/AiAssistPanel";
+import AdminSidebar from "@/shared/components/admin/AdminSidebar";
+import AdminNavbar from "@/shared/components/admin/AdminNavbar";
+import RichTextEditor from "@/shared/components/ui/RichTextEditor";
+import AiAssistPanel, { BLOG_AI_ACTIONS } from "@/shared/components/ui/AiAssistPanel";
 import { useCsrf } from "@/contexts/CsrfContext";
 
 import { ARTICLE_CATEGORIES as categories } from "@/constants/blog";

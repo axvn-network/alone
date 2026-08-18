@@ -7,8 +7,8 @@
  * Rooms: "admin"
  */
 
-import { getCurrentUser } from "@/lib/auth-utils";
-import { addClient, removeClient } from "@/lib/sse-broker";
+import { getCurrentUser } from "@/core/security/auth-utils";
+import { addClient, removeClient } from "@/shared/utils/sse-broker";
 import { unauthorizedResponse } from "@/utils/api-response";
 import { randomUUID } from "crypto";
 

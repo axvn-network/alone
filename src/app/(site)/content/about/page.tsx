@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Shield, Eye, Target, Award, Users, Scale, Lock, Hexagon, Heart, ArrowRight, CheckCircle2 } from "lucide-react";
-import Reveal from "@/app/(site)/components/animations/Reveal";
-import Stagger from "@/app/(site)/components/animations/Stagger";
-import StaggerItem from "@/app/(site)/components/animations/StaggerItem";
-import PageHero from "@/app/(site)/components/public/PageHero";
-import SectionHeader from "@/app/(site)/components/public/SectionHeader";
+import Reveal from "@/shared/components/animations/Reveal";
+import Stagger from "@/shared/components/animations/Stagger";
+import StaggerItem from "@/shared/components/animations/StaggerItem";
+import PageHero from "@/modules/content/components/PageHero";
+import SectionHeader from "@/modules/content/components/SectionHeader";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

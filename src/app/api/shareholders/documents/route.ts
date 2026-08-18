@@ -9,10 +9,10 @@
  */
 
 import { NextRequest } from "next/server";
-import { connectDB } from "@/lib/db";
-import DocumentModel from "@/models/Document";
-import { getActiveShareholder } from "@/lib/sh-auth";
-import { getCurrentUser } from "@/lib/auth-utils";
+import { connectDB } from "@/core/database";
+import { DocumentModel } from "@/modules/documents";
+import { getActiveShareholder } from "@/modules/auth/sh-auth";
+import { getCurrentUser } from "@/core/security/auth-utils";
 import {
   successResponse,
   unauthorizedResponse,

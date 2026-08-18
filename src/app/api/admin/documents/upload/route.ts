@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { getCurrentUser } from "@/lib/auth-utils";
+import { getCurrentUser } from "@/core/security/auth-utils";
 import { uploadToCloudinary } from "@/utils/cloudinary";
 import {
   successResponse,

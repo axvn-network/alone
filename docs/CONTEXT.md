@@ -27,22 +27,22 @@ Tên công khai là **AXVN Tech Holding** / **AXVN Group**. Canonical URL là `h
 Sự thật kỹ thuật chỉ lấy từ mã nguồn, `package.json`, cấu hình và tài liệu này. Không suy diễn kiến trúc Langding từ tài liệu AXVN/VNKR khác.
 
 ## 6. Technology stack
-Next.js 16 App Router, React 19, TypeScript 5.9, Tailwind CSS 4, Framer Motion, Mongoose/MongoDB, Zod, Nodemailer, Cloudinary, Sentry và PM2/Nginx deployment.
+Next.js 16 App Router, React 19, TypeScript 5.9, Tailwind CSS 4, Framer Motion, Mongoose/MongoDB, Zod, Nodemailer, Cloudinary, Anthropic Claude và PM2/Nginx deployment.
 
 ## 7. Folder structure
-`src/app` chứa routes/pages và route handlers; `src/components` là UI; `src/services` điều phối nghiệp vụ; `src/models` là schema Mongoose; `src/lib` là hạ tầng; `src/validators` là Zod; `scripts` là vận hành/corpus; `_extracted` là nguồn bất biến; `_standardized` là retrieval layer.
+`src/app` chứa routing thuần; `src/core` là hạ tầng (database, models, rbac, security, vn-utils, env); `src/modules` là business logic phân domain; `src/shared` là cross-cutting (components, hooks, services, types, utils, validators, constants, contexts); `src/data` là static JSON; `src/locales` là i18n; `scripts` là vận hành; `infra` là PM2/Nginx config; `docs` là tài liệu.
 
 ## 8. System architecture
 Browser gọi Next.js App Router. Public pages dùng server/client components; API handlers gọi service → Mongoose/MongoDB. Admin và shareholder portal dùng session cookie; SSE phát sự kiện in-process.
 
 ## 9. Module breakdown
-Public marketing, CMS/admin, documents, enquiries, investment plans, shareholder portal, media upload, AI assist, corpus tooling là các module chính. Dùng service layer cho API thay vì truy cập model trực tiếp trong UI.
+`src/modules/`: auth, audit-log, blog, capital-transactions, content, documents, enquiries, investment-plans, investor, media, partner-applications, public-users, settings, shareholders là các module chính. API route handlers gọi service trong modules — không gọi model trực tiếp. Guards được import từ `src/core/rbac`.
 
 ## 10. Request flow
 Client → middleware/proxy guards và headers → App Router page/route handler → validator → service → model/database → typed API response. Mutation admin yêu cầu session và CSRF.
 
 ## 11. Authentication
-Admin dùng cookie HMAC httpOnly. Cổ đông dùng session riêng. Không đưa token vào local storage; secrets chỉ đọc từ environment variables.
+Admin dùng cookie HMAC httpOnly (`admin_session`), managed bởi `src/core/security/session.ts`. Cổ đông dùng `sh_session` riêng, managed bởi `src/modules/auth/sh-session.ts`. Guards: `requireAdminGuard`, `checkAdminAPI` từ `src/core/rbac`. Public Users có `pub_session` riêng. Không đưa token vào local storage; secrets chỉ đọc từ environment variables.
 
 ## 12. Authorization
 Admin/superadmin và roles cổ đông được kiểm tra ở server. UI visibility không phải authorization; route handlers phải kiểm tra quyền.

@@ -1,14 +1,14 @@
-import Hero from "@/app/(site)/components/public/Hero";
-import Introduction from "@/app/(site)/components/public/Introduction";
-import WhatWeDo from "@/app/(site)/components/public/WhatWeDo";
-import InvestmentSectors from "@/app/(site)/components/public/InvestmentSectors";
-import WhyChooseUs from "@/app/(site)/components/public/WhyChooseUs";
-import Philosophy from "@/app/(site)/components/public/Philosophy";
-import PartnershipCTA from "@/app/(site)/components/public/PartnershipCTA";
-import Newsletter from "@/app/(site)/components/public/Newsletter";
+import Hero from "@/modules/content/components/Hero";
+import Introduction from "@/modules/content/components/Introduction";
+import WhatWeDo from "@/modules/content/components/WhatWeDo";
+import InvestmentSectors from "@/modules/content/components/InvestmentSectors";
+import WhyChooseUs from "@/modules/content/components/WhyChooseUs";
+import Philosophy from "@/modules/content/components/Philosophy";
+import PartnershipCTA from "@/modules/content/components/PartnershipCTA";
+import Newsletter from "@/modules/content/components/Newsletter";
 
-import PageTransition from "@/app/(site)/components/animations/PageTransition";
-import { FloatingBlobs } from "@/app/(site)/components/animations/AnimatedBackground";
+import PageTransition from "@/shared/components/animations/PageTransition";
+import { FloatingBlobs } from "@/shared/components/animations/AnimatedBackground";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

@@ -349,7 +349,7 @@ const PLANS = [
       "Kinh doanh có lãi ít nhất 2 năm liền trước",
       "BCTC 2 năm gần nhất được kiểm toán sạch toàn phần",
       "Chỉ góp vốn tại duy nhất 1 tổ chức TSMH được BTC cấp phép",
-      "Được Ban lãnh đạo Fortress Investment Holdings chấp thuận",
+      "Được Ban lãnh đạo AXVN Tech Holding chấp thuận",
     ],
     conditionsEn: [
       "Large financial institution or conglomerate with proven Fintech/Finance experience",

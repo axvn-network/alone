@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { blogService } from "@/services";
+import * as blogService from "@/modules/blog";
 
 interface Props {
   params: Promise<{ slug: string }>;

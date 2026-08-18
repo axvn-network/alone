@@ -49,7 +49,7 @@ _standardized/
 .vscode/
 
 # ── Orphaned infra configs (project uses PM2/Nginx) ─────────────────────────────
-nettlify.toml
+netlify.toml
 supabase/
 
 # ── Claude Worktrees (tự động tạo bởi Claude CLI) ───────────────────

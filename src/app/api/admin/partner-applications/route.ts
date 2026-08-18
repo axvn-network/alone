@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
-import { getCurrentUser } from "@/lib/auth-utils";
-import { partnerApplicationService } from "@/services";
-import type { ListApplicationsQuery } from "@/services/partnerApplication.service";
+import { getCurrentUser } from "@/core/security/auth-utils";
+import * as partnerApplicationService from "@/modules/partner-applications";
+import type { ListApplicationsQuery } from "@/modules/partner-applications";
 import {
   successResponse,
   errorResponse,

@@ -38,14 +38,14 @@
 
 import { NextRequest } from "next/server";
 import { cookies } from "next/headers";
-import { connectDB } from "@/lib/db";
-import PublicUser from "@/models/PublicUser";
+import { connectDB } from "@/core/database";
+import { PublicUser } from "@/modules/public-users";
 import {
   makePublicUserToken,
   parsePublicUserToken,
   PUB_COOKIE,
   PUB_MAX_AGE,
-} from "@/lib/rbac/public-session";
+} from "@/core/rbac/rbac-lib/public-session";
 import {
   successResponse,
   errorResponse,

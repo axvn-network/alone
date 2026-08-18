@@ -1,9 +1,7 @@
 import { successResponse, serverErrorResponse, unauthorizedResponse } from "@/utils/api-response";
 import { handleError } from "@/utils/errors";
-import { getActiveShareholder } from "@/lib/sh-auth";
-import { shareholderOpsService } from "@/services";
-
-const { meetingService } = shareholderOpsService;
+import { getActiveShareholder } from "@/modules/auth/sh-auth";
+import { meetingService } from "@/modules/shareholders";
 
 // GET /api/shareholders/meetings
 export async function GET() {

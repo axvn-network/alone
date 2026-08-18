@@ -1,0 +1,94 @@
+# =================================================================
+# infra/lkvip_holding/stalwart/stalwart.config.toml.example
+#
+# Cấu hình Stalwart Mail Server mẫu cho AXVN Tech Holding
+# Đặt tại: /etc/stalwart/config.toml
+#
+# Tài liệu đầy đủ: https://stalw.art/docs/
+# =================================================================
+
+[server]
+hostname = "mail.vnkr.vn"
+
+# ── Listeners ──────────────────────────────────────────────────
+[[server.listener]]
+id = "smtp"
+bind = ["0.0.0.0:25"]
+protocol = "smtp"
+
+[[server.listener]]
+id = "submission"
+bind = ["0.0.0.0:587"]
+protocol = "smtp"
+
+[server.listener.tls]
+implicit = false
+enable = true
+
+[[server.listener]]
+id = "submissions"
+bind = ["0.0.0.0:465"]
+protocol = "smtp"
+
+[server.listener.tls]
+implicit = true
+enable = true
+
+[[server.listener]]
+id = "imaps"
+bind = ["0.0.0.0:993"]
+protocol = "imap"
+
+[server.listener.tls]
+implicit = true
+enable = true
+
+[[server.listener]]
+id = "management"
+bind = ["127.0.0.1:8080"]
+protocol = "http"
+
+# ── TLS (Let's Encrypt) ────────────────────────────────────────
+[certificate."default"]
+cert = "%{file:/etc/letsencrypt/live/mail.vnkr.vn/fullchain.pem}%"
+private-key = "%{file:/etc/letsencrypt/live/mail.vnkr.vn/privkey.pem}%"
+
+# ── Storage ────────────────────────────────────────────────────
+[storage]
+data = "rocksdb"
+fts = "rocksdb"
+blob = "rocksdb"
+lookup = "rocksdb"
+directory = "internal"
+
+[store."rocksdb"]
+type = "rocksdb"
+path = "/var/lib/stalwart/db"
+compression = "lz4"
+
+# ── Directory (internal — không dùng LDAP) ─────────────────────
+[directory."internal"]
+type = "internal"
+store = "rocksdb"
+
+# ── SMTP settings ──────────────────────────────────────────────
+[smtp.auth]
+require = true
+allow-plain-text = false
+
+[smtp.rcpt]
+relay = false  # không relay mail ngoài domain
+
+# ── DKIM signing ───────────────────────────────────────────────
+# Tạo DKIM key: stalwart-cli server dkim generate --domain vnkr.vn
+[[signature]]
+id = "vnkr"
+algorithm = "ed25519-sha256"
+domain = "vnkr.vn"
+selector = "default"
+headers.signed = ["From", "To", "Subject", "Date", "Message-Id"]
+report = true
+
+# ── Spam filter (default Stalwart rules) ──────────────────────
+[spam]
+enable = true

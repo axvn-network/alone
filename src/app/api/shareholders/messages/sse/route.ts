@@ -8,8 +8,8 @@
  */
 
 import { NextRequest } from "next/server";
-import { addClient, removeClient } from "@/lib/sse-broker";
-import { getActiveShareholder } from "@/lib/sh-auth";
+import { addClient, removeClient } from "@/shared/utils/sse-broker";
+import { getActiveShareholder } from "@/modules/auth/sh-auth";
 import { randomUUID } from "crypto";
 
 // Heartbeat được xử lý bởi global timer trong sse-broker.ts — không cần timer riêng ở đây.

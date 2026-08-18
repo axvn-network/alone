@@ -13,22 +13,8 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 Before changing application code, read the relevant Next.js 16 documentation
 under `node_modules/next/dist/docs/`.
 
-Read [CONTEXT.md](CONTEXT.md), [KNOWLEDGE_BASE.md](KNOWLEDGE_BASE.md),
-and `.ai/manifest.yaml` before work. Then check `.ai/work-queue.yaml` and
-`.ai/locks.yaml` before claiming a task.
+Read [CONTEXT.md](CONTEXT.md) and [GEMINI.md](../GEMINI.md) before work.
 
-For strategy, legal, finance, governance, roadmap, infrastructure, KPI, risk,
-or corporate claims, locate material with `_standardized/index.json` or
-`_standardized/chunks.jsonl`, then verify it in the relevant `_extracted/`
-Markdown named by `original_path`. Do not edit `_extracted/`, alter valid
-Vietnamese UTF-8, invent source-backed facts, or transmit confidential corpus
-content to external services without authorization. Cite source-backed output
-as `[slug | original_path]`.
-
-## Multi-Agent Workflow
-
-Use the shared repo-native protocol in `.ai/manifest.yaml`. Work on one small,
-unlocked scope at a time; record the file scope in `.ai/locks.yaml` before
-editing and leave a UTF-8 handoff in `.ai/handoffs/` when releasing it. Never
-overwrite another agent's in-progress changes, generated corpus artifacts, or
-CMS data without explicit review.
+For architecture decisions, consult `docs/ARCH_BLUEPRINT.md`.
+For troubleshooting, consult `docs/TROUBLESHOOTING.md`.
+Do not invent facts about the codebase — always read the relevant source file first.

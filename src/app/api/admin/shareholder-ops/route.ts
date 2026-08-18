@@ -1,11 +1,9 @@
 import { NextRequest } from "next/server";
 import { successResponse, errorResponse, serverErrorResponse, unauthorizedResponse } from "@/utils/api-response";
-import { getCurrentUser } from "@/lib/auth-utils";
-import { shareholderOpsService } from "@/services";
-import { broadcast } from "@/lib/sse-broker";
+import { getCurrentUser } from "@/core/security/auth-utils";
+import { taskService, meetingService, messageService } from "@/modules/shareholders";
+import { broadcast } from "@/shared/utils/sse-broker";
 import { handleError } from "@/utils/errors";
-
-const { taskService, meetingService, messageService } = shareholderOpsService;
 
 // GET /api/admin/shareholder-ops?type=tasks|meetings|messages&channel=general
 export async function GET(req: NextRequest) {
@@ -14,7 +12,7 @@ export async function GET(req: NextRequest) {
     if (!user) return unauthorizedResponse();
 
     const type    = req.nextUrl.searchParams.get("type") || "tasks";
-    const channel = (req.nextUrl.searchParams.get("channel") || "general") as import("@/models/ShareholderMessage").MessageChannel;
+    const channel = (req.nextUrl.searchParams.get("channel") || "general") as import("@/core/models/ShareholderMessage").MessageChannel;
 
     if (type === "tasks") {
       const { tasks } = await taskService.list();
@@ -52,7 +50,7 @@ export async function POST(req: NextRequest) {
       const { channel, content } = body as { channel: string; content: string };
       // Admin sender — use a virtual senderId from admin session
       const msg = await messageService.send({
-        channel:       (channel || "general") as import("@/models/ShareholderMessage").MessageChannel,
+        channel:       (channel || "general") as import("@/core/models/ShareholderMessage").MessageChannel,
         content,
         senderId:      user.id,
         senderName:    user.name,

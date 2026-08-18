@@ -1,9 +1,9 @@
 import { NextRequest } from "next/server";
-import { enquiryService } from "@/services";
+import * as enquiryService from "@/modules/enquiries";
 import { contactEnquirySchema, formatZodErrors } from "@/validators";
 import { rateLimit } from "@/utils/rate-limit";
-import { sendEnquiryNotification } from "@/lib/email";
-import { logger } from "@/lib/logger";
+import { sendEnquiryNotification } from "@/shared/utils/email";
+import { logger } from "@/shared/utils/logger";
 import { sanitizeText, sanitizeEmail, sanitizeMessage } from "@/utils/sanitize";
 import {
   successResponse,

@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
-import { getCurrentUser } from "@/lib/auth-utils";
-import { logger } from "@/lib/logger";
+import { getCurrentUser } from "@/core/security/auth-utils";
+import { logger } from "@/shared/utils/logger";
 import { successResponse, unauthorizedResponse, errorResponse, serverErrorResponse } from "@/utils/api-response";
 import { handleError } from "@/utils/errors";
 

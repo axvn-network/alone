@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { logger } from "@/lib/logger";
+import { logger } from "@/shared/utils/logger";
 import { errorResponse, serverErrorResponse } from "@/utils/api-response";
 import { handleError } from "@/utils/errors";
 

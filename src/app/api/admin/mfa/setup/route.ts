@@ -1,8 +1,8 @@
 import { generateSecret, generateURI } from "otplib";
 import QRCode from "qrcode";
-import { getCurrentUser } from "@/lib/auth-utils";
-import { connectDB } from "@/lib/db";
-import Admin from "@/models/Admin";
+import { getCurrentUser } from "@/core/security/auth-utils";
+import { connectDB } from "@/core/database";
+import { AdminModel as Admin } from "@/modules/auth";
 import {
   successResponse,
   notFoundResponse,

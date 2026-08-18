@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { documentService, DocumentQuery } from "@/services/document.service";
+import { documentService, DocumentQuery } from "@/modules/documents";
 import { successResponse, serverErrorResponse } from "@/utils/api-response";
 import { handleError } from "@/utils/errors";
 

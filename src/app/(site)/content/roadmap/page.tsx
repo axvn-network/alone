@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import PageHero from "@/app/(site)/components/public/PageHero";
+import PageHero from "@/modules/content/components/PageHero";
 import RoadmapClient from "./RoadmapClient";
 import { ROADMAP_META } from "@/data/roadmap";
 

@@ -1,9 +1,9 @@
 import ContactForm from "./components/ContactForm";
 import { Phone, Mail, MapPin, Clock, MessageCircle } from "lucide-react";
-import PageHero from "@/app/(site)/components/public/PageHero";
-import SectionHeader from "@/app/(site)/components/public/SectionHeader";
+import PageHero from "@/modules/content/components/PageHero";
+import SectionHeader from "@/modules/content/components/SectionHeader";
 import type { Metadata } from "next";
-import { getSettings } from "@/services/settings.service";
+import { getSettings } from "@/modules/settings";
 
 export const metadata: Metadata = {
   title: "Liên Hệ | AXVN Tech Holding",

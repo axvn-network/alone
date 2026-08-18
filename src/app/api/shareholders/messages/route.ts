@@ -1,11 +1,9 @@
 import { NextRequest } from "next/server";
 import { successResponse, errorResponse, serverErrorResponse, unauthorizedResponse } from "@/utils/api-response";
 import { handleError } from "@/utils/errors";
-import { getActiveShareholder } from "@/lib/sh-auth";
-import { shareholderOpsService } from "@/services";
-import type { MessageChannel } from "@/models/ShareholderMessage";
-
-const { messageService } = shareholderOpsService;
+import { getActiveShareholder } from "@/modules/auth/sh-auth";
+import { messageService } from "@/modules/shareholders";
+import type { MessageChannel } from "@/modules/shareholders";
 
 // GET /api/shareholders/messages?channel=general&limit=50
 export async function GET(req: NextRequest) {

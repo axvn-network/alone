@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 # =============================================================================
-# deploy.sh — Zero-downtime production deploy cho langding.tc-gaming.live
+# deploy.sh — Zero-downtime production deploy
 #
 # Sử dụng:
-#   ./scripts/deploy.sh              # full deploy
-#   ./scripts/deploy.sh --skip-build # chỉ copy assets + reload PM2 (khi code không đổi)
+#   ./scripts/deploy.sh              # full deploy (git pull + build + PM2 reload)
+#   ./scripts/deploy.sh --skip-build # copy assets + reload PM2 (khi code không đổi)
+#   ./scripts/deploy.sh --no-git     # build + deploy từ code hiện tại (không git pull)
 #
 # Yêu cầu: chạy từ thư mục gốc dự án (/var/lkvip/langding)
 # =============================================================================
@@ -24,7 +25,11 @@ err()  { echo -e "${RED}✗${NC}  $*"; exit 1; }
 step() { echo -e "\n${YELLOW}▶${NC}  $*"; }
 
 SKIP_BUILD=false
-for arg in "$@"; do [[ "$arg" == "--skip-build" ]] && SKIP_BUILD=true; done
+NO_GIT=false
+for arg in "$@"; do
+  [[ "$arg" == "--skip-build" ]] && SKIP_BUILD=true
+  [[ "$arg" == "--no-git" ]]     && NO_GIT=true
+done
 
 cd "$APP_DIR"
 
@@ -44,6 +49,15 @@ for var in MONGODB_URI SESSION_SECRET NEXT_PUBLIC_SITE_URL; do
 done
 
 ok "Preflight passed"
+
+# ── Git pull ──────────────────────────────────────────────────────────────────
+if [[ "$NO_GIT" == false ]]; then
+  step "Git pull"
+  git pull --ff-only 2>&1 || err "git pull thất bại — resolve conflicts thủ công rồi chạy lại"
+  ok "Git up-to-date"
+else
+  warn "Bỏ qua git pull (--no-git)"
+fi
 
 # ── 1. TypeScript check ───────────────────────────────────────────────────────
 step "TypeScript check"
@@ -85,8 +99,7 @@ else
   ok "Nginx config đã đồng bộ (không thay đổi)"
 fi
 
-nginx -t 2>&1 | grep -v "^$" \
-  || err "nginx -t thất bại — không reload"
+nginx -t 2>&1 || err "nginx -t thất bại — không reload"
 
 nginx -s reload
 ok "Nginx reloaded"

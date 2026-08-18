@@ -1,4 +1,4 @@
-import { clearSessionCookie } from "@/lib/session";
+import { clearSessionCookie } from "@/core/security/session";
 import { successResponse } from "@/utils/api-response";
 
 export async function POST() {

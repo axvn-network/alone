@@ -1,13 +1,13 @@
 "use client";
 
 import { CalendarRange, Building2, ShieldCheck } from "lucide-react";
-import KpiDashboard from "@/app/(site)/components/visual/KpiDashboard";
-import { Timeline } from "../../roadmap/components/Timeline";
-import { RoadmapAccordion } from "../../roadmap/components/RoadmapAccordion";
-import StrategyNotice from "@/app/(site)/components/public/StrategyNotice";
-import DocLayout, { DocSidebar, DocMain, DocHero, DocBody } from "@/components/layout/DocLayout";
+import KpiDashboard from "@/modules/dashboard/components/KpiDashboard";
+import { Timeline } from "@/modules/content/components/Timeline";
+import { RoadmapAccordion } from "@/modules/content/components/RoadmapAccordion";
+import StrategyNotice from "@/modules/content/components/StrategyNotice";
+import DocLayout, { DocSidebar, DocMain, DocHero, DocBody } from "@/shared/components/layout/DocLayout";
 import { ROADMAP_PHASES, ROADMAP_META } from "@/data/roadmap";
-import type { TocItem } from "@/components/layout/DocLayout";
+import type { TocItem } from "@/shared/components/layout/DocLayout";
 
 const TOC: readonly TocItem[] = [
   { id: "kpi", label: "Tổng quan", level: 1 },

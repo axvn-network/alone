@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Admin and portal — do not index
+Disallow: /admin
+Disallow: /admin-login
+Disallow: /portals/shareholders/
+Disallow: /api/
+
+Sitemap: https://langding.tc-gaming.live/sitemap.xml

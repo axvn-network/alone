@@ -1,11 +1,11 @@
 "use client";
 
-import { Timeline } from "../../roadmap/components/Timeline";
-import { RoadmapAccordion } from "../../roadmap/components/RoadmapAccordion";
-import DocLayout, { DocSidebar, DocMain, DocHero, DocBody } from "@/components/layout/DocLayout";
+import { Timeline } from "@/modules/content/components/Timeline";
+import { RoadmapAccordion } from "@/modules/content/components/RoadmapAccordion";
+import DocLayout, { DocSidebar, DocMain, DocHero, DocBody } from "@/shared/components/layout/DocLayout";
 import { ROADMAP_PHASES, ROADMAP_META } from "@/data/roadmap";
-import type { TocItem } from "@/components/layout/DocLayout";
-import StrategyNotice from "@/app/(site)/components/public/StrategyNotice";
+import type { TocItem } from "@/shared/components/layout/DocLayout";
+import StrategyNotice from "@/modules/content/components/StrategyNotice";
 
 const TOC: readonly TocItem[] = [
   { id: "timeline", label: "Lộ trình", level: 1 },

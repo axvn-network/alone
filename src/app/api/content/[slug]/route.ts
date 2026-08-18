@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { contentService } from "@/services";
+import * as contentService from "@/modules/content";
 import { successResponse, notFoundResponse, serverErrorResponse } from "@/utils/api-response";
 import { handleError, NotFoundError } from "@/utils/errors";
 

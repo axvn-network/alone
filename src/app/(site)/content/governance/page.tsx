@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import PageHero from "@/app/(site)/components/public/PageHero";
+import PageHero from "@/modules/content/components/PageHero";
 import GovernanceClient from "./GovernanceClient";
 
 export const metadata: Metadata = {

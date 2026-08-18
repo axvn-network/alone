@@ -12,7 +12,7 @@
  * Không trả về thông tin nhạy cảm (no env, no version, no stack trace).
  */
 
-import { connectDB } from "@/lib/db";
+import { connectDB } from "@/core/database";
 
 export const dynamic = "force-dynamic"; // không cache health check
 

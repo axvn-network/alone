@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import { Be_Vietnam_Pro, Plus_Jakarta_Sans } from "next/font/google";
-import FloatingChatButtons from "@/components/layout/FloatingChatButtons";
-import CustomCursor from "@/components/layout/CustomCursor";
-import AnimationProvider from "@/components/layout/AnimationProvider";
-import GlobalNavbar from "@/components/layout/GlobalNavbar";
-import GlobalFooter from "@/components/layout/GlobalFooter";
+import FloatingChatButtons from "@/shared/components/layout/FloatingChatButtons";
+import CustomCursor from "@/shared/components/layout/CustomCursor";
+import AnimationProvider from "@/shared/components/layout/AnimationProvider";
+import GlobalNavbar from "@/shared/components/layout/GlobalNavbar";
+import GlobalFooter from "@/shared/components/layout/GlobalFooter";
 import { LangProvider } from "@/contexts/LangContext";
 import { PUBLIC_BRAND } from "@/constants/brand";
 import "./globals.css";

@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
-import { getCurrentUser } from "@/lib/auth-utils";
-import { blogService } from "@/services";
+import { getCurrentUser } from "@/core/security/auth-utils";
+import * as blogService from "@/modules/blog";
 import { blogSchema, formatZodErrors } from "@/validators";
 import {
   successResponse,

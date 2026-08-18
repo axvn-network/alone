@@ -1,0 +1,183 @@
+# ================================================================
+# infra/lkvip_holding/nginx/nginx.conf.lkvip
+#
+# Nginx config cho server lkvip_holding (máy chủ VPS chính)
+# Bao gồm: reverse proxy cho nhiều vhost, WebSocket, SSE, SSL
+#
+# Location: /etc/nginx/sites-available/lkvip.conf
+#
+# Deploy:
+#   sudo cp nginx.conf.lkvip /etc/nginx/sites-available/lkvip.conf
+#   sudo ln -sf /etc/nginx/sites-available/lkvip.conf /etc/nginx/sites-enabled/
+#   sudo nginx -t && sudo systemctl reload nginx
+#
+# Rate limit zones (thêm vào /etc/nginx/nginx.conf bên trong http {}):
+#   limit_req_zone $binary_remote_addr zone=langding:10m rate=30r/m;
+#   limit_req_zone $binary_remote_addr zone=api:10m rate=60r/m;
+# ================================================================
+
+# ── HTTP → HTTPS redirect (tất cả domains) ───────────────────
+server {
+    listen 80;
+    listen [::]:80;
+    server_name langding.tc-gaming.live vnkr.vn www.vnkr.vn;
+    return 301 https://$host$request_uri;
+}
+
+# ── langding.tc-gaming.live ───────────────────────────────────
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    http2 on;
+    server_name langding.tc-gaming.live;
+
+    # ── SSL (Certbot) ──────────────────────────────────────────
+    ssl_certificate     /etc/letsencrypt/live/langding.tc-gaming.live/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/langding.tc-gaming.live/privkey.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/langding.tc-gaming.live/chain.pem;
+    include /etc/nginx/snippets/ssl-params.conf;
+
+    # ── Security headers ───────────────────────────────────────
+    include /etc/nginx/snippets/security-headers.conf;
+
+    # ── Gzip ──────────────────────────────────────────────────
+    include /etc/nginx/snippets/gzip.conf;
+
+    client_max_body_size 25M;
+
+    # ── Static assets — cache 1 năm ───────────────────────────
+    location /_next/static/ {
+        alias /var/lkvip/langding/.next/static/;
+        expires 1y;
+        add_header Cache-Control "public, max-age=31536000, immutable";
+        access_log off;
+    }
+
+    # ── Public assets — cache 1 ngày ──────────────────────────
+    location /public/ {
+        alias /var/lkvip/langding/public/;
+        expires 1d;
+        add_header Cache-Control "public, max-age=86400";
+        access_log off;
+    }
+
+    # ── HMR WebSocket (dev mode) ───────────────────────────────
+    location /_next/hmr {
+        proxy_pass            http://127.0.0.1:3000;
+        proxy_http_version    1.1;
+        proxy_set_header      Upgrade    $http_upgrade;
+        proxy_set_header      Connection "upgrade";
+        proxy_set_header      Host       $host;
+        proxy_read_timeout    86400s;
+        proxy_send_timeout    86400s;
+        proxy_cache_bypass    $http_upgrade;
+        access_log off;
+    }
+
+    # ── Favicon / robots / sitemap ────────────────────────────
+    location ~* ^/(favicon\.ico|robots\.txt|sitemap\.xml)$ {
+        proxy_pass       http://127.0.0.1:3000;
+        proxy_set_header Host $host;
+        access_log off;
+    }
+
+    # ── Block dotfiles (.git, .env …) ─────────────────────────
+    location ~ /\. {
+        deny all;
+        access_log    off;
+        log_not_found off;
+    }
+
+    # ── Next.js app (tất cả routes + SSE + WebSocket) ────────
+    location / {
+        proxy_pass            http://127.0.0.1:3000;
+        proxy_http_version    1.1;
+        proxy_set_header      Upgrade           $http_upgrade;
+        proxy_set_header      Connection        "upgrade";
+        proxy_set_header      Host              $host;
+        proxy_set_header      X-Real-IP         $remote_addr;
+        proxy_set_header      X-Forwarded-For   $proxy_add_x_forwarded_for;
+        proxy_set_header      X-Forwarded-Proto $scheme;
+        proxy_cache_bypass    $http_upgrade;
+        proxy_read_timeout    120s;
+        proxy_connect_timeout 10s;
+        proxy_send_timeout    120s;
+        # SSE: tắt buffering để stream về ngay
+        proxy_buffering       off;
+        proxy_cache           off;
+    }
+
+    access_log /var/log/nginx/langding_access.log;
+    error_log  /var/log/nginx/langding_error.log warn;
+}
+
+# ── vnkr.vn (production canonical domain) ────────────────────
+# Thay SSL paths sau khi certbot: certbot --nginx -d vnkr.vn -d www.vnkr.vn
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    http2 on;
+    server_name vnkr.vn www.vnkr.vn;
+
+    # Redirect www → non-www
+    if ($host = "www.vnkr.vn") {
+        return 301 https://vnkr.vn$request_uri;
+    }
+
+    # ── SSL (Certbot) ──────────────────────────────────────────
+    ssl_certificate     /etc/letsencrypt/live/vnkr.vn/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/vnkr.vn/privkey.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/vnkr.vn/chain.pem;
+    include /etc/nginx/snippets/ssl-params.conf;
+
+    # ── Security headers ───────────────────────────────────────
+    include /etc/nginx/snippets/security-headers.conf;
+
+    # ── Gzip ──────────────────────────────────────────────────
+    include /etc/nginx/snippets/gzip.conf;
+
+    client_max_body_size 25M;
+
+    # ── Static assets — cache 1 năm ───────────────────────────
+    location /_next/static/ {
+        alias /var/lkvip/langding/.next/static/;
+        expires 1y;
+        add_header Cache-Control "public, max-age=31536000, immutable";
+        access_log off;
+    }
+
+    # ── Favicon / robots / sitemap ────────────────────────────
+    location ~* ^/(favicon\.ico|robots\.txt|sitemap\.xml)$ {
+        proxy_pass       http://127.0.0.1:3000;
+        proxy_set_header Host $host;
+        access_log off;
+    }
+
+    # ── Block dotfiles ─────────────────────────────────────────
+    location ~ /\. {
+        deny all;
+        access_log    off;
+        log_not_found off;
+    }
+
+    # ── Next.js app ────────────────────────────────────────────
+    location / {
+        proxy_pass            http://127.0.0.1:3000;
+        proxy_http_version    1.1;
+        proxy_set_header      Upgrade           $http_upgrade;
+        proxy_set_header      Connection        "upgrade";
+        proxy_set_header      Host              $host;
+        proxy_set_header      X-Real-IP         $remote_addr;
+        proxy_set_header      X-Forwarded-For   $proxy_add_x_forwarded_for;
+        proxy_set_header      X-Forwarded-Proto $scheme;
+        proxy_cache_bypass    $http_upgrade;
+        proxy_read_timeout    120s;
+        proxy_connect_timeout 10s;
+        proxy_send_timeout    120s;
+        proxy_buffering       off;
+        proxy_cache           off;
+    }
+
+    access_log /var/log/nginx/vnkr_access.log;
+    error_log  /var/log/nginx/vnkr_error.log warn;
+}

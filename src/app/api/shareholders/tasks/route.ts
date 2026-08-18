@@ -1,10 +1,8 @@
 import { NextRequest } from "next/server";
 import { successResponse, errorResponse, serverErrorResponse, unauthorizedResponse } from "@/utils/api-response";
 import { handleError } from "@/utils/errors";
-import { getActiveShareholder } from "@/lib/sh-auth";
-import { shareholderOpsService } from "@/services";
-
-const { taskService } = shareholderOpsService;
+import { getActiveShareholder } from "@/modules/auth/sh-auth";
+import { taskService } from "@/modules/shareholders";
 
 // GET /api/shareholders/tasks
 export async function GET() {

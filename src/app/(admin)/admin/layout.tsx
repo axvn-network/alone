@@ -1,4 +1,4 @@
-import { requireAdminGuard } from "@/lib/rbac";
+import { requireAdminGuard } from "@/core/rbac/rbac-lib";
 import type { Metadata } from "next";
 import AdminProviders from "./AdminProviders";
 

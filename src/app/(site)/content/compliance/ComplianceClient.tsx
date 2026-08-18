@@ -1,9 +1,9 @@
 "use client";
 
-import { ComplianceTracker } from "../../compliance/components/ComplianceTracker";
-import DocLayout, { DocSidebar, DocMain, DocHero, DocBody } from "@/components/layout/DocLayout";
+import { ComplianceTracker } from "@/app/(site)/compliance/components/ComplianceTracker";
+import DocLayout, { DocSidebar, DocMain, DocHero, DocBody } from "@/shared/components/layout/DocLayout";
 import { COMPLIANCE_TASKS } from "@/data/comp/compliance";
-import type { TocItem } from "@/components/layout/DocLayout";
+import type { TocItem } from "@/shared/components/layout/DocLayout";
 
 const TOC: readonly TocItem[] = [
   { id: "tracker", label: "Tiến độ tuân thủ", level: 1 },

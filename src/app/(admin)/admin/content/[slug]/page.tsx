@@ -2,12 +2,12 @@
 
 import { useEffect, useState, use } from "react";
 import Link from "next/link";
-import AdminSidebar from "@/app/(admin)/components/AdminSidebar";
-import AdminNavbar from "@/app/(admin)/components/AdminNavbar";
+import AdminSidebar from "@/shared/components/admin/AdminSidebar";
+import AdminNavbar from "@/shared/components/admin/AdminNavbar";
 import { toast } from "sonner";
 import { ArrowLeft, Save, Eye } from "lucide-react";
-import RichTextEditor from "@/app/(site)/components/ui/RichTextEditor";
-import AiAssistPanel, { PAGE_AI_ACTIONS } from "@/app/(site)/components/ui/AiAssistPanel";
+import RichTextEditor from "@/shared/components/ui/RichTextEditor";
+import AiAssistPanel, { PAGE_AI_ACTIONS } from "@/shared/components/ui/AiAssistPanel";
 import { useCsrf } from "@/contexts/CsrfContext";
 
 const pageLabels: Record<string, string> = {

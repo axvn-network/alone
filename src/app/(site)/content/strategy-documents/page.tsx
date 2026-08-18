@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { BookOpen, FileText, ShieldAlert } from "lucide-react";
-import PageHero from "@/app/(site)/components/public/PageHero";
-import { Section } from "@/app/(site)/components/ui/Primitives";
-import StrategyNotice from "@/app/(site)/components/public/StrategyNotice";
-import { getStrategicDocumentSummaries } from "@/lib/strategic-documents";
+import PageHero from "@/modules/content/components/PageHero";
+import { Section } from "@/shared/components/ui/Primitives";
+import StrategyNotice from "@/modules/content/components/StrategyNotice";
+import { getStrategicDocumentSummaries } from "@/core/strategic-documents";
 
 export const metadata: Metadata = {
   title: "Tài Liệu Chiến Lược",

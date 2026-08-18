@@ -7,8 +7,8 @@ import {
   Send, Save, X, ChevronDown, ChevronUp, Loader2, MessageSquare,
   ShieldCheck, ShieldAlert, CheckCircle2, XCircle, RefreshCw,
 } from "lucide-react";
-import AdminSidebar from "@/app/(admin)/components/AdminSidebar";
-import AdminNavbar from "@/app/(admin)/components/AdminNavbar";
+import AdminSidebar from "@/shared/components/admin/AdminSidebar";
+import AdminNavbar from "@/shared/components/admin/AdminNavbar";
 import { useCsrf } from "@/contexts/CsrfContext";
 import {
   ROLE_LABELS, ALL_ROLES, SHAREHOLDER_STATUS_CLS as STATUS_CLS,
@@ -16,7 +16,7 @@ import {
   TASK_CATEGORIES as CATEGORIES, CAT_LABELS,
   MEETING_TYPES, MEETING_TYPE_LABELS, ADMIN_PAGE_CLS,
 } from "@/constants/admin";
-import { formatVNDCompact } from "@/lib/vn/format";
+import { formatVNDCompact } from "@/core/vn-utils/vn-lib/format";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 interface Shareholder { _id: string; name: string; email: string; phone: string; role: string; status: string; equityPercent: number; capitalCommitted: number; capitalPaid: number; notes: string; kycStatus?: string; }

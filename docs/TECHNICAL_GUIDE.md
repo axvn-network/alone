@@ -13,7 +13,7 @@ Dự án sử dụng kiến trúc **Next.js 16 (App Router)** với mô hình `s
 - **Database:** MongoDB 9 + Mongoose (ODM).
 - **Reverse Proxy:** Nginx (TLS 1.3, HSTS).
 - **Process Manager:** PM2 (Fork Mode — tương thích SSE in-memory).
-- **Realtime:** Server-Sent Events (SSE) qua `lib/sse-broker.ts`.
+- **Realtime:** Server-Sent Events (SSE) — in-memory broker trong `src/modules/` / route handlers.
 - **Media:** Cloudinary (folder namespace: `AXVN/`, `AXVN/blog`, `AXVN/documents`).
 
 ### Luồng request chuẩn
@@ -101,24 +101,43 @@ TTL tự động qua MongoDB TTL index trên field `retainUntil`.
 
 ```
 src/
-├── app/             # Routes + pages (App Router)
-│   ├── (admin)/     # Admin module
-│   │   └── admin/   # Admin CMS pages
-│   ├── (site)/      # Site routes
-│   │   ├── auth/    # Auth routes (e.g., admin-login)
-│   │   ├── content/ # CMS pages (about, privacy, etc.)
-│   │   └── portals/ # User portals (shareholders, investment)
-│   └── api/         # Route handlers (backend)
-├── components/      # Shared UI components
-├── constants/       # brand.ts, project.ts
-├── data/            # Static data (compliance tasks, etc.)
-├── hooks/           # React hooks
-├── lib/             # Infrastructure (db, session, email, SSE, auth)
-├── models/          # Mongoose schemas
-├── services/        # Business logic layer
-├── types/           # TypeScript types/interfaces
-├── utils/           # Helpers (sanitize, rate-limit, errors, cloudinary)
-└── validators/      # Zod schemas
+├── app/              # Routing only — page.tsx, layout.tsx, route.ts
+│   ├── (admin)/      # Admin CMS pages (session-protected)
+│   ├── (site)/       # Public pages + portals
+│   └── api/          # Route handlers: admin/*, shareholders/*, public/*
+├── core/             # Infrastructure — no React, no business logic
+│   ├── database/     # MongoDB singleton (connectDB)
+│   ├── env.ts        # Typed env validation (Zod)
+│   ├── models/       # Canonical Mongoose schemas
+│   ├── rbac/         # Guards: requireAdminGuard, checkAdminAPI…
+│   ├── security/     # Session HMAC, CSRF, auth-utils
+│   └── vn-utils/     # hanh-chinh, CCCD validators, VND formatting
+├── modules/          # Business domain logic (15 modules)
+│   ├── auth/         # sh-auth, sh-session, auth-utils
+│   ├── audit-log/    # logAudit(), AuditLog model
+│   ├── blog/         # Blog CRUD + service
+│   ├── capital-transactions/
+│   ├── content/      # CMS pages
+│   ├── documents/
+│   ├── enquiries/
+│   ├── investment-plans/
+│   ├── investor/
+│   ├── media/        # Cloudinary upload
+│   ├── partner-applications/
+│   ├── public-users/
+│   ├── settings/
+│   └── shareholders/ # + task/meeting/message sub-models
+├── shared/           # Cross-cutting (used by ≥ 2 modules)
+│   ├── components/   # admin/, animations/, layout/, ui/
+│   ├── constants/    # brand.ts, colors.ts, project.ts
+│   ├── contexts/     # AdminSessionContext, CsrfContext, LangContext
+│   ├── hooks/        # useDebounce, usePermission…
+│   ├── services/     # Canonical service implementations
+│   ├── types/        # Global TypeScript interfaces
+│   ├── utils/        # api-response, errors, logger, rate-limit…
+│   └── validators/   # Zod schemas (Vietnamese messages)
+├── data/             # Static JSON
+└── locales/          # i18n (vi, en)
 ```
 
 ---
@@ -155,14 +174,14 @@ bash scripts/backup.sh  # mongodump hàng ngày — lên lịch cron
 | Biến | Mô tả |
 |---|---|
 | `MONGODB_URI` | MongoDB connection string |
-| `SESSION_SECRET` | ≥ 32 chars — ký session cookie admin |
+| `SESSION_SECRET` | ≥ 64 chars — ký session cookie admin (`openssl rand -hex 64`) |
 | `ADMIN_EMAIL` | Email superadmin seed |
 | `ADMIN_PASSWORD` | Password superadmin seed |
 | `CLOUDINARY_CLOUD_NAME` | Cloudinary cloud |
 | `CLOUDINARY_API_KEY` | Cloudinary key |
 | `CLOUDINARY_API_SECRET` | Cloudinary secret |
 | `SMTP_HOST` / `SMTP_PORT` / `SMTP_USER` / `SMTP_PASS` | Email notification |
-| `GEMINI_API_KEY` | AI assist (optional) |
+| `ANTHROPIC_API_KEY` | AI assist — Anthropic Claude (optional) |
 | `WHATSAPP_VERIFY_TOKEN` | WhatsApp webhook token |
 | `NEXT_PUBLIC_SITE_URL` | `https://vnkr.vn` (production) |
 

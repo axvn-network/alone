@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
-import { getCurrentUser } from "@/lib/auth-utils";
-import { enquiryService } from "@/services";
+import { getCurrentUser } from "@/core/security/auth-utils";
+import * as enquiryService from "@/modules/enquiries";
 import {
   successResponse,
   errorResponse,

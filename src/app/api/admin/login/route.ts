@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { connectDB } from "@/lib/db";
-import Admin from "@/models/Admin";
+import { connectDB } from "@/core/database";
+import { AdminModel as Admin } from "@/modules/auth";
 import bcrypt from "bcryptjs";
-import { setSessionCookie } from "@/lib/session";
+import { setSessionCookie } from "@/core/security/session";
 import { rateLimit, clearRateLimit } from "@/utils/rate-limit";
 
 const FALLBACK_USERNAME = process.env.ADMIN_USERNAME || "admin";

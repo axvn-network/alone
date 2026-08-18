@@ -1,8 +1,8 @@
 import { NextRequest } from "next/server";
 import { verify } from "otplib";
-import { connectDB } from "@/lib/db";
-import Admin from "@/models/Admin";
-import { setSessionCookie } from "@/lib/session";
+import { connectDB } from "@/core/database";
+import { AdminModel as Admin } from "@/modules/auth";
+import { setSessionCookie } from "@/core/security/session";
 import { successResponse, errorResponse } from "@/utils/api-response";
 
 export async function POST(req: NextRequest) {

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { RiskMatrix } from "@/app/(site)/components/visual/RiskMatrix";
-import PageHero from "@/app/(site)/components/public/PageHero";
+import { RiskMatrix } from "@/modules/dashboard/components/RiskMatrix";
+import PageHero from "@/modules/content/components/PageHero";
 import { RISKS } from "@/data/risks";
 
 export const metadata: Metadata = {

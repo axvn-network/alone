@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import PageTransition from "@/app/(site)/components/animations/PageTransition";
-import Reveal from "@/app/(site)/components/animations/Reveal";
-import Stagger from "@/app/(site)/components/animations/Stagger";
-import StaggerItem from "@/app/(site)/components/animations/StaggerItem";
-import PageHero from "@/app/(site)/components/public/PageHero";
+import PageTransition from "@/shared/components/animations/PageTransition";
+import Reveal from "@/shared/components/animations/Reveal";
+import Stagger from "@/shared/components/animations/Stagger";
+import StaggerItem from "@/shared/components/animations/StaggerItem";
+import PageHero from "@/modules/content/components/PageHero";
 import {
   Search,
   ClipboardCheck,

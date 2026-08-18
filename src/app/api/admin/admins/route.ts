@@ -8,10 +8,10 @@
  */
 
 import { NextRequest } from "next/server";
-import { connectDB } from "@/lib/db";
-import Admin from "@/models/Admin";
+import { connectDB } from "@/core/database";
+import { AdminModel as Admin } from "@/modules/auth";
 import bcrypt from "bcryptjs";
-import { getCurrentUser } from "@/lib/auth-utils";
+import { getCurrentUser } from "@/core/security/auth-utils";
 import {
   successResponse,
   serverErrorResponse,

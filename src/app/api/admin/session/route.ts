@@ -1,4 +1,4 @@
-import { getCurrentUser } from "@/lib/auth-utils";
+import { getCurrentUser } from "@/core/security/auth-utils";
 import { successResponse, unauthorizedResponse } from "@/utils/api-response";
 
 export async function GET() {

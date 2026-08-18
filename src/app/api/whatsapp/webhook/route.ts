@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { logger } from "@/lib/logger";
+import { logger } from "@/shared/utils/logger";
 
 /**
  * WhatsApp Business Cloud API — Webhook

@@ -1,10 +1,10 @@
 import { NextRequest } from "next/server";
-import { connectDB } from "@/lib/db";
-import Shareholder from "@/models/Shareholder";
+import { connectDB } from "@/core/database";
+import { ShareholderModel as Shareholder } from "@/modules/shareholders";
 import { successResponse, serverErrorResponse, notFoundResponse, unauthorizedResponse } from "@/utils/api-response";
 import { handleError } from "@/utils/errors";
 import { cookies } from "next/headers";
-import { makeShareholderToken, parseShareholderToken, SH_COOKIE } from "@/lib/sh-session";
+import { makeShareholderToken, parseShareholderToken, SH_COOKIE } from "@/modules/auth/sh-session";
 
 // POST /api/shareholders/auth — login
 export async function POST(req: NextRequest) {

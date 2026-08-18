@@ -13,9 +13,9 @@
  */
 
 import { NextRequest } from "next/server";
-import { connectDB } from "@/lib/db";
-import Shareholder from "@/models/Shareholder";
-import { getActiveShareholder } from "@/lib/sh-auth";
+import { connectDB } from "@/core/database";
+import { ShareholderModel as Shareholder } from "@/modules/shareholders";
+import { getActiveShareholder } from "@/modules/auth/sh-auth";
 import {
   successResponse,
   serverErrorResponse,

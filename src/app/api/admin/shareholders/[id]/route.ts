@@ -7,9 +7,9 @@
  */
 
 import { NextRequest } from "next/server";
-import { getCurrentUser } from "@/lib/auth-utils";
-import * as shareholderService from "@/services/shareholder.service";
-import { logAudit } from "@/services/audit.service";
+import { getCurrentUser } from "@/core/security/auth-utils";
+import { shareholderService } from "@/modules/shareholders";
+import { logAudit } from "@/modules/audit-log";
 import {
   successResponse,
   serverErrorResponse,

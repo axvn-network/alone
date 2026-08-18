@@ -1,11 +1,11 @@
 "use client";
 
-import { GovernanceCards } from "../../governance/components/GovernanceCards";
-import { ShareholderTable } from "../../governance/components/ShareholderTable";
-import { AdvisorCards } from "../../governance/components/AdvisorCards";
-import DocLayout, { DocSidebar, DocMain, DocHero, DocBody } from "@/components/layout/DocLayout";
+import { GovernanceCards } from "@/app/(site)/governance/components/GovernanceCards";
+import { ShareholderTable } from "@/app/(site)/governance/components/ShareholderTable";
+import { AdvisorCards } from "@/app/(site)/governance/components/AdvisorCards";
+import DocLayout, { DocSidebar, DocMain, DocHero, DocBody } from "@/shared/components/layout/DocLayout";
 import { GOVERNANCE_DOCS, SHAREHOLDERS, ADVISORS } from "@/data/gov/governance";
-import type { TocItem } from "@/components/layout/DocLayout";
+import type { TocItem } from "@/shared/components/layout/DocLayout";
 
 const TOC: readonly TocItem[] = [
   { id: "docs", label: "Tài liệu quản trị", level: 1 },

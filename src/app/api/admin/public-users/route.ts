@@ -7,9 +7,9 @@
  */
 
 import { NextRequest } from "next/server";
-import { connectDB } from "@/lib/db";
-import PublicUser from "@/models/PublicUser";
-import { getCurrentUser } from "@/lib/auth-utils";
+import { connectDB } from "@/core/database";
+import { PublicUser } from "@/modules/public-users";
+import { getCurrentUser } from "@/core/security/auth-utils";
 import {
   successResponse,
   unauthorizedResponse,

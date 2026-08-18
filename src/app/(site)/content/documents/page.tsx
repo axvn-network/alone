@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import DocumentsClient, { type DocItem } from "./DocumentsClient";
-import { documentService } from "@/services/document.service";
+import { documentService } from "@/modules/documents";
 
 export const metadata: Metadata = {
   title: "Công Bố Thông Tin & Tài Liệu | AXVN Tech Holding",

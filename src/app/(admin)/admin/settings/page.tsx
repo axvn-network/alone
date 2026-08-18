@@ -15,8 +15,8 @@ import {
   ToggleRight,
   Mail,
 } from "lucide-react";
-import AdminSidebar from "@/app/(admin)/components/AdminSidebar";
-import AdminNavbar from "@/app/(admin)/components/AdminNavbar";
+import AdminSidebar from "@/shared/components/admin/AdminSidebar";
+import AdminNavbar from "@/shared/components/admin/AdminNavbar";
 import { useCsrf } from "@/contexts/CsrfContext";
 
 interface SocialLink {

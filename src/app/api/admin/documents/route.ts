@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
-import { getCurrentUser } from "@/lib/auth-utils";
-import { documentService, DocumentQuery } from "@/services/document.service";
+import { getCurrentUser } from "@/core/security/auth-utils";
+import { documentService, DocumentQuery } from "@/modules/documents";
 import { documentSchema, formatZodErrors } from "@/validators";
 import {
   successResponse,

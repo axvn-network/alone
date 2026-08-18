@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
-import { getCurrentUser } from "@/lib/auth-utils";
-import { mediaService } from "@/services";
+import { getCurrentUser } from "@/core/security/auth-utils";
+import * as mediaService from "@/modules/media";
 import {
   successResponse,
   errorResponse,

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { generateCsrfToken, CSRF_COOKIE_NAME } from "@/lib/csrf";
+import { generateCsrfToken, CSRF_COOKIE_NAME } from "@/shared/utils/csrf";
 
 /**
  * GET /api/csrf

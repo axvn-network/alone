@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import StrategicCollaborationPage from "@/app/(site)/components/public/StrategicCollaborationPage";
+import StrategicCollaborationPage from "@/modules/content/components/StrategicCollaborationPage";
 
 export const metadata: Metadata = {
   title: "Khung Hợp Tác | AXVN Tech Holding",

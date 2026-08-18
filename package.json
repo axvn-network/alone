@@ -5,12 +5,17 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
+    "build:analyze": "ANALYZE=true next build",
     "start": "next start",
-    "lint": "eslint src config middleware.ts next.config.ts --max-warnings=0",
+    "lint": "eslint src next.config.ts --max-warnings=0",
     "typecheck": "tsc --noEmit",
     "verify": "bash scripts/verify.sh",
     "seed:plans": "tsx scripts/seed-investment-plans.ts",
-    "hanh-chinh": "tsx scripts/update-hanh-chinh.ts"
+    "seed:rbac": "tsx scripts/seed-rbac.ts",
+    "provision:admin": "tsx scripts/provision-admin.ts",
+    "reset:admin": "tsx scripts/reset-admin.ts",
+    "health": "bash scripts/health-check.sh",
+    "compress:images": "node scripts/compress-images.mjs"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.11",

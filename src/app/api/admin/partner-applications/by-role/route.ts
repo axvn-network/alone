@@ -1,5 +1,5 @@
-import { getCurrentUser } from "@/lib/auth-utils";
-import { partnerApplicationService } from "@/services";
+import { getCurrentUser } from "@/core/security/auth-utils";
+import * as partnerApplicationService from "@/modules/partner-applications";
 import {
   successResponse,
   serverErrorResponse,

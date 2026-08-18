@@ -28,6 +28,54 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "@/db": [
+        "./src/core/database/index.ts"
+      ],
+      "@/validators": [
+        "./src/shared/validators/index.ts"
+      ],
+      "@/validators/*": [
+        "./src/shared/validators/*"
+      ],
+      "@/models": [
+        "./src/core/models/index.ts"
+      ],
+      "@/models/*": [
+        "./src/core/models/*"
+      ],
+      "@/services": [
+        "./src/shared/services/index.ts"
+      ],
+      "@/services/*": [
+        "./src/shared/services/*"
+      ],
+      "@/hooks": [
+        "./src/shared/hooks/index.ts"
+      ],
+      "@/hooks/*": [
+        "./src/shared/hooks/*"
+      ],
+      "@/utils/*": [
+        "./src/shared/utils/*"
+      ],
+      "@/types": [
+        "./src/shared/types/index.ts"
+      ],
+      "@/types/*": [
+        "./src/shared/types/*"
+      ],
+      "@/constants": [
+        "./src/shared/constants/index.ts"
+      ],
+      "@/constants/*": [
+        "./src/shared/constants/*"
+      ],
+      "@/contexts": [
+        "./src/shared/contexts/index.ts"
+      ],
+      "@/contexts/*": [
+        "./src/shared/contexts/*"
       ]
     }
   },
@@ -36,8 +84,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts",
-    ".next/dev/dev/types/**/*.ts"
+    ".next/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",

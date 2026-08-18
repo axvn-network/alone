@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { Building2, Code2, Landmark, Scale, Sparkles, WalletCards } from "lucide-react";
-import PageHero from "@/app/(site)/components/public/PageHero";
-import StrategyNotice from "@/app/(site)/components/public/StrategyNotice";
-import DocumentExplorer, { type ExplorerDocument } from "@/app/(site)/components/visual/DocumentExplorer";
-import SystemDiagram, { DEFAULT_DIAGRAM_ROOT, type SystemDiagramNode } from "@/app/(site)/components/visual/SystemDiagram";
-import VisualTimeline, { type VisualTimelineItem } from "@/app/(site)/components/visual/VisualTimeline";
+import PageHero from "@/modules/content/components/PageHero";
+import StrategyNotice from "@/modules/content/components/StrategyNotice";
+import DocumentExplorer, { type ExplorerDocument } from "@/modules/dashboard/components/DocumentExplorer";
+import SystemDiagram, { DEFAULT_DIAGRAM_ROOT, type SystemDiagramNode } from "@/modules/dashboard/components/SystemDiagram";
+import VisualTimeline, { type VisualTimelineItem } from "@/modules/dashboard/components/VisualTimeline";
 import { CORE_VALUES, SUBSIDIARIES } from "@/constants/strategy";
 import { ROADMAP_PHASES } from "@/data/roadmap";
 

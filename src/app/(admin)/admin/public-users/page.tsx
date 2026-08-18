@@ -12,8 +12,8 @@
  */
 
 import { useEffect, useState, useCallback } from "react";
-import AdminSidebar from "@/app/(admin)/components/AdminSidebar";
-import AdminNavbar from "@/app/(admin)/components/AdminNavbar";
+import AdminSidebar from "@/shared/components/admin/AdminSidebar";
+import AdminNavbar from "@/shared/components/admin/AdminNavbar";
 import { useAdminSession } from "@/contexts/AdminSessionContext";
 import { useCsrf } from "@/contexts/CsrfContext";
 import { toast } from "sonner";

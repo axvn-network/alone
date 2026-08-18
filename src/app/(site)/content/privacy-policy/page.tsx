@@ -1,5 +1,5 @@
-import PageHero from "@/app/(site)/components/public/PageHero";
-import ProseDoc, { ProseList, ProseNote } from "@/app/(site)/components/public/ProseSection";
+import PageHero from "@/modules/content/components/PageHero";
+import ProseDoc, { ProseList, ProseNote } from "@/modules/content/components/ProseSection";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
