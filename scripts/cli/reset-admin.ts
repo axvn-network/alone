@@ -10,7 +10,7 @@
  */
 import { connect, disconnect } from "mongoose";
 import bcrypt from "bcryptjs";
-import Admin from "../src/models/Admin";
+import Admin from "../core/models/Admin";
 import dotenv from "dotenv";
 import path from "path";
 
@@ -24,7 +24,7 @@ async function resetAdminPassword() {
   // ── Validate args ──────────────────────────────────────────────────────────
   if (!email) {
     console.error(
-      "\n❌ Usage: npx tsx scripts/reset-admin.ts <email> [new_password]\n" +
+      "\n[ERROR] Usage: npx tsx scripts/reset-admin.ts <email> [new_password]\n" +
       "   Example: npx tsx scripts/reset-admin.ts admin@vnkr.vn NewPass@9876\n"
     );
     process.exit(1);
@@ -32,8 +32,8 @@ async function resetAdminPassword() {
 
   if (!newPassword) {
     console.error(
-      "\n❌ new_password là bắt buộc.\n" +
-      "   Hãy truyền mật khẩu mạnh (≥12 ký tự, có số + ký tự đặc biệt):\n" +
+      "\n[ERROR] new_password la bat buoc.\n" +
+      "   Hay truyen mat khau manh (>=12 ky tu, co so + ky tu dac biet):\n" +
       "   npx tsx scripts/reset-admin.ts admin@vnkr.vn 'MyStr0ng!Pass'\n"
     );
     process.exit(1);
@@ -41,18 +41,18 @@ async function resetAdminPassword() {
 
   // Basic password strength check
   if (newPassword.length < 10) {
-    console.error("\n❌ Mật khẩu quá ngắn — tối thiểu 10 ký tự.\n");
+    console.error("\n[ERROR] Mat khau qua ngan -- toi thieu 10 ky tu.\n");
     process.exit(1);
   }
 
   if (!process.env.MONGODB_URI) {
-    console.error("\n❌ MONGODB_URI không tìm thấy trong .env.local\n");
+    console.error("\n[ERROR] MONGODB_URI khong tim thay trong .env.local\n");
     process.exit(1);
   }
 
-  console.log("\n⚠  SECURITY WARNING");
-  console.log("   Đổi mật khẩu ngay sau khi đăng nhập!");
-  console.log("   Không log, không chia sẻ mật khẩu này.\n");
+  console.log("\n[WARNING] SECURITY WARNING");
+  console.log("   Doi mat khau ngay sau khi dang nhap!");
+  console.log("   Khong log, khong chia se mat khau nay.\n");
 
   await connect(process.env.MONGODB_URI);
 
@@ -63,19 +63,19 @@ async function resetAdminPassword() {
   );
 
   if (result.matchedCount === 0) {
-    console.error(`❌ Admin không tìm thấy: ${email}`);
+    console.error(`[ERROR] Admin khong tim thay: ${email}`);
     await disconnect();
     process.exit(1);
   }
 
-  console.log(`✓ Đặt lại mật khẩu thành công cho: ${email}`);
-  console.log("  → Hãy đăng nhập và đổi mật khẩu ngay!\n");
+  console.log(`[OK] Dat lai mat khau thanh cong cho: ${email}`);
+  console.log("  -> Hay dang nhap va doi mat khau ngay!\n");
 
   await disconnect();
   process.exit(0);
 }
 
 resetAdminPassword().catch((err) => {
-  console.error("❌ Reset failed:", err);
+  console.error("[ERROR] Reset failed:", err);
   process.exit(1);
 });

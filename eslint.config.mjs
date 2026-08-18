@@ -17,29 +17,6 @@ const eslintConfig = defineConfig([
           caughtErrorsIgnorePattern: "^_",
         },
       ],
-      "no-restricted-imports": [
-        "error",
-        {
-          paths: [
-            {
-              name: "@/components/layout",
-              message: "Import specific components from @/components/layout/* instead of the barrel.",
-            },
-            {
-              name: "@/components/ui",
-              message: "Please colocate UI components within their feature route.",
-            },
-            {
-              name: "@/components/visual",
-              message: "Please colocate Visual components within their feature route.",
-            },
-            {
-              name: "@/components/admin",
-              message: "Please colocate Admin components within their feature route.",
-            },
-          ],
-        },
-      ],
     },
   },
   globalIgnores([

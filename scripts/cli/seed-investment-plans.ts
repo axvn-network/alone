@@ -15,7 +15,7 @@ import mongoose from "mongoose";
 
 const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) {
-  console.error("❌ MONGODB_URI is not set. Please configure your .env.local file.");
+  console.error("[ERROR] MONGODB_URI is not set. Please configure your .env.local file.");
   process.exit(1);
 }
 
@@ -386,32 +386,32 @@ const PLANS = [
 
 // ── Run ───────────────────────────────────────────────────────────────────────
 async function run() {
-  console.log("🔌 Connecting to MongoDB...");
+  console.log("Connecting to MongoDB...");
   await mongoose.connect(MONGODB_URI as string, { bufferCommands: false });
-  console.log("✅ Connected\n");
+  console.log("Connected\n");
 
   const existing = await InvestmentPlan.countDocuments();
   if (existing > 0) {
-    console.log(`⚠️  Found ${existing} existing plans. Skipping seed (use --force to override).`);
+    console.log(`[!] Found ${existing} existing plans. Skipping seed (use --force to override).`);
     if (!process.argv.includes("--force")) {
       await mongoose.disconnect();
       process.exit(0);
     }
-    console.log("🗑️  --force flag detected. Clearing existing plans...");
+    console.log("[!] --force flag detected. Clearing existing plans...");
     await InvestmentPlan.deleteMany({});
   }
 
-  console.log(`📦 Seeding ${PLANS.length} investment plans...\n`);
+  console.log(`Seeding ${PLANS.length} investment plans...\n`);
   for (const plan of PLANS) {
     await InvestmentPlan.create(plan);
-    console.log(`  ✓ [${plan.tier}] ${plan.name} (${plan.status})`);
+    console.log(`  [+] [${plan.tier}] ${plan.name} (${plan.status})`);
   }
 
-  console.log("\n🎉 Done! Investment plans seeded successfully.");
+  console.log("\nDone! Investment plans seeded successfully.");
   await mongoose.disconnect();
 }
 
 run().catch((err) => {
-  console.error("❌ Seed failed:", err);
+  console.error("[ERROR] Seed failed:", err);
   process.exit(1);
 });

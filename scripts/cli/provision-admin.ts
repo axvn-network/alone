@@ -1,7 +1,7 @@
 import 'dotenv/config';
-import { connectDB } from '@/lib/db';
-import Admin from '@/models/Admin';
-import { Role } from '@/models/Role';
+import { connectDB } from '@/core/database';
+import Admin from '@/core/models/Admin';
+import { Role } from '@/core/models/Role';
 import bcrypt from 'bcryptjs';
 
 async function provision() {
@@ -22,7 +22,7 @@ async function provision() {
 
   const hashedPassword = await bcrypt.hash(password, 12);
   
-  const admin = await Admin.create({
+  const _admin = await Admin.create({
     name: email.split('@')[0],
     email,
     password: hashedPassword,

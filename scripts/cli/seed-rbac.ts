@@ -6,14 +6,14 @@
  * Sử dụng:
  *   npm run seed:rbac
  *
- * ⚠️  Script này XÓA toàn bộ Permission và Role hiện có trước khi seed.
- *     Chỉ chạy trên DB mới hoặc khi cần reset hoàn toàn phân quyền.
+ * [WARNING] Script nay XOA toan bo Permission va Role hien co truoc khi seed.
+ *     Chi chay tren DB moi hoac khi can reset hoan toan phan quyen.
  */
 
 import 'dotenv/config';
-import { connectDB } from '@/lib/db';
-import { Permission } from '@/models/Permission';
-import { Role } from '@/models/Role';
+import { connectDB } from '@/core/database';
+import { Permission } from '@/core/models/Permission';
+import { Role } from '@/core/models/Role';
 
 // ─── Danh sách quyền hạn đầy đủ ──────────────────────────────────────────────
 
@@ -120,7 +120,7 @@ async function seed() {
   console.log('MONGODB_URI:', process.env.MONGODB_URI ? 'SET' : 'NOT SET');
   await connectDB();
 
-  console.log('⚠️  Xóa Permission và Role cũ...');
+  console.log('[!] Xoa Permission va Role cu...');
   await Permission.deleteMany({});
   await Role.deleteMany({});
 
@@ -145,16 +145,16 @@ async function seed() {
       permissions: permIds,
     });
 
-    console.log(`  ✓ ${roleName} (${permIds.length} permissions)`);
+    console.log(`  [+] ${roleName} (${permIds.length} permissions)`);
   }
 
-  console.log('\n✅ RBAC seeded successfully.');
+  console.log('\nRBAC seeded successfully.');
   console.log('Tiếp theo: Gán role cho admin bằng lệnh:');
   console.log('  npm run provision:admin -- <email> <password> <roleName>');
   process.exit(0);
 }
 
 seed().catch((err: unknown) => {
-  console.error('❌ Seed failed:', err);
+  console.error('[ERROR] Seed failed:', err);
   process.exit(1);
 });

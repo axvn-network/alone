@@ -3,91 +3,88 @@ title: "Langding Project Context"
 slug: "langding-project-context"
 date: "2026-08-09"
 group: "GOVERNANCE"
-original_path: ""
 tags: [architecture, governance, AXVN, agents]
 lang: "vi"
-summary: "Bản đồ kỹ thuật, quy ước nội dung và ranh giới triển khai cho Langding."
+summary: "Ban do du an, thuong hieu, quy uoc nguon su that va no ky thuat cua Langding."
 ---
 
 # Langding — Project Context
 
 ## 1. Project overview
-Langding là website công khai, CMS quản trị và cổng cổ đông cho AXVN Tech Holding. Website công bố định hướng hệ sinh thái số và nội dung tham chiếu; không phải nền tảng giao dịch hay lời chào bán tài chính.
+Langding la website cong khai, CMS quan tri va cong co dong cho **AXVN Tech Holding**. Website cong bo dinh huong he sinh thai so va noi dung tham chieu — khong phai nen tang giao dich hay loi chao ban tai chinh.
 
-## 2. Audience and goals
-Khách truy cập xem thông tin AXVN; quản trị viên quản lý nội dung; cổ đông được phân quyền dùng portal. Mục tiêu là thông tin nhất quán, rõ nguồn và an toàn.
+## 2. Audience
+- Khach truy cap: xem thong tin AXVN.
+- Quan tri vien: quan ly noi dung qua admin CMS.
+- Co dong: dung shareholder portal (phan quyen).
 
 ## 3. Public brand
-Tên công khai là **AXVN Tech Holding** / **AXVN Group**. Canonical URL là `https://vnkr.vn`. Asset logo hiện tại chỉ là placeholder cho đến khi có brand kit AXVN chính thức.
+Ten cong khai: **AXVN Tech Holding** / **AXVN Group**. Canonical URL: `https://vnkr.vn`. Logo hien la placeholder cho den khi co brand kit AXVN chinh thuc.
 
-## 4. Product strategy source
-Định hướng AXVN lấy từ `_extracted/CHIEN_LUOC_2026_2031/` sau khi tìm bằng `_standardized/index.json` hoặc `chunks.jsonl`, rồi xác minh theo `original_path`. Trích dẫn: `[slug | original_path]`.
+## 4. Strategy source of truth
+Dinh huong AXVN lay tu noi dung corpus `_extracted/CHIEN_LUOC_2026_2031/` (nam ngoai repo) — tim bang `_standardized/index.json` hoac `chunks.jsonl`, xac minh theo `original_path`. Trich dan: `[slug | original_path]`. Khong suy dien chien luoc tu tai lieu ngoai corpus.
 
 ## 5. Technical source of truth
-Sự thật kỹ thuật chỉ lấy từ mã nguồn, `package.json`, cấu hình và tài liệu này. Không suy diễn kiến trúc Langding từ tài liệu AXVN/VNKR khác.
+Su that ky thuat chi lay tu ma nguon, `package.json`, cau hinh va [`ARCH_BLUEPRINT.md`](ARCH_BLUEPRINT.md). Khong suy dien kien truc tu tai lieu chien luoc AXVN/VNKR.
 
 ## 6. Technology stack
-Next.js 16 App Router, React 19, TypeScript 5.9, Tailwind CSS 4, Framer Motion, Mongoose/MongoDB, Zod, Nodemailer, Cloudinary, Anthropic Claude và PM2/Nginx deployment.
+Next.js 16 App Router · React 19 · TypeScript 5.9 · Tailwind CSS 4 · Framer Motion · Mongoose/MongoDB · Zod · Nodemailer · Cloudinary · Anthropic Claude · PM2/Nginx.
 
-## 7. Folder structure
-`src/app` chứa routing thuần; `src/core` là hạ tầng (database, models, rbac, security, vn-utils, env); `src/modules` là business logic phân domain; `src/shared` là cross-cutting (components, hooks, services, types, utils, validators, constants, contexts); `src/data` là static JSON; `src/locales` là i18n; `scripts` là vận hành; `infra` là PM2/Nginx config; `docs` là tài liệu.
+## 7. Configuration
+- `.env.local` chua secrets — khong commit.
+- `NEXT_PUBLIC_SITE_URL` phai la `https://vnkr.vn` khi production.
+- `SESSION_SECRET` >= 64 hex chars (`openssl rand -hex 64`).
 
-## 8. System architecture
-Browser gọi Next.js App Router. Public pages dùng server/client components; API handlers gọi service → Mongoose/MongoDB. Admin và shareholder portal dùng session cookie; SSE phát sự kiện in-process.
+## 8. Logging & audit
+- Loi server qua `logger` (`@/shared/utils/logger`) — khong dung `console.*` trong API routes.
+- Audit log ghi moi hanh dong admin quan trong.
+- Khong log secrets, access token, du lieu KYC hay toan van corpus noi bo.
 
-## 9. Module breakdown
-`src/modules/`: auth, audit-log, blog, capital-transactions, content, documents, enquiries, investment-plans, investor, media, partner-applications, public-users, settings, shareholders là các module chính. API route handlers gọi service trong modules — không gọi model trực tiếp. Guards được import từ `src/core/rbac`.
+## 9. Coding conventions
+- UTF-8 toan bo; patch nho; khong format toan repo.
+- Khong sua generated/lock/vendor files tru khi co yeu cau ro rang.
+- Khong `any` trong models hoac service layer.
+- Khong commit API keys, secrets, DSN hay token.
+- Doc tai lieu Next.js lien quan truoc khi sua code framework.
 
-## 10. Request flow
-Client → middleware/proxy guards và headers → App Router page/route handler → validator → service → model/database → typed API response. Mutation admin yêu cầu session và CSRF.
+## 10. Tech debt (hien tai)
+| Van de | Ghi chu |
+|---|---|
+| ESLint FlatCompat circular JSON | Crashes khi chay `eslint.config.mjs` — xem RUNBOOK §5.10 |
+| Legacy Fortress names | Route/model/CSS names chua "fortress" — chi doi UI, khong doi collection DB |
+| CMS content | Co the con branding cu — can audit thu cong |
+| Source strategy | Mot so claims chua xac minh hoac mau thuan — luon doi chieu `original_path` |
+| SSE in-memory | Chi phu hop 1 process — can Redis truoc khi scale ngang |
 
-## 11. Authentication
-Admin dùng cookie HMAC httpOnly (`admin_session`), managed bởi `src/core/security/session.ts`. Cổ đông dùng `sh_session` riêng, managed bởi `src/modules/auth/sh-session.ts`. Guards: `requireAdminGuard`, `checkAdminAPI` từ `src/core/rbac`. Public Users có `pub_session` riêng. Không đưa token vào local storage; secrets chỉ đọc từ environment variables.
+## 11. Roadmap
+```
+Da xong (Q3 2025):
+  [x] Rebrand Fortress -> AXVN toan bo codebase
+  [x] Rate limit shareholder auth (5/min + progressive lockout)
+  [x] SSE global heartbeat (1 timer, khong per-connection)
+  [x] PM2 fork mode (instances: 1)
+  [x] npm audit pipeline
+  [x] Health check endpoint /api/health
+  [x] HMAC verify sh_session proxy (Edge-safe)
+  [x] Consent fields ND 13/2023
+  [x] MFA TOTP admin (otplib)
+  [x] KYC fields Shareholder model
+  [x] GitHub Actions CI (audit + lint + typecheck + build)
+  [x] logger.* thay console.* trong API routes
+  [x] force-dynamic tren public DB routes
 
-## 12. Authorization
-Admin/superadmin và roles cổ đông được kiểm tra ở server. UI visibility không phải authorization; route handlers phải kiểm tra quyền.
+Q1 2026 (Pre-NQ05 filing):
+  [ ] AML/KYC third-party integration
+  [ ] Penetration test
+  [ ] nationalId encryption at rest (AES-256-GCM)
+  [ ] Audit log retention 7 nam (capital events)
+  [ ] UptimeRobot / Betterstack monitoring
+  [ ] Legal review toan bo website content
 
-## 13. Database
-MongoDB/Mongoose lưu CMS, blog, documents, enquiries, plans, shareholders và audit data. Không đổi collection/model legacy có tên Fortress trong đợt rebrand.
-
-## 14. API architecture
-Routes đặt tại `src/app/api`. Dùng helpers response/error, Zod validation và service layer. Public route chỉ trả dữ liệu đã publish; admin mutation cần CSRF.
-
-## 15. Business flows
-Public contact/partner enquiry → validation → enquiry service; quản trị nội dung → audit; shareholder portal → tasks/meetings/messages; corpus → standardized documents → chunks → optional embedding.
-
-## 16. Dependency graph
-UI phụ thuộc component/constants/hooks; routes phụ thuộc services; services phụ thuộc models/lib; corpus scripts độc lập với runtime application. Tránh để public UI đọc trực tiếp `_extracted` hoặc `chunks.jsonl`.
-
-## 17. External services
-MongoDB, Cloudinary, SMTP, Google Analytics, Meta Pixel, WhatsApp và Gemini AI là tích hợp tùy cấu hình. Embedding/vector services là ví dụ opt-in, không được gọi nếu chưa có phê duyệt.
-
-## 18. Configuration
-`.env.local` chứa secrets. `NEXT_PUBLIC_SITE_URL` phải là `https://vnkr.vn` khi production. Không commit API key, password, DSN hay token.
-
-## 19. Logging and audit
-Lỗi server qua safe error handling; audit log lưu hành động quản trị. Không log secrets, access token, dữ liệu KYC hay toàn văn corpus nội bộ.
-
-## 20. Error handling
-Chuẩn hóa lỗi qua `src/utils/errors.ts` và API response helpers. Client hiển thị thông báo an toàn; không làm lộ stack trace hoặc cấu hình.
-
-## 21. Security
-Cookie an toàn, CSRF double-submit, rate limit, Zod validation, sanitizer và security headers. Corpus/public documents không được lộ đường dẫn nội bộ hoặc metadata vector.
-
-## 22. Performance and scalability
-Public pages ưu tiên static/prerender theo Next.js 16; hình ảnh dùng `next/image`. SSE hiện in-memory, phù hợp một tiến trình hoặc cần broker trước khi scale ngang.
-
-## 23. Deployment
-`npm run build` tạo Next standalone build; PM2/Nginx là hướng deployment hiện có. Chỉ thay URL/copy, không tự đổi middleware thành proxy hoặc đổi hạ tầng.
-
-## 24. Testing
-Kiểm tra tối thiểu: corpus validator, embedding dry-run, `npx tsc --noEmit --pretty false`, `npm run build`, `git diff --check`, và visual QA public routes.
-
-## 25. Coding conventions
-Giữ UTF-8; patch nhỏ; không format toàn repo; không sửa generated/lock/vendor files ngoài yêu cầu. Đọc tài liệu Next.js liên quan trước khi sửa code framework.
-
-## 26. Strengths and technical debt
-Điểm mạnh: service/validator separation, kiểm soát session/CSRF, corpus hash validation. Nợ kỹ thuật: ESLint FlatCompat currently crashes with circular JSON; legacy route/model/CSS names contain Fortress; CMS content may retain old brand; source strategy contains unverified or conflicting claims.
-
-## 27. Improvement direction and appendix
-Tập trung một `publicBrand` constant, audit CMS branding không đột biến dữ liệu, tách public strategic summaries khỏi restricted corpus, và thay SSE in-memory nếu cần scale ngang. Mọi claim chiến lược/pháp lý phải được xác minh nguồn gốc và công bố kèm notice.
+Q2 2026 (Scale):
+  [ ] Redis pub/sub cho SSE broker
+  [ ] Redis rate limiter (ZSET sliding window)
+  [ ] PM2 cluster mode (sau khi co Redis)
+  [ ] Read replica MongoDB
+  [ ] CDN static assets
+```

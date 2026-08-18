@@ -1,6 +1,7 @@
-# Hướng dẫn Quản trị Hệ thống (Admin Guide)
+# Admin Guide — AXVN Tech Holding
 
-Tài liệu này cung cấp hướng dẫn chi tiết cho đội ngũ quản trị viên về cách vận hành website AXVN Tech Holding (vnkr.vn).
+Hướng dẫn vận hành CMS và admin portal tại `vnkr.vn`.
+Sự cố hệ thống, deploy, rollback → xem [`RUNBOOK.md`](RUNBOOK.md).
 
 ---
 

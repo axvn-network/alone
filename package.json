@@ -10,14 +10,16 @@
     "lint": "eslint src next.config.ts --max-warnings=0",
     "typecheck": "tsc --noEmit",
     "verify": "bash scripts/verify.sh",
-    "seed:plans": "tsx scripts/seed-investment-plans.ts",
-    "seed:rbac": "tsx scripts/seed-rbac.ts",
-    "provision:admin": "tsx scripts/provision-admin.ts",
-    "reset:admin": "tsx scripts/reset-admin.ts",
+    "seed:plans": "tsx src/cli/seed-investment-plans.ts",
+    "seed:rbac": "tsx src/cli/seed-rbac.ts",
+    "provision:admin": "tsx src/cli/provision-admin.ts",
+    "reset:admin": "tsx src/cli/reset-admin.ts",
     "health": "bash scripts/health-check.sh",
-    "compress:images": "node scripts/compress-images.mjs"
+    "compress:images": "node scripts/compress-images.mjs",
+    "prepare": "husky"
   },
   "dependencies": {
+    "@t3-oss/env-nextjs": "^0.13.11",
     "@tailwindcss/postcss": "^4.1.11",
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "^22.15.23",
@@ -54,6 +56,8 @@
     "dotenv": "^16.6.1",
     "eslint": "^9.27.0",
     "eslint-config-next": "^16.3.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.3.0",
     "tsx": "^4.23.10"
   }
 }

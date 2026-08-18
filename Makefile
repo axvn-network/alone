@@ -33,11 +33,11 @@ lint:
 	npm run lint
 
 verify:
-	npm run verify
+	bash scripts/axvn-manage.sh verify
 
 # ── Production ────────────────────────────────────────────────────────────────
 deploy:
-	bash scripts/deploy.sh
+	bash scripts/axvn-manage.sh deploy
 
 # Hot-patch: reload PM2 + Nginx nhưng không build (dành cho thay đổi env/nginx)
 deploy-skip-build:
@@ -67,11 +67,11 @@ monit:
 	pm2 monit
 
 health:
-	bash scripts/health-check.sh
+	bash scripts/axvn-manage.sh health
 
 # ── Database ──────────────────────────────────────────────────────────────────
 backup:
-	bash scripts/backup.sh
+	bash scripts/axvn-manage.sh backup
 
 # Seed dữ liệu gói đầu tư mẫu (chỉ dùng với DB trống lần đầu)
 seed-plans:

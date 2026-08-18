@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
+import { env } from "./src/core/env";
 
-const isDev = process.env.NODE_ENV !== "production";
+// Ensure env is loaded
+console.log(`[Env] Running in ${env.NODE_ENV} mode`);
+
+const isDev = env.NODE_ENV !== "production";
 
 // ── Security headers ───────────────────────────────────────────────────────────
 const securityHeaders = [

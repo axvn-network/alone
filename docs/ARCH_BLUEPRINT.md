@@ -1,7 +1,7 @@
 # Architecture Blueprint — AXVN Tech Holding (Langding)
 
 > **Source of truth kỹ thuật** — mọi thay đổi kiến trúc phải cập nhật file này trước khi implement.
-> Đọc cùng với [`DOCUMENTATION.md`](DOCUMENTATION.md) và [`CONTEXT.md`](CONTEXT.md).
+> Đọc cùng với [`CONTEXT.md`](CONTEXT.md).
 
 ---
 
@@ -10,10 +10,10 @@
 | Nguyên tắc | Mô tả |
 |---|---|
 | **Route-Centric (Feature-First)** | Colocation tuyệt đối — mọi tài nguyên (components, hooks, types) của một route phải nằm trong thư mục của route đó |
-| **Service Layer Separation** | UI không bao giờ gọi model/DB trực tiếp; luôn qua `src/services/` |
+| **Service Layer Separation** | UI không bao giờ gọi model/DB trực tiếp; luôn qua `src/modules/<name>/service.ts` |
 | **Strict Typing** | Không `any`. Không `as unknown as`. Mỗi interface phải có định nghĩa rõ ràng |
 | **Zero-Garbage Policy** | Không tồn tại `utils/`, `components/` dùng chung ở root nếu chỉ dùng cho 1 feature |
-| **Edge-Safe Middleware** | `middleware.ts` chỉ được dùng Web Crypto API (`crypto.subtle`) — không import Node.js modules |
+| **Edge-Safe Proxy** | `src/proxy.ts` (function `proxy`) chỉ được dùng Web Crypto API (`crypto.subtle`) — không import Node.js modules |
 | **Single Process for SSE** | PM2 **fork mode** bắt buộc khi dùng SSE in-memory broker. Scale ngang → Redis adapter trước |
 
 ---
@@ -27,7 +27,7 @@ Browser
 Nginx (TLS 1.3 · HSTS · gzip · static cache)
   │
   ▼
-middleware.ts  ← Edge Runtime (Web Crypto only)
+src/proxy.ts  ← Edge Runtime (Web Crypto only, function: proxy)
   ├─ Auth header check (admin_session HMAC, sh_session HMAC+exp)
   ├─ CSRF double-submit verify (mutation routes)
   └─ Route guards (redirect /admin → /admin-login nếu chưa auth)
@@ -46,8 +46,7 @@ Next.js App Router  ← Node.js Runtime
 
 ```
 langding/
-├── .ai/                      # Agent protocol (manifest, work-queue, locks, handoffs)
-├── .github/workflows/        # CI/CD: ci.yml (lint+typecheck+build), cd.yml (SSH deploy)
+├── .github/workflows/        # CI/CD: ci.yml (audit+lint+typecheck+build)
 ├── docs/                     # Tài liệu kỹ thuật (file này)
 ├── infra/
 │   ├── ecosystem.config.js   # PM2 config (fork mode, AXVN-langding)
@@ -72,6 +71,8 @@ langding/
 │   ├── compress-images.mjs   # Lossless image compression (sharp)
 │   ├── reset-admin.ts        # Emergency admin password reset (bắt buộc pass)
 │   ├── seed-investment-plans.ts  # Seed investment plans (first-time, --force flag)
+│   ├── seed-rbac.ts (archived)       # Seed RBAC (archived)
+│   ├── provision-admin.ts (archived) # Provision admin (archived)
 │   └── archived/             # Scripts không còn dùng (giữ để tham khảo)
 ├── public/                   # Static assets (robots.txt, sitemap.xml, images)
 ├── Makefile                  # Developer ergonomics — 20+ targets
@@ -131,7 +132,7 @@ langding/
 | Infrastructure từ `@/core/` | `import { connectDB } from "@/core/database"` | `import { connectDB } from "../../lib/db"` |
 | Auth guards từ `@/core/rbac` | `import { checkAdminAPI } from "@/core/rbac"` | Tự viết auth check |
 | Logger từ `@/shared/utils/logger` | `logger.error("msg", err)` | `console.error(...)` trong production |
-| middleware.ts chỉ dùng Web Crypto | `crypto.subtle.verify(...)` | `import { createHmac } from "crypto"` |
+| `src/proxy.ts` chỉ dùng Web Crypto | `crypto.subtle.verify(...)` | `import { createHmac } from "crypto"` |
 | Zod v4 literal boolean | `z.boolean().refine(v => v === true)` | `z.literal(true, { errorMap })` |
 
 ---
@@ -219,7 +220,7 @@ TTL tự động qua MongoDB TTL index trên field `retainUntil`.
 
 ```
 Layer 1 — Network:       Nginx (TLS 1.3, HSTS, rate limit zones)
-Layer 2 — Edge:          middleware.ts (HMAC cookie verify, CSRF, route guards)
+Layer 2 — Edge:          src/proxy.ts (HMAC cookie verify, CSRF, route guards)
 Layer 3 — Application:   Zod validation, checkAdminAPI(), rate-limit (shared/utils)
 Layer 4 — Data:          nationalId select:false, bcrypt(12 rounds), audit trail
 Layer 5 — Infrastructure: .env.local (không commit), SESSION_SECRET ≥ 64 hex
@@ -291,18 +292,40 @@ Steps:
 
 ---
 
-## 12. Kiểm soát Kiến trúc
+## 12. Environment Variables
+
+| Biến | Yêu cầu | Mô tả |
+|---|---|---|
+| `MONGODB_URI` | required | MongoDB connection string |
+| `SESSION_SECRET` | required | ≥ 64 hex chars — ký session cookies (`openssl rand -hex 64`) |
+| `ADMIN_EMAIL` | required | Email superadmin seed |
+| `ADMIN_PASSWORD` | required | Password superadmin seed |
+| `NEXT_PUBLIC_SITE_URL` | required | `https://vnkr.vn` (production) |
+| `NODE_ENV` | required | `production` trên server |
+| `CLOUDINARY_CLOUD_NAME` | media | Cloudinary cloud |
+| `CLOUDINARY_API_KEY` | media | Cloudinary key |
+| `CLOUDINARY_API_SECRET` | media | Cloudinary secret |
+| `SMTP_HOST` / `SMTP_PORT` / `SMTP_USER` / `SMTP_PASS` | email | Email notification |
+| `ANTHROPIC_API_KEY` | AI | Anthropic Claude assist |
+| `WHATSAPP_VERIFY_TOKEN` | WA | WhatsApp webhook token |
+| `NEXT_PUBLIC_GA_ID` | optional | Google Analytics ID (`G-XXXXXXXXXX`) |
+| `NEXT_PUBLIC_META_PIXEL_ID` | optional | Meta Pixel ID |
+
+> Validate tất cả biến: `bash scripts/check-env.sh`
+
+---
+
+## 13. Kiểm soát Kiến trúc
 
 Mọi thay đổi kiến trúc phải:
 1. Cập nhật file này trước khi merge
 2. Pass CI pipeline đầy đủ
-3. Cập nhật `DOCUMENTATION.md` Section 2–3 nếu liên quan
-4. Ghi entry vào `CHANGELOG.md`
+3. Ghi entry vào `CHANGELOG.md`
 
 **Cấm tuyệt đối:**
-- Import từ thư mục legacy trong code mới
+- Import từ thư mục legacy (`src/lib/`, `src/models/`, `src/services/`, `src/utils/` ở root) trong code mới
 - `any` type trong models hoặc service layer
-- Node.js crypto modules trong `middleware.ts`
+- Node.js crypto modules trong `src/proxy.ts`
 - Cluster mode PM2 khi chưa có Redis adapter
 - Commit API keys, secrets, DSN vào repo
 

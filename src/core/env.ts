@@ -1,59 +1,38 @@
-/**
- * src/core/env.ts
- *
- * Validated runtime environment variables via Zod.
- * Throws at startup if any required variable is missing or malformed.
- * Import `env` everywhere instead of accessing `process.env` directly.
- */
-
+import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
 
-const envSchema = z.object({
-  // Database
-  MONGODB_URI: z.string().min(1),
+export const env = createEnv({
+  server: {
+    NODE_ENV: z.enum(["development", "production", "test"]),
+    MONGODB_URI: z.string().url(),
+    SESSION_SECRET: z.string().min(32),
+    ADMIN_EMAIL: z.string().email(),
+    ADMIN_PASSWORD: z.string().min(8),
+    SMTP_HOST: z.string().optional(),
+    SMTP_USER: z.string().optional(),
+    SMTP_PASS: z.string().optional(),
+    LOG_LEVEL: z.enum(["debug", "info", "warn", "error"]).optional(),
+    CLOUDINARY_CLOUD_NAME: z.string().optional(),
+    CLOUDINARY_API_KEY: z.string().optional(),
+    CLOUDINARY_API_SECRET: z.string().optional(),
+  },
+  client: {
+    NEXT_PUBLIC_SITE_URL: z.string().url(),
+  },
+  runtimeEnv: {
+    NODE_ENV: process.env.NODE_ENV,
+    MONGODB_URI: process.env.MONGODB_URI,
+    SESSION_SECRET: process.env.SESSION_SECRET,
+    ADMIN_EMAIL: process.env.ADMIN_EMAIL,
+    ADMIN_PASSWORD: process.env.ADMIN_PASSWORD,
+    SMTP_HOST: process.env.SMTP_HOST,
+    SMTP_USER: process.env.SMTP_USER,
+    SMTP_PASS: process.env.SMTP_PASS,
+    LOG_LEVEL: process.env.LOG_LEVEL,
+    CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME,
 
-  // Email
-  SMTP_HOST: z.string().optional(),
-  SMTP_PORT: z.string().optional().default("587"),
-  SMTP_SECURE: z.string().optional().transform((v) => v === "true"),
-  SMTP_USER: z.string().optional(),
-  SMTP_PASS: z.string().optional(),
-  SMTP_FROM: z.string().optional(),
-  ADMIN_EMAIL: z.string().email().default("admin@axvn.vn"),
-
-  // WhatsApp
-  WHATSAPP_VERIFY_TOKEN: z.string().default("AXVN_webhook_2026"),
-  WHATSAPP_ACCESS_TOKEN: z.string().optional(),
-  WHATSAPP_PHONE_NUMBER_ID: z.string().optional(),
-  WHATSAPP_API_VERSION: z.string().default("v20.0"),
-
-  // Cloudinary
-  CLOUDINARY_CLOUD_NAME: z.string().optional(),
-  CLOUDINARY_API_KEY: z.string().optional(),
-  CLOUDINARY_API_SECRET: z.string().optional(),
-
-  // Auth / Session
-  SESSION_SECRET: z.string().min(32),
-  ADMIN_USERNAME: z.string().optional(),
-  ADMIN_PASSWORD: z.string().optional(),
-  ADMIN_NAME: z.string().default("Admin"),
-
-  // General
-  NEXT_PUBLIC_SITE_URL: z.string().url().default("https://axvn.vn"),
-  NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
-  ANTHROPIC_API_KEY: z.string().optional(),
-  LOG_LEVEL: z.enum(["debug", "info", "warn", "error"]).default("info"),
-
-  // Analytics — optional, chỉ inject script khi có giá trị thực
-  NEXT_PUBLIC_GA_ID: z.string().optional(),
-  NEXT_PUBLIC_META_PIXEL_ID: z.string().optional(),
+    CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
+    CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
+    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
+  },
 });
-
-const _env = envSchema.safeParse(process.env);
-
-if (!_env.success) {
-  console.error("❌ Invalid environment variables:", _env.error.format());
-  throw new Error("Invalid environment variables");
-}
-
-export const env = _env.data;
