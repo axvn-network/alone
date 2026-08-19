@@ -8,8 +8,8 @@
  * Client-side components use the LangContext hook instead.
  */
 
-import vi from "@/i18n/vi.json";
-import en from "@/i18n/en.json";
+import vi from "./vi.json";
+import en from "./en.json";
 
 export type Locale = "vi" | "en";
 export type LocaleKeys = typeof vi;
