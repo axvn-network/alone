@@ -26,6 +26,8 @@ export interface IInvestmentPlan extends Document {
   taglineEn: string;
   minCommitment: number; // VNĐ
   maxCommitment: number; // 0 = unlimited
+  /** Minimum equity stake (%) offered to this tier — 0 = not specified */
+  minimumEquity: number;
   currency: string;
   duration: string;
   durationEn: string;
@@ -59,8 +61,9 @@ const InvestmentPlanSchema = new Schema<IInvestmentPlan>(
     nameEn: { type: String, required: true, trim: true },
     tagline: { type: String, default: "" },
     taglineEn: { type: String, default: "" },
-    minCommitment: { type: Number, required: true },
-    maxCommitment: { type: Number, default: 0 },
+    minCommitment: { type: Number, required: true, min: 0 },
+    maxCommitment: { type: Number, default: 0, min: 0 },
+    minimumEquity: { type: Number, default: 0, min: 0 },
     currency: { type: String, default: "VND" },
     duration: { type: String, default: "" },
     durationEn: { type: String, default: "" },
@@ -88,6 +91,7 @@ const InvestmentPlanSchema = new Schema<IInvestmentPlan>(
 );
 
 InvestmentPlanSchema.index({ status: 1, order: 1 });
+InvestmentPlanSchema.index({ tier: 1, status: 1 });
 
 const InvestmentPlan =
   mongoose.models.InvestmentPlan ||

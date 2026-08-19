@@ -1,31 +1,11 @@
 /**
  * src/core/rbac/index.ts
  *
- * Role-Based Access Control.
- * Re-exports auth-utils + exposes permission helpers.
+ * Role-Based Access Control — single import point.
+ * Full re-export from rbac-lib so callers never need to reach into sub-files.
  *
- * Roles: superadmin > admin > shareholder > public
- *
- * Migration path:
- *   Phase 1 (now):   thin wrappers over lib/auth-utils.ts
- *   Phase 2 (NQ05):  integrate with external KYC provider, add AML role checks
+ * Hierarchy: superadmin > admin > shareholder > public
  */
 
-export {
-  getCurrentUser,
-  requireAuth,
-  requireAdmin,
-  logoutAdmin,
-} from "@/core/security/auth-utils";
-
-export type { SessionUser } from "@/core/security/auth-utils";
-
-/** Check if a user has superadmin role */
-export function isSuperAdmin(role: string): boolean {
-  return role === "superadmin";
-}
-
-/** Check if a user has at least admin access */
-export function isAdmin(role: string): boolean {
-  return role === "admin" || role === "superadmin";
-}
+export * from "./rbac-lib";
+export type { APIGuardResult } from "./rbac-lib";

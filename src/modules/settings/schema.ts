@@ -33,6 +33,9 @@ export const settingsSchema = z.object({
   googleAnalyticsId: z.string().optional(),
   metaPixelId: z.string().optional(),
   footer: z.string().optional(),
+  footerLegal: z.string().optional(),
+  smtpFromName: z.string().optional(),
+  smtpFromEmail: z.string().email().optional().or(z.literal("")),
   chatButtons: z.array(chatButtonSchema).optional(),
 });
 

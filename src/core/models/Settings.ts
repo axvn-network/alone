@@ -12,7 +12,6 @@ export interface IChatButton {
   enabled: boolean;
   /** Số điện thoại (whatsapp/zalo/telegram) hoặc URL đầy đủ (livechat) */
   value: string;
-  /** Tin nhắn mặc định (whatsapp/telegram) */
   messageVi?: string;
   messageEn?: string;
 }
@@ -24,6 +23,7 @@ export interface ISettings extends Document {
   email: string;
   phone: string;
   address: string;
+  /** WhatsApp number (E.164, e.g. "971500000000") — legacy field kept for compat */
   whatsapp: string;
   googleMap: string;
   socialLinks: ISocialLink[];
@@ -31,6 +31,14 @@ export interface ISettings extends Document {
   metaPixelId: string;
   footer: string;
   chatButtons: IChatButton[];
+  /** Custom legal/compliance footer text (HTML-safe) */
+  footerLegal: string;
+  /** Name displayed in outgoing email notifications */
+  smtpFromName: string;
+  /** Reply-to email address for outgoing notifications */
+  smtpFromEmail: string;
+  updatedAt: Date;
+  createdAt: Date;
 }
 
 const SocialLinkSchema = new Schema<ISocialLink>(
@@ -66,7 +74,7 @@ const SettingsSchema = new Schema<ISettings>(
     address: { type: String, default: "" },
     whatsapp: { type: String, default: "" },
     googleMap: { type: String, default: "" },
-    socialLinks: [SocialLinkSchema],
+    socialLinks: { type: [SocialLinkSchema], default: [] },
     googleAnalyticsId: { type: String, default: "" },
     metaPixelId: { type: String, default: "" },
     footer: { type: String, default: "" },
@@ -82,6 +90,9 @@ const SettingsSchema = new Schema<ISettings>(
         },
       ],
     },
+    footerLegal: { type: String, default: "" },
+    smtpFromName: { type: String, default: "AXVN Tech Holding" },
+    smtpFromEmail: { type: String, default: "" },
   },
   { timestamps: true },
 );

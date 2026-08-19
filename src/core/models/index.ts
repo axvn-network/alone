@@ -17,7 +17,7 @@ export { default as Upload } from "./Upload";
 export type { IUpload } from "./Upload";
 
 export { default as Settings } from "./Settings";
-export type { ISettings, ISocialLink } from "./Settings";
+export type { ISettings, ISocialLink, IChatButton, ChatButtonType } from "./Settings";
 
 export { default as DocumentModel } from "./Document";
 export type { IDocument, DocumentCategory } from "./Document";

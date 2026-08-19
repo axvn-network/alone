@@ -39,7 +39,10 @@ export async function POST(request: NextRequest) {
     if (!parsed.success)
       return validationErrorResponse(formatZodErrors(parsed.error));
 
-    const enquiry = await createEnquiry(parsed.data);
+    const enquiry = await createEnquiry(parsed.data, {
+      ipAddress: ip,
+      userAgent: request.headers.get("user-agent") ?? "",
+    });
     sendEnquiryNotification(parsed.data).catch((err) =>
       logger.error("Failed to send notification email", err),
     );

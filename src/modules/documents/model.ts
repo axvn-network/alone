@@ -6,7 +6,9 @@ export type DocumentCategory =
   | "charter"
   | "shareholder_meeting"
   | "annual_report"
-  | "governance_report";
+  | "governance_report"
+  | "press_release"
+  | "regulatory_filing";
 
 export interface IDocument extends MongoDocument {
   title: string;
@@ -37,6 +39,8 @@ const DocumentSchema = new Schema<IDocument>(
         "shareholder_meeting",
         "annual_report",
         "governance_report",
+        "press_release",
+        "regulatory_filing",
       ],
       required: true,
     },
@@ -61,7 +65,8 @@ const DocumentSchema = new Schema<IDocument>(
 );
 
 DocumentSchema.index({ category: 1, year: -1, publishedDate: -1 });
-DocumentSchema.index({ status: 1 });
+DocumentSchema.index({ status: 1, publishedDate: -1 });
+DocumentSchema.index({ isFeatured: 1, status: 1 });
 
 const DocumentModel =
   mongoose.models.Document ||

@@ -52,7 +52,8 @@ export async function PUT(req: NextRequest, { params }: Ctx) {
       action: "shareholder.update",
       collection: "shareholders",
       id,
-      ip: req.headers.get("x-forwarded-for") || "",
+      ip: req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "",
+      userAgent: req.headers.get("user-agent") ?? "",
     });
 
     return successResponse(sh);
@@ -77,7 +78,8 @@ export async function DELETE(req: NextRequest, { params }: Ctx) {
       action: "shareholder.delete",
       collection: "shareholders",
       id,
-      ip: req.headers.get("x-forwarded-for") || "",
+      ip: req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "",
+      userAgent: req.headers.get("user-agent") ?? "",
     });
 
     return successResponse({ ok: true });

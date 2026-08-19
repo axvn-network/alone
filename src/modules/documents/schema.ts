@@ -15,6 +15,8 @@ export const documentSchema = z.object({
     "shareholder_meeting",
     "annual_report",
     "governance_report",
+    "press_release",
+    "regulatory_filing",
   ]),
   fileUrl: z.string().min(1, "File URL is required"),
   fileType: z.enum(["pdf", "doc", "xlsx", "other"]).optional().default("pdf"),

@@ -103,3 +103,27 @@ export async function PUT(req: NextRequest) {
     return serverErrorResponse(handleError(e).message);
   }
 }
+
+// DELETE /api/admin/shareholder-ops?type=task|meeting&id=xxx
+export async function DELETE(req: NextRequest) {
+  try {
+    const user = await getCurrentUser();
+    if (!user) return unauthorizedResponse();
+
+    const type = req.nextUrl.searchParams.get("type");
+    const id   = req.nextUrl.searchParams.get("id");
+    if (!id) return errorResponse("id is required");
+
+    if (type === "task") {
+      await taskService.remove(id);
+      return successResponse({ ok: true }, "Task deleted");
+    }
+    if (type === "meeting") {
+      await meetingService.remove(id);
+      return successResponse({ ok: true }, "Meeting deleted");
+    }
+    return errorResponse("type must be task or meeting");
+  } catch (e) {
+    return serverErrorResponse(handleError(e).message);
+  }
+}

@@ -8,10 +8,7 @@
 import { revalidatePath } from "next/cache";
 import { requireAuth } from "@/core/security/auth-utils";
 import { handleError } from "@/utils/errors";
-import {
-  pageContentSchema,
-  type PageContentInput,
-} from "@/modules/content/schema";
+import { pageContentSchema, type PageContentInput } from "@/modules/content/schema";
 import { formatZodErrors } from "@/shared/utils/zod";
 import { updatePage } from "./service";
 

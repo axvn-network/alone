@@ -30,6 +30,12 @@ export interface ISettings extends Document {
   googleAnalyticsId: string;
   metaPixelId: string;
   footer: string;
+  /** Legal disclaimer / compliance text shown in the footer */
+  footerLegal: string;
+  /** Display name used in outgoing system emails (e.g. "AXVN Tech Holding") */
+  smtpFromName: string;
+  /** From-address used in outgoing system emails */
+  smtpFromEmail: string;
   chatButtons: IChatButton[];
 }
 
@@ -66,10 +72,13 @@ const SettingsSchema = new Schema<ISettings>(
     address: { type: String, default: "" },
     whatsapp: { type: String, default: "" },
     googleMap: { type: String, default: "" },
-    socialLinks: [SocialLinkSchema],
+    socialLinks: { type: [SocialLinkSchema], default: [] },
     googleAnalyticsId: { type: String, default: "" },
     metaPixelId: { type: String, default: "" },
     footer: { type: String, default: "" },
+    footerLegal: { type: String, default: "" },
+    smtpFromName: { type: String, default: "AXVN Tech Holding" },
+    smtpFromEmail: { type: String, default: "" },
     chatButtons: {
       type: [ChatButtonSchema],
       default: [

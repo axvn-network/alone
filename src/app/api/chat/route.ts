@@ -9,8 +9,15 @@ export async function POST(req: NextRequest) {
   try {
     const { query } = (await req.json()) as { query?: string };
     if (!query?.trim()) return errorResponse("Query is required");
-    logger.warn("Chat API: corpus not available");
-    return errorResponse("Tính năng chat tạm thời không khả dụng.");
+
+    // Chat corpus not yet configured — return a polite fallback in the
+    // format the ChatWidget expects: { answer: string }
+    logger.info("Chat API: corpus not configured, returning fallback answer");
+    return Response.json({
+      success: true,
+      answer:
+        "Tính năng trợ lý AI đang được cập nhật. Vui lòng liên hệ trực tiếp qua email info@axvn.vn hoặc sử dụng form Liên Hệ để được hỗ trợ.",
+    });
   } catch (error) {
     logger.error("Chat API error", error);
     return serverErrorResponse(handleError(error).message);

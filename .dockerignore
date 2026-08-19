@@ -1,0 +1,59 @@
+# Dependencies & Package Managers
+/node_modules
+/.pnp
+.pnp.js
+
+# Build Outputs & Cache
+/.next/
+/out/
+/build
+/dist
+*.tsbuildinfo
+.turbo
+
+# Environment & Credentials
+.env
+.env*.local
+.env.production
+.env.staging
+*.pem
+
+# Logs & Debugging
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# System & OS Files
+.DS_Store
+Thumbs.db
+*.swp
+*.tmp
+
+# Uploads & User Generated Content (Keep .gitkeep)
+public/admin-uploads/*
+!public/admin-uploads/.gitkeep
+
+# ── Corpus Pipeline Artifacts (auto-generated, không commit) ────────
+# Bản sao UTF-8 nguồn bất biến — do scripts/import_corpus.py sinh ra
+_extracted/
+# Retrieval layer: index.json, chunks.jsonl — do scripts/make_chunks.py sinh ra
+_standardized/
+
+# ── AI / Agent Workflow (nội bộ, không phải source code) ────────────
+# Chứa manifest, work-queue, locks, handoff notes của multi-agent pipeline
+.ai/
+.claude/
+.codex/
+.vscode/
+
+# ── Orphaned infra configs (project uses PM2/Nginx) ─────────────────────────────
+netlify.toml
+supabase/
+
+# ── Claude Worktrees (tự động tạo bởi Claude CLI) ───────────────────
+.claude/
+
+# ── next-env.d.ts (tự động sinh bởi Next.js) ────────────────────────
+next-env.d.ts

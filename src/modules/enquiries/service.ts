@@ -3,10 +3,7 @@
  * Enquiry service — canonical implementation.
  */
 import { connectDB } from "@/core/database";
-import Enquiry, {
-  type IEnquiry,
-  type EnquiryStatus,
-} from "@/modules/enquiries/model";
+import Enquiry, { type IEnquiry, type EnquiryStatus } from "@/modules/enquiries/model";
 import { type ContactEnquiryInput } from "@/modules/enquiries/schema";
 
 export interface EnquiryStats {
@@ -18,9 +15,10 @@ export interface EnquiryStats {
 
 export async function createEnquiry(
   data: ContactEnquiryInput,
+  meta?: { ipAddress?: string; userAgent?: string },
 ): Promise<IEnquiry> {
   await connectDB();
-  return Enquiry.create(data);
+  return Enquiry.create({ ...data, ...meta });
 }
 
 export async function getEnquiries(options?: {
@@ -33,24 +31,15 @@ export async function getEnquiries(options?: {
   const { status, type, page = 1, limit = 20 } = options ?? {};
   const filter: Record<string, unknown> = {};
   if (status) filter.status = status;
-  if (type) filter.type = type;
+  if (type)   filter.type   = type;
   const [docs, total] = await Promise.all([
-    Enquiry.find(filter)
-      .sort({ createdAt: -1 })
-      .skip((page - 1) * limit)
-      .limit(limit)
-      .lean(),
+    Enquiry.find(filter).sort({ createdAt: -1 }).skip((page - 1) * limit).limit(limit).lean(),
     Enquiry.countDocuments(filter),
   ]);
   return { enquiries: docs, total, page, limit };
 }
 
-export async function listForAdmin(options?: {
-  page?: number;
-  limit?: number;
-  status?: EnquiryStatus | string;
-  type?: string;
-}) {
+export async function listForAdmin(options?: { page?: number; limit?: number; status?: EnquiryStatus | string; type?: string }) {
   return getEnquiries(options);
 }
 
@@ -59,16 +48,9 @@ export async function getEnquiryById(id: string) {
   return Enquiry.findById(id).lean();
 }
 
-export async function updateEnquiryStatus(
-  id: string,
-  status: EnquiryStatus | string,
-) {
+export async function updateEnquiryStatus(id: string, status: EnquiryStatus | string) {
   await connectDB();
-  return Enquiry.findByIdAndUpdate(
-    id,
-    { $set: { status } },
-    { new: true },
-  ).lean();
+  return Enquiry.findByIdAndUpdate(id, { $set: { status } }, { new: true }).lean();
 }
 
 export async function deleteEnquiry(id: string) {

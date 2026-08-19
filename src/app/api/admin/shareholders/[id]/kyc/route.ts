@@ -34,7 +34,9 @@ export async function PATCH(
     }
 
     const ip =
-      req.headers.get("x-forwarded-for") ?? req.headers.get("x-real-ip") ?? "";
+      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+      req.headers.get("x-real-ip") ?? "";
+    const userAgent = req.headers.get("user-agent") ?? "";
 
     let updated: Awaited<ReturnType<typeof approveKyc>>;
 
@@ -46,6 +48,7 @@ export async function PATCH(
         collection: "shareholders",
         id,
         ip,
+        userAgent,
       });
     } else {
       updated = await rejectKyc(id);
@@ -55,6 +58,7 @@ export async function PATCH(
         collection: "shareholders",
         id,
         ip,
+        userAgent,
       });
     }
 

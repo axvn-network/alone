@@ -1,25 +1,28 @@
 /**
- * src/proxy.ts — Gatekeeper
+ * src/proxy.ts — Next.js 16+ Edge Proxy (replaces middleware.ts)
  *
- * Entry point cho Next.js Edge Proxy (Next.js 16+ convention).
- * Logic thực thi được cô lập trong core/security/proxy.ts.
+ * Entry point for the Next.js Edge proxy layer.
+ * All logic is isolated in core/security/proxy.ts — this file only
+ * wires the export and the static `config` matcher.
  *
- * LƯU Ý: `config` phải được định nghĩa trực tiếp tại đây (không được re-export)
- * vì Next.js cần parse tĩnh tại build time.
+ * NOTE: `config` must be defined directly here (not re-exported) because
+ * Next.js parses it statically at build time.
+ *
+ * Export name must be `proxy` (Next.js 16 / Turbopack requirement).
  */
 export { proxy } from "@/core/security/proxy";
 
 export const config = {
   matcher: [
-    // Khu vực quản trị
+    // Admin area
     "/admin",
     "/admin/:path*",
-    // Alias đăng nhập admin cũ
+    // Legacy admin-login alias
     "/auth/admin-login",
-    // Cổng cổ đông
+    // Shareholder portal
     "/portals/shareholders/dashboard",
     "/portals/shareholders/dashboard/:path*",
-    // Tất cả API (CSRF + security headers)
+    // All API routes (CSRF + security headers)
     "/api/:path*",
   ],
 };

@@ -40,16 +40,20 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const ip =
-      request.headers.get("x-forwarded-for") ||
+      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
       request.headers.get("x-real-ip") ||
       "unknown";
     if (!rateLimit(`enquiry:${ip}`, 5, 60000).allowed) {
       return errorResponse("Too many requests. Please try again later.", 429);
     }
-    const parsed = contactEnquirySchema.safeParse(await request.json());
+    const raw = await request.json();
+    const parsed = contactEnquirySchema.safeParse(raw);
     if (!parsed.success)
       return validationErrorResponse(formatZodErrors(parsed.error));
-    const enquiry = await createEnquiry(parsed.data);
+    const enquiry = await createEnquiry(parsed.data, {
+      ipAddress: ip,
+      userAgent: request.headers.get("user-agent") ?? "",
+    });
     sendEnquiryNotification(parsed.data).catch((err) =>
       logger.error("Failed to send notification email", err),
     );

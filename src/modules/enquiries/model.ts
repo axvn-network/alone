@@ -23,6 +23,10 @@ export interface IEnquiry extends Document {
   consentGiven: boolean;
   /** ISO timestamp khi người dùng tick checkbox */
   consentTimestamp: string;
+  /** IP address of the submitter — retained for fraud/abuse tracking */
+  ipAddress: string;
+  /** User-agent string of the submitter */
+  userAgent: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -49,8 +53,12 @@ const EnquirySchema = new Schema<IEnquiry>(
     document: { type: String, default: "" },
     status: { type: String, enum: ["new", "read", "archived"], default: "new" },
     /** Đồng ý xử lý DLCN — bắt buộc theo NĐ 13/2023 */
-    consentGiven: { type: Boolean, default: false },
+    consentGiven: { type: Boolean, required: true, default: false },
     consentTimestamp: { type: String, default: "" },
+    /** IP address of the submitter — retained for fraud/abuse tracking */
+    ipAddress: { type: String, default: "" },
+    /** User-agent string of the submitter */
+    userAgent: { type: String, default: "" },
   },
   { timestamps: true },
 );

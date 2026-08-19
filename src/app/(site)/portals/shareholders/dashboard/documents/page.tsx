@@ -44,6 +44,8 @@ const CATEGORY_LABELS: Record<string, string> = {
   shareholder_meeting: "Họp Đại hội cổ đông",
   annual_report: "Báo cáo thường niên",
   governance_report: "Báo cáo quản trị",
+  press_release: "Thông cáo báo chí",
+  regulatory_filing: "Hồ sơ pháp lý / Nộp cơ quan",
 };
 
 // Icon theo loại file

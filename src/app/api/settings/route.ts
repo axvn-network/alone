@@ -1,7 +1,6 @@
 import { NextRequest } from "next/server";
-import { getSettings } from "@/modules/settings";
+import { getPublicSettings, updateSettings, settingsSchema } from "@/modules/settings";
 import { getCurrentUser } from "@/core/security/auth-utils";
-import { updateSettings, settingsSchema } from "@/modules/settings";
 import { formatZodErrors } from "@/utils/zod";
 import {
   successResponse,
@@ -13,10 +12,10 @@ import { handleError } from "@/utils/errors";
 
 export const dynamic = "force-dynamic";
 
-// GET — public: read site settings
+// GET — public: read site settings (SMTP fields scrubbed)
 export async function GET() {
   try {
-    return successResponse(await getSettings());
+    return successResponse(await getPublicSettings());
   } catch (error) {
     return serverErrorResponse(handleError(error).message);
   }

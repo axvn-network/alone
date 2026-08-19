@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
-import { ArchitectureDiagram } from "@/modules/dashboard";
-import DocLayout, {
-  DocMain,
-  DocBody,
-  DocHero,
-} from "@/shared/components/layout/DocLayout";
+import { ArchitectureDiagram } from "@/modules/dashboard/components/ArchitectureDiagram";
+import DocLayout, { DocMain, DocBody, DocHero } from "@/shared/components/layout/DocLayout";
 import PageHero from "@/shared/components/blocks/PageHero";
 import { ARCH_NODES } from "@/shared/constants/system-architecture";
 
@@ -31,10 +27,7 @@ export default function ArchitecturePage() {
           <DocBody>
             <p className="text-AXVN-silver/60 text-sm">
               Xem chi tiết tại{" "}
-              <a
-                href="/roadmap"
-                className="text-AXVN-gold underline hover:no-underline"
-              >
+              <a href="/roadmap" className="text-AXVN-gold underline hover:no-underline">
                 Lộ trình chiến lược
               </a>
               .

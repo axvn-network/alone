@@ -1,13 +1,7 @@
-import type {
-  ShareholderRole,
-  ShareholderStatus,
-} from "@/modules/shareholders";
-import type { PlanStatus } from "@/modules/investment-plans";
-import type { DocumentCategory } from "@/modules/documents";
-import type {
-  PartnerApplicationStatus,
-  AssessmentDimensions,
-} from "@/modules/partner-applications";
+import type { ShareholderRole, ShareholderStatus } from "@/modules/shareholders/model";
+import type { PlanStatus } from "@/modules/investment-plans/model";
+import type { DocumentCategory } from "@/modules/documents/model";
+import type { PartnerApplicationStatus, AssessmentDimensions } from "@/modules/partner-applications/model";
 
 // ─── Shared primitives ────────────────────────────────────────────────────────
 
@@ -29,6 +23,12 @@ export interface SiteSettings {
   googleAnalyticsId: string;
   metaPixelId: string;
   footer: string;
+  /** Legal disclaimer / compliance text shown in the footer */
+  footerLegal: string;
+  /** Display name used in outgoing system emails */
+  smtpFromName: string;
+  /** From-address used in outgoing system emails */
+  smtpFromEmail: string;
 }
 
 // ─── Page / SEO ───────────────────────────────────────────────────────────────
@@ -188,10 +188,7 @@ export interface AdminUser {
 // ─── Shareholder ──────────────────────────────────────────────────────────────
 
 // Re-exported here so consumers only need "@/types".
-export type {
-  ShareholderRole,
-  ShareholderStatus,
-} from "@/modules/shareholders";
+export type { ShareholderRole, ShareholderStatus } from "@/modules/shareholders/model";
 
 export interface ShareholderUser {
   _id: string;
@@ -214,7 +211,7 @@ export interface ShareholderUser {
 
 export type PlanTier = "seed" | "growth" | "expansion" | "strategic" | "anchor";
 // Re-exported here so consumers only need "@/types".
-export type { PlanStatus } from "@/modules/investment-plans";
+export type { PlanStatus } from "@/modules/investment-plans/model";
 
 export interface InvestmentPlanItem {
   _id: string;
@@ -225,6 +222,7 @@ export interface InvestmentPlanItem {
   taglineEn: string;
   minCommitment: number;
   maxCommitment: number;
+  minimumEquity: number;
   currency: string;
   duration: string;
   durationEn: string;
@@ -250,7 +248,7 @@ export interface InvestmentPlanItem {
 // ─── Document ─────────────────────────────────────────────────────────────────
 
 // Re-exported here so consumers only need "@/types".
-export type { DocumentCategory } from "@/modules/documents";
+export type { DocumentCategory } from "@/modules/documents/model";
 
 export interface DocumentItem {
   _id: string;
@@ -272,10 +270,7 @@ export interface DocumentItem {
 // ─── Partner Application ──────────────────────────────────────────────────────
 
 // Re-exported here so consumers only need "@/types".
-export type {
-  PartnerApplicationStatus,
-  AssessmentDimensions,
-} from "@/modules/partner-applications";
+export type { PartnerApplicationStatus, AssessmentDimensions } from "@/modules/partner-applications/model";
 
 export interface PartnerApplicationItem {
   _id: string;
@@ -310,6 +305,7 @@ export interface AuditLogItem {
   target: { collection: string; id: string };
   delta: Record<string, unknown>;
   ip: string;
+  userAgent: string;
   retainUntil: string;
   createdAt: string;
 }

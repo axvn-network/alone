@@ -18,9 +18,13 @@ const DEFAULT_SETTINGS = {
   googleAnalyticsId: "",
   metaPixelId: "",
   footer: "",
+  footerLegal: "",
+  smtpFromName: "AXVN Tech Holding",
+  smtpFromEmail: "",
   chatButtons: [],
 };
 
+/** Full settings — admin only */
 export async function getSettings(): Promise<ISettings> {
   await connectDB();
   const doc = await Settings.findOne({}).lean<ISettings>();
@@ -30,8 +34,14 @@ export async function getSettings(): Promise<ISettings> {
   return doc;
 }
 
+/** Public-safe settings — strips SMTP credentials before returning */
 export async function getPublicSettings() {
-  return getSettings();
+  const doc = await getSettings();
+  // Return plain object without SMTP fields — never expose mail credentials publicly
+  const { smtpFromEmail: _e, smtpFromName: _n, ...publicFields } =
+    doc as ISettings & Record<string, unknown>;
+  void _e; void _n;
+  return publicFields;
 }
 
 export async function updateSettings(data: Partial<ISettings>) {

@@ -13,6 +13,7 @@ export const investmentPlanSchema = z.object({
   taglineEn: z.string().optional().default(""),
   minCommitment: z.number().min(0, "Minimum commitment must be >= 0"),
   maxCommitment: z.number().min(0).optional().default(0),
+  minimumEquity: z.number().min(0).optional().default(0),
   currency: z.string().optional().default("VND"),
   duration: z.string().optional().default(""),
   durationEn: z.string().optional().default(""),

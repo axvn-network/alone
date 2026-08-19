@@ -30,10 +30,7 @@ export async function createDocumentAction(data: DocumentInput) {
   }
 }
 
-export async function updateDocumentAction(
-  id: string,
-  data: Partial<DocumentInput>,
-) {
+export async function updateDocumentAction(id: string, data: Partial<DocumentInput>) {
   await requireAuth();
 
   const parsed = documentSchema.partial().safeParse(data);

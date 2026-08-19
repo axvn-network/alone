@@ -22,6 +22,7 @@ export interface LogAuditOptions {
   id?: string;
   delta?: Record<string, unknown>;
   ip?: string;
+  userAgent?: string;
 }
 
 export interface AuditQuery {
@@ -53,6 +54,7 @@ export async function logAudit(opts: LogAuditOptions): Promise<IAuditLog> {
     target,
     delta: opts.delta ?? {},
     ip: opts.ip ?? "",
+    userAgent: opts.userAgent ?? "",
   });
 }
 

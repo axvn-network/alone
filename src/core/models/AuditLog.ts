@@ -1,14 +1,25 @@
 import mongoose, { Schema, Document } from "mongoose";
 
-const SEVEN_YEARS_MS = 7 * 365 * 24 * 60 * 60 * 1000;
-const ONE_YEAR_MS = 365 * 24 * 60 * 60 * 1000;
+const SEVEN_YEARS_S = 7 * 365 * 24 * 60 * 60;
+const ONE_YEAR_S = 365 * 24 * 60 * 60;
 
-// Actions cần giữ lại 7 năm vì liên quan đến vốn / cổ đông
-const LONG_RETAIN_PREFIXES = ["capital.", "shareholder.", "admin.login."];
+/**
+ * Actions involving capital or shareholder data are subject to
+ * the 7-year accounting record retention requirement under
+ * Luật Kế toán 88/2015/QH13, Article 41.
+ * All other audit events default to a 1-year retention window.
+ */
+const LONG_RETAIN_PREFIXES = [
+  "capital.",
+  "shareholder.",
+  "admin.login.",
+  "investment_plan.",
+  "document.",
+];
 
-function calcRetainUntil(action: string): Date {
+function calcRetainUntilSecs(action: string): number {
   const isLong = LONG_RETAIN_PREFIXES.some((p) => action.startsWith(p));
-  return new Date(Date.now() + (isLong ? SEVEN_YEARS_MS : ONE_YEAR_MS));
+  return isLong ? SEVEN_YEARS_S : ONE_YEAR_S;
 }
 
 export interface IAuditLog extends Document {
@@ -17,6 +28,8 @@ export interface IAuditLog extends Document {
   target: { collection: string; id: string };
   delta: Record<string, unknown>;
   ip: string;
+  userAgent: string;
+  /** UTC timestamp until which this document must be retained */
   retainUntil: Date;
   createdAt: Date;
 }
@@ -35,10 +48,12 @@ const AuditLogSchema = new Schema<IAuditLog>(
     },
     delta: { type: Schema.Types.Mixed, default: {} },
     ip: { type: String, default: "" },
+    userAgent: { type: String, default: "" },
     retainUntil: {
       type: Date,
       default: function (this: { action?: string }) {
-        return calcRetainUntil(this.action || "");
+        const secs = calcRetainUntilSecs(this.action || "");
+        return new Date(Date.now() + secs * 1000);
       },
     },
   },
@@ -52,8 +67,10 @@ const AuditLogSchema = new Schema<IAuditLog>(
 AuditLogSchema.index({ "actor.id": 1, createdAt: -1 });
 AuditLogSchema.index({ createdAt: -1 });
 AuditLogSchema.index({ action: 1, createdAt: -1 });
-// TTL: xóa document khi retainUntil đã qua
-// capital.*/shareholder.*/admin.login → 7 năm | còn lại → 1 năm
+AuditLogSchema.index({ "target.collection": 1, "target.id": 1 });
+// TTL: MongoDB removes the document when retainUntil passes.
+// capital.*  / shareholder.* / investment_plan.* / document.* → 7 years
+// All other actions → 1 year
 AuditLogSchema.index({ retainUntil: 1 }, { expireAfterSeconds: 0 });
 
 const AuditLog =

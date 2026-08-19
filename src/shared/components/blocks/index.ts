@@ -1,4 +1,9 @@
+export { ComplianceTracker } from "@/modules/compliance/components/ComplianceTracker";
+export { GovernanceCards } from "@/modules/governance/components/GovernanceCards";
+export { AdvisorCards } from "@/modules/governance/components/AdvisorCards";
+export { ShareholderTable } from "@/modules/shareholders/components/ShareholderTable";
 export { default as ContactForm } from "./ContactForm";
+
 export { default as Hero } from "./Hero";
 export { default as Introduction } from "./Introduction";
 export { default as InvestmentSectors } from "./InvestmentSectors";

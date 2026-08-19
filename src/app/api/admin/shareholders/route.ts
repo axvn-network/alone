@@ -51,7 +51,8 @@ export async function POST(req: NextRequest) {
       action: "shareholder.create",
       collection: "shareholders",
       id: sh._id as string,
-      ip: req.headers.get("x-forwarded-for") || "",
+      ip: req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "",
+      userAgent: req.headers.get("user-agent") ?? "",
     });
 
     return successResponse(sh, "Cổ đông đã được tạo thành công", 201);
@@ -76,7 +77,8 @@ export async function PUT(req: NextRequest) {
       action: "shareholder.update",
       collection: "shareholders",
       id: _id,
-      ip: req.headers.get("x-forwarded-for") || "",
+      ip: req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "",
+      userAgent: req.headers.get("user-agent") ?? "",
     });
 
     return successResponse(sh);

@@ -1,16 +1,11 @@
 "use client";
 
 import { CalendarRange, Building2, ShieldCheck } from "lucide-react";
-import { KpiDashboard } from "@/modules/dashboard";
+import KpiDashboard from "@/modules/dashboard/components/KpiDashboard";
 import { Timeline } from "@/shared/components/blocks/Timeline";
 import { RoadmapAccordion } from "@/shared/components/blocks/RoadmapAccordion";
 import StrategyNotice from "@/shared/components/blocks/StrategyNotice";
-import DocLayout, {
-  DocSidebar,
-  DocMain,
-  DocHero,
-  DocBody,
-} from "@/shared/components/layout/DocLayout";
+import DocLayout, { DocSidebar, DocMain, DocHero, DocBody } from "@/shared/components/layout/DocLayout";
 import { ROADMAP_PHASES, ROADMAP_META } from "@/shared/constants/roadmap";
 import type { TocItem } from "@/shared/components/layout/DocLayout";
 
@@ -47,26 +42,23 @@ export default function StrategyClient() {
       <DocSidebar toc={TOC} />
       <DocMain>
         <section id="kpi" aria-labelledby="kpi-heading" className="mb-12">
-          <p
-            id="kpi-heading"
-            className="text-[10px] font-semibold uppercase tracking-widest text-AXVN-gold mb-4"
-          >
+          <h2 id="kpi-heading" className="text-[10px] font-semibold uppercase tracking-widest text-AXVN-gold mb-4">
             Tổng Quan
-          </p>
+          </h2>
           <KpiDashboard items={KPI_ITEMS} columns={3} />
         </section>
 
         <DocHero id="timeline">
-          <p className="text-[10px] font-semibold uppercase tracking-widest text-AXVN-gold mb-6">
+          <h2 className="text-[10px] font-semibold uppercase tracking-widest text-AXVN-gold mb-6">
             Lộ Trình Tương Tác
-          </p>
+          </h2>
           <Timeline />
         </DocHero>
 
         <DocBody id="details">
-          <p className="text-[10px] font-semibold uppercase tracking-widest text-AXVN-gold mb-4">
+          <h2 className="text-[10px] font-semibold uppercase tracking-widest text-AXVN-gold mb-4">
             Chi Tiết Từng Giai Đoạn
-          </p>
+          </h2>
           <RoadmapAccordion phases={ROADMAP_PHASES} />
         </DocBody>
 

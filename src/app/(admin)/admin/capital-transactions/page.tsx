@@ -24,20 +24,17 @@ import AdminSidebar from "@/shared/components/admin/AdminSidebar";
 import AdminNavbar from "@/shared/components/admin/AdminNavbar";
 import { ADMIN_PAGE_CLS } from "@/constants/admin";
 import { service as capTxService } from "@/modules/capital-transactions";
-import {
-  CapTxTable,
-  type CapTxStatus,
-  type CapTxType,
-} from "@/modules/capital-transactions";
+import { CapTxTable } from "@/modules/capital-transactions/components/CapTxTable";
+import type { CapTxStatus, CapTxType } from "@/modules/capital-transactions/types";
 
 const LIMIT = 20;
 
 interface PageProps {
   searchParams: Promise<{
-    page?: string;
-    status?: string;
-    type?: string;
-    shareholderId?: string;
+    page?:           string;
+    status?:         string;
+    type?:           string;
+    shareholderId?:  string;
   }>;
 }
 
@@ -45,16 +42,14 @@ export const metadata = {
   title: "Giao Dịch Vốn | AXVN Admin",
 };
 
-export default async function CapitalTransactionsPage({
-  searchParams,
-}: PageProps) {
+export default async function CapitalTransactionsPage({ searchParams }: PageProps) {
   // Auth guard — redirects to /admin-login if unauthenticated
   await requireAuth();
 
   const sp = await searchParams;
-  const page = Math.max(1, Number(sp.page ?? 1));
-  const filterStatus = (sp.status ?? "") as CapTxStatus | "";
-  const filterType = (sp.type ?? "") as CapTxType | "";
+  const page          = Math.max(1, Number(sp.page  ?? 1));
+  const filterStatus  = (sp.status ?? "") as CapTxStatus | "";
+  const filterType    = (sp.type   ?? "") as CapTxType   | "";
   const shareholderId = sp.shareholderId ?? "";
 
   // ── Read — direct DB calls, no HTTP round-trip ────────────────────────────
@@ -63,20 +58,21 @@ export default async function CapitalTransactionsPage({
   const [result, shareholderDocs] = await Promise.all([
     capTxService.list({
       page,
-      limit: LIMIT,
-      ...(filterStatus ? { status: filterStatus } : {}),
-      ...(filterType ? { type: filterType } : {}),
-      ...(shareholderId ? { shareholderId } : {}),
+      limit:  LIMIT,
+      ...(filterStatus  ? { status:        filterStatus  } : {}),
+      ...(filterType    ? { type:          filterType    } : {}),
+      ...(shareholderId ? { shareholderId              } : {}),
     }),
-    Shareholder.find({ status: "active" }, { _id: 1, name: 1, email: 1 })
+    Shareholder
+      .find({ status: "active" }, { _id: 1, name: 1, email: 1 })
       .sort({ name: 1 })
       .limit(300)
       .lean(),
   ]);
 
   const shareholders = shareholderDocs.map((sh) => ({
-    _id: sh._id.toString(),
-    name: sh.name,
+    _id:   sh._id.toString(),
+    name:  sh.name,
     email: sh.email,
   }));
 

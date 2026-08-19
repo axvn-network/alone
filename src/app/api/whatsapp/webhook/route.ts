@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { logger } from "@/shared/utils/logger";
+import { env } from "@/core/env";
 
 /**
  * WhatsApp Business Cloud API — Webhook
@@ -16,11 +17,11 @@ import { logger } from "@/shared/utils/logger";
  *  3. Subscribe events: messages
  */
 
-const VERIFY_TOKEN = process.env.WHATSAPP_VERIFY_TOKEN || "AXVN_webhook_2025";
-const ACCESS_TOKEN = process.env.WHATSAPP_ACCESS_TOKEN || "";
-const PHONE_NUMBER_ID = process.env.WHATSAPP_PHONE_NUMBER_ID || "";
-const WA_API_VERSION = process.env.WHATSAPP_API_VERSION || "v20.0";
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://axvn.vn";
+const VERIFY_TOKEN = env.WHATSAPP_VERIFY_TOKEN ?? "AXVN_webhook_2025";
+const ACCESS_TOKEN = env.WHATSAPP_ACCESS_TOKEN ?? "";
+const PHONE_NUMBER_ID = env.WHATSAPP_PHONE_NUMBER_ID ?? "";
+const WA_API_VERSION = env.WHATSAPP_API_VERSION ?? "v20.0";
+const SITE_URL = env.NEXT_PUBLIC_SITE_URL;
 
 // ── In-memory conversation state (resets on server restart — acceptable for webhook bot) ──
 type ConvState = {

@@ -1,24 +1,4 @@
 {
-  "common": {
-    "user": "User",
-    "balance": "Balance",
-    "recharge": "Recharge / Top-up",
-    "withdraw": "Withdrawal",
-    "order": "Order",
-    "status": "Status",
-    "amount": "Amount",
-    "date": "Date Created",
-    "actions": "Actions",
-    "search": "Search...",
-    "filter": "Filter",
-    "all": "All",
-    "submit": "Submit Request",
-    "cancel": "Cancel",
-    "save": "Save Changes",
-    "loading": "Loading...",
-    "success": "Success",
-    "error": "An error occurred"
-  },
   "nav": {
     "home": "Home",
     "about": "About Us",
@@ -29,57 +9,6 @@
     "insights": "Insights",
     "documents": "Disclosures",
     "contact": "Connect Now"
-  },
-  "plans": {
-    "pageTag": "Partnership Investment Plans",
-    "pageHeading": "Building Vietnam's Digital Financial Future Together",
-    "pageDesc": "B2B partnership plans to co-build a licensed crypto asset market platform — aligned with Vietnam's Resolution 5/2025/NQ-CP and Ministry of Finance licensing from 20 January 2026.",
-    "alertBadge": "From 20 Jan 2026 — Ministry of Finance officially accepting license applications",
-    "noLicense": "No entity has been licensed yet",
-    "noLicenseDesc": "This is an unprecedented window of opportunity — and it is open.",
-    "minCommitment": "Minimum Commitment",
-    "equity": "Equity",
-    "duration": "Duration",
-    "benefits": "Partner Benefits",
-    "conditions": "Entry Conditions",
-    "register": "Register for This Plan",
-    "consult": "Get Advice",
-    "viewDetail": "View Details",
-    "disclaimer": "These are B2B project-building partnerships — not retail financial investment products.",
-    "nq5Label": "Source: Resolution 05/2025/NQ-CP + Decision 96/QĐ-BTC dated 20 Jan 2026",
-    "licensing": {
-      "tag": "Licensing Requirements — NQ 5/2025/NQ-CP",
-      "heading": "This Is What We Need to Build Together",
-      "desc": "No single organisation can meet all these requirements alone — that is why AXVN needs partners."
-    },
-    "roadmap": {
-      "tag": "Legal Roadmap",
-      "heading": "From Resolution to License"
-    },
-    "tiers": {
-      "seed": "Seed Partner",
-      "growth": "Growth Partner",
-      "expansion": "Expansion Partner",
-      "strategic": "Strategic Partner",
-      "anchor": "Anchor Partner"
-    }
-  },
-  "whatsapp": {
-    "greeting": "Hello! I'd like to learn about AXVN partnership investment plans.",
-    "planInquiry": "Tell me more about the partnership investment plans",
-    "licensing": "Information about Resolution 5/2025 and licensing conditions"
-  },
-  "roles": {
-    "superadmin": "Super Admin",
-    "admin": "Administrator",
-    "agent": "Agent / Partner",
-    "support": "Support Agent"
-  },
-  "payment": {
-    "momo": "MoMo Wallet",
-    "bank": "Bank Transfer (VietQR)",
-    "usdt": "USDT Crypto (BEP20)",
-    "telco": "Telco Cards"
   },
   "footer": {
     "followUs": "FOLLOW US",
@@ -264,10 +193,6 @@
     "btn2": "CONTACT OUR EXPERT TEAM"
   },
   "newsletter": {
-    "title": "Subscribe to FinTech & Digital Asset Insights",
-    "desc": "Stay updated with Vietnam's crypto asset market developments, FinTech investment opportunities and in-depth digital economy perspectives from AXVN — delivered only when it truly adds value.",
-    "btn": "SUBSCRIBE",
-    "disclaimer": "By subscribing, you agree to receive communications from AXVN Tech Holding. You may unsubscribe at any time.",
     "successTitle": "Thank you for subscribing.",
     "successDesc": "We will send you only the most important expert insights.",
     "placeholder": "Your Email Address"

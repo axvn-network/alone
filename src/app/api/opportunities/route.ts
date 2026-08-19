@@ -15,7 +15,7 @@ import { handleError } from "@/utils/errors";
 export async function POST(request: NextRequest) {
   try {
     const ip =
-      request.headers.get("x-forwarded-for") ||
+      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
       request.headers.get("x-real-ip") ||
       "unknown";
     if (!rateLimit(`opportunity:${ip}`, 3, 60000).allowed) {
@@ -24,7 +24,10 @@ export async function POST(request: NextRequest) {
     const parsed = contactEnquirySchema.safeParse(await request.json());
     if (!parsed.success)
       return validationErrorResponse(formatZodErrors(parsed.error));
-    const enquiry = await createEnquiry(parsed.data);
+    const enquiry = await createEnquiry(parsed.data, {
+      ipAddress: ip,
+      userAgent: request.headers.get("user-agent") ?? "",
+    });
     sendEnquiryNotification(parsed.data).catch((err) =>
       logger.error("Failed to send notification email", err),
     );

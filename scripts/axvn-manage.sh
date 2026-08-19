@@ -22,7 +22,7 @@ set -euo pipefail
 
 APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 ECOSYSTEM="$APP_DIR/infra/ecosystem.config.js"
-NGINX_CONF_SRC="$APP_DIR/infra/nginx/nginx.conf.langding"
+NGINX_CONF_SRC="$APP_DIR/infra/nginx/langding.conf"
 NGINX_CONF_DST="/etc/nginx/sites-available/langding.conf"
 PM2_APP="AXVN-langding"
 ENV_FILE="${ENV_FILE:-$APP_DIR/.env.local}"
@@ -85,6 +85,7 @@ cmd_deploy() {
   ok "Standalone output exists"
 
   step "[deploy] Copy static assets"
+  mkdir -p .next/standalone/.next
   cp -r .next/static  .next/standalone/.next/static
   cp -r public        .next/standalone/public
   ok "Static assets copied"
@@ -197,6 +198,7 @@ cmd_rollback() {
 
   step "[rollback] Copy static assets"
   [[ -f ".next/standalone/server.js" ]] || err ".next/standalone/server.js missing"
+  mkdir -p .next/standalone/.next
   cp -r .next/static  .next/standalone/.next/static
   cp -r public        .next/standalone/public
   ok "Static assets copied"
@@ -407,7 +409,7 @@ cmd_setup() {
   ok "/var/backups/AXVN, /var/log/pm2, /tmp/incidents created"
 
   step "[7/7] Nginx site config"
-  local src="$APP_DIR/infra/nginx/nginx.conf.langding"
+  local src="$APP_DIR/infra/nginx/langding.conf"
   if [[ -f "$src" ]]; then
     cp "$src" /etc/nginx/sites-available/langding.conf
     ln -sf /etc/nginx/sites-available/langding.conf /etc/nginx/sites-enabled/langding.conf
@@ -516,7 +518,7 @@ cmd_check_env() {
 cmd_seed_plans() {
   cd "$APP_DIR"
   [[ -f "$ENV_FILE" ]] || err ".env.local not found"
-  local seed_script="$APP_DIR/scripts/seed-investment-plans.ts"
+  local seed_script="$APP_DIR/src/cli/seed-investment-plans.ts"
   [[ -f "$seed_script" ]] || err "Seed script not found: $seed_script"
   echo "Seeding investment plans..."
   npx tsx "$seed_script" "$@"

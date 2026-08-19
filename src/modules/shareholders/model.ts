@@ -5,7 +5,12 @@
 import mongoose, { Schema, Document } from "mongoose";
 
 export type ShareholderRole =
-  "tech" | "financial" | "tech-company" | "individual" | "legal" | "foreign";
+  | "tech"
+  | "financial"
+  | "tech-company"
+  | "individual"
+  | "legal"
+  | "foreign";
 
 export type ShareholderStatus = "pending" | "active" | "suspended";
 
@@ -31,51 +36,26 @@ export interface IShareholder extends Document {
 
 const ShareholderSchema = new Schema<IShareholder>(
   {
-    name: { type: String, required: true, trim: true },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-      lowercase: true,
-      trim: true,
-    },
-    password: { type: String, required: true, select: false },
-    phone: { type: String, default: "" },
-    role: {
-      type: String,
-      enum: [
-        "tech",
-        "financial",
-        "tech-company",
-        "individual",
-        "legal",
-        "foreign",
-      ],
-      required: true,
-    },
-    status: {
-      type: String,
-      enum: ["pending", "active", "suspended"],
-      default: "pending",
-    },
-    equityPercent: { type: Number, default: 0, min: 0, max: 100 },
+    name:             { type: String, required: true, trim: true },
+    email:            { type: String, required: true, unique: true, lowercase: true, trim: true },
+    password:         { type: String, required: true, select: false },
+    phone:            { type: String, default: "" },
+    role:             { type: String, enum: ["tech", "financial", "tech-company", "individual", "legal", "foreign"], required: true },
+    status:           { type: String, enum: ["pending", "active", "suspended"], default: "pending" },
+    equityPercent:    { type: Number, default: 0, min: 0, max: 100 },
     capitalCommitted: { type: Number, default: 0, min: 0 },
-    capitalPaid: { type: Number, default: 0, min: 0 },
-    notes: { type: String, default: "" },
-    avatarUrl: { type: String, default: "" },
-    lastLogin: { type: Date, default: null },
-    kycStatus: {
-      type: String,
-      enum: ["none", "pending", "approved", "rejected"],
-      default: "none",
-    },
-    kycNote: { type: String, default: "" },
+    capitalPaid:      { type: Number, default: 0, min: 0 },
+    notes:            { type: String, default: "" },
+    avatarUrl:        { type: String, default: "" },
+    lastLogin:        { type: Date, default: null },
+    kycStatus:        { type: String, enum: ["none", "pending", "approved", "rejected"], default: "none" },
+    kycNote:          { type: String, default: "" },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 ShareholderSchema.index({ role: 1, status: 1 });
-// email index is created automatically by unique:true on the field definition above
+ShareholderSchema.index({ status: 1, createdAt: -1 });
 
 const Shareholder =
   mongoose.models.Shareholder ||

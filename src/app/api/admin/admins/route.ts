@@ -10,11 +10,10 @@ import { NextRequest } from "next/server";
 import { connectDB } from "@/core/database";
 import { AdminModel as Admin } from "@/modules/auth";
 import bcrypt from "bcryptjs";
-import { getCurrentUser } from "@/core/security/auth-utils";
+import { checkAdminAPI, checkSuperAdminAPI } from "@/core/rbac";
 import {
   successResponse,
   serverErrorResponse,
-  unauthorizedResponse,
   errorResponse,
   notFoundResponse,
 } from "@/utils/api-response";
@@ -27,8 +26,8 @@ function safe(doc: Record<string, unknown>) {
 }
 
 export async function GET() {
-  const user = await getCurrentUser();
-  if (!user) return unauthorizedResponse();
+  const { user, response } = await checkAdminAPI();
+  if (!user) return response!;
   try {
     await connectDB();
     const admins = await Admin.find({}).sort({ createdAt: -1 }).lean();
@@ -39,10 +38,8 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  const user = await getCurrentUser();
-  if (!user) return unauthorizedResponse();
-  if (user.role !== "superadmin")
-    return errorResponse("Forbidden: superadmin only", 403);
+  const { user, response } = await checkSuperAdminAPI();
+  if (!user) return response!;
   try {
     await connectDB();
     const { name, email, password, role } = (await req.json()) as {
@@ -70,8 +67,8 @@ export async function POST(req: NextRequest) {
 }
 
 export async function PUT(req: NextRequest) {
-  const user = await getCurrentUser();
-  if (!user) return unauthorizedResponse();
+  const { user, response } = await checkAdminAPI();
+  if (!user) return response!;
   try {
     await connectDB();
     const { _id, password, ...rest } = (await req.json()) as {
@@ -96,10 +93,8 @@ export async function PUT(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
-  const user = await getCurrentUser();
-  if (!user) return unauthorizedResponse();
-  if (user.role !== "superadmin")
-    return errorResponse("Forbidden: superadmin only", 403);
+  const { user, response } = await checkSuperAdminAPI();
+  if (!user) return response!;
   try {
     await connectDB();
     const id = req.nextUrl.searchParams.get("id");

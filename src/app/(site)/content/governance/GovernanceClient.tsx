@@ -3,17 +3,8 @@
 import { GovernanceCards } from "@/modules/governance/components/GovernanceCards";
 import { ShareholderTable } from "@/modules/shareholders/components/ShareholderTable";
 import { AdvisorCards } from "@/modules/governance/components/AdvisorCards";
-import DocLayout, {
-  DocSidebar,
-  DocMain,
-  DocHero,
-  DocBody,
-} from "@/shared/components/layout/DocLayout";
-import {
-  GOVERNANCE_DOCS,
-  SHAREHOLDERS,
-  ADVISORS,
-} from "@/shared/constants/governance";
+import DocLayout, { DocSidebar, DocMain, DocHero, DocBody } from "@/shared/components/layout/DocLayout";
+import { GOVERNANCE_DOCS, SHAREHOLDERS, ADVISORS } from "@/shared/constants/governance";
 import type { TocItem } from "@/shared/components/layout/DocLayout";
 
 const TOC: readonly TocItem[] = [
@@ -28,23 +19,23 @@ export default function GovernanceClient() {
       <DocSidebar toc={TOC} />
       <DocMain>
         <DocHero id="docs">
-          <p className="text-[10px] font-semibold uppercase tracking-widest text-AXVN-gold mb-6">
+          <h2 className="text-[10px] font-semibold uppercase tracking-widest text-AXVN-gold mb-6">
             Tài Liệu Quản Trị Hệ Thống
-          </p>
+          </h2>
           <GovernanceCards docs={GOVERNANCE_DOCS} />
         </DocHero>
 
         <DocBody id="shareholders">
-          <p className="text-[10px] font-semibold uppercase tracking-widest text-AXVN-gold mb-6">
+          <h2 className="text-[10px] font-semibold uppercase tracking-widest text-AXVN-gold mb-6">
             Cổ Đông Sáng Lập & Vốn Góp
-          </p>
+          </h2>
           <ShareholderTable shareholders={SHAREHOLDERS} />
         </DocBody>
 
         <DocBody id="advisors">
-          <p className="text-[10px] font-semibold uppercase tracking-widest text-AXVN-gold mb-6">
+          <h2 className="text-[10px] font-semibold uppercase tracking-widest text-AXVN-gold mb-6">
             Cơ Cấu Hội Đồng Cố Vấn
-          </p>
+          </h2>
           <AdvisorCards advisors={ADVISORS} />
         </DocBody>
       </DocMain>

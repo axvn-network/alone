@@ -32,6 +32,12 @@
       "@/db": [
         "./src/core/database/index.ts"
       ],
+      "@/validators": [
+        "./src/shared/validators/index.ts"
+      ],
+      "@/validators/*": [
+        "./src/shared/validators/*"
+      ],
       "@/hooks": [
         "./src/shared/hooks/index.ts"
       ],
@@ -83,6 +89,6 @@
   "exclude": [
     "node_modules",
     "scripts",
-    "infra"
+    "src/cli"
   ]
 }

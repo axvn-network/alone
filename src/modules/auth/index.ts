@@ -13,20 +13,8 @@ export { default as AdminModel } from "./model";
 export type { IAdmin } from "./model";
 
 // ── Admin auth helpers ────────────────────────────────────────────────────────
-export {
-  getCurrentUser,
-  requireAuth,
-  requireAdmin,
-  logoutAdmin,
-} from "./auth-utils";
+export { getCurrentUser, requireAuth, requireAdmin, logoutAdmin } from "./auth-utils";
 export type { SessionUser } from "./auth-utils";
 
 // ── Shareholder auth helper ───────────────────────────────────────────────────
 export { getActiveShareholder } from "./sh-auth";
-
-// ── Shareholder session tokens ────────────────────────────────────────────────
-export {
-  SH_COOKIE,
-  makeShareholderToken,
-  parseShareholderToken,
-} from "./sh-session";

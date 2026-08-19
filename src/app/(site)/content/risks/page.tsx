@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
-import { RiskMatrix } from "@/modules/dashboard";
+import { RiskMatrix } from "@/modules/dashboard/components/RiskMatrix";
 import PageHero from "@/shared/components/blocks/PageHero";
 import { RISKS } from "@/shared/constants/risks";
-
-// Static page — no DB queries. Cached at build time.
-export const revalidate = 86400;
 
 export const metadata: Metadata = {
   title: "Ma Trận Rủi Ro Chiến Lược | AXVN Tech Holding",

@@ -9,7 +9,7 @@
 
 import { NextRequest } from "next/server";
 import { addClient, removeClient } from "@/shared/utils/sse-broker";
-import { getActiveShareholder } from "@/modules/auth";
+import { getActiveShareholder } from "@/modules/auth/sh-auth";
 import { randomUUID } from "crypto";
 
 // Heartbeat được xử lý bởi global timer trong sse-broker.ts — không cần timer riêng ở đây.
@@ -21,8 +21,8 @@ export async function GET(req: NextRequest) {
   }
 
   const channel = req.nextUrl.searchParams.get("channel") || "general";
-  const room = `sh-messages-${channel}`;
-  const id = randomUUID();
+  const room    = `sh-messages-${channel}`;
+  const id      = randomUUID();
 
   const stream = new ReadableStream({
     start(controller) {
@@ -30,18 +30,14 @@ export async function GET(req: NextRequest) {
       addClient(room, client);
 
       const hello = new TextEncoder().encode(
-        `event: connected\ndata: ${JSON.stringify({ clientId: id, channel })}\n\n`,
+        `event: connected\ndata: ${JSON.stringify({ clientId: id, channel })}\n\n`
       );
       controller.enqueue(hello);
 
       // Cleanup when client disconnects — heartbeat handled globally
       const cleanup = () => {
         removeClient(room, client);
-        try {
-          controller.close();
-        } catch {
-          /* already closed */
-        }
+        try { controller.close(); } catch { /* already closed */ }
       };
       (controller as unknown as Record<string, unknown>)._cleanup = cleanup;
     },

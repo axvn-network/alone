@@ -18,7 +18,7 @@ export async function getBlogs(options?: {
 
   const { status, category, search, page = 1, limit = 10 } = options || {};
   const query: Record<string, unknown> = {
-    ...(status ? { status } : {}),
+    ...(status   ? { status }   : {}),
     ...(category ? { category } : {}),
     ...buildSearchFilter(search, ["title", "excerpt"]),
   };
@@ -52,22 +52,14 @@ export async function listForAdmin(options?: {
   await connectDB();
 
   const query: Record<string, unknown> = {
-    ...(options?.status ? { status: options.status } : {}),
+    ...(options?.status   ? { status:   options.status }   : {}),
     ...(options?.category ? { category: options.category } : {}),
     ...buildSearchFilter(options?.search, ["title", "excerpt"]),
   };
 
   const docs = await Blog.find(query, {
-    slug: 1,
-    title: 1,
-    excerpt: 1,
-    category: 1,
-    readTime: 1,
-    tags: 1,
-    featuredImage: 1,
-    status: 1,
-    updatedAt: 1,
-    createdAt: 1,
+    slug: 1, title: 1, excerpt: 1, category: 1, readTime: 1, tags: 1,
+    featuredImage: 1, status: 1, updatedAt: 1, createdAt: 1,
   })
     .sort({ createdAt: -1 })
     .limit(200)
@@ -78,8 +70,7 @@ export async function listForAdmin(options?: {
     title: a.title,
     excerpt: a.excerpt || "",
     category: a.category || "General",
-    readTime:
-      ((a as Record<string, unknown>).readTime as string) || "5 min read",
+    readTime: (a as Record<string, unknown>).readTime as string || "5 min read",
     tags: a.tags || [],
     featuredImage: a.featuredImage || "",
     status: a.status,
@@ -115,7 +106,7 @@ export async function updateBlog(slug: string, data: Partial<BlogInput>) {
   const post = await Blog.findOneAndUpdate(
     { slug },
     { $set: data },
-    { new: true, runValidators: true },
+    { new: true, runValidators: true }
   ).lean();
   if (!post) throw new NotFoundError("Blog post not found");
   return post;
@@ -133,7 +124,7 @@ export async function publishBlog(slug: string) {
   const post = await Blog.findOneAndUpdate(
     { slug },
     { $set: { status: "published", publishedAt: new Date() } },
-    { new: true },
+    { new: true }
   ).lean();
   if (!post) throw new NotFoundError("Blog post not found");
   return post;
@@ -144,7 +135,7 @@ export async function unpublishBlog(slug: string) {
   const post = await Blog.findOneAndUpdate(
     { slug },
     { $set: { status: "draft", publishedAt: null } },
-    { new: true },
+    { new: true }
   ).lean();
   if (!post) throw new NotFoundError("Blog post not found");
   return post;
@@ -160,7 +151,7 @@ export async function getRelated(slug: string, category: string, limit = 3) {
   await connectDB();
   return Blog.find(
     { status: "published", category, slug: { $ne: slug } },
-    { slug: 1, title: 1, excerpt: 1, featuredImage: 1, createdAt: 1 },
+    { slug: 1, title: 1, excerpt: 1, featuredImage: 1, createdAt: 1 }
   )
     .sort({ createdAt: -1 })
     .limit(limit)

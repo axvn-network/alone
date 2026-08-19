@@ -1,24 +1,4 @@
 {
-  "common": {
-    "user": "Người dùng",
-    "balance": "Số dư",
-    "recharge": "Nạp tiền",
-    "withdraw": "Rút tiền",
-    "order": "Đơn hàng",
-    "status": "Trạng thái",
-    "amount": "Số tiền",
-    "date": "Ngày tạo",
-    "actions": "Thao tác",
-    "search": "Tìm kiếm...",
-    "filter": "Bộ lọc",
-    "all": "Tất cả",
-    "submit": "Gửi yêu cầu",
-    "cancel": "Hủy bỏ",
-    "save": "Lưu thay đổi",
-    "loading": "Đang tải...",
-    "success": "Thành công",
-    "error": "Có lỗi xảy ra"
-  },
   "nav": {
     "home": "Trang chủ",
     "about": "Về Chúng Tôi",
@@ -29,57 +9,6 @@
     "insights": "Góc nhìn",
     "documents": "Công bố thông tin",
     "contact": "Kết Nối Ngay"
-  },
-  "plans": {
-    "pageTag": "Hạng Mục Hợp Tác Đầu Tư",
-    "pageHeading": "Cùng Nhau Xây Dựng Tương Lai Tài Chính Số",
-    "pageDesc": "Các hạng mục hợp tác B2B để cùng xây dựng nền tảng tổ chức thị trường giao dịch tài sản mã hóa, hướng đến được Bộ Tài chính cấp phép theo Nghị quyết 5/2025/NQ-CP.",
-    "alertBadge": "Từ 20/01/2026 — Bộ Tài chính chính thức tiếp nhận hồ sơ cấp phép",
-    "noLicense": "Chưa có đơn vị nào được cấp phép",
-    "noLicenseDesc": "Đây là cửa sổ cơ hội chưa từng có — và nó đang mở.",
-    "minCommitment": "Cam Kết Tối Thiểu",
-    "equity": "Cổ Phần",
-    "duration": "Thời Hạn",
-    "benefits": "Quyền Lợi Đối Tác",
-    "conditions": "Điều Kiện Tham Gia",
-    "register": "Đăng Ký Hạng Mục Này",
-    "consult": "Tư Vấn Thêm",
-    "viewDetail": "Xem Chi Tiết",
-    "disclaimer": "Đây là các hạng mục hợp tác xây dựng dự án B2B — không phải sản phẩm đầu tư tài chính bán lẻ.",
-    "nq5Label": "Nguồn: Nghị quyết 05/2025/NQ-CP + QĐ 96/QĐ-BTC ngày 20/1/2026",
-    "licensing": {
-      "tag": "Điều Kiện Cấp Phép",
-      "heading": "Đây Là Những Gì Chúng Ta Cần Xây Dựng",
-      "desc": "Không một tổ chức đơn lẻ nào có thể đáp ứng tất cả điều kiện này một mình — đó là lý do AXVN cần đối tác."
-    },
-    "roadmap": {
-      "tag": "Lộ Trình Pháp Lý",
-      "heading": "Từ Nghị Quyết Đến Giấy Phép"
-    },
-    "tiers": {
-      "seed": "Hạng Mục Hạt Giống",
-      "growth": "Hạng Mục Tăng Trưởng",
-      "expansion": "Hạng Mục Mở Rộng",
-      "strategic": "Hạng Mục Chiến Lược",
-      "anchor": "Hạng Mục Neo Chiến Lược"
-    }
-  },
-  "whatsapp": {
-    "greeting": "Xin chào! Tôi muốn tìm hiểu về các hạng mục hợp tác đầu tư của AXVN.",
-    "planInquiry": "Cho tôi biết thêm về các hạng mục hợp tác đầu tư",
-    "licensing": "Thông tin về NQ 5/2025 và điều kiện cấp phép"
-  },
-  "roles": {
-    "superadmin": "Quản trị viên cấp cao",
-    "admin": "Quản trị viên",
-    "agent": "Đại lý / Đối tác",
-    "support": "Hỗ trợ viên"
-  },
-  "payment": {
-    "momo": "Ví MoMo",
-    "bank": "Chuyển khoản ngân hàng (VietQR)",
-    "usdt": "Tiền điện tử USDT (BEP20)",
-    "telco": "Thẻ cào điện thoại"
   },
   "footer": {
     "followUs": "THEO DÕI CHÚNG TÔI",
@@ -264,10 +193,6 @@
     "btn2": "XEM LỘ TRÌNH DỰ ÁN"
   },
   "newsletter": {
-    "title": "Cập Nhật FinTech & Tài Sản Mã Hóa",
-    "desc": "Nhận phân tích thị trường tài sản mã hóa Việt Nam, cơ hội FinTech và góc nhìn kinh tế số chuyên sâu từ AXVN — chỉ khi thực sự có giá trị, không spam.",
-    "btn": "ĐĂNG KÝ NHẬN BẢN TIN",
-    "disclaimer": "Bằng cách đăng ký, bạn đồng ý nhận thông tin từ AXVN Tech Holding. Hủy đăng ký bất kỳ lúc nào.",
     "successTitle": "Đăng ký thành công.",
     "successDesc": "Chúng tôi sẽ chỉ gửi đến bạn những thông tin thực sự có giá trị.",
     "placeholder": "Địa chỉ email của bạn"

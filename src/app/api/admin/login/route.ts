@@ -4,9 +4,9 @@ import { AdminModel as Admin } from "@/modules/auth";
 import bcrypt from "bcryptjs";
 import { setSessionCookie } from "@/core/security/session";
 import { rateLimit, clearRateLimit } from "@/utils/rate-limit";
+import { env } from "@/core/env";
 
-const FALLBACK_USERNAME = process.env.ADMIN_USERNAME || "admin";
-const FALLBACK_PASSWORD = process.env.ADMIN_PASSWORD || "";
+const FALLBACK_PASSWORD = env.ADMIN_PASSWORD;
 
 /**
  * POST /api/admin/login
@@ -82,13 +82,14 @@ export async function POST(request: Request) {
     // DB unavailable — fall through to env fallback
   }
 
-  // ── Env-based emergency fallback ──────────────────────────────────────────
+  // ── Env-based emergency fallback (DB unavailable) ────────────────────────
+  // Uses ADMIN_EMAIL + ADMIN_PASSWORD from env — no separate ADMIN_USERNAME var needed.
   if (
     FALLBACK_PASSWORD.length >= 8 &&
-    username === FALLBACK_USERNAME &&
+    username === env.ADMIN_EMAIL &&
     password === FALLBACK_PASSWORD
   ) {
-    await setSessionCookie(FALLBACK_USERNAME);
+    await setSessionCookie(env.ADMIN_EMAIL);
     clearRateLimit(rateLimitKey);
     return NextResponse.json({ success: true });
   }

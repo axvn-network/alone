@@ -1,5 +1,5 @@
 /**
- * src/lib/vn/validators.ts
+ * src/core/vn-utils/vn-lib/validators.ts
  *
  * Low-level validation functions for Vietnamese data standards.
  * Each function returns a typed result object with both the primary
@@ -14,6 +14,7 @@ import {
 } from "libphonenumber-js";
 
 import { MA_TINH_HOP_LE } from "./hanh-chinh";
+import { SWIFT_MAP } from "./swift-ngan-hang";
 
 // ─── Province code registry (CCCD) ───────────────────────────────────────────
 // Source: Circular 59/2021/TT-BCA (Ministry of Public Security)
@@ -244,6 +245,7 @@ export function normalizeNationalId(raw: string): string {
 /**
  * Validate a SWIFT/BIC code.
  * Format: 6 letters + 2 alphanumeric + optional 3 alphanumeric (8 or 11 total).
+ * If the 8-character prefix matches a known Vietnamese bank, bankName is populated.
  */
 export function validateSwiftBic(raw: string): SwiftResult {
   const s = raw.toUpperCase().replace(/\s/g, "");
@@ -255,7 +257,16 @@ export function validateSwiftBic(raw: string): SwiftResult {
     const msg = "SWIFT/BIC contains invalid characters.";
     return { isValid: false, hopLe: false, error: msg, loi: msg };
   }
-  return { isValid: true, hopLe: true, normalized: s, chuanHoa: s };
+  // Look up by 8-char prefix (branch codes strip the last 3 chars)
+  const lookup = SWIFT_MAP.get(s.slice(0, 8));
+  const bankName = lookup?.shortName;
+  return {
+    isValid: true,
+    hopLe: true,
+    normalized: s,
+    chuanHoa: s,
+    ...(bankName ? { bankName, nganHang: bankName } : {}),
+  };
 }
 
 /**

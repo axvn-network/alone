@@ -80,10 +80,7 @@ export default async function ContactPage() {
       {/* ── Thông tin liên hệ ── */}
       <section
         className="bg-AXVN-navy rounded-2xl section-mx section-my"
-        style={{
-          paddingTop: "var(--section-py)",
-          paddingBottom: "var(--section-py)",
-        }}
+        style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}
       >
         <div className="max-w-[1400px] mx-auto section-px">
           <div className="text-center mb-10 md:mb-12">
@@ -104,12 +101,8 @@ export default async function ContactPage() {
                   <item.icon className="w-5 h-5 text-AXVN-gold" />
                 </div>
                 <div>
-                  <p className="text-AXVN-silver/55 text-xs mb-0.5">
-                    {item.label}
-                  </p>
-                  <p className="text-AXVN-ivory font-medium text-sm">
-                    {item.value}
-                  </p>
+                  <p className="text-AXVN-silver/55 text-xs mb-0.5">{item.label}</p>
+                  <p className="text-AXVN-ivory font-medium text-sm">{item.value}</p>
                 </div>
               </a>
             ))}
@@ -129,10 +122,7 @@ export default async function ContactPage() {
               >
                 Gửi Lời Nhắn Trực Tiếp
               </h2>
-              <p
-                className="text-AXVN-navy/55 mb-7"
-                style={{ fontSize: "var(--text-body)" }}
-              >
+              <p className="text-AXVN-navy/55 mb-7" style={{ fontSize: "var(--text-body)" }}>
                 Đội ngũ tư vấn sẽ phản hồi trong vòng 1–2 ngày làm việc.
               </p>
               <ContactForm />
