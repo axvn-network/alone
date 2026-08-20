@@ -2,13 +2,13 @@
 
 import { useState } from "react";
 import { Building2, Code2, Landmark, Scale, Sparkles, WalletCards } from "lucide-react";
-import PageHero from "@/modules/content/components/PageHero";
-import StrategyNotice from "@/modules/content/components/StrategyNotice";
+import PageHero from "@/shared/components/blocks/PageHero";
+import StrategyNotice from "@/shared/components/blocks/StrategyNotice";
 import DocumentExplorer, { type ExplorerDocument } from "@/modules/dashboard/components/DocumentExplorer";
 import SystemDiagram, { DEFAULT_DIAGRAM_ROOT, type SystemDiagramNode } from "@/modules/dashboard/components/SystemDiagram";
 import VisualTimeline, { type VisualTimelineItem } from "@/modules/dashboard/components/VisualTimeline";
 import { CORE_VALUES, SUBSIDIARIES } from "@/constants/strategy";
-import { ROADMAP_PHASES } from "@/data/roadmap";
+import { ROADMAP_PHASES } from "@/shared/constants/roadmap";
 
 const TIMELINE_ITEMS: readonly VisualTimelineItem[] = ROADMAP_PHASES.map((phase) => ({
   id: phase.year,

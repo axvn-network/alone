@@ -1,1 +1,3 @@
+#!/bin/sh
+# husky pre-commit hook — chạy lint-staged (eslint --fix + tsc --noEmit + prettier)
 npx lint-staged

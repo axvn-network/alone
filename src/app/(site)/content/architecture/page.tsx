@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { ArchitectureDiagram } from "@/modules/dashboard/components/ArchitectureDiagram";
 import DocLayout, { DocMain, DocBody, DocHero } from "@/shared/components/layout/DocLayout";
-import PageHero from "@/modules/content/components/PageHero";
-import { ARCH_NODES } from "@/data/system-architecture";
+import PageHero from "@/shared/components/blocks/PageHero";
+import { ARCH_NODES } from "@/shared/constants/system-architecture";
 
 export const metadata: Metadata = {
   title: "Kiến Trúc Hệ Sinh Thái | AXVN Tech Holding",

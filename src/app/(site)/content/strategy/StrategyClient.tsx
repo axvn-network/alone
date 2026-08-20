@@ -2,11 +2,11 @@
 
 import { CalendarRange, Building2, ShieldCheck } from "lucide-react";
 import KpiDashboard from "@/modules/dashboard/components/KpiDashboard";
-import { Timeline } from "@/modules/content/components/Timeline";
-import { RoadmapAccordion } from "@/modules/content/components/RoadmapAccordion";
-import StrategyNotice from "@/modules/content/components/StrategyNotice";
+import { Timeline } from "@/shared/components/blocks/Timeline";
+import { RoadmapAccordion } from "@/shared/components/blocks/RoadmapAccordion";
+import StrategyNotice from "@/shared/components/blocks/StrategyNotice";
 import DocLayout, { DocSidebar, DocMain, DocHero, DocBody } from "@/shared/components/layout/DocLayout";
-import { ROADMAP_PHASES, ROADMAP_META } from "@/data/roadmap";
+import { ROADMAP_PHASES, ROADMAP_META } from "@/shared/constants/roadmap";
 import type { TocItem } from "@/shared/components/layout/DocLayout";
 
 const TOC: readonly TocItem[] = [

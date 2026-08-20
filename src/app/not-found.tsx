@@ -5,12 +5,15 @@ export default function NotFound() {
     <main className="min-h-screen bg-AXVN-navy">
       <section className="pt-32 pb-20">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12 text-center">
-          <p className="text-AXVN-gold text-sm font-medium tracking-[4px] uppercase mb-4">404</p>
+          <p className="text-AXVN-gold text-sm font-medium tracking-[4px] uppercase mb-4">
+            404
+          </p>
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
             Không Tìm Thấy Trang
           </h1>
           <p className="text-AXVN-silver/60 text-lg max-w-xl mx-auto mb-10">
-            Trang bạn đang tìm không tồn tại hoặc đã được chuyển sang địa chỉ khác.
+            Trang bạn đang tìm không tồn tại hoặc đã được chuyển sang địa chỉ
+            khác.
           </p>
           <Link
             href="/"

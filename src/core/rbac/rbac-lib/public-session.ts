@@ -88,7 +88,7 @@ export function makePublicUserToken(id: string, email: string): string {
  * Trả về `{ id, email }` nếu hợp lệ và chưa hết hạn, ngược lại null.
  */
 export function parsePublicUserToken(
-  raw: string
+  raw: string,
 ): { id: string; email: string } | null {
   try {
     const dot = raw.lastIndexOf(".");
@@ -103,7 +103,7 @@ export function parsePublicUserToken(
     // Giải mã payload
     const json = Buffer.from(
       encoded.replace(/-/g, "+").replace(/_/g, "/"),
-      "base64"
+      "base64",
     ).toString();
     const data = JSON.parse(json) as PubPayload;
 

@@ -8,7 +8,7 @@
 import { revalidatePath } from "next/cache";
 import { requireAuth } from "@/core/security/auth-utils";
 import { handleError } from "@/utils/errors";
-import Enquiry from "@/core/models/Enquiry";
+import Enquiry from "@/modules/enquiries/model";
 import { connectDB } from "@/core/database";
 
 export async function markEnquiryReadAction(id: string) {

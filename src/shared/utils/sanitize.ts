@@ -9,8 +9,7 @@
  */
 
 /** Characters/patterns that indicate injection attempts */
-const SCRIPT_PATTERN =
-  /<script[\s\S]*?>[\s\S]*?<\/script>/gi;
+const SCRIPT_PATTERN = /<script[\s\S]*?>[\s\S]*?<\/script>/gi;
 const HTML_TAG_PATTERN = /<[^>]+>/g;
 const NULL_BYTE_PATTERN = /\0/g;
 const CONTROL_CHAR_PATTERN = /[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g;
@@ -76,7 +75,7 @@ export function sanitizeObject<T extends Record<string, unknown>>(obj: T): T {
       (result as Record<string, unknown>)[key] = stripHtml(val);
     } else if (val && typeof val === "object" && !Array.isArray(val)) {
       (result as Record<string, unknown>)[key] = sanitizeObject(
-        val as Record<string, unknown>
+        val as Record<string, unknown>,
       );
     }
   }

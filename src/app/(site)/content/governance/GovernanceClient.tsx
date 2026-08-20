@@ -1,10 +1,10 @@
 "use client";
 
-import { GovernanceCards } from "@/app/(site)/governance/components/GovernanceCards";
-import { ShareholderTable } from "@/app/(site)/governance/components/ShareholderTable";
-import { AdvisorCards } from "@/app/(site)/governance/components/AdvisorCards";
+import { GovernanceCards } from "@/modules/governance/components/GovernanceCards";
+import { ShareholderTable } from "@/modules/shareholders/components/ShareholderTable";
+import { AdvisorCards } from "@/modules/governance/components/AdvisorCards";
 import DocLayout, { DocSidebar, DocMain, DocHero, DocBody } from "@/shared/components/layout/DocLayout";
-import { GOVERNANCE_DOCS, SHAREHOLDERS, ADVISORS } from "@/data/gov/governance";
+import { GOVERNANCE_DOCS, SHAREHOLDERS, ADVISORS } from "@/shared/constants/governance";
 import type { TocItem } from "@/shared/components/layout/DocLayout";
 
 const TOC: readonly TocItem[] = [

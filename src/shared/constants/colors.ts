@@ -1,6 +1,6 @@
 /**
  * src/constants/colors.ts
- * 
+ *
  * Single source of truth for the AXVN Tech Holding brand color palette.
  * Use these variables in Tailwind CSS configurations and TypeScript files.
  */

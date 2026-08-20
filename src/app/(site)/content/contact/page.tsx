@@ -1,7 +1,7 @@
-import ContactForm from "./components/ContactForm";
+import ContactForm from "@/modules/enquiries/components/ContactForm";
 import { Phone, Mail, MapPin, Clock, MessageCircle } from "lucide-react";
-import PageHero from "@/modules/content/components/PageHero";
-import SectionHeader from "@/modules/content/components/SectionHeader";
+import PageHero from "@/shared/components/blocks/PageHero";
+import SectionHeader from "@/shared/components/blocks/SectionHeader";
 import type { Metadata } from "next";
 import { getSettings } from "@/modules/settings";
 

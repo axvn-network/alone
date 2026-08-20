@@ -2,12 +2,7 @@
  * PATCH /api/admin/shareholders/[id]/kyc
  *
  * Body: { action: "approve" | "reject" }
- *
- * Duyệt hoặc từ chối KYC của một cổ đông.
- * Superadmin và admin đều có thể thực hiện.
- * Ghi audit log sau mỗi thao tác.
  */
-
 import { NextRequest } from "next/server";
 import { getCurrentUser } from "@/core/security/auth-utils";
 import { approveKyc, rejectKyc } from "@/modules/shareholders";
@@ -22,7 +17,7 @@ import { handleError } from "@/utils/errors";
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const user = await getCurrentUser();
@@ -38,7 +33,10 @@ export async function PATCH(
       return badRequestResponse('action must be "approve" or "reject"');
     }
 
-    const ip = req.headers.get("x-forwarded-for") ?? req.headers.get("x-real-ip") ?? "";
+    const ip =
+      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+      req.headers.get("x-real-ip") ?? "";
+    const userAgent = req.headers.get("user-agent") ?? "";
 
     let updated: Awaited<ReturnType<typeof approveKyc>>;
 
@@ -46,23 +44,25 @@ export async function PATCH(
       updated = await approveKyc(id, user.id);
       await logAudit({
         actor: { id: user.id, name: user.name, email: user.email },
-        action:     "shareholder.kyc.approve",
+        action: "shareholder.kyc.approve",
         collection: "shareholders",
         id,
         ip,
+        userAgent,
       });
     } else {
       updated = await rejectKyc(id);
       await logAudit({
         actor: { id: user.id, name: user.name, email: user.email },
-        action:     "shareholder.kyc.reject",
+        action: "shareholder.kyc.reject",
         collection: "shareholders",
         id,
         ip,
+        userAgent,
       });
     }
 
-    return successResponse(updated);
+    return successResponse(updated, `KYC ${action}d`);
   } catch (e) {
     return serverErrorResponse(handleError(e).message);
   }

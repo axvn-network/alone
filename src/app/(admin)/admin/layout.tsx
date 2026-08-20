@@ -10,7 +10,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function AdminLayout({ children }: { children: React.ReactNode }) {
+export default async function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   // Sử dụng RBAC guard — redirect về /admin-login nếu không phải admin/superadmin
   await requireAdminGuard();
   return <AdminProviders>{children}</AdminProviders>;

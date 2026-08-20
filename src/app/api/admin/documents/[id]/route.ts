@@ -16,7 +16,7 @@ interface Props {
 
 // PUT /api/admin/documents/[id]
 export async function PUT(request: NextRequest, { params }: Props) {
-  if (!await getCurrentUser()) return unauthorizedResponse();
+  if (!(await getCurrentUser())) return unauthorizedResponse();
   try {
     const { id } = await params;
     if (!id) return errorResponse("ID is required");
@@ -31,7 +31,7 @@ export async function PUT(request: NextRequest, { params }: Props) {
 
 // DELETE /api/admin/documents/[id]
 export async function DELETE(_request: NextRequest, { params }: Props) {
-  if (!await getCurrentUser()) return unauthorizedResponse();
+  if (!(await getCurrentUser())) return unauthorizedResponse();
   try {
     const { id } = await params;
     if (!id) return errorResponse("ID is required");

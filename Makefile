@@ -14,7 +14,7 @@
         backup seed-plans seed-rbac provision-admin reset-admin \
         module env-check compress-images \
         pm2-setup pm2-save pm2-restart \
-        setup install clean help
+        setup install clean clean-all help
 
 # ── Development ───────────────────────────────────────────────────────────────
 dev:
@@ -33,7 +33,7 @@ lint:
 	npm run lint
 
 verify:
-	bash scripts/axvn-manage.sh verify
+	bash scripts/axvn-manage.sh verify 2>&1
 
 # ── Production ────────────────────────────────────────────────────────────────
 deploy:
@@ -41,14 +41,14 @@ deploy:
 
 # Hot-patch: reload PM2 + Nginx nhưng không build (dành cho thay đổi env/nginx)
 deploy-skip-build:
-	bash scripts/deploy.sh --skip-build
+	bash scripts/axvn-manage.sh deploy --skip-build
 
 # Build + deploy từ code hiện tại (không git pull — dành cho dev iteration)
 deploy-no-git:
-	bash scripts/deploy.sh --no-git
+	bash scripts/axvn-manage.sh deploy --no-git
 
 rollback:
-	bash scripts/rollback.sh
+	bash scripts/axvn-manage.sh rollback
 
 start:
 	npm run start
@@ -93,24 +93,24 @@ endif
 ifndef pass
 	$(error Usage: make reset-admin email=<admin-email> pass=<new-password>)
 endif
-	npx tsx scripts/reset-admin.ts "$(email)" "$(pass)"
+	npx tsx src/cli/reset-admin.ts "$(email)" "$(pass)"
 
 # ── Code generation ───────────────────────────────────────────────────────────
-# Scaffold module Feature-Sliced: make module name=investor
+# Scaffold module Feature-Sliced: make module name=my-module
 module:
 ifndef name
 	$(error Usage: make module name=<module-name>)
 endif
-	bash scripts/make-module.sh "$(name)"
+	bash scripts/axvn-manage.sh make-module "$(name)"
 
 # ── Utilities ─────────────────────────────────────────────────────────────────
 # Validate biến môi trường trong .env.local
 env-check:
-	bash scripts/check-env.sh
+	bash scripts/axvn-manage.sh check-env
 
 # Nén ảnh trong public/ (giảm size trước khi deploy)
 compress-images:
-	node scripts/compress-images.mjs
+	bash scripts/axvn-manage.sh compress-img
 
 # ── PM2 helpers ───────────────────────────────────────────────────────────────
 # Cài pm2-logrotate (chạy một lần sau khi cài pm2)
@@ -129,14 +129,20 @@ pm2-restart:
 
 # ── VPS Setup (lần đầu) ───────────────────────────────────────────────────────
 setup:
-	sudo bash scripts/setup.sh
+	sudo bash scripts/axvn-manage.sh setup
 
 # ── Dependencies ─────────────────────────────────────────────────────────────
 install:
 	npm ci
 
+# Xóa cache và incremental build (giữ nguyên node_modules)
 clean:
 	rm -rf .next node_modules/.cache tsconfig.tsbuildinfo
+
+# Xóa hoàn toàn — dùng khi cần npm ci sạch (mất ~2 phút để cài lại)
+clean-all:
+	rm -rf .next node_modules node_modules/.cache tsconfig.tsbuildinfo
+	npm cache clean --force
 
 # ── Help ──────────────────────────────────────────────────────────────────────
 help:
@@ -190,5 +196,6 @@ help:
 	@echo ""
 	@echo "  ── Dependencies ────────────────────────────────────────────────────────"
 	@echo "  make install              — npm ci"
-	@echo "  make clean                — remove build cache"
+	@echo "  make clean                — remove build cache (keep node_modules)"
+	@echo "  make clean-all            — full wipe: build + node_modules + npm cache"
 	@echo ""

@@ -32,11 +32,11 @@
  * ─────────────────────────────────────────────────────────────────────────────
  * Bảo mật:
  *   - Không trả về password trong response
- *   - Rate limit: xử lý qua middleware hoặc middleware rate-limit riêng
+ *   - Rate limit: 5 lần đăng ký / 5 lần đăng nhập per IP per phút (progressive lockout)
  *   - Mật khẩu được hash bcrypt với cost factor 12
  */
 
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { connectDB } from "@/core/database";
 import { PublicUser } from "@/modules/public-users";
@@ -53,6 +53,8 @@ import {
   serverErrorResponse,
 } from "@/utils/api-response";
 import { handleError } from "@/utils/errors";
+import { rateLimit, clearRateLimit } from "@/utils/rate-limit";
+import { logger } from "@/shared/utils/logger";
 
 // ─── Kiểu dữ liệu request ─────────────────────────────────────────────────────
 
@@ -79,7 +81,16 @@ type AuthBody = RegisterBody | LoginBody | LogoutBody;
 
 // ─── Helper: shape trả về sau khi xác thực ────────────────────────────────────
 
-function safeUser(doc: { _id: { toString(): string }; name: string; email: string; phone: string; emailVerified: boolean; newsletterSubscribed: boolean; lastLogin: Date | null; createdAt: Date }) {
+function safeUser(doc: {
+  _id: { toString(): string };
+  name: string;
+  email: string;
+  phone: string;
+  emailVerified: boolean;
+  newsletterSubscribed: boolean;
+  lastLogin: Date | null;
+  createdAt: Date;
+}) {
   return {
     id: doc._id.toString(),
     name: doc.name,
@@ -99,11 +110,11 @@ async function writeSessionCookie(id: string, email: string): Promise<void> {
   const token = makePublicUserToken(id, email);
   const cookieStore = await cookies();
   cookieStore.set(PUB_COOKIE, token, {
-    httpOnly: true,                                                  // Ngăn JavaScript đọc cookie
-    secure: process.env.NODE_ENV === "production",                  // HTTPS only trong production
+    httpOnly: true, // Ngăn JavaScript đọc cookie
+    secure: process.env.NODE_ENV === "production", // HTTPS only trong production
     sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
     path: "/",
-    maxAge: PUB_MAX_AGE,                                             // 7 ngày
+    maxAge: PUB_MAX_AGE, // 7 ngày
   });
 }
 
@@ -124,16 +135,47 @@ async function clearSessionCookie(): Promise<void> {
 // ─── POST /api/auth ───────────────────────────────────────────────────────────
 
 export async function POST(req: NextRequest) {
+  // ── Rate limiting per IP ───────────────────────────────────────────────────
+  const ip =
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    req.headers.get("x-real-ip") ||
+    "unknown";
+
   try {
-    const body = await req.json() as AuthBody;
+    const body = (await req.json()) as AuthBody;
     const { action } = body;
+
+    // Apply rate-limit for mutating actions only (register + login)
+    if (action === "register" || action === "login") {
+      const rateLimitKey = `pub-auth-${action}:${ip}`;
+      const limit = rateLimit(rateLimitKey, 5, 60_000);
+      if (!limit.allowed) {
+        const retryAfter = Math.ceil((limit.resetAt - Date.now()) / 1000);
+        logger.warn(`[auth/${action}] Rate-limit hit`, { ip });
+        return NextResponse.json(
+          { success: false, message: "Quá nhiều yêu cầu. Vui lòng thử lại sau." },
+          {
+            status: 429,
+            headers: {
+              "Retry-After": String(retryAfter),
+              "X-RateLimit-Reset": String(limit.resetAt),
+            },
+          },
+        );
+      }
+    }
 
     await connectDB();
 
     // ── Đăng ký tài khoản mới ─────────────────────────────────────────────
     if (action === "register") {
-      const { name, email, password, phone = "", newsletterSubscribed = false } =
-        body as RegisterBody;
+      const {
+        name,
+        email,
+        password,
+        phone = "",
+        newsletterSubscribed = false,
+      } = body as RegisterBody;
 
       // Kiểm tra dữ liệu đầu vào
       if (!name?.trim()) return errorResponse("Vui lòng nhập họ tên.");
@@ -153,7 +195,7 @@ export async function POST(req: NextRequest) {
       const user = await PublicUser.create({
         name: name.trim(),
         email: email.toLowerCase().trim(),
-        password,          // Schema middleware sẽ hash tự động
+        password, // Schema middleware sẽ hash tự động
         phone: phone.trim(),
         newsletterSubscribed,
         emailVerified: false, // Mặc định chưa xác thực email
@@ -163,7 +205,11 @@ export async function POST(req: NextRequest) {
       // Ghi cookie session ngay sau khi đăng ký
       await writeSessionCookie(user._id.toString(), user.email);
 
-      return successResponse(safeUser(user.toObject()), "Đăng ký thành công!", 201);
+      return successResponse(
+        safeUser(user.toObject()),
+        "Đăng ký thành công!",
+        201,
+      );
     }
 
     // ── Đăng nhập ─────────────────────────────────────────────────────────
@@ -197,7 +243,13 @@ export async function POST(req: NextRequest) {
       // Ghi cookie session
       await writeSessionCookie(user._id.toString(), user.email);
 
-      return successResponse(safeUser(user.toObject()), "Đăng nhập thành công!");
+      // Xóa rate-limit sau đăng nhập thành công
+      clearRateLimit(`pub-auth-login:${ip}`);
+
+      return successResponse(
+        safeUser(user.toObject()),
+        "Đăng nhập thành công!",
+      );
     }
 
     // ── Đăng xuất ─────────────────────────────────────────────────────────
@@ -232,7 +284,9 @@ export async function GET() {
     if (!parsed) {
       // Token hết hạn hoặc bị giả mạo — xóa cookie rác
       await clearSessionCookie();
-      return unauthorizedResponse("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.");
+      return unauthorizedResponse(
+        "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.",
+      );
     }
 
     await connectDB();
@@ -240,7 +294,9 @@ export async function GET() {
 
     if (!user || !user.isActive) {
       await clearSessionCookie();
-      return unauthorizedResponse("Tài khoản không tồn tại hoặc đã bị vô hiệu hoá.");
+      return unauthorizedResponse(
+        "Tài khoản không tồn tại hoặc đã bị vô hiệu hoá.",
+      );
     }
 
     return successResponse(safeUser(user as Parameters<typeof safeUser>[0]));

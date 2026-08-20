@@ -1,7 +1,12 @@
 import { NextRequest } from "next/server";
 import { getCurrentUser } from "@/core/security/auth-utils";
-import * as contentService from "@/modules/content";
-import { pageContentSchema, formatZodErrors } from "@/validators";
+import {
+  getPage,
+  getAllPages,
+  updatePage,
+  pageContentSchema,
+} from "@/modules/content";
+import { formatZodErrors } from "@/utils/zod";
 import {
   successResponse,
   validationErrorResponse,
@@ -17,8 +22,8 @@ export const dynamic = "force-dynamic";
 export async function GET(request: NextRequest) {
   try {
     const slug = request.nextUrl.searchParams.get("slug");
-    if (slug) return successResponse(await contentService.getPage(slug));
-    return successResponse(await contentService.getAllPages());
+    if (slug) return successResponse(await getPage(slug));
+    return successResponse(await getAllPages());
   } catch (error) {
     if (error instanceof NotFoundError) return notFoundResponse(error.message);
     return serverErrorResponse(handleError(error).message);
@@ -27,13 +32,14 @@ export async function GET(request: NextRequest) {
 
 // PUT — admin only: update page content
 export async function PUT(request: NextRequest) {
-  if (!await getCurrentUser()) return unauthorizedResponse();
+  if (!(await getCurrentUser())) return unauthorizedResponse();
   try {
     const parsed = pageContentSchema.safeParse(await request.json());
-    if (!parsed.success) return validationErrorResponse(formatZodErrors(parsed.error));
+    if (!parsed.success)
+      return validationErrorResponse(formatZodErrors(parsed.error));
     return successResponse(
-      await contentService.updatePage(parsed.data.slug, parsed.data),
-      "Page updated successfully"
+      await updatePage(parsed.data.slug, parsed.data),
+      "Page updated successfully",
     );
   } catch (error) {
     if (error instanceof NotFoundError) return notFoundResponse(error.message);

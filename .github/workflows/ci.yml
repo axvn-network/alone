@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   ci:
-    name: Lint · Type-check · Build · Audit
+    name: Lint · Type-check · Test · Build · Audit
     runs-on: ubuntu-latest
 
     strategy:
@@ -44,6 +44,17 @@ jobs:
       # ── Type-check ────────────────────────────────────────────────────────────
       - name: TypeScript
         run: npm run typecheck
+
+      # ── Unit tests (Vitest) ────────────────────────────────────────────────────
+      - name: Unit tests
+        run: npm test
+        env:
+          NODE_ENV: test
+          SESSION_SECRET: "0000000000000000000000000000000000000000000000000000000000000000"
+          MONGODB_URI: "mongodb://localhost:27017/test"
+          NEXT_PUBLIC_SITE_URL: "http://localhost:3000"
+          ADMIN_EMAIL: "ci@axvn.vn"
+          ADMIN_PASSWORD: "ci-placeholder"
 
       # ── Build ─────────────────────────────────────────────────────────────────
       - name: Next.js build

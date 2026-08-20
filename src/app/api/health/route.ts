@@ -18,17 +18,32 @@ export const dynamic = "force-dynamic"; // không cache health check
 
 export async function GET() {
   const uptime = Math.floor(process.uptime());
+  const ts = new Date().toISOString();
   let dbStatus: "connected" | "disconnected" = "disconnected";
+  let dbLatencyMs: number | null = null;
 
   try {
+    const t0 = Date.now();
     const conn = await connectDB();
-    if (conn) dbStatus = "connected";
+    if (conn) {
+      dbStatus = "connected";
+      dbLatencyMs = Date.now() - t0;
+    }
   } catch {
     // DB unreachable — trả về 503
   }
 
-  const status = dbStatus === "connected" ? "ok" : "degraded";
-  const httpStatus = dbStatus === "connected" ? 200 : 503;
+  const ok = dbStatus === "connected";
 
-  return Response.json({ status, db: dbStatus, uptime }, { status: httpStatus });
+  return Response.json(
+    {
+      status:    ok ? "ok" : "degraded",
+      db:        dbStatus,
+      dbLatency: dbLatencyMs !== null ? `${dbLatencyMs}ms` : null,
+      uptime:    `${uptime}s`,
+      timestamp: ts,
+      version:   process.env.npm_package_version ?? "0.1.0",
+    },
+    { status: ok ? 200 : 503 },
+  );
 }

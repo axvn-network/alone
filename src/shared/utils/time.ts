@@ -11,7 +11,7 @@
 import { thoiGianTuongDoi, formatNgayVN } from "@/core/vn-utils/vn-lib/format";
 
 /** @deprecated Use `thoiGianTuongDoi` from `@/core/vn-utils/vn-lib/format` instead. */
-export function timeAgo(dateStr: string): string {
+export function timeAgo(dateStr: string | Date): string {
   return thoiGianTuongDoi(dateStr);
 }
 

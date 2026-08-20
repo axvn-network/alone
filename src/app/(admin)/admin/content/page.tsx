@@ -33,7 +33,9 @@ export default function ContentList() {
         <AdminNavbar title="Quản Lý Nội Dung" />
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 relative z-10">
           <div className="mb-6">
-            <p className="text-AXVN-silver text-sm">Quản lý tất cả các trang tĩnh của website</p>
+            <p className="text-AXVN-silver text-sm">
+              Quản lý tất cả các trang tĩnh của website
+            </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -47,13 +49,17 @@ export default function ContentList() {
                   <FileText className="w-4 h-4 text-AXVN-gold" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-AXVN-ivory group-hover:text-AXVN-gold transition-colors">{page.title}</p>
+                  <p className="text-sm font-medium text-AXVN-ivory group-hover:text-AXVN-gold transition-colors">
+                    {page.title}
+                  </p>
                   <p className="text-[11px] text-AXVN-silver/40 mt-1">
                     Cập nhật {timeAgo(page.updatedAt)}
                   </p>
                 </div>
                 <div className="flex items-center gap-1 mt-3 pt-3 border-t border-AXVN-charcoal">
-                  <span className="text-xs text-AXVN-silver/30 group-hover:text-AXVN-gold/60 transition-colors">Chỉnh sửa</span>
+                  <span className="text-xs text-AXVN-silver/30 group-hover:text-AXVN-gold/60 transition-colors">
+                    Chỉnh sửa
+                  </span>
                   <ChevronRight className="w-3.5 h-3.5 text-AXVN-silver/20 group-hover:text-AXVN-gold/50 transition-colors" />
                 </div>
               </Link>

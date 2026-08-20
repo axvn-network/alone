@@ -51,6 +51,11 @@ module.exports = {
       instances: 1,
       exec_mode: "fork",
 
+      // ── Run as non-root system user ────────────────────────────────────────
+      // user: "axvn",  // uncomment khi PM2 được setup đúng với user axvn
+      // NOTE: hiện chạy root vì PM2 startup được config bởi root.
+      // Để migrate: pm2 delete AXVN-langding && sudo -u axvn pm2 start ...
+
       // ── Stability ─────────────────────────────────────────────────────────
       watch: false,                // không watch files trong production
       max_memory_restart: "500M",  // tự restart khi vượt 500MB RAM

@@ -1,7 +1,11 @@
 import { NextRequest } from "next/server";
 import { getCurrentUser } from "@/core/security/auth-utils";
-import * as investmentPlanService from "@/modules/investment-plans";
-import { investmentPlanSchema, formatZodErrors } from "@/validators";
+import {
+  getAllPlans,
+  createPlan,
+  investmentPlanSchema,
+} from "@/modules/investment-plans";
+import { formatZodErrors } from "@/utils/zod";
 import {
   successResponse,
   validationErrorResponse,
@@ -14,8 +18,9 @@ import { handleError } from "@/utils/errors";
 export async function GET(req: NextRequest) {
   if (!(await getCurrentUser())) return unauthorizedResponse();
   try {
-    const status = req.nextUrl.searchParams.get("status") as "active" | "draft" | "closed" | undefined;
-    const plans = await investmentPlanService.getAllPlans(status ? { status } : undefined);
+    const status = req.nextUrl.searchParams.get("status") as
+      "active" | "draft" | "closed" | undefined;
+    const plans = await getAllPlans(status ? { status } : undefined);
     return successResponse(plans);
   } catch (error) {
     return serverErrorResponse(handleError(error).message);
@@ -27,9 +32,14 @@ export async function POST(req: NextRequest) {
   if (!(await getCurrentUser())) return unauthorizedResponse();
   try {
     const parsed = investmentPlanSchema.safeParse(await req.json());
-    if (!parsed.success) return validationErrorResponse(formatZodErrors(parsed.error));
-    const plan = await investmentPlanService.createPlan(parsed.data);
-    return successResponse(plan, "Hạng mục hợp tác đã được tạo thành công", 201);
+    if (!parsed.success)
+      return validationErrorResponse(formatZodErrors(parsed.error));
+    const plan = await createPlan(parsed.data);
+    return successResponse(
+      plan,
+      "Hạng mục hợp tác đã được tạo thành công",
+      201,
+    );
   } catch (error) {
     return serverErrorResponse(handleError(error).message);
   }

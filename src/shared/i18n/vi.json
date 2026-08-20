@@ -1,0 +1,200 @@
+{
+  "nav": {
+    "home": "Trang chủ",
+    "about": "Về Chúng Tôi",
+    "investmentFocus": "Lĩnh vực đầu tư",
+    "approach": "Cách Chúng Tôi Làm",
+    "investWithUs": "Đồng Hành Xây Dựng",
+    "partnershipPlans": "Vai Trò Tham Gia",
+    "insights": "Góc nhìn",
+    "documents": "Công bố thông tin",
+    "contact": "Kết Nối Ngay"
+  },
+  "footer": {
+    "followUs": "THEO DÕI CHÚNG TÔI",
+    "copyright": "Bản quyền thuộc về AXVN Tech Holding.",
+    "docBtn": "Tải Tài Liệu Giới Thiệu",
+    "desc": "Tập đoàn đầu tư công nghệ có trụ sở tại Dubai, UAE — tiên phong đầu tư vào FinTech, dịch vụ tài sản mã hóa hợp pháp, AI và kinh tế số tại Việt Nam và Đông Nam Á.",
+    "col1Heading": "Về AXVN",
+    "col1Link1": "Giới thiệu công ty",
+    "col1Link2": "Tầm nhìn & Sứ mệnh",
+    "col1Link3": "Ban lãnh đạo",
+    "col1Link4": "Giá trị cốt lõi",
+    "col1Link5": "Góc nhìn & Bài viết",
+    "col2Heading": "Lĩnh Vực Đầu Tư",
+    "col2Link1": "Tổng quan lĩnh vực",
+    "col2Link2": "Tài Sản Mã Hóa (Có Cấp Phép)",
+    "col2Link3": "FinTech & Thanh Toán Số",
+    "col2Link4": "Công Nghệ AI & Đột Phá",
+    "col2Link5": "Công Nghệ Giáo Dục",
+    "col2Link6": "Kinh Tế Số & Thương Mại Điện Tử",
+    "col3Heading": "Đồng Hành Xây Dựng",
+    "col3Link1": "Tham Gia Hành Trình",
+    "col3Link2": "Các Vai Trò Tham Gia",
+    "col4Heading": "Tài Nguyên & Pháp Lý",
+    "col4Link1": "Góc nhìn chuyên sâu",
+    "col4Link2": "Công bố thông tin",
+    "col4Link3": "Điều khoản sử dụng",
+    "col4Link4": "Chính sách bảo mật",
+    "col4Link5": "Miễn trừ trách nhiệm đầu tư",
+    "col4Link6": "Liên hệ trực tiếp",
+    "pillar1Title": "XÂY DỰNG TRÊN NIỀM TIN",
+    "pillar1Sub": "Liêm chính và minh bạch trong mọi hoạt động",
+    "pillar2Title": "TẠO RA GIÁ TRỊ THỰC",
+    "pillar2Sub": "Xây dựng nền tảng có lộ trình rõ ràng và tiến độ minh bạch",
+    "pillar3Title": "QUẢN TRỊ CÓ KỶ LUẬT",
+    "pillar3Sub": "Thẩm định nghiêm ngặt và giám sát chặt chẽ mọi khoản đầu tư"
+  },
+  "hero": {
+    "subtitle": "AXVN Tech Holding",
+    "titleLine1": "Xây Dựng Từ Nền Tảng.",
+    "titleLine2": "Tiên Phong Tầm Nhìn.",
+    "description": "AXVN đang xây dựng nền tảng giao dịch tài sản mã hóa hợp pháp đầu tiên tại Việt Nam — một hành trình dài hạn có lộ trình rõ ràng, pháp lý minh bạch và đội ngũ có lý tưởng. Chúng tôi không tìm người góp vốn — chúng tôi tìm người đồng hành.",
+    "btn1": "Xem Lộ Trình Dự Án",
+    "btn2": "Đồng Hành Cùng Chúng Tôi"
+  },
+  "intro": {
+    "tag": "01 — Hành Trình AXVN",
+    "title": "Chúng Tôi Đang Xây Dựng Một Thứ Chưa Từng Tồn Tại",
+    "p1": "Nghị quyết 5/2025/NQ-CP có hiệu lực từ 9/9/2025 — lần đầu tiên trong lịch sử, Việt Nam chính thức mở thị trường tài sản mã hóa hợp pháp. Tính đến hôm nay, chưa có đơn vị nào được cấp phép. AXVN đang là một trong những đơn vị đầu tiên xây dựng hồ sơ.",
+    "p2": "Đây không phải là quảng cáo hay lời mời gọi đầu tư. Đây là bức tranh thực tế về những gì chúng tôi đang làm, tại sao chúng tôi làm, và ai là người chúng tôi muốn đồng hành cùng.",
+    "p3": "Lộ trình rõ ràng. Tiến độ minh bạch. Rủi ro được nói thẳng. Nếu bạn thấy cùng một cơ hội và chia sẻ cùng lý tưởng — chúng tôi muốn nói chuyện."
+  },
+  "whatWeDo": {
+    "tag": "02 — Năng Lực Cốt Lõi",
+    "title": "Đầu Tư Vào FinTech, Tài Sản Số & Công Nghệ",
+    "subtitle": "Vốn Kỷ Luật. Am Hiểu Pháp Lý. Tập Trung Công Nghệ.",
+    "desc1": "Chúng tôi ưu tiên FinTech, hạ tầng tài sản mã hóa hợp pháp, nền tảng AI và các doanh nghiệp số có khả năng mở rộng tại Việt Nam và Đông Nam Á — nơi khung pháp lý thí điểm tài sản mã hóa đang tạo ra cơ hội đầu tư lịch sử.",
+    "desc2": "Mọi quyết định đầu tư đều trải qua thẩm định chuyên sâu: thương mại, tài chính, pháp lý và quản trị rủi ro. Kỷ luật trong quy trình là lý do đối tác tin tưởng AXVN.",
+    "focusPrefix": "Trọng Tâm",
+    "cards": [
+      {
+        "title": "FinTech & Dịch Vụ Tài Sản Mã Hóa",
+        "desc": "Đầu tư vào nền tảng giao dịch tài sản mã hóa được cấp phép, dịch vụ lưu ký, mã hóa tài sản và hạ tầng FinTech — phù hợp khung thí điểm Nghị quyết 5/2025/NQ-CP có hiệu lực từ 9/9/2025."
+      },
+      {
+        "title": "AI & Hạ Tầng Nền Tảng Số",
+        "desc": "Ưu tiên AI ứng dụng, SaaS, hạ tầng blockchain và nền tảng số giải quyết bài toán thực tiễn — trọng tâm Việt Nam, mở rộng Đông Nam Á và quốc tế."
+      },
+      {
+        "title": "Công Nghệ Giáo Dục (EdTech)",
+        "desc": "Nền tảng học trực tuyến, đào tạo kỹ năng số và tài chính, phát triển nguồn nhân lực phục vụ thị trường 100 triệu người của Việt Nam đang bước vào kỷ nguyên kinh tế số."
+      },
+      {
+        "title": "Private Equity & Kinh Tế Số",
+        "desc": "Tiếp cận cơ hội đầu tư đã qua thẩm định chặt chẽ vào doanh nghiệp kinh tế số tăng trưởng cao, startup FinTech và private equity tại Việt Nam và khu vực."
+      }
+    ]
+  },
+  "sectors": {
+    "tag": "03 — Lĩnh Vực Đầu Tư",
+    "title": "FinTech Là Trọng Tâm. Kinh Tế Số Tăng Trưởng.",
+    "desc": "AXVN đặt FinTech, dịch vụ tài sản mã hóa hợp pháp và kinh tế số Việt Nam là trọng tâm chiến lược — đón đầu Nghị quyết 5/2025/NQ-CP có hiệu lực từ 9/9/2025.",
+    "btnText": "XEM TẤT CẢ LĨNH VỰC ĐẦU TƯ",
+    "sectorPrefix": "Lĩnh vực",
+    "list": [
+      {
+        "title": "Dịch Vụ Tài Sản Mã Hóa (Có Cấp Phép)",
+        "desc": "Nền tảng giao dịch, lưu ký và phát hành tài sản mã hóa được cấp phép — tiên phong trong khung thí điểm Nghị quyết 5/2025/NQ-CP có hiệu lực từ 9/9/2025."
+      },
+      {
+        "title": "FinTech & Thanh Toán Số",
+        "desc": "Hạ tầng thanh toán, cho vay số, bảo hiểm công nghệ và các giải pháp tài chính số cho phân khúc thị trường chưa được phục vụ đầy đủ tại Việt Nam."
+      },
+      {
+        "title": "Công Nghệ AI & Đột Phá",
+        "desc": "Nền tảng AI ứng dụng, SaaS và tự động hóa giải quyết bài toán thực tiễn — trọng tâm Việt Nam, mở rộng Đông Nam Á và toàn cầu."
+      },
+      {
+        "title": "Công Nghệ Giáo Dục (EdTech)",
+        "desc": "Nền tảng học trực tuyến, đào tạo kỹ năng số và chứng chỉ chuyên môn — đáp ứng nhu cầu nhân lực số bùng nổ trong kỷ nguyên tài sản mã hóa hợp pháp."
+      },
+      {
+        "title": "Hạ Tầng Blockchain",
+        "desc": "Mạng lưới blockchain cấp doanh nghiệp, hợp đồng thông minh, bảo mật và hạ tầng tương tác liên chuỗi cho hệ sinh thái tài sản số Việt Nam."
+      },
+      {
+        "title": "Kinh Tế Số & Thương Mại Điện Tử",
+        "desc": "Sàn thương mại điện tử ngành dọc, nền tảng logistics số và doanh nghiệp bán lẻ công nghệ có lộ trình tăng trưởng rõ ràng tại Việt Nam."
+      },
+      {
+        "title": "Private Equity & Vốn Tăng Trưởng",
+        "desc": "Đầu tư chiến lược vào startup công nghệ tăng trưởng cao, doanh nghiệp FinTech và công ty tư nhân tại Việt Nam và Đông Nam Á."
+      },
+      {
+        "title": "Mã Hóa Tài Sản (Tokenisation)",
+        "desc": "Mã hóa tài sản thực — bất động sản, hàng hóa, quỹ đầu tư — thành tài sản mã hóa tuân thủ pháp lý trong hệ sinh thái số Việt Nam."
+      },
+      {
+        "title": "Quản Lý Đầu Tư Chiến Lược",
+        "desc": "Liên doanh, đồng đầu tư và liên minh chiến lược cùng định chế tài chính uy tín trong lĩnh vực kinh tế số và tài sản mã hóa."
+      }
+    ]
+  },
+  "why": {
+    "tag": "04 — Tại Sao Đây Là Cơ Hội Có Một Không Hai",
+    "title": "Cửa Sổ 5 Năm. Chưa Ai Đi Trước. Khung Pháp Lý Vừa Mở.",
+    "benefits": [
+      {
+        "title": "Chưa Có Ai Được Cấp Phép — Ở Việt Nam",
+        "desc": "Tính đến hôm nay, chưa có đơn vị nào được Bộ Tài chính cấp phép dịch vụ tài sản mã hóa tại Việt Nam. AXVN đang trong số những đơn vị đầu tiên xây dựng hồ sơ theo NQ 05/2025/NQ-CP có hiệu lực từ 9/9/2025."
+      },
+      {
+        "title": "Pháp Lý Rõ Ràng — Không Phải Vùng Xám",
+        "desc": "NQ 05/2025/NQ-CP và QĐ 96/QĐ-BTC ngày 20/1/2026 định nghĩa rõ ràng điều kiện cấp phép, cơ cấu cổ đông và quy trình hoạt động. Đây là nền tảng pháp lý, không phải khoảng trống."
+      },
+      {
+        "title": "Thị Trường 100 Triệu Người — Chưa Có Sàn Hợp Pháp",
+        "desc": "Việt Nam có 100 triệu dân, tỷ lệ sở hữu crypto cao nhất Đông Nam Á — nhưng chưa có sàn giao dịch hợp pháp. Đây là khoảng trống thị trường hiếm gặp trong lịch sử tài chính số."
+      },
+      {
+        "title": "Vốn Điều Lệ 10.000 Tỷ — Cần Liên Minh, Không Ai Đơn Độc",
+        "desc": "Không một tổ chức đơn lẻ nào có thể đáp ứng toàn bộ yêu cầu. Đây là lý do cần đối tác — và cũng là lý do mỗi đối tác tham gia sớm có vị thế thiết yếu không thể thay thế."
+      },
+      {
+        "title": "Đội Ngũ Xây Dựng Trên Kỷ Luật Và Lý Tưởng",
+        "desc": "AXVN không được xây dựng để bán. Đây là dự án dài hạn — được lãnh đạo bởi những người tin tưởng sâu sắc vào thị trường tài sản số hợp pháp như nền tảng tài chính thế hệ tiếp theo."
+      },
+      {
+        "title": "Minh Bạch Hoàn Toàn — Kể Cả Rủi Ro",
+        "desc": "Chúng tôi không che giấu rủi ro để thuyết phục bạn tham gia. Thị trường đang hình thành. Cấp phép không chắc chắn 100%. Nếu bạn chấp nhận điều đó và vẫn thấy tiềm năng — chúng ta cùng chí hướng."
+      }
+    ]
+  },
+  "philosophy": {
+    "tag": "05 — Triết Lý Xây Dựng",
+    "title": "Ba Điều Chúng Tôi Tin Vào",
+    "desc": "Không phải slogan. Đây là những nguyên tắc thực sự định hướng từng quyết định, từng cuộc trò chuyện và từng bước đi của AXVN.",
+    "quote": "\"Người ta không tham gia vì bị thuyết phục — họ tham gia vì họ thấy và tin vào điều tương tự.\"",
+    "commitments": [
+      {
+        "title": "Xây Dựng Đúng — Không Phải Nhanh",
+        "desc": "Tiêu chuẩn pháp lý, kỹ thuật và quản trị không thể rút ngắn. Chúng tôi xây dựng để tồn tại lâu dài — không phải để ra mắt nhanh rồi sụp đổ.",
+        "number": "01"
+      },
+      {
+        "title": "Minh Bạch Kể Cả Khi Khó",
+        "desc": "Cập nhật tiến độ thực tế — kể cả khi tiến độ chậm. Nói thẳng về rủi ro — kể cả khi điều đó làm mất đi người chưa sẵn sàng. Chúng tôi ưu tiên đúng người hơn nhiều người.",
+        "number": "02"
+      },
+      {
+        "title": "Đối Tác — Không Phải Khách Hàng",
+        "desc": "Người tham gia vào dự án này là đồng hành — có quyền biết, có quyền nói và có trách nhiệm chung. AXVN không tìm người đứng ngoài góp tiền.",
+        "number": "03"
+      }
+    ]
+  },
+  "cta": {
+    "tag": "06 — Cùng Đồng Hành",
+    "title": "Nếu Bạn Thấy Điều Tương Tự — Chúng Tôi Muốn Nghe Từ Bạn",
+    "p1": "Chúng tôi không đang chạy chiến dịch huy động vốn. Chúng tôi đang tìm những người thực sự tin vào thị trường tài sản mã hóa hợp pháp Việt Nam — người muốn là một phần của hành trình xây dựng, không phải chỉ kết quả cuối.",
+    "p2": "Nếu bạn là tổ chức tài chính, doanh nghiệp công nghệ, chuyên gia pháp lý, hay cá nhân có tầm nhìn dài hạn — chia sẻ với chúng tôi bạn nhìn thấy gì. Không có áp lực, không có cam kết ngay lập tức.",
+    "btn1": "KẾT NỐI VỚI CHÚNG TÔI",
+    "btn2": "XEM LỘ TRÌNH DỰ ÁN"
+  },
+  "newsletter": {
+    "successTitle": "Đăng ký thành công.",
+    "successDesc": "Chúng tôi sẽ chỉ gửi đến bạn những thông tin thực sự có giá trị.",
+    "placeholder": "Địa chỉ email của bạn"
+  }
+}

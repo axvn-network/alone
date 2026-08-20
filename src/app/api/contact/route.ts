@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
-import * as enquiryService from "@/modules/enquiries";
-import { contactEnquirySchema, formatZodErrors } from "@/validators";
+import { createEnquiry, contactEnquirySchema } from "@/modules/enquiries";
+import { formatZodErrors } from "@/utils/zod";
 import { rateLimit } from "@/utils/rate-limit";
 import { sendEnquiryNotification } from "@/shared/utils/email";
 import { logger } from "@/shared/utils/logger";
@@ -20,34 +20,32 @@ export async function POST(request: NextRequest) {
       request.headers.get("x-real-ip") ||
       "unknown";
 
-    // 5 submissions per 5 minutes per IP
     const check = rateLimit(`contact:${ip}`, 5, 5 * 60_000);
-    if (!check.allowed) {
+    if (!check.allowed)
       return errorResponse("Too many requests. Please try again later.", 429);
-    }
 
     const raw = await request.json();
-
-    // Sanitize before validation
     const sanitized = {
       ...raw,
-      name:    sanitizeText(raw.name),
-      email:   sanitizeEmail(raw.email),
-      phone:   sanitizeText(raw.phone),
+      name: sanitizeText(raw.name),
+      email: sanitizeEmail(raw.email),
+      phone: sanitizeText(raw.phone),
       company: sanitizeText(raw.company),
       subject: sanitizeText(raw.subject),
       message: sanitizeMessage(raw.message),
     };
 
     const parsed = contactEnquirySchema.safeParse(sanitized);
-    if (!parsed.success) return validationErrorResponse(formatZodErrors(parsed.error));
+    if (!parsed.success)
+      return validationErrorResponse(formatZodErrors(parsed.error));
 
-    const enquiry = await enquiryService.createEnquiry(parsed.data);
-
+    const enquiry = await createEnquiry(parsed.data, {
+      ipAddress: ip,
+      userAgent: request.headers.get("user-agent") ?? "",
+    });
     sendEnquiryNotification(parsed.data).catch((err) =>
-      logger.error("Failed to send notification email", err)
+      logger.error("Failed to send notification email", err),
     );
-
     return successResponse(enquiry, "Enquiry submitted successfully", 201);
   } catch (error) {
     return serverErrorResponse(handleError(error).message);

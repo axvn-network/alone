@@ -10,8 +10,8 @@
 import { revalidatePath } from "next/cache";
 import { requireAuth } from "@/core/security/auth-utils";
 import { handleError } from "@/utils/errors";
-import { blogSchema, formatZodErrors } from "@/validators";
-import type { BlogInput } from "@/validators";
+import { blogSchema, type BlogInput } from "@/modules/blog/schema";
+import { formatZodErrors } from "@/shared/utils/zod";
 import * as blogService from "@/modules/blog";
 
 export async function createBlogAction(data: BlogInput) {

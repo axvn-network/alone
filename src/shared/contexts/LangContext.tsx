@@ -1,6 +1,12 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 import type { Locale } from "@/shared/i18n";
 
 interface LangContextValue {
@@ -30,7 +36,11 @@ export function LangProvider({ children }: { children: ReactNode }) {
     document.documentElement.lang = l;
   };
 
-  return <LangContext.Provider value={{ lang, setLang }}>{children}</LangContext.Provider>;
+  return (
+    <LangContext.Provider value={{ lang, setLang }}>
+      {children}
+    </LangContext.Provider>
+  );
 }
 
 export function useLang(): LangContextValue {

@@ -8,8 +8,8 @@
 import { revalidatePath } from "next/cache";
 import { requireAuth } from "@/core/security/auth-utils";
 import { handleError } from "@/utils/errors";
-import { shareholderSchema, formatZodErrors } from "@/validators";
-import type { ShareholderInput } from "@/validators";
+import { shareholderSchema, type ShareholderInput } from "@/modules/shareholders/schema";
+import { formatZodErrors } from "@/shared/utils/zod";
 import * as shareholderService from "@/modules/shareholders";
 
 export async function createShareholderAction(data: ShareholderInput) {

@@ -6,7 +6,11 @@
  *   import { fadeUpVariants, staggerContainerVariants } from "@/shared/utils/animation";
  */
 
-import { type Variants, type Transition, type UseInViewOptions } from "framer-motion";
+import {
+  type Variants,
+  type Transition,
+  type UseInViewOptions,
+} from "framer-motion";
 
 export const easings = {
   smooth: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
@@ -91,8 +95,16 @@ export const slideInRightVariants: Variants = {
 
 export const buttonVariants: Variants = {
   rest: { scale: 1, y: 0 },
-  hover: { scale: 1.03, y: -2, transition: { type: "spring", stiffness: 400, damping: 20 } },
-  tap: { scale: 0.97, y: 0, transition: { type: "spring", stiffness: 500, damping: 15 } },
+  hover: {
+    scale: 1.03,
+    y: -2,
+    transition: { type: "spring", stiffness: 400, damping: 20 },
+  },
+  tap: {
+    scale: 0.97,
+    y: 0,
+    transition: { type: "spring", stiffness: 500, damping: 15 },
+  },
 };
 
 export const staggerContainerVariants: Variants = {
@@ -108,7 +120,11 @@ export const staggerContainerVariants: Variants = {
 
 export const navVariants: Variants = {
   hidden: { y: -80, opacity: 0 },
-  visible: { y: 0, opacity: 1, transition: { duration: 0.9, ease: easings.out, delay: 0.1 } },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: { duration: 0.9, ease: easings.out, delay: 0.1 },
+  },
 };
 
 export const modalBackdropVariants: Variants = {
@@ -150,12 +166,22 @@ export const sidebarVariants: Variants = {
 
 export const accordionVariants: Variants = {
   collapsed: { height: 0, opacity: 0, overflow: "hidden" },
-  expanded: { height: "auto", opacity: 1, overflow: "hidden", transition: { duration: 0.35, ease: easings.inOut } },
+  expanded: {
+    height: "auto",
+    opacity: 1,
+    overflow: "hidden",
+    transition: { duration: 0.35, ease: easings.inOut },
+  },
 };
 
 export const toastVariants: Variants = {
   hidden: { opacity: 0, y: -20, scale: 0.95 },
-  visible: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 350, damping: 25 } },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { type: "spring", stiffness: 350, damping: 25 },
+  },
   exit: { opacity: 0, y: -10, scale: 0.95, transition: { duration: 0.2 } },
 };
 
@@ -168,7 +194,11 @@ export const skeletonVariants: Variants = {
 
 export const iconHoverVariants: Variants = {
   rest: { rotate: 0, scale: 1 },
-  hover: { rotate: 5, scale: 1.1, transition: { type: "spring", stiffness: 400, damping: 12 } },
+  hover: {
+    rotate: 5,
+    scale: 1.1,
+    transition: { type: "spring", stiffness: 400, damping: 12 },
+  },
 };
 
 export const imageRevealVariants: Variants = {

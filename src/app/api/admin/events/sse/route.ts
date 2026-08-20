@@ -27,14 +27,18 @@ export async function GET() {
 
       // Send initial connection event
       const hello = new TextEncoder().encode(
-        `event: connected\ndata: ${JSON.stringify({ clientId: id })}\n\n`
+        `event: connected\ndata: ${JSON.stringify({ clientId: id })}\n\n`,
       );
       controller.enqueue(hello);
 
       // Cleanup when client disconnects — heartbeat handled globally
       const cleanup = () => {
         removeClient("admin", client);
-        try { controller.close(); } catch { /* already closed */ }
+        try {
+          controller.close();
+        } catch {
+          /* already closed */
+        }
       };
 
       // Store cleanup on controller for signal handler

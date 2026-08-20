@@ -4,7 +4,11 @@ import { Toaster } from "sonner";
 import { CsrfProvider } from "@/contexts/CsrfContext";
 import { AdminSessionProvider } from "@/contexts/AdminSessionContext";
 
-export default function AdminProviders({ children }: { children: React.ReactNode }) {
+export default function AdminProviders({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <AdminSessionProvider>
       <CsrfProvider>

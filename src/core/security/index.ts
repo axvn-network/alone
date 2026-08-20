@@ -1,18 +1,21 @@
 /**
  * src/core/security/index.ts
  *
- * Security primitives — CSRF, session, rate-limit.
+ * Security primitives — CSRF, session, AES-256-GCM encryption.
  * Single import point for all security concerns.
- *
- * Migration path:
- *   Phase 2 (scale): move rate-limit to Redis ZSET sliding window
- *   Phase 3 (NQ05):  AES-256-GCM encryption for nationalId at rest
  */
 
-export { generateCsrfToken, validateCsrfToken } from "@/shared/utils/csrf";
+export { generateCsrfToken, validateCsrfToken, CSRF_COOKIE_NAME, CSRF_HEADER_NAME } from "./csrf";
 export {
   setSessionCookie,
   getSessionEmail,
   clearSessionCookie,
   parseSessionToken,
-} from "@/core/security/session";
+  makeShareholderToken,
+  parseShareholderToken,
+  COOKIE_NAME as SESSION_COOKIE_NAME,
+  SH_COOKIE,
+} from "./session";
+export { encryptAES, decryptAES } from "./crypto-aes";
+export { getCurrentUser, requireAuth, requireAdmin, logoutAdmin } from "./auth-utils";
+export type { SessionUser } from "./auth-utils";

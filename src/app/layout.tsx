@@ -20,7 +20,10 @@ const SITE_CONFIG = {
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
 const GA_ACTIVE = !!GA_ID && GA_ID !== "G-XXXXXXXXXX";
-const FB_ACTIVE = !!PIXEL_ID && PIXEL_ID !== "XXXXXXXXXXXXXXX" && PIXEL_ID !== "XXXXXXXXXXXXXXXX";
+const FB_ACTIVE =
+  !!PIXEL_ID &&
+  PIXEL_ID !== "XXXXXXXXXXXXXXX" &&
+  PIXEL_ID !== "XXXXXXXXXXXXXXXX";
 
 const beVietnamPro = Be_Vietnam_Pro({
   subsets: ["vietnamese", "latin"],
@@ -59,7 +62,8 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_CONFIG.URL),
   openGraph: {
     title: "AXVN Tech Holding - Vững Chắc Nền Tảng. Đột Phá Tầm Nhìn.",
-    description: "Tập đoàn đầu tư chiến lược đa ngành với tầm nhìn bền vững và tiềm lực vững chắc.",
+    description:
+      "Tập đoàn đầu tư chiến lược đa ngành với tầm nhìn bền vững và tiềm lực vững chắc.",
     type: "website",
     locale: "vi_VN",
     siteName: SITE_CONFIG.NAME,
@@ -92,7 +96,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi" className={`dark ${beVietnamPro.variable} ${plusJakartaSans.variable}`} suppressHydrationWarning>
+    <html
+      lang="vi"
+      className={`dark ${beVietnamPro.variable} ${plusJakartaSans.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         {/* Google Analytics — only injected when NEXT_PUBLIC_GA_ID is set to a real ID */}
         {GA_ACTIVE && (
@@ -138,4 +146,3 @@ export default function RootLayout({
     </html>
   );
 }
-

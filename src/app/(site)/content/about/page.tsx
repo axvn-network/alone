@@ -1,12 +1,27 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Shield, Eye, Target, Award, Users, Scale, Lock, Hexagon, Heart, ArrowRight, CheckCircle2 } from "lucide-react";
+import {
+  Shield,
+  Eye,
+  Target,
+  Award,
+  Users,
+  Scale,
+  Lock,
+  Hexagon,
+  Heart,
+  ArrowRight,
+  CheckCircle2,
+} from "lucide-react";
 import Reveal from "@/shared/components/animations/Reveal";
 import Stagger from "@/shared/components/animations/Stagger";
 import StaggerItem from "@/shared/components/animations/StaggerItem";
-import PageHero from "@/modules/content/components/PageHero";
-import SectionHeader from "@/modules/content/components/SectionHeader";
+import PageHero from "@/shared/components/blocks/PageHero";
+import SectionHeader from "@/shared/components/blocks/SectionHeader";
 import type { Metadata } from "next";
+
+// Static page — no DB queries. Cache for 24h; revalidate on next request after expiry.
+export const revalidate = 86400;
 
 export const metadata: Metadata = {
   title: "Về Chúng Tôi | AXVN Tech Holding",
@@ -21,32 +36,108 @@ export const metadata: Metadata = {
 
 // Ba giá trị cốt lõi — hiển thị nổi bật đầu tiên
 const coreValues = [
-  { icon: Shield, title: "XÂY DỰNG TRÊN NIỀM TIN", description: "Liêm chính và minh bạch trong mọi hoạt động." },
-  { icon: Target, title: "TẠO RA GIÁ TRỊ THỰC", description: "Xây dựng nền tảng có lộ trình rõ ràng và tiến độ minh bạch." },
-  { icon: Scale, title: "QUẢN TRỊ CÓ KỶ LUẬT", description: "Thẩm định nghiêm ngặt và giám sát chặt chẽ mọi khoản đầu tư." },
+  {
+    icon: Shield,
+    title: "XÂY DỰNG TRÊN NIỀM TIN",
+    description: "Liêm chính và minh bạch trong mọi hoạt động.",
+  },
+  {
+    icon: Target,
+    title: "TẠO RA GIÁ TRỊ THỰC",
+    description: "Xây dựng nền tảng có lộ trình rõ ràng và tiến độ minh bạch.",
+  },
+  {
+    icon: Scale,
+    title: "QUẢN TRỊ CÓ KỶ LUẬT",
+    description: "Thẩm định nghiêm ngặt và giám sát chặt chẽ mọi khoản đầu tư.",
+  },
 ];
 
 // Các nguyên tắc bổ sung
 const values = [
-  { icon: Shield, title: "Liêm Chính", description: "Trung thực, trách nhiệm và minh bạch trong mọi quyết định và giao dịch — không có ngoại lệ." },
-  { icon: Hexagon, title: "Kỷ Luật", description: "Quyết định dựa trên phân tích, không phải cảm xúc. Biết khi nào nên tiến và khi nào nên dừng." },
-  { icon: Eye, title: "Tầm Nhìn Dài Hạn", description: "Nhìn xa hơn lợi nhuận trước mắt để xác định giá trị bền vững mà thị trường đang bỏ qua." },
-  { icon: Users, title: "Quan Hệ Đối Tác", description: "Xây dựng mối quan hệ trên niềm tin, tôn trọng và mục tiêu chung. Thành công của đối tác là thành công của chúng tôi." },
-  { icon: Award, title: "Tiêu Chuẩn Xuất Sắc", description: "Giữ chuẩn mực cao trong mọi khoản đầu tư, quan hệ đối tác và tương tác kinh doanh." },
-  { icon: Scale, title: "Trách Nhiệm Giải Trình", description: "Chịu trách nhiệm hoàn toàn với quyết định, cam kết và hiệu suất. Chúng tôi làm đúng những gì đã nói." },
-  { icon: Lock, title: "Bảo Mật Tuyệt Đối", description: "Bảo vệ thông tin, lợi ích và quyền riêng tư của đối tác và các bên liên quan — luôn luôn." },
-  { icon: Heart, title: "Lấy Đối Tác Làm Trung Tâm", description: "Đặt lợi ích đối tác vào trung tâm mọi quyết định — minh bạch, tin cậy và tạo giá trị dài hạn." },
+  {
+    icon: Shield,
+    title: "Liêm Chính",
+    description:
+      "Trung thực, trách nhiệm và minh bạch trong mọi quyết định và giao dịch — không có ngoại lệ.",
+  },
+  {
+    icon: Hexagon,
+    title: "Kỷ Luật",
+    description:
+      "Quyết định dựa trên phân tích, không phải cảm xúc. Biết khi nào nên tiến và khi nào nên dừng.",
+  },
+  {
+    icon: Eye,
+    title: "Tầm Nhìn Dài Hạn",
+    description:
+      "Nhìn xa hơn lợi nhuận trước mắt để xác định giá trị bền vững mà thị trường đang bỏ qua.",
+  },
+  {
+    icon: Users,
+    title: "Quan Hệ Đối Tác",
+    description:
+      "Xây dựng mối quan hệ trên niềm tin, tôn trọng và mục tiêu chung. Thành công của đối tác là thành công của chúng tôi.",
+  },
+  {
+    icon: Award,
+    title: "Tiêu Chuẩn Xuất Sắc",
+    description:
+      "Giữ chuẩn mực cao trong mọi khoản đầu tư, quan hệ đối tác và tương tác kinh doanh.",
+  },
+  {
+    icon: Scale,
+    title: "Trách Nhiệm Giải Trình",
+    description:
+      "Chịu trách nhiệm hoàn toàn với quyết định, cam kết và hiệu suất. Chúng tôi làm đúng những gì đã nói.",
+  },
+  {
+    icon: Lock,
+    title: "Bảo Mật Tuyệt Đối",
+    description:
+      "Bảo vệ thông tin, lợi ích và quyền riêng tư của đối tác và các bên liên quan — luôn luôn.",
+  },
+  {
+    icon: Heart,
+    title: "Lấy Đối Tác Làm Trung Tâm",
+    description:
+      "Đặt lợi ích đối tác vào trung tâm mọi quyết định — minh bạch, tin cậy và tạo giá trị dài hạn.",
+  },
 ];
 
 const philosophyPoints = [
-  { label: "Nhu cầu thị trường thực sự", desc: "Người dùng cần sản phẩm FinTech/tài sản số có giá trị thực — không phải đầu cơ" },
-  { label: "Tuân thủ pháp lý là nền tảng", desc: "Mọi đầu tư crypto/FinTech phải phù hợp NQ5/2025 và quy định pháp luật hiện hành" },
-  { label: "Lãnh đạo có năng lực & đạo đức", desc: "Đội ngũ quản lý am hiểu pháp lý, có kinh nghiệm và trách nhiệm cao" },
-  { label: "Vận hành có thể mở rộng quy mô", desc: "Tăng trưởng mà không gãy vỡ cấu trúc tuân thủ và quản trị" },
-  { label: "Lợi thế cạnh tranh bền vững", desc: "Doanh nghiệp được cấp phép và định vị đúng trong hệ sinh thái tài sản số" },
-  { label: "Thông tin tài chính minh bạch", desc: "Con số rõ ràng, trình bày trung thực với nhà đầu tư và cơ quan quản lý" },
-  { label: "Tiềm năng tăng trưởng thực tế", desc: "Tham vọng được neo chặt trong nhu cầu thị trường tài sản số Việt Nam" },
-  { label: "Liên kết các bên cùng mục tiêu", desc: "Nhà đầu tư, doanh nghiệp và cơ quan quản lý cùng hướng đến mục tiêu chung" },
+  {
+    label: "Nhu cầu thị trường thực sự",
+    desc: "Người dùng cần sản phẩm FinTech/tài sản số có giá trị thực — không phải đầu cơ",
+  },
+  {
+    label: "Tuân thủ pháp lý là nền tảng",
+    desc: "Mọi đầu tư crypto/FinTech phải phù hợp NQ5/2025 và quy định pháp luật hiện hành",
+  },
+  {
+    label: "Lãnh đạo có năng lực & đạo đức",
+    desc: "Đội ngũ quản lý am hiểu pháp lý, có kinh nghiệm và trách nhiệm cao",
+  },
+  {
+    label: "Vận hành có thể mở rộng quy mô",
+    desc: "Tăng trưởng mà không gãy vỡ cấu trúc tuân thủ và quản trị",
+  },
+  {
+    label: "Lợi thế cạnh tranh bền vững",
+    desc: "Doanh nghiệp được cấp phép và định vị đúng trong hệ sinh thái tài sản số",
+  },
+  {
+    label: "Thông tin tài chính minh bạch",
+    desc: "Con số rõ ràng, trình bày trung thực với nhà đầu tư và cơ quan quản lý",
+  },
+  {
+    label: "Tiềm năng tăng trưởng thực tế",
+    desc: "Tham vọng được neo chặt trong nhu cầu thị trường tài sản số Việt Nam",
+  },
+  {
+    label: "Liên kết các bên cùng mục tiêu",
+    desc: "Nhà đầu tư, doanh nghiệp và cơ quan quản lý cùng hướng đến mục tiêu chung",
+  },
 ];
 
 function Section({
@@ -62,7 +153,10 @@ function Section({
     <section
       id={id}
       className={`rounded-2xl section-mx section-my ${dark ? "bg-AXVN-navy" : "bg-white"}`}
-      style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}
+      style={{
+        paddingTop: "var(--section-py)",
+        paddingBottom: "var(--section-py)",
+      }}
     >
       <div className="max-w-[1400px] mx-auto section-px">{children}</div>
     </section>
@@ -106,7 +200,10 @@ export default function AboutPage() {
       {/* ── Tầm nhìn & Sứ mệnh ── */}
       <Section id="mission">
         <Reveal className="text-center mb-10 md:mb-14">
-          <SectionHeader tag="Tại Sao Chúng Tôi Ở Đây" heading="Lý Do Và Mục Đích" />
+          <SectionHeader
+            tag="Tại Sao Chúng Tôi Ở Đây"
+            heading="Lý Do Và Mục Đích"
+          />
         </Reveal>
         <Stagger className="grid md:grid-cols-2 gap-5 md:gap-8">
           <StaggerItem className="bg-AXVN-navy border border-AXVN-gold/10 hover:border-AXVN-gold/30 transition-all duration-300 rounded-2xl p-7 md:p-10">
@@ -118,10 +215,17 @@ export default function AboutPage() {
               className="font-semibold text-AXVN-ivory mb-4 leading-snug"
               style={{ fontSize: "var(--text-h3)" }}
             >
-              Thị Trường Tài Sản Số Hợp Pháp Là Nền Tảng Tài Chính Thế Hệ Tiếp Theo Của Việt Nam
+              Thị Trường Tài Sản Số Hợp Pháp Là Nền Tảng Tài Chính Thế Hệ Tiếp
+              Theo Của Việt Nam
             </h3>
-            <p className="text-AXVN-silver/80 leading-[1.8]" style={{ fontSize: "var(--text-body)" }}>
-              Không phải vì đây là xu hướng. Vì đây là tất yếu. Với 100 triệu dân, tỷ lệ sở hữu crypto cao nhất Đông Nam Á nhưng chưa có một sàn giao dịch hợp pháp — thị trường này cần được xây dựng đúng, bởi người có trách nhiệm. AXVN Tech Holding ở đây để làm điều đó.
+            <p
+              className="text-AXVN-silver/80 leading-[1.8]"
+              style={{ fontSize: "var(--text-body)" }}
+            >
+              Không phải vì đây là xu hướng. Vì đây là tất yếu. Với 100 triệu
+              dân, tỷ lệ sở hữu crypto cao nhất Đông Nam Á nhưng chưa có một sàn
+              giao dịch hợp pháp — thị trường này cần được xây dựng đúng, bởi
+              người có trách nhiệm. AXVN Tech Holding ở đây để làm điều đó.
             </p>
           </StaggerItem>
 
@@ -136,8 +240,15 @@ export default function AboutPage() {
             >
               Xây Dựng Đúng. Kỷ Luật. Minh Bạch. Để Tồn Tại Lâu Dài.
             </h3>
-            <p className="text-AXVN-silver/80 leading-[1.8]" style={{ fontSize: "var(--text-body)" }}>
-              Tập hợp những người cùng lý tưởng — tổ chức tài chính, chuyên gia công nghệ, nhà đầu tư dài hạn — để cùng nhau xây dựng sàn giao dịch tài sản mã hóa đầu tiên được Bộ Tài chính Việt Nam cấp phép theo NQ 05/2025/NQ-CP. Đúng quy trình. Đúng pháp lý. Không đường tắt.
+            <p
+              className="text-AXVN-silver/80 leading-[1.8]"
+              style={{ fontSize: "var(--text-body)" }}
+            >
+              Tập hợp những người cùng lý tưởng — tổ chức tài chính, chuyên gia
+              công nghệ, nhà đầu tư dài hạn — để cùng nhau xây dựng sàn giao
+              dịch tài sản mã hóa đầu tiên được Bộ Tài chính Việt Nam cấp phép
+              theo NQ 05/2025/NQ-CP. Đúng quy trình. Đúng pháp lý. Không đường
+              tắt.
             </p>
           </StaggerItem>
         </Stagger>
@@ -185,7 +296,7 @@ export default function AboutPage() {
                   alt={person.name}
                   fill
                   className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                  loading="lazy"
+                  loading="eager"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-AXVN-navy/60 to-transparent" />
@@ -205,7 +316,11 @@ export default function AboutPage() {
                 </div>
                 <div className="space-y-3">
                   {person.bio.map((para, i) => (
-                    <p key={i} className="text-AXVN-silver/75 leading-[1.8]" style={{ fontSize: "var(--text-body)" }}>
+                    <p
+                      key={i}
+                      className="text-AXVN-silver/75 leading-[1.8]"
+                      style={{ fontSize: "var(--text-body)" }}
+                    >
                       {para}
                     </p>
                   ))}
@@ -239,7 +354,10 @@ export default function AboutPage() {
               <h3 className="font-bold text-AXVN-gold uppercase tracking-widest text-sm mb-3 leading-snug">
                 {v.title}
               </h3>
-              <p className="text-AXVN-silver/80 leading-[1.75]" style={{ fontSize: "var(--text-body)" }}>
+              <p
+                className="text-AXVN-silver/80 leading-[1.75]"
+                style={{ fontSize: "var(--text-body)" }}
+              >
                 {v.description}
               </p>
             </StaggerItem>
@@ -262,7 +380,10 @@ export default function AboutPage() {
               >
                 {v.title}
               </h3>
-              <p className="text-AXVN-silver/70 leading-[1.75]" style={{ fontSize: "var(--text-body)" }}>
+              <p
+                className="text-AXVN-silver/70 leading-[1.75]"
+                style={{ fontSize: "var(--text-body)" }}
+              >
                 {v.description}
               </p>
             </StaggerItem>
@@ -278,7 +399,9 @@ export default function AboutPage() {
             heading={
               <>
                 Vốn Kỷ Luật.{" "}
-                <span className="font-bold text-AXVN-gold">Tuân Thủ. Tăng Trưởng Bền Vững.</span>
+                <span className="font-bold text-AXVN-gold">
+                  Tuân Thủ. Tăng Trưởng Bền Vững.
+                </span>
               </>
             }
             description="Giá trị bền vững trong kinh tế số bắt đầu từ tuân thủ pháp lý, nền tảng thị trường vững chắc và đội ngũ đủ năng lực — tất cả những thứ khác chỉ là ảo ảnh nhất thời."
@@ -293,8 +416,15 @@ export default function AboutPage() {
             >
               <div className="w-px h-full min-h-[2.5rem] bg-AXVN-gold/30 shrink-0 group-hover:bg-AXVN-gold/60 transition-colors" />
               <div>
-                <p className="font-semibold text-AXVN-ivory text-sm mb-1">{point.label}</p>
-                <p className="text-AXVN-silver/60 leading-relaxed" style={{ fontSize: "var(--text-body)" }}>{point.desc}</p>
+                <p className="font-semibold text-AXVN-ivory text-sm mb-1">
+                  {point.label}
+                </p>
+                <p
+                  className="text-AXVN-silver/60 leading-relaxed"
+                  style={{ fontSize: "var(--text-body)" }}
+                >
+                  {point.desc}
+                </p>
               </div>
             </StaggerItem>
           ))}
@@ -344,12 +474,15 @@ export default function AboutPage() {
             },
           ].map((item, i) => (
             <StaggerItem key={i}>
-              <div className={`flex items-start gap-4 p-5 md:p-6 border rounded-sm transition-all duration-300 ${item.status === "done"
-                  ? "bg-AXVN-navy border-AXVN-gold/25"
-                  : item.status === "active"
-                    ? "bg-AXVN-gold/5 border-AXVN-gold/50"
-                    : "bg-white border-AXVN-gold/10"
-                }`}>
+              <div
+                className={`flex items-start gap-4 p-5 md:p-6 border rounded-sm transition-all duration-300 ${
+                  item.status === "done"
+                    ? "bg-AXVN-navy border-AXVN-gold/25"
+                    : item.status === "active"
+                      ? "bg-AXVN-gold/5 border-AXVN-gold/50"
+                      : "bg-white border-AXVN-gold/10"
+                }`}
+              >
                 <div className="shrink-0 mt-0.5">
                   {item.status === "done" ? (
                     <CheckCircle2 className="w-5 h-5 text-AXVN-gold" />
@@ -363,16 +496,41 @@ export default function AboutPage() {
                 </div>
                 <div className="min-w-0">
                   <div className="flex items-center gap-2 mb-1 flex-wrap">
-                    <span className={`text-[10px] font-mono font-bold tracking-widest uppercase ${item.status === "done" ? "text-AXVN-gold" : item.status === "active" ? "text-AXVN-gold" : "text-AXVN-gold/40"
-                      }`}>{item.phase}</span>
+                    <span
+                      className={`text-[10px] font-mono font-bold tracking-widest uppercase ${
+                        item.status === "done"
+                          ? "text-AXVN-gold"
+                          : item.status === "active"
+                            ? "text-AXVN-gold"
+                            : "text-AXVN-gold/40"
+                      }`}
+                    >
+                      {item.phase}
+                    </span>
                     {item.status === "active" && (
-                      <span className="text-[10px] font-bold tracking-wider text-AXVN-gold bg-AXVN-gold/10 border border-AXVN-gold/30 px-2 py-0.5 uppercase">Đang Thực Hiện</span>
+                      <span className="text-[10px] font-bold tracking-wider text-AXVN-gold bg-AXVN-gold/10 border border-AXVN-gold/30 px-2 py-0.5 uppercase">
+                        Đang Thực Hiện
+                      </span>
                     )}
                   </div>
-                  <p className={`font-semibold text-sm mb-1 ${item.status === "upcoming" ? "text-AXVN-charcoal/60" : "text-AXVN-ivory"
-                    }`}>{item.title}</p>
-                  <p className={`text-xs leading-relaxed ${item.status === "upcoming" ? "text-AXVN-charcoal/50" : "text-AXVN-silver/70"
-                    }`}>{item.desc}</p>
+                  <p
+                    className={`font-semibold text-sm mb-1 ${
+                      item.status === "upcoming"
+                        ? "text-AXVN-charcoal/60"
+                        : "text-AXVN-ivory"
+                    }`}
+                  >
+                    {item.title}
+                  </p>
+                  <p
+                    className={`text-xs leading-relaxed ${
+                      item.status === "upcoming"
+                        ? "text-AXVN-charcoal/50"
+                        : "text-AXVN-silver/70"
+                    }`}
+                  >
+                    {item.desc}
+                  </p>
                 </div>
               </div>
             </StaggerItem>

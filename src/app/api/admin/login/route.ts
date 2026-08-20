@@ -1,12 +1,23 @@
 import { NextResponse } from "next/server";
+import { timingSafeEqual } from "crypto";
 import { connectDB } from "@/core/database";
 import { AdminModel as Admin } from "@/modules/auth";
 import bcrypt from "bcryptjs";
 import { setSessionCookie } from "@/core/security/session";
 import { rateLimit, clearRateLimit } from "@/utils/rate-limit";
+import { logger } from "@/shared/utils/logger";
+import { env } from "@/core/env";
 
-const FALLBACK_USERNAME = process.env.ADMIN_USERNAME || "admin";
-const FALLBACK_PASSWORD = process.env.ADMIN_PASSWORD || "";
+const FALLBACK_PASSWORD = env.ADMIN_PASSWORD;
+
+/** Constant-time string equality — prevents timing attacks on env fallback */
+function safeEqual(a: string, b: string): boolean {
+  try {
+    return timingSafeEqual(Buffer.from(a), Buffer.from(b));
+  } catch {
+    return false; // different lengths → not equal
+  }
+}
 
 /**
  * POST /api/admin/login
@@ -37,7 +48,7 @@ export async function POST(request: Request) {
           "Retry-After": String(retryAfter),
           "X-RateLimit-Reset": String(limit.resetAt),
         },
-      }
+      },
     );
   }
 
@@ -51,14 +62,14 @@ export async function POST(request: Request) {
   } catch {
     return NextResponse.json(
       { success: false, message: "Invalid request" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
   if (!username || !password) {
     return NextResponse.json(
       { success: false, message: "Credentials required" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -75,27 +86,32 @@ export async function POST(request: Request) {
         await Admin.findByIdAndUpdate(admin._id, { lastLogin: new Date() });
         await setSessionCookie(admin.email);
         clearRateLimit(rateLimitKey); // reset failed-attempt counter
+        logger.info("[admin/login] Login success", { email: admin.email, ip });
         return NextResponse.json({ success: true });
       }
     }
-  } catch {
+  } catch (dbErr) {
     // DB unavailable — fall through to env fallback
+    logger.warn("[admin/login] DB unavailable, trying env fallback", dbErr);
   }
 
-  // ── Env-based emergency fallback ──────────────────────────────────────────
+  // ── Env-based emergency fallback (DB unavailable) ────────────────────────
+  // Uses ADMIN_EMAIL + ADMIN_PASSWORD from env — no separate ADMIN_USERNAME var needed.
+  // Both comparisons use constant-time equality to prevent timing attacks.
   if (
     FALLBACK_PASSWORD.length >= 8 &&
-    username === FALLBACK_USERNAME &&
-    password === FALLBACK_PASSWORD
+    safeEqual(username, env.ADMIN_EMAIL) &&
+    safeEqual(password, FALLBACK_PASSWORD)
   ) {
-    await setSessionCookie(FALLBACK_USERNAME);
+    await setSessionCookie(env.ADMIN_EMAIL);
     clearRateLimit(rateLimitKey);
     return NextResponse.json({ success: true });
   }
 
   // ── Generic failure — do not reveal whether user exists ───────────────────
+  logger.warn("[admin/login] Failed login attempt", { ip });
   return NextResponse.json(
     { success: false, message: "Invalid credentials" },
-    { status: 401 }
+    { status: 401 },
   );
 }

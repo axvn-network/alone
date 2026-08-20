@@ -27,23 +27,31 @@ import { useAdminSession } from "@/contexts/AdminSessionContext";
 
 // ── Link dùng chung cho tất cả admin ─────────────────────────────────────────
 const COMMON_LINKS = [
-  { label: "Tổng Quan",          icon: LayoutDashboard, href: "/admin" },
-  { label: "Visual Editor",       icon: Layers,          href: "/admin/visual-editor" },
-  { label: "Cổ Đông Portal",      icon: Users,           href: "/admin/shareholders" },
-  { label: "Người Dùng Công Khai",icon: UserCog,         href: "/admin/public-users" },
-  { label: "Quản Lý Nội Dung",    icon: FileText,        href: "/admin/content" },
-  { label: "Bài Viết & Tin Tức",  icon: Newspaper,       href: "/admin/blog" },
-  { label: "Tài Liệu & CBTT",     icon: FolderOpen,      href: "/admin/documents" },
-  { label: "Hạng Mục Hợp Tác",    icon: Handshake,       href: "/admin/investment-plans" },
-  { label: "Đơn Đăng Ký",         icon: FileSearch2,     href: "/admin/partner-applications" },
-  { label: "Yêu Cầu",             icon: MessageCircle,   href: "/admin/enquiries" },
-  { label: "Nhật Ký",             icon: ClipboardList,   href: "/admin/audit-log" },
-  { label: "Cài Đặt",             icon: Settings,        href: "/admin/settings" },
+  { label: "Tổng Quan", icon: LayoutDashboard, href: "/admin" },
+  { label: "Visual Editor", icon: Layers, href: "/admin/visual-editor" },
+  { label: "Cổ Đông Portal", icon: Users, href: "/admin/shareholders" },
+  { label: "Người Dùng Công Khai", icon: UserCog, href: "/admin/public-users" },
+  { label: "Quản Lý Nội Dung", icon: FileText, href: "/admin/content" },
+  { label: "Bài Viết & Tin Tức", icon: Newspaper, href: "/admin/blog" },
+  { label: "Tài Liệu & CBTT", icon: FolderOpen, href: "/admin/documents" },
+  {
+    label: "Hạng Mục Hợp Tác",
+    icon: Handshake,
+    href: "/admin/investment-plans",
+  },
+  {
+    label: "Đơn Đăng Ký",
+    icon: FileSearch2,
+    href: "/admin/partner-applications",
+  },
+  { label: "Yêu Cầu", icon: MessageCircle, href: "/admin/enquiries" },
+  { label: "Nhật Ký", icon: ClipboardList, href: "/admin/audit-log" },
+  { label: "Cài Đặt", icon: Settings, href: "/admin/settings" },
 ];
 
 // ── Link chỉ dành cho Siêu Quản Trị Viên ─────────────────────────────────────
 const SUPERADMIN_ONLY_LINKS = [
-  { label: "Quản Lý Admin",       icon: Crown,           href: "/admin/admins" },
+  { label: "Quản Lý Admin", icon: Crown, href: "/admin/admins" },
 ];
 
 export default function AdminSidebar() {
@@ -60,7 +68,11 @@ export default function AdminSidebar() {
 
   async function handleLogout() {
     setOpen(false);
-    try { await fetch("/api/admin/logout", { method: "POST" }); } catch { /* ignore */ }
+    try {
+      await fetch("/api/admin/logout", { method: "POST" });
+    } catch {
+      /* ignore */
+    }
     router.push("/admin-login");
   }
 
@@ -88,8 +100,9 @@ export default function AdminSidebar() {
       )}
 
       <aside
-        className={`fixed md:sticky top-0 left-0 z-40 w-60 bg-[#03080e]/98 backdrop-blur-xl flex flex-col shrink-0 h-screen transition-transform duration-300 md:translate-x-0 border-r border-AXVN-gold/10 shadow-[4px_0_24px_rgba(0,0,0,0.5)] ${open ? "translate-x-0" : "-translate-x-full"
-          }`}
+        className={`fixed md:sticky top-0 left-0 z-40 w-60 bg-[#03080e]/98 backdrop-blur-xl flex flex-col shrink-0 h-screen transition-transform duration-300 md:translate-x-0 border-r border-AXVN-gold/10 shadow-[4px_0_24px_rgba(0,0,0,0.5)] ${
+          open ? "translate-x-0" : "-translate-x-full"
+        }`}
       >
         {/* Logo */}
         <div className="p-5 border-b border-AXVN-gold/10 flex items-center justify-between">
@@ -121,10 +134,14 @@ export default function AdminSidebar() {
                 </span>
               </div>
               <div className="min-w-0 flex-1">
-                <p className="text-AXVN-ivory text-xs font-semibold truncate leading-tight">{adminInfo.name}</p>
+                <p className="text-AXVN-ivory text-xs font-semibold truncate leading-tight">
+                  {adminInfo.name}
+                </p>
                 <div className="flex items-center gap-1 mt-0.5">
                   <ShieldCheck className="w-2.5 h-2.5 shrink-0 text-AXVN-gold/60" />
-                  <span className={`text-[10px] font-medium ${adminInfo.role === "superadmin" ? "text-AXVN-gold/80" : "text-AXVN-silver/60"}`}>
+                  <span
+                    className={`text-[10px] font-medium ${adminInfo.role === "superadmin" ? "text-AXVN-gold/80" : "text-AXVN-silver/60"}`}
+                  >
                     {adminInfo.role === "superadmin" ? "Super Admin" : "Admin"}
                   </span>
                 </div>
@@ -142,15 +159,18 @@ export default function AdminSidebar() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className={`flex items-center gap-3 px-3 py-2.5 text-[13px] transition-all duration-200 rounded-xl relative group ${active
+                className={`flex items-center gap-3 px-3 py-2.5 text-[13px] transition-all duration-200 rounded-xl relative group ${
+                  active
                     ? "text-AXVN-gold font-semibold bg-gradient-to-r from-AXVN-gold/12 to-transparent border border-AXVN-gold/15"
                     : "text-AXVN-silver/70 hover:text-AXVN-ivory hover:bg-white/4"
-                  }`}
+                }`}
               >
                 {active && (
                   <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-gradient-to-b from-AXVN-champagne to-AXVN-gold rounded-r-full shadow-[0_0_6px_rgba(201,162,74,0.5)]" />
                 )}
-                <link.icon className={`w-4 h-4 shrink-0 transition-all duration-200 ${active ? "text-AXVN-gold" : "group-hover:text-AXVN-gold/70"}`} />
+                <link.icon
+                  className={`w-4 h-4 shrink-0 transition-all duration-200 ${active ? "text-AXVN-gold" : "group-hover:text-AXVN-gold/70"}`}
+                />
                 <span className="truncate">{link.label}</span>
               </Link>
             );

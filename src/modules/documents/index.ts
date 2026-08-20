@@ -9,7 +9,11 @@ export type { IDocument, DocumentCategory } from "./model";
 
 // ── Service ───────────────────────────────────────────────────────────────────
 export { documentService } from "./service";
-export type { DocumentQuery, CreateDocumentDto, UpdateDocumentDto } from "./service";
+export type {
+  DocumentQuery,
+  CreateDocumentDto,
+  UpdateDocumentDto,
+} from "./service";
 
 // ── Schema ────────────────────────────────────────────────────────────────────
 export { documentSchema } from "./schema";

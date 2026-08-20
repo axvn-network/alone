@@ -48,7 +48,7 @@ describe("validateCCCD", () => {
   });
 
   test("Invalid — fewer than 12 digits", () => {
-    const r = validateCCCD("07905678901");  // 11 digits
+    const r = validateCCCD("07905678901"); // 11 digits
     assert.equal(r.isValid, false);
     assert.match(r.error!, /12/);
   });
@@ -220,13 +220,13 @@ describe("validateBarcodeGS1VN", () => {
   });
 
   test("Invalid — fewer than 13 digits", () => {
-    const r = validateBarcodeGS1VN("893000000000");  // 12 digits
+    const r = validateBarcodeGS1VN("893000000000"); // 12 digits
     assert.equal(r.isValid, false);
     assert.match(r.error!, /13/);
   });
 
   test("Invalid — prefix not 893", () => {
-    const r = validateBarcodeGS1VN("4006381333931");  // German prefix 400
+    const r = validateBarcodeGS1VN("4006381333931"); // German prefix 400
     assert.equal(r.isValid, false);
     assert.match(r.error!, /893/);
   });
@@ -349,4 +349,6 @@ describe("validateDiaChi", () => {
   });
 });
 
-console.log("✅ All validator unit tests defined. Run: npx tsx --test src/lib/vn/__tests__/validators.test.ts");
+console.log(
+  "✅ All validator unit tests defined. Run: npx tsx --test src/lib/vn/__tests__/validators.test.ts",
+);

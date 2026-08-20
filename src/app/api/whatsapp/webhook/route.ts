@@ -1,26 +1,46 @@
 import { NextRequest, NextResponse } from "next/server";
+import { createHmac, timingSafeEqual } from "crypto";
 import { logger } from "@/shared/utils/logger";
+import { env } from "@/core/env";
 
 /**
  * WhatsApp Business Cloud API — Webhook
  *
  * Tích hợp từ nurmandev/whatsapp-bot (Diploy pattern):
  *  - Webhook verification (GET)
+ *  - X-Hub-Signature-256 HMAC verification on POST (Meta security requirement)
  *  - Auto-reply với interactive list/button menus
  *  - State tracking per sender (in-memory, stateless across restarts)
  *  - Hỗ trợ text + button_reply + list_reply
  *
  * Setup:
  *  1. WHATSAPP_VERIFY_TOKEN, WHATSAPP_ACCESS_TOKEN, WHATSAPP_PHONE_NUMBER_ID trong .env.local
- *  2. Đăng ký webhook: https://<domain>/api/whatsapp/webhook
- *  3. Subscribe events: messages
+ *  2. WHATSAPP_APP_SECRET — bắt buộc để verify X-Hub-Signature-256
+ *  3. Đăng ký webhook: https://<domain>/api/whatsapp/webhook
+ *  4. Subscribe events: messages
  */
 
-const VERIFY_TOKEN = process.env.WHATSAPP_VERIFY_TOKEN || "AXVN_webhook_2025";
-const ACCESS_TOKEN = process.env.WHATSAPP_ACCESS_TOKEN || "";
-const PHONE_NUMBER_ID = process.env.WHATSAPP_PHONE_NUMBER_ID || "";
-const WA_API_VERSION = process.env.WHATSAPP_API_VERSION || "v20.0";
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://axvn.vn";
+const VERIFY_TOKEN = env.WHATSAPP_VERIFY_TOKEN ?? "AXVN_webhook_2025";
+const ACCESS_TOKEN = env.WHATSAPP_ACCESS_TOKEN ?? "";
+const PHONE_NUMBER_ID = env.WHATSAPP_PHONE_NUMBER_ID ?? "";
+const WA_API_VERSION = env.WHATSAPP_API_VERSION ?? "v20.0";
+const APP_SECRET = env.WHATSAPP_APP_SECRET ?? "";
+const SITE_URL = env.NEXT_PUBLIC_SITE_URL;
+
+/**
+ * Verify the X-Hub-Signature-256 header sent by Meta.
+ * Required to prevent spoofed webhook calls.
+ * https://developers.facebook.com/docs/graph-api/webhooks/getting-started#verification-requests
+ */
+function verifyWhatsAppSignature(rawBody: string, signature: string): boolean {
+  if (!APP_SECRET) return false; // No secret configured — reject
+  const expected = "sha256=" + createHmac("sha256", APP_SECRET).update(rawBody).digest("hex");
+  try {
+    return timingSafeEqual(Buffer.from(signature), Buffer.from(expected));
+  } catch {
+    return false;
+  }
+}
 
 // ── In-memory conversation state (resets on server restart — acceptable for webhook bot) ──
 type ConvState = {
@@ -59,8 +79,16 @@ export async function GET(req: NextRequest) {
 
 // ── POST: Incoming messages ────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
+  // ── X-Hub-Signature-256 verification (Meta security requirement) ─────────
+  const rawBody = await req.text();
+  const signature = req.headers.get("x-hub-signature-256") ?? "";
+  if (!verifyWhatsAppSignature(rawBody, signature)) {
+    logger.warn("[WA Webhook] Invalid signature — rejected");
+    return new NextResponse("Forbidden", { status: 403 });
+  }
+
   try {
-    const body = await req.json();
+    const body = JSON.parse(rawBody);
     const entry = body?.entry?.[0];
     const change = entry?.changes?.[0];
     const value = change?.value;
@@ -79,7 +107,7 @@ export async function POST(req: NextRequest) {
     let interactiveId = "";
 
     if (msgType === "text") {
-      incomingText = (msg.text?.body as string || "").toLowerCase().trim();
+      incomingText = ((msg.text?.body as string) || "").toLowerCase().trim();
     } else if (msgType === "interactive") {
       interactiveId =
         msg.interactive?.button_reply?.id ||
@@ -89,7 +117,12 @@ export async function POST(req: NextRequest) {
     }
 
     const state = getState(from);
-    const response = await buildResponse(from, state, incomingText, interactiveId);
+    const response = await buildResponse(
+      from,
+      state,
+      incomingText,
+      interactiveId,
+    );
 
     if (response && ACCESS_TOKEN && PHONE_NUMBER_ID) {
       await sendWAMessage(from, response);
@@ -128,31 +161,48 @@ async function buildResponse(
   from: string,
   state: ConvState,
   text: string,
-  id: string
+  id: string,
 ): Promise<WAMessage | null> {
   // ── Greeting / reset ──────────────────────────────────────────────────────
-  if (/^(xin chào|hello|hi|chào|hey|start|bắt đầu|menu|back|quay lại|restart)/.test(text) || !text) {
+  if (
+    /^(xin chào|hello|hi|chào|hey|start|bắt đầu|menu|back|quay lại|restart)/.test(
+      text,
+    ) ||
+    !text
+  ) {
     setState(from, { step: "menu" });
     return buildMainMenu();
   }
 
   // ── Interactive button/list IDs ────────────────────────────────────────────
-  if (id === "btn_plans" || /(gói|plan|đầu tư|hợp tác|invest|cổ đông)/.test(text)) {
+  if (
+    id === "btn_plans" ||
+    /(gói|plan|đầu tư|hợp tác|invest|cổ đông)/.test(text)
+  ) {
     setState(from, { step: "plans" });
     return buildPlansMenu();
   }
 
-  if (id === "btn_nq5" || /(nq5|nghị quyết|nq-cp|2025|cấp phép|pilot|thí điểm)/.test(text)) {
+  if (
+    id === "btn_nq5" ||
+    /(nq5|nghị quyết|nq-cp|2025|cấp phép|pilot|thí điểm)/.test(text)
+  ) {
     setState(from, { step: "nq5" });
     return buildNQ5Message();
   }
 
-  if (id === "btn_contact" || /(liên hệ|contact|tư vấn|gặp|meet|talk|email|số điện thoại)/.test(text)) {
+  if (
+    id === "btn_contact" ||
+    /(liên hệ|contact|tư vấn|gặp|meet|talk|email|số điện thoại)/.test(text)
+  ) {
     setState(from, { step: "contact" });
     return buildContactMessage();
   }
 
-  if (id === "btn_about" || /(về chúng tôi|about|fortress|giới thiệu)/.test(text)) {
+  if (
+    id === "btn_about" ||
+    /(về chúng tôi|about|fortress|giới thiệu)/.test(text)
+  ) {
     return buildAboutMessage();
   }
 
@@ -193,9 +243,18 @@ function buildMainMenu(): WAMessage {
       footer: { text: "AXVN Tech Holding · axvn.vn" },
       action: {
         buttons: [
-          { type: "reply", reply: { id: "btn_plans", title: "💼 Hạng Mục Hợp Tác" } },
-          { type: "reply", reply: { id: "btn_nq5", title: "📜 Nghị Quyết 05" } },
-          { type: "reply", reply: { id: "btn_contact", title: "📞 Liên Hệ Ngay" } },
+          {
+            type: "reply",
+            reply: { id: "btn_plans", title: "💼 Hạng Mục Hợp Tác" },
+          },
+          {
+            type: "reply",
+            reply: { id: "btn_nq5", title: "📜 Nghị Quyết 05" },
+          },
+          {
+            type: "reply",
+            reply: { id: "btn_contact", title: "📞 Liên Hệ Ngay" },
+          },
         ],
       },
     },
@@ -210,7 +269,9 @@ function buildPlansMenu(): WAMessage {
       body: {
         text: `💼 *Các Gói Cổ Đông Hợp Tác — Dự Án TSMH*\n\nĐây là các gói *góp vốn xây dựng* nền tảng TSMH được cấp phép — *không phải sản phẩm đầu tư tài chính*. Bạn trở thành cổ đông, có quyền biểu quyết và hưởng lợi từ hoạt động kinh doanh.\n\nChọn loại cổ đông để xem chi tiết quyền & nghĩa vụ:`,
       },
-      footer: { text: "Theo Điều 8 NQ 05/2025/NQ-CP · Vốn điều lệ tối thiểu 10.000 tỷ VNĐ" },
+      footer: {
+        text: "Theo Điều 8 NQ 05/2025/NQ-CP · Vốn điều lệ tối thiểu 10.000 tỷ VNĐ",
+      },
       action: {
         button: "Xem Hạng Mục Hợp Tác",
         sections: [
@@ -220,7 +281,8 @@ function buildPlansMenu(): WAMessage {
               {
                 id: "plan_individual",
                 title: "👤 Cổ Đông Cá Nhân",
-                description: "Từ 100 triệu VNĐ · ≤35% VĐL · Quyền biểu quyết ĐHCĐ",
+                description:
+                  "Từ 100 triệu VNĐ · ≤35% VĐL · Quyền biểu quyết ĐHCĐ",
               },
               {
                 id: "plan_institution",
@@ -235,7 +297,8 @@ function buildPlansMenu(): WAMessage {
               {
                 id: "plan_foreign",
                 title: "🌐 Nhà Đầu Tư Nước Ngoài",
-                description: "Tối đa 49% VĐL · Cần IRC + IICA · Góp vốn gián tiếp",
+                description:
+                  "Tối đa 49% VĐL · Cần IRC + IICA · Góp vốn gián tiếp",
               },
             ],
           },
@@ -245,12 +308,21 @@ function buildPlansMenu(): WAMessage {
   };
 }
 
-const PLAN_DETAILS: Record<string, {
-  icon: string; name: string; min: string; equity: string;
-  rights: string[]; obligations: string[]; docs: string[];
-}> = {
+const PLAN_DETAILS: Record<
+  string,
+  {
+    icon: string;
+    name: string;
+    min: string;
+    equity: string;
+    rights: string[];
+    obligations: string[];
+    docs: string[];
+  }
+> = {
   individual: {
-    icon: "👤", name: "Cổ Đông Cá Nhân",
+    icon: "👤",
+    name: "Cổ Đông Cá Nhân",
     min: "từ 100 triệu VNĐ",
     equity: "≤35% VĐL (nhóm cá nhân tổng)",
     rights: [
@@ -271,7 +343,8 @@ const PLAN_DETAILS: Record<string, {
     ],
   },
   institution: {
-    icon: "🏛️", name: "Tổ Chức Tài Chính / Công Nghệ",
+    icon: "🏛️",
+    name: "Tổ Chức Tài Chính / Công Nghệ",
     min: "từ 1.000 tỷ VNĐ",
     equity: ">35% bắt buộc (≥2 tổ chức)",
     rights: [
@@ -294,7 +367,8 @@ const PLAN_DETAILS: Record<string, {
     ],
   },
   anchor: {
-    icon: "⚓", name: "Cổ Đông Neo Chiến Lược",
+    icon: "⚓",
+    name: "Cổ Đông Neo Chiến Lược",
     min: "từ 3.000 tỷ VNĐ",
     equity: "Tỷ lệ đặc biệt · veto quyền",
     rights: [
@@ -315,7 +389,8 @@ const PLAN_DETAILS: Record<string, {
     ],
   },
   foreign: {
-    icon: "🌐", name: "Nhà Đầu Tư Nước Ngoài",
+    icon: "🌐",
+    name: "Nhà Đầu Tư Nước Ngoài",
     min: "Theo năng lực · Tối đa 49% VĐL",
     equity: "≤49% VĐL (tổng nhóm nước ngoài)",
     rights: [
@@ -356,8 +431,14 @@ function buildPlanDetail(planKey: string): WAMessage {
       footer: { text: "Căn cứ: NQ 05/2025/NQ-CP · QĐ 96/QĐ-BTC" },
       action: {
         buttons: [
-          { type: "reply", reply: { id: "btn_contact", title: "📞 Đăng Ký Ngay" } },
-          { type: "reply", reply: { id: "btn_plans", title: "🔙 Xem Gói Khác" } },
+          {
+            type: "reply",
+            reply: { id: "btn_contact", title: "📞 Đăng Ký Ngay" },
+          },
+          {
+            type: "reply",
+            reply: { id: "btn_plans", title: "🔙 Xem Gói Khác" },
+          },
           { type: "reply", reply: { id: "btn_nq5", title: "📜 Về NQ 05" } },
         ],
       },
@@ -376,8 +457,14 @@ function buildNQ5Message(): WAMessage {
       footer: { text: "Nguồn: Nghị quyết 05/2025/NQ-CP chính thức" },
       action: {
         buttons: [
-          { type: "reply", reply: { id: "btn_plans", title: "💼 Xem Hạng Mục Hợp Tác" } },
-          { type: "reply", reply: { id: "btn_contact", title: "📞 Liên Hệ Tư Vấn" } },
+          {
+            type: "reply",
+            reply: { id: "btn_plans", title: "💼 Xem Hạng Mục Hợp Tác" },
+          },
+          {
+            type: "reply",
+            reply: { id: "btn_contact", title: "📞 Liên Hệ Tư Vấn" },
+          },
           { type: "reply", reply: { id: "btn_about", title: "🏢 Về AXVN" } },
         ],
       },
@@ -396,9 +483,15 @@ function buildContactMessage(): WAMessage {
       footer: { text: "AXVN Tech Holding · Dubai, UAE" },
       action: {
         buttons: [
-          { type: "reply", reply: { id: "btn_plans", title: "💼 Xem Hạng Mục Hợp Tác" } },
+          {
+            type: "reply",
+            reply: { id: "btn_plans", title: "💼 Xem Hạng Mục Hợp Tác" },
+          },
           { type: "reply", reply: { id: "btn_nq5", title: "📜 Về NQ 05" } },
-          { type: "reply", reply: { id: "btn_about", title: "🏢 Về AXVN Tech Holding" } },
+          {
+            type: "reply",
+            reply: { id: "btn_about", title: "🏢 Về AXVN Tech Holding" },
+          },
         ],
       },
     },
@@ -416,8 +509,14 @@ function buildAboutMessage(): WAMessage {
       footer: { text: "axvn.vn" },
       action: {
         buttons: [
-          { type: "reply", reply: { id: "btn_plans", title: "💼 Hạng Mục Hợp Tác" } },
-          { type: "reply", reply: { id: "btn_nq5", title: "📜 Nghị Quyết 05" } },
+          {
+            type: "reply",
+            reply: { id: "btn_plans", title: "💼 Hạng Mục Hợp Tác" },
+          },
+          {
+            type: "reply",
+            reply: { id: "btn_nq5", title: "📜 Nghị Quyết 05" },
+          },
           { type: "reply", reply: { id: "btn_contact", title: "📞 Liên Hệ" } },
         ],
       },

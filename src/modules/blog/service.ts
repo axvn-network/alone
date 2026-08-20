@@ -1,5 +1,5 @@
 import Blog from "./model";
-import type { BlogInput } from "@/validators";
+import type { BlogInput } from "@/modules/blog/schema";
 import type { AdminArticleItem } from "@/types";
 import { NotFoundError } from "@/utils/errors";
 import { connectDB } from "@/core/database";

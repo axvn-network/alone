@@ -31,7 +31,10 @@ export default function Counter({
       let startTime: number;
       const animate = (timestamp: number) => {
         if (!startTime) startTime = timestamp;
-        const progress = Math.min((timestamp - startTime) / (duration * 1000), 1);
+        const progress = Math.min(
+          (timestamp - startTime) / (duration * 1000),
+          1,
+        );
         const eased = 1 - Math.pow(1 - progress, 3);
         setCount(eased * target);
         if (progress < 1) requestAnimationFrame(animate);

@@ -21,7 +21,11 @@ import {
   updateCapTxStatusSchema,
   submitDepositSchema,
 } from "./schema";
-import type { CreateCapTxInput, UpdateCapTxStatusInput, SubmitDepositInput } from "./schema";
+import type {
+  CreateCapTxInput,
+  UpdateCapTxStatusInput,
+  SubmitDepositInput,
+} from "./schema";
 
 // ─── Admin: Tạo giao dịch (capital_call / adjustment) ────────────────────────
 
@@ -30,19 +34,26 @@ export async function createCapTxAction(raw: CreateCapTxInput) {
 
   const parsed = createCapTxSchema.safeParse(raw);
   if (!parsed.success) {
-    return { success: false as const, errors: parsed.error.flatten().fieldErrors };
+    return {
+      success: false as const,
+      errors: parsed.error.flatten().fieldErrors,
+    };
   }
 
   try {
     const tx = await service.create(parsed.data);
 
     await logAudit({
-      actor:      { id: user.id, name: user.name, email: user.email },
-      action:     "capitalTransaction.create",
+      actor: { id: user.id, name: user.name, email: user.email },
+      action: "capitalTransaction.create",
       collection: "capitaltransactions",
-      id:         tx._id,
-      delta:      { type: tx.type, amount: tx.amount, shareholderId: tx.shareholderId },
-      ip:         "",
+      id: tx._id,
+      delta: {
+        type: tx.type,
+        amount: tx.amount,
+        shareholderId: tx.shareholderId,
+      },
+      ip: "",
     });
 
     revalidatePath("/admin/capital-transactions");
@@ -59,7 +70,10 @@ export async function updateCapTxStatusAction(raw: UpdateCapTxStatusInput) {
 
   const parsed = updateCapTxStatusSchema.safeParse(raw);
   if (!parsed.success) {
-    return { success: false as const, errors: parsed.error.flatten().fieldErrors };
+    return {
+      success: false as const,
+      errors: parsed.error.flatten().fieldErrors,
+    };
   }
 
   const { id, status, adminNote } = parsed.data;
@@ -73,12 +87,12 @@ export async function updateCapTxStatusAction(raw: UpdateCapTxStatusInput) {
     });
 
     await logAudit({
-      actor:      { id: user.id, name: user.name, email: user.email },
-      action:     `capitalTransaction.${status}`,
+      actor: { id: user.id, name: user.name, email: user.email },
+      action: `capitalTransaction.${status}`,
       collection: "capitaltransactions",
       id,
-      delta:      { status, adminNote },
-      ip:         "",
+      delta: { status, adminNote },
+      ip: "",
     });
 
     revalidatePath("/admin/capital-transactions");
@@ -95,7 +109,10 @@ export async function submitDepositAction(raw: SubmitDepositInput) {
 
   const parsed = submitDepositSchema.safeParse(raw);
   if (!parsed.success) {
-    return { success: false as const, errors: parsed.error.flatten().fieldErrors };
+    return {
+      success: false as const,
+      errors: parsed.error.flatten().fieldErrors,
+    };
   }
 
   try {
@@ -107,12 +124,12 @@ export async function submitDepositAction(raw: SubmitDepositInput) {
     );
 
     await logAudit({
-      actor:      { id: user.id, name: user.name, email: user.email },
-      action:     "capitalTransaction.deposit.submit",
+      actor: { id: user.id, name: user.name, email: user.email },
+      action: "capitalTransaction.deposit.submit",
       collection: "capitaltransactions",
-      id:         tx._id,
-      delta:      { amount: tx.amount, proofUrl: tx.proofUrl },
-      ip:         "",
+      id: tx._id,
+      delta: { amount: tx.amount, proofUrl: tx.proofUrl },
+      ip: "",
     });
 
     revalidatePath("/admin/capital-transactions");

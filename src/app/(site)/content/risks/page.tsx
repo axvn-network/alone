@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { RiskMatrix } from "@/modules/dashboard/components/RiskMatrix";
-import PageHero from "@/modules/content/components/PageHero";
-import { RISKS } from "@/data/risks";
+import PageHero from "@/shared/components/blocks/PageHero";
+import { RISKS } from "@/shared/constants/risks";
 
 export const metadata: Metadata = {
   title: "Ma Trận Rủi Ro Chiến Lược | AXVN Tech Holding",

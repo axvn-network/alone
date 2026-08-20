@@ -5,10 +5,10 @@
 export interface ComplianceTask {
   id: string;
   taskName: string;
-  category: 'Legal' | 'Financial' | 'Technical' | 'Regulatory';
+  category: "Legal" | "Financial" | "Technical" | "Regulatory";
   progress: number;
   deadline: string;
-  status: 'Pending' | 'InProgress' | 'Completed';
+  status: "Pending" | "InProgress" | "Completed";
 }
 
 export const COMPLIANCE_TASKS: readonly ComplianceTask[] = [
@@ -18,7 +18,7 @@ export const COMPLIANCE_TASKS: readonly ComplianceTask[] = [
     category: "Legal",
     progress: 80,
     deadline: "2026-09-01",
-    status: "InProgress"
+    status: "InProgress",
   },
   {
     id: "COMP-02",
@@ -26,6 +26,6 @@ export const COMPLIANCE_TASKS: readonly ComplianceTask[] = [
     category: "Financial",
     progress: 100,
     deadline: "2026-08-15",
-    status: "Completed"
-  }
+    status: "Completed",
+  },
 ];

@@ -27,7 +27,9 @@ import {
 import AdminSidebar from "@/shared/components/admin/AdminSidebar";
 import AdminNavbar from "@/shared/components/admin/AdminNavbar";
 import RichTextEditor from "@/shared/components/ui/RichTextEditor";
-import AiAssistPanel, { BLOG_AI_ACTIONS } from "@/shared/components/ui/AiAssistPanel";
+import AiAssistPanel, {
+  BLOG_AI_ACTIONS,
+} from "@/shared/components/ui/AiAssistPanel";
 import { useCsrf } from "@/contexts/CsrfContext";
 
 import { ARTICLE_CATEGORIES as categories } from "@/constants/blog";
@@ -50,7 +52,10 @@ function DeleteModal({
 }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onCancel} />
+      <div
+        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+        onClick={onCancel}
+      />
       <div className="relative bg-[#07111D] border border-red-500/20 rounded-2xl shadow-2xl shadow-black/60 w-full max-w-md p-6">
         <button
           onClick={onCancel}
@@ -61,23 +66,35 @@ function DeleteModal({
         <div className="w-12 h-12 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center justify-center mb-4">
           <AlertTriangle className="w-6 h-6 text-red-400" />
         </div>
-        <h2 className="text-lg font-bold text-AXVN-ivory mb-1">Xóa Bài Viết?</h2>
+        <h2 className="text-lg font-bold text-AXVN-ivory mb-1">
+          Xóa Bài Viết?
+        </h2>
         <p className="text-AXVN-silver/50 text-sm mb-4 leading-relaxed">
           Thao tác này sẽ xóa vĩnh viễn{" "}
-          <span className="text-AXVN-ivory font-semibold">&ldquo;{title}&rdquo;</span>.
-          Không thể hoàn tác hành động này.
+          <span className="text-AXVN-ivory font-semibold">
+            &ldquo;{title}&rdquo;
+          </span>
+          . Không thể hoàn tác hành động này.
         </p>
         <div className="flex items-center gap-3 p-3 bg-white/5 border border-white/5 rounded-xl mb-5">
           <div className="relative w-14 h-10 rounded-lg overflow-hidden border border-white/10 shrink-0 bg-white/5">
             {featuredImage ? (
-              <Image src={featuredImage} alt="" fill className="object-cover" sizes="56px" />
+              <Image
+                src={featuredImage}
+                alt=""
+                fill
+                className="object-cover"
+                sizes="56px"
+              />
             ) : (
               <div className="w-full h-full flex items-center justify-center">
                 <ImageOff className="w-4 h-4 text-AXVN-silver/30" />
               </div>
             )}
           </div>
-          <p className="text-sm font-medium text-AXVN-ivory truncate">{title || "Untitled"}</p>
+          <p className="text-sm font-medium text-AXVN-ivory truncate">
+            {title || "Untitled"}
+          </p>
         </div>
         <div className="flex gap-2.5">
           <button
@@ -106,7 +123,11 @@ function DeleteModal({
 }
 
 /* ─── Main Editor Component ──────────────────────────────────── */
-export default function ArticleEditor({ params }: { params: Promise<{ slug: string }> }) {
+export default function ArticleEditor({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = use(params);
   const router = useRouter();
   const { csrfFetch } = useCsrf();
@@ -166,25 +187,38 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
   }, [slug, isNew]);
 
   function generateSlug(str: string) {
-    return str.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    return str
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "");
   }
 
   async function handleSave() {
-    if (!title.trim()) { toast.error("Tiêu đề là bắt buộc"); return; }
+    if (!title.trim()) {
+      toast.error("Tiêu đề là bắt buộc");
+      return;
+    }
     setSaving(true);
     const articleSlug = isNew ? generateSlug(title) : slug;
     try {
       const method = isNew ? "POST" : "PUT";
-      const url = isNew
-        ? "/api/admin/articles"
-        : `/api/admin/articles/${slug}`;
+      const url = isNew ? "/api/admin/articles" : `/api/admin/articles/${slug}`;
       const res = await csrfFetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          title, excerpt, content, category, readTime, tags,
-          featuredImage, status,
-          seo: { title: seoTitle || title, description: seoDescription || excerpt },
+          title,
+          excerpt,
+          content,
+          category,
+          readTime,
+          tags,
+          featuredImage,
+          status,
+          seo: {
+            title: seoTitle || title,
+            description: seoDescription || excerpt,
+          },
         }),
       });
       const d = await res.json();
@@ -204,7 +238,9 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
   async function handleDelete() {
     setDeleteLoading(true);
     try {
-      const res = await csrfFetch(`/api/admin/articles/${slug}`, { method: "DELETE" });
+      const res = await csrfFetch(`/api/admin/articles/${slug}`, {
+        method: "DELETE",
+      });
       const d = await res.json();
       if (!res.ok) throw new Error(d.message || "Xóa bài viết thất bại");
       toast.success("Đã xóa bài viết");
@@ -225,7 +261,10 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
     try {
       const formData = new FormData();
       formData.append("file", file);
-      const res = await csrfFetch("/api/admin/upload", { method: "POST", body: formData });
+      const res = await csrfFetch("/api/admin/upload", {
+        method: "POST",
+        body: formData,
+      });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Upload failed");
       if (data.data?.url) setFeaturedImage(data.data.url);
@@ -240,9 +279,17 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
   }
 
   const tabs: { id: Tab; label: string; icon: React.ReactNode }[] = [
-    { id: "content", label: "Nội Dung", icon: <FileText className="w-3.5 h-3.5" /> },
+    {
+      id: "content",
+      label: "Nội Dung",
+      icon: <FileText className="w-3.5 h-3.5" />,
+    },
     { id: "seo", label: "SEO", icon: <Globe className="w-3.5 h-3.5" /> },
-    { id: "settings", label: "Cài Đặt", icon: <Settings2 className="w-3.5 h-3.5" /> },
+    {
+      id: "settings",
+      label: "Cài Đặt",
+      icon: <Settings2 className="w-3.5 h-3.5" />,
+    },
   ];
 
   const plainText = content.replace(/<[^>]*>/g, "");
@@ -258,7 +305,11 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
           <AdminNavbar title="Loading…" />
           <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 space-y-4">
             {[200, 120, 400].map((h, i) => (
-              <div key={i} className={`bg-[#07111D]/60 border border-white/5 rounded-xl animate-pulse`} style={{ height: h }} />
+              <div
+                key={i}
+                className={`bg-[#07111D]/60 border border-white/5 rounded-xl animate-pulse`}
+                style={{ height: h }}
+              />
             ))}
           </div>
         </main>
@@ -273,15 +324,19 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
         <div className="absolute top-0 left-1/3 w-[500px] h-[500px] bg-AXVN-gold/4 rounded-full blur-[140px] pointer-events-none" />
         <div className="absolute bottom-1/3 right-0 w-[400px] h-[400px] bg-blue-600/4 rounded-full blur-[120px] pointer-events-none" />
 
-        <AdminNavbar title={isNew ? "Tạo Bài Viết Mới" : "Chỉnh Sửa Bài Viết"} />
+        <AdminNavbar
+          title={isNew ? "Tạo Bài Viết Mới" : "Chỉnh Sửa Bài Viết"}
+        />
 
         <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 relative z-10">
-
           {/* Load error banner */}
           {loadError && (
             <div className="mb-5 flex items-center gap-3 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-sm text-red-400">
               <AlertCircle className="w-4 h-4 shrink-0" />
-              Không tìm thấy bài viết hoặc tải thất bại. <Link href="/admin/blog" className="underline ml-1">Quay lại danh sách</Link>
+              Không tìm thấy bài viết hoặc tải thất bại.{" "}
+              <Link href="/admin/blog" className="underline ml-1">
+                Quay lại danh sách
+              </Link>
             </div>
           )}
 
@@ -344,13 +399,13 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
 
           {/* Main layout */}
           <div className="flex gap-5 items-start">
-
             {/* Left: Editor */}
             <div className="flex-1 min-w-0 space-y-4">
-
               {/* Title field */}
               <div className="bg-[#07111D]/60 backdrop-blur-xl border border-white/5 rounded-xl p-5">
-                <label className="block text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-widest mb-3">Tiêu Đề Bài Viết</label>
+                <label className="block text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-widest mb-3">
+                  Tiêu Đề Bài Viết
+                </label>
                 <input
                   type="text"
                   value={title}
@@ -360,7 +415,10 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                 />
                 {title && (
                   <p className="text-[10px] text-AXVN-silver/30 mt-2.5">
-                    Slug: <span className="font-mono text-AXVN-silver/50">/insights/{isNew ? generateSlug(title) : slug}</span>
+                    Slug:{" "}
+                    <span className="font-mono text-AXVN-silver/50">
+                      /insights/{isNew ? generateSlug(title) : slug}
+                    </span>
                   </p>
                 )}
               </div>
@@ -368,8 +426,14 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
               {/* Excerpt */}
               <div className="bg-[#07111D]/60 backdrop-blur-xl border border-white/5 rounded-xl p-5">
                 <div className="flex items-center justify-between mb-3">
-                  <label className="text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-widest">Tóm Tắt Bài Viết</label>
-                  <span className={`text-[10px] font-medium ${excerpt.length > 200 ? "text-red-400" : "text-AXVN-silver/30"}`}>{excerpt.length}/200</span>
+                  <label className="text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-widest">
+                    Tóm Tắt Bài Viết
+                  </label>
+                  <span
+                    className={`text-[10px] font-medium ${excerpt.length > 200 ? "text-red-400" : "text-AXVN-silver/30"}`}
+                  >
+                    {excerpt.length}/200
+                  </span>
                 </div>
                 <textarea
                   value={excerpt}
@@ -387,10 +451,11 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                     <button
                       key={t.id}
                       onClick={() => setActiveTab(t.id)}
-                      className={`flex items-center gap-2 px-4 sm:px-5 py-3.5 text-xs font-semibold transition-all border-b-2 shrink-0 ${activeTab === t.id
+                      className={`flex items-center gap-2 px-4 sm:px-5 py-3.5 text-xs font-semibold transition-all border-b-2 shrink-0 ${
+                        activeTab === t.id
                           ? "border-AXVN-gold text-AXVN-gold bg-AXVN-gold/5"
                           : "border-transparent text-AXVN-silver/40 hover:text-AXVN-ivory hover:bg-white/5"
-                        }`}
+                      }`}
                     >
                       {t.icon} {t.label}
                     </button>
@@ -410,12 +475,19 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                     <div className="space-y-5">
                       <div className="p-4 bg-blue-500/5 border border-blue-500/10 rounded-lg text-xs text-blue-400/80 flex items-start gap-2">
                         <Globe className="w-3.5 h-3.5 shrink-0 mt-0.5" />
-                        Kiểm soát cách bài viết hiển thị trên Google. Nếu để trống, hệ thống sẽ dùng tiêu đề và tóm tắt mặc định.
+                        Kiểm soát cách bài viết hiển thị trên Google. Nếu để
+                        trống, hệ thống sẽ dùng tiêu đề và tóm tắt mặc định.
                       </div>
                       <div>
                         <div className="flex items-center justify-between mb-2">
-                          <label className="text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-widest">Tiêu Đề SEO</label>
-                          <span className={`text-[10px] font-medium ${seoTitle.length > 60 ? "text-red-400" : "text-AXVN-silver/30"}`}>{seoTitle.length}/60</span>
+                          <label className="text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-widest">
+                            Tiêu Đề SEO
+                          </label>
+                          <span
+                            className={`text-[10px] font-medium ${seoTitle.length > 60 ? "text-red-400" : "text-AXVN-silver/30"}`}
+                          >
+                            {seoTitle.length}/60
+                          </span>
                         </div>
                         <input
                           type="text"
@@ -427,8 +499,14 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                       </div>
                       <div>
                         <div className="flex items-center justify-between mb-2">
-                          <label className="text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-widest">Mô Tả SEO</label>
-                          <span className={`text-[10px] font-medium ${seoDescription.length > 160 ? "text-red-400" : "text-AXVN-silver/30"}`}>{seoDescription.length}/160</span>
+                          <label className="text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-widest">
+                            Mô Tả SEO
+                          </label>
+                          <span
+                            className={`text-[10px] font-medium ${seoDescription.length > 160 ? "text-red-400" : "text-AXVN-silver/30"}`}
+                          >
+                            {seoDescription.length}/160
+                          </span>
                         </div>
                         <textarea
                           value={seoDescription}
@@ -440,10 +518,19 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                       </div>
                       {(seoTitle || title) && (
                         <div className="p-4 bg-white/5 border border-white/5 rounded-lg">
-                          <p className="text-[10px] font-bold text-AXVN-silver/30 uppercase tracking-widest mb-3">Xem Trước Trên Google</p>
-                          <p className="text-blue-400 text-base font-medium leading-snug truncate">{seoTitle || title}</p>
-                          <p className="text-green-500/70 text-xs mt-0.5">axvn.vn › insights › {isNew ? generateSlug(title) : slug}</p>
-                          <p className="text-AXVN-silver/50 text-xs mt-1 line-clamp-2 leading-relaxed">{seoDescription || excerpt || "Chưa có mô tả."}</p>
+                          <p className="text-[10px] font-bold text-AXVN-silver/30 uppercase tracking-widest mb-3">
+                            Xem Trước Trên Google
+                          </p>
+                          <p className="text-blue-400 text-base font-medium leading-snug truncate">
+                            {seoTitle || title}
+                          </p>
+                          <p className="text-green-500/70 text-xs mt-0.5">
+                            axvn.vn › insights ›{" "}
+                            {isNew ? generateSlug(title) : slug}
+                          </p>
+                          <p className="text-AXVN-silver/50 text-xs mt-1 line-clamp-2 leading-relaxed">
+                            {seoDescription || excerpt || "Chưa có mô tả."}
+                          </p>
                         </div>
                       )}
                     </div>
@@ -453,17 +540,25 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                     <div className="space-y-5">
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                         <div>
-                          <label className="flex items-center gap-1.5 text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-widest mb-2"><Tag className="w-3 h-3" /> Danh Mục</label>
+                          <label className="flex items-center gap-1.5 text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-widest mb-2">
+                            <Tag className="w-3 h-3" /> Danh Mục
+                          </label>
                           <select
                             value={category}
                             onChange={(e) => setCategory(e.target.value)}
                             className="w-full bg-white/5 border border-white/10 text-AXVN-ivory text-sm px-4 py-3 focus:outline-none focus:border-AXVN-gold/40 transition-colors rounded-lg appearance-none"
                           >
-                            {categories.map((c) => <option key={c} value={c}>{c}</option>)}
+                            {categories.map((c) => (
+                              <option key={c} value={c}>
+                                {c}
+                              </option>
+                            ))}
                           </select>
                         </div>
                         <div>
-                          <label className="flex items-center gap-1.5 text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-widest mb-2"><Clock className="w-3 h-3" /> Thời Gian Đọc</label>
+                          <label className="flex items-center gap-1.5 text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-widest mb-2">
+                            <Clock className="w-3 h-3" /> Thời Gian Đọc
+                          </label>
                           <input
                             type="text"
                             value={readTime}
@@ -473,12 +568,22 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                         </div>
                       </div>
                       <div>
-                        <label className="flex items-center gap-1.5 text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-widest mb-2"><Tag className="w-3 h-3" /> Thẻ Tags</label>
+                        <label className="flex items-center gap-1.5 text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-widest mb-2">
+                          <Tag className="w-3 h-3" /> Thẻ Tags
+                        </label>
                         <div className="flex flex-wrap gap-1.5 mb-2">
                           {tags.map((tag, i) => (
-                            <span key={i} className="flex items-center gap-1 text-[11px] bg-AXVN-gold/10 text-AXVN-gold border border-AXVN-gold/20 px-2 py-1 rounded">
+                            <span
+                              key={i}
+                              className="flex items-center gap-1 text-[11px] bg-AXVN-gold/10 text-AXVN-gold border border-AXVN-gold/20 px-2 py-1 rounded"
+                            >
                               {tag}
-                              <button onClick={() => setTags(tags.filter((_, j) => j !== i))} className="hover:text-red-400 transition-colors">
+                              <button
+                                onClick={() =>
+                                  setTags(tags.filter((_, j) => j !== i))
+                                }
+                                className="hover:text-red-400 transition-colors"
+                              >
                                 <X className="w-3 h-3" />
                               </button>
                             </span>
@@ -513,10 +618,14 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                         </div>
                       </div>
                       <div className="sm:hidden">
-                        <label className="block text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-widest mb-2">Trạng Thái Xuất Bản</label>
+                        <label className="block text-[10px] font-bold text-AXVN-silver/40 uppercase tracking-widest mb-2">
+                          Trạng Thái Xuất Bản
+                        </label>
                         <select
                           value={status}
-                          onChange={(e) => setStatus(e.target.value as "draft" | "published")}
+                          onChange={(e) =>
+                            setStatus(e.target.value as "draft" | "published")
+                          }
                           className="w-full bg-white/5 border border-white/10 text-AXVN-ivory text-sm px-4 py-3 focus:outline-none focus:border-AXVN-gold/40 transition-colors rounded-lg appearance-none"
                         >
                           <option value="draft">Bản Nháp</option>
@@ -531,7 +640,6 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
 
             {/* Right sidebar */}
             <div className="hidden lg:flex flex-col gap-4 w-72 shrink-0">
-
               {/* AI Assistant Panel */}
               <AiAssistPanel
                 actions={BLOG_AI_ACTIONS}
@@ -548,17 +656,33 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                 onApply={(action, result) => {
                   if (action === "blog_title") {
                     // First line as title
-                    setTitle(result.split("\n")[0].replace(/^[-•*\d.]\s*/, "").trim());
+                    setTitle(
+                      result
+                        .split("\n")[0]
+                        .replace(/^[-•*\d.]\s*/, "")
+                        .trim(),
+                    );
                   } else if (action === "blog_excerpt") {
                     setExcerpt(result.slice(0, 200));
-                  } else if (action === "blog_content" || action === "blog_continue" || action === "blog_improve") {
-                    setContent((prev) => (action === "blog_continue" ? prev + "\n" + result : result));
+                  } else if (
+                    action === "blog_content" ||
+                    action === "blog_continue" ||
+                    action === "blog_improve"
+                  ) {
+                    setContent((prev) =>
+                      action === "blog_continue"
+                        ? prev + "\n" + result
+                        : result,
+                    );
                   } else if (action === "blog_seo_title") {
                     setSeoTitle(result.slice(0, 60));
                   } else if (action === "blog_seo_desc") {
                     setSeoDescription(result.slice(0, 160));
                   } else if (action === "blog_tags") {
-                    const newTags = result.split(/[,\n]/).map((t) => t.trim()).filter(Boolean);
+                    const newTags = result
+                      .split(/[,\n]/)
+                      .map((t) => t.trim())
+                      .filter(Boolean);
                     setTags((prev) => [...new Set([...prev, ...newTags])]);
                   } else if (action === "blog_readtime") {
                     setReadTime(result.trim());
@@ -574,24 +698,31 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
               <div className="bg-[#07111D]/60 backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden">
                 <div className="px-4 py-3 border-b border-white/5 flex items-center gap-2">
                   <Layers className="w-3.5 h-3.5 text-AXVN-gold" />
-                  <h3 className="text-xs font-bold text-AXVN-ivory uppercase tracking-widest">Xuất Bản</h3>
+                  <h3 className="text-xs font-bold text-AXVN-ivory uppercase tracking-widest">
+                    Xuất Bản
+                  </h3>
                 </div>
                 <div className="p-4 space-y-4">
                   <div className="flex items-center gap-2">
-                    <div className={`w-2 h-2 rounded-full ${status === "published" ? "bg-emerald-400" : "bg-amber-400"}`} />
-                    <span className="text-sm font-semibold text-AXVN-ivory">{status === "published" ? "Đã xuất bản" : "Bản nháp"}</span>
+                    <div
+                      className={`w-2 h-2 rounded-full ${status === "published" ? "bg-emerald-400" : "bg-amber-400"}`}
+                    />
+                    <span className="text-sm font-semibold text-AXVN-ivory">
+                      {status === "published" ? "Đã xuất bản" : "Bản nháp"}
+                    </span>
                   </div>
                   <div className="flex gap-2">
                     {(["draft", "published"] as const).map((s) => (
                       <button
                         key={s}
                         onClick={() => setStatus(s)}
-                        className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-all border ${status === s
+                        className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-all border ${
+                          status === s
                             ? s === "published"
                               ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/30"
                               : "bg-amber-500/20 text-amber-400 border-amber-500/30"
                             : "border-white/10 text-AXVN-silver/50 hover:border-white/20 hover:text-AXVN-ivory"
-                          }`}
+                        }`}
                       >
                         {s === "draft" ? "Bản Nháp" : "Xuất Bản"}
                       </button>
@@ -620,16 +751,32 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
               <div className="bg-[#07111D]/60 backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden">
                 <div className="px-4 py-3 border-b border-white/5 flex items-center gap-2">
                   <ImageIcon className="w-3.5 h-3.5 text-AXVN-gold" />
-                  <h3 className="text-xs font-bold text-AXVN-ivory uppercase tracking-widest">Ảnh Bìa</h3>
+                  <h3 className="text-xs font-bold text-AXVN-ivory uppercase tracking-widest">
+                    Ảnh Bìa
+                  </h3>
                 </div>
                 <div className="p-4">
                   {featuredImage ? (
                     <div className="relative group rounded-lg overflow-hidden border border-white/10 h-40">
-                      <Image src={featuredImage} alt="" fill className="object-cover" sizes="288px" />
+                      <Image
+                        src={featuredImage}
+                        alt=""
+                        fill
+                        className="object-cover"
+                        sizes="288px"
+                      />
                       <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
-                        <label className="p-2 bg-white/10 hover:bg-white/20 rounded-lg cursor-pointer transition-colors" title="Change image">
+                        <label
+                          className="p-2 bg-white/10 hover:bg-white/20 rounded-lg cursor-pointer transition-colors"
+                          title="Change image"
+                        >
                           <Upload className="w-4 h-4 text-white" />
-                          <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageUpload}
+                            className="hidden"
+                          />
                         </label>
                         <button
                           onClick={() => setFeaturedImage("")}
@@ -648,19 +795,33 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                         <>
                           <Upload className="w-6 h-6 text-AXVN-silver/30" />
                           <div className="text-center">
-                            <p className="text-xs text-AXVN-silver/60 font-medium">Nhấn để tải ảnh lên</p>
-                            <p className="text-[10px] text-AXVN-silver/30">PNG, JPG, WebP tối đa 5MB</p>
+                            <p className="text-xs text-AXVN-silver/60 font-medium">
+                              Nhấn để tải ảnh lên
+                            </p>
+                            <p className="text-[10px] text-AXVN-silver/30">
+                              PNG, JPG, WebP tối đa 5MB
+                            </p>
                           </div>
                         </>
                       )}
-                      <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" disabled={imageUploading} />
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageUpload}
+                        className="hidden"
+                        disabled={imageUploading}
+                      />
                     </label>
                   )}
                   {uploadError && (
-                    <p className="text-[10px] text-red-400 mt-2">{uploadError}</p>
+                    <p className="text-[10px] text-red-400 mt-2">
+                      {uploadError}
+                    </p>
                   )}
                   {featuredImage && (
-                    <p className="text-[10px] text-AXVN-silver/30 mt-2 truncate">{featuredImage}</p>
+                    <p className="text-[10px] text-AXVN-silver/30 mt-2 truncate">
+                      {featuredImage}
+                    </p>
                   )}
                 </div>
               </div>
@@ -669,7 +830,9 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
               <div className="bg-[#07111D]/60 backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden">
                 <div className="px-4 py-3 border-b border-white/5 flex items-center gap-2">
                   <Tag className="w-3.5 h-3.5 text-AXVN-gold" />
-                  <h3 className="text-xs font-bold text-AXVN-ivory uppercase tracking-widest">Danh Mục & Thông Tin</h3>
+                  <h3 className="text-xs font-bold text-AXVN-ivory uppercase tracking-widest">
+                    Danh Mục & Thông Tin
+                  </h3>
                 </div>
                 <div className="p-4 space-y-3">
                   <div className="relative">
@@ -678,7 +841,15 @@ export default function ArticleEditor({ params }: { params: Promise<{ slug: stri
                       onChange={(e) => setCategory(e.target.value)}
                       className="w-full bg-white/5 border border-white/10 text-AXVN-ivory text-sm px-3 py-2.5 focus:outline-none focus:border-AXVN-gold/40 transition-colors rounded-lg appearance-none cursor-pointer"
                     >
-                      {categories.map((c) => <option key={c} value={c} className="bg-[#07111D] text-AXVN-ivory">{c}</option>)}
+                      {categories.map((c) => (
+                        <option
+                          key={c}
+                          value={c}
+                          className="bg-[#07111D] text-AXVN-ivory"
+                        >
+                          {c}
+                        </option>
+                      ))}
                     </select>
                     <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-AXVN-silver/40 pointer-events-none" />
                   </div>

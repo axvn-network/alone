@@ -11,7 +11,13 @@ interface RevealProps {
   blur?: boolean;
 }
 
-export default function Reveal({ children, className, delay = 0, y = 40, blur = true }: RevealProps) {
+export default function Reveal({
+  children,
+  className,
+  delay = 0,
+  y = 40,
+  blur = true,
+}: RevealProps) {
   const reduced = useReducedMotion();
 
   if (reduced) return <div className={className}>{children}</div>;

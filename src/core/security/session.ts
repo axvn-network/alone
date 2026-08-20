@@ -34,7 +34,7 @@ function getSecret(): string {
   if (!secret || secret.length < 32) {
     if (process.env.NODE_ENV === "production") {
       throw new Error(
-        "SESSION_SECRET must be at least 32 chars. Generate: openssl rand -hex 32"
+        "SESSION_SECRET must be at least 32 chars. Generate: openssl rand -hex 32",
       );
     }
     return "dev-only-insecure-fallback-do-not-use-in-prod-ever";
@@ -81,7 +81,10 @@ function parseToken(token: string): SessionPayload | null {
 
   try {
     const payload = JSON.parse(
-      Buffer.from(encoded.replace(/-/g, "+").replace(/_/g, "/"), "base64").toString()
+      Buffer.from(
+        encoded.replace(/-/g, "+").replace(/_/g, "/"),
+        "base64",
+      ).toString(),
     ) as SessionPayload;
 
     // Check expiry
@@ -153,13 +156,15 @@ interface ShPayload {
 export function makeShareholderToken(id: string, email: string): string {
   const exp = Math.floor(Date.now() / 1000) + SH_MAX_AGE;
   const encoded = b64urlEncode(
-    JSON.stringify({ id, email, exp, nonce: randomBytes(8).toString("hex") })
+    JSON.stringify({ id, email, exp, nonce: randomBytes(8).toString("hex") }),
   );
   const sig = sign(encoded);
   return `${encoded}.${sig}`;
 }
 
-export function parseShareholderToken(raw: string): { id: string; email: string } | null {
+export function parseShareholderToken(
+  raw: string,
+): { id: string; email: string } | null {
   try {
     const dot = raw.lastIndexOf(".");
     if (dot === -1) return null;
@@ -167,7 +172,10 @@ export function parseShareholderToken(raw: string): { id: string; email: string 
     const provided = raw.slice(dot + 1);
     if (!constantTimeEqual(provided, sign(encoded))) return null;
     const data = JSON.parse(
-      Buffer.from(encoded.replace(/-/g, "+").replace(/_/g, "/"), "base64").toString()
+      Buffer.from(
+        encoded.replace(/-/g, "+").replace(/_/g, "/"),
+        "base64",
+      ).toString(),
     ) as ShPayload;
     if (!data.exp || Date.now() / 1000 > data.exp) return null;
     return { id: data.id, email: data.email };

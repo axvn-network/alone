@@ -8,8 +8,8 @@
 import { revalidatePath } from "next/cache";
 import { requireAuth } from "@/core/security/auth-utils";
 import { handleError } from "@/utils/errors";
-import { partnerApplicationSchema, partnerApplicationUpdateSchema, formatZodErrors } from "@/validators";
-import type { PartnerApplicationInput, PartnerApplicationUpdateInput } from "@/validators";
+import { partnerApplicationSchema, partnerApplicationUpdateSchema, type PartnerApplicationInput, type PartnerApplicationUpdateInput } from "@/modules/partner-applications/schema";
+import { formatZodErrors } from "@/shared/utils/zod";
 import { createApplication, updateApplication } from "./service";
 
 export async function submitPartnerApplicationAction(data: PartnerApplicationInput) {

@@ -1,6 +1,9 @@
 import { NextRequest } from "next/server";
-import * as partnerApplicationService from "@/modules/partner-applications";
-import { partnerApplicationSchema, formatZodErrors } from "@/validators";
+import {
+  createApplication,
+  partnerApplicationSchema,
+} from "@/modules/partner-applications";
+import { formatZodErrors } from "@/utils/zod";
 import { rateLimit } from "@/utils/rate-limit";
 import { sanitizeText, sanitizeEmail, sanitizeMessage } from "@/utils/sanitize";
 import {
@@ -11,7 +14,7 @@ import {
 } from "@/utils/api-response";
 import { handleError } from "@/utils/errors";
 
-// POST /api/partner-application — public, nộp đơn đăng ký kèm kết quả quiz
+// POST /api/partner-application — public, submit application with quiz results
 export async function POST(request: NextRequest) {
   try {
     const ip =
@@ -19,40 +22,47 @@ export async function POST(request: NextRequest) {
       request.headers.get("x-real-ip") ||
       "unknown";
 
-    // 2 lần nộp / 10 phút / IP
     const check = rateLimit(`partner-app:${ip}`, 2, 10 * 60_000);
-    if (!check.allowed) {
+    if (!check.allowed)
       return errorResponse("Quá nhiều yêu cầu. Vui lòng thử lại sau.", 429);
-    }
 
     const raw = await request.json();
-
     const normalized = {
-      fullName:     sanitizeText(raw.fullName || ""),
-      email:        sanitizeEmail(raw.email || ""),
-      phone:        sanitizeText(raw.phone || ""),
-      company:      sanitizeText(raw.company || ""),
-      position:     sanitizeText(raw.position || ""),
-      linkedinUrl:  sanitizeText(raw.linkedinUrl || ""),
-      quizAnswers:  raw.quizAnswers && typeof raw.quizAnswers === "object" ? raw.quizAnswers : {},
-      assessmentScore: raw.assessmentScore ?? { technical: 0, financial: 0, legal: 0, strategic: 0, network: 0 },
-      suggestedRole:   raw.suggestedRole || "individual",
-      desiredRole:     raw.desiredRole || raw.suggestedRole || "individual",
-      capitalRange:    sanitizeText(raw.capitalRange || ""),
-      motivation:      sanitizeMessage(raw.motivation || ""),
-      capabilities:    sanitizeMessage(raw.capabilities || ""),
-      investmentPlan:  sanitizeText(raw.investmentPlan || ""),
-      consentGiven:    raw.consentGiven === true,
-      consentTimestamp: typeof raw.consentTimestamp === "string" && raw.consentTimestamp
-        ? raw.consentTimestamp
-        : new Date().toISOString(),
+      fullName: sanitizeText(raw.fullName || ""),
+      email: sanitizeEmail(raw.email || ""),
+      phone: sanitizeText(raw.phone || ""),
+      company: sanitizeText(raw.company || ""),
+      position: sanitizeText(raw.position || ""),
+      linkedinUrl: sanitizeText(raw.linkedinUrl || ""),
+      quizAnswers:
+        raw.quizAnswers && typeof raw.quizAnswers === "object"
+          ? raw.quizAnswers
+          : {},
+      assessmentScore: raw.assessmentScore ?? {
+        technical: 0,
+        financial: 0,
+        legal: 0,
+        strategic: 0,
+        network: 0,
+      },
+      suggestedRole: raw.suggestedRole || "individual",
+      desiredRole: raw.desiredRole || raw.suggestedRole || "individual",
+      capitalRange: sanitizeText(raw.capitalRange || ""),
+      motivation: sanitizeMessage(raw.motivation || ""),
+      capabilities: sanitizeMessage(raw.capabilities || ""),
+      investmentPlan: sanitizeText(raw.investmentPlan || ""),
+      consentGiven: raw.consentGiven === true,
+      consentTimestamp:
+        typeof raw.consentTimestamp === "string" && raw.consentTimestamp
+          ? raw.consentTimestamp
+          : new Date().toISOString(),
     };
 
     const parsed = partnerApplicationSchema.safeParse(normalized);
-    if (!parsed.success) return validationErrorResponse(formatZodErrors(parsed.error));
+    if (!parsed.success)
+      return validationErrorResponse(formatZodErrors(parsed.error));
 
-    const doc = await partnerApplicationService.createApplication(parsed.data);
-
+    const doc = await createApplication(parsed.data);
     return successResponse(doc, "Đơn đăng ký đã được gửi thành công", 201);
   } catch (error) {
     return serverErrorResponse(handleError(error).message);

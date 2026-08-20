@@ -1,8 +1,8 @@
 "use client";
 
-import { ComplianceTracker } from "@/app/(site)/compliance/components/ComplianceTracker";
+import { ComplianceTracker } from "@/modules/compliance/components/ComplianceTracker";
 import DocLayout, { DocSidebar, DocMain, DocHero, DocBody } from "@/shared/components/layout/DocLayout";
-import { COMPLIANCE_TASKS } from "@/data/comp/compliance";
+import { COMPLIANCE_TASKS } from "@/shared/constants/compliance";
 import type { TocItem } from "@/shared/components/layout/DocLayout";
 
 const TOC: readonly TocItem[] = [

@@ -11,7 +11,7 @@
 import { redirect } from "next/navigation";
 import { getSessionEmail, clearSessionCookie } from "@/core/security/session";
 import { connectDB } from "@/core/database";
-import Admin from "@/core/models/Admin";
+import Admin from "@/modules/auth/model";
 
 export interface SessionUser {
   id: string;

@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { getCurrentUser } from "@/core/security/auth-utils";
 import { logger } from "@/shared/utils/logger";
+import { env } from "@/core/env";
 import { successResponse, unauthorizedResponse, errorResponse, serverErrorResponse } from "@/utils/api-response";
 import { handleError } from "@/utils/errors";
 
@@ -19,7 +20,7 @@ Quy tắc bắt buộc:
 export async function POST(request: NextRequest) {
   if (!await getCurrentUser()) return unauthorizedResponse();
 
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+  const apiKey = env.ANTHROPIC_API_KEY;
   if (!apiKey || apiKey === "your_anthropic_api_key_here") {
     return errorResponse("ANTHROPIC_API_KEY chưa được cấu hình. Vui lòng thêm vào .env.local", 503);
   }

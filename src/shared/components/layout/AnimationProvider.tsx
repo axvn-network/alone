@@ -3,12 +3,18 @@
 import { useEffect, useRef } from "react";
 import Lenis from "lenis";
 
-export default function AnimationProvider({ children }: { children: React.ReactNode }) {
+export default function AnimationProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
     // Respect prefers-reduced-motion — skip smooth scroll for accessibility
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
     if (prefersReduced) return;
 
     const lenis = new Lenis({

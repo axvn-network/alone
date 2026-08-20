@@ -12,10 +12,15 @@ export default function Error({
     <main className="min-h-screen bg-AXVN-navy">
       <section className="pt-32 pb-20">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12 text-center">
-          <p className="text-AXVN-gold text-sm font-medium tracking-[4px] uppercase mb-4">Lỗi Hệ Thống</p>
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">Đã Xảy Ra Lỗi</h1>
+          <p className="text-AXVN-gold text-sm font-medium tracking-[4px] uppercase mb-4">
+            Lỗi Hệ Thống
+          </p>
+          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
+            Đã Xảy Ra Lỗi
+          </h1>
           <p className="text-AXVN-silver/60 text-lg max-w-xl mx-auto mb-10">
-            Hệ thống gặp sự cố không mong muốn. Vui lòng thử lại hoặc liên hệ với chúng tôi nếu vấn đề tiếp diễn.
+            Hệ thống gặp sự cố không mong muốn. Vui lòng thử lại hoặc liên hệ
+            với chúng tôi nếu vấn đề tiếp diễn.
           </p>
           <div className="flex items-center justify-center gap-4 flex-wrap">
             <button

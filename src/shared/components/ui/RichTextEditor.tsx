@@ -28,7 +28,10 @@ const tools = [
   { icon: Quote, cmd: "formatBlock", value: "blockquote", label: "Quote" },
 ];
 
-export default function RichTextEditor({ value, onChange }: RichTextEditorProps) {
+export default function RichTextEditor({
+  value,
+  onChange,
+}: RichTextEditorProps) {
   const editorRef = useRef<HTMLDivElement>(null);
   const isInternal = useRef(false);
 
@@ -41,10 +44,13 @@ export default function RichTextEditor({ value, onChange }: RichTextEditorProps)
     if (el.innerHTML !== value) el.innerHTML = value;
   }, [value]);
 
-  const exec = useCallback((cmd: string, val?: string) => {
-    document.execCommand(cmd, false, val);
-    if (editorRef.current) onChange(editorRef.current.innerHTML);
-  }, [onChange]);
+  const exec = useCallback(
+    (cmd: string, val?: string) => {
+      document.execCommand(cmd, false, val);
+      if (editorRef.current) onChange(editorRef.current.innerHTML);
+    },
+    [onChange],
+  );
 
   const handleImageUpload = useCallback(() => {
     const input = document.createElement("input");
@@ -56,7 +62,10 @@ export default function RichTextEditor({ value, onChange }: RichTextEditorProps)
       try {
         const formData = new FormData();
         formData.append("file", file);
-        const res = await fetch("/api/admin/upload", { method: "POST", body: formData });
+        const res = await fetch("/api/admin/upload", {
+          method: "POST",
+          body: formData,
+        });
         const data = await res.json();
         if (!res.ok) throw new Error(data.message || "Upload failed");
         if (data.data?.url) {
@@ -85,7 +94,10 @@ export default function RichTextEditor({ value, onChange }: RichTextEditorProps)
           <button
             key={t.cmd + (t.value || "")}
             type="button"
-            onMouseDown={(e) => { e.preventDefault(); exec(t.cmd, t.value); }}
+            onMouseDown={(e) => {
+              e.preventDefault();
+              exec(t.cmd, t.value);
+            }}
             className="p-1.5 text-AXVN-silver hover:text-AXVN-ivory hover:bg-AXVN-charcoal transition-colors rounded-md"
             title={t.label}
           >
@@ -104,7 +116,11 @@ export default function RichTextEditor({ value, onChange }: RichTextEditorProps)
         <span className="w-px h-5 bg-white/10 mx-1" />
         <button
           type="button"
-          onMouseDown={(e) => { e.preventDefault(); document.execCommand("undo"); if (editorRef.current) onChange(editorRef.current.innerHTML); }}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            document.execCommand("undo");
+            if (editorRef.current) onChange(editorRef.current.innerHTML);
+          }}
           className="p-1.5 text-AXVN-silver hover:text-AXVN-ivory hover:bg-AXVN-charcoal transition-colors rounded-md"
           title="Undo"
         >
@@ -112,7 +128,11 @@ export default function RichTextEditor({ value, onChange }: RichTextEditorProps)
         </button>
         <button
           type="button"
-          onMouseDown={(e) => { e.preventDefault(); document.execCommand("redo"); if (editorRef.current) onChange(editorRef.current.innerHTML); }}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            document.execCommand("redo");
+            if (editorRef.current) onChange(editorRef.current.innerHTML);
+          }}
           className="p-1.5 text-AXVN-silver hover:text-AXVN-ivory hover:bg-AXVN-charcoal transition-colors rounded-md"
           title="Redo"
         >

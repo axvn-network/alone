@@ -1,7 +1,9 @@
-import PageHero from "@/modules/content/components/PageHero";
-import ProseDoc, { ProseNote } from "@/modules/content/components/ProseSection";
+import PageHero from "@/shared/components/blocks/PageHero";
+import ProseDoc, { ProseNote } from "@/shared/components/blocks/ProseSection";
 import type { Metadata } from "next";
 
+// Static page — no DB queries. Cached at build time.
+export const revalidate = 86400;
 export const metadata: Metadata = {
   title: "Điều Khoản Sử Dụng",
   description:
@@ -19,13 +21,18 @@ export default function TermsOfUsePage() {
 
       <section
         className="bg-white section-mx section-my"
-        style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}
+        style={{
+          paddingTop: "var(--section-py)",
+          paddingBottom: "var(--section-py)",
+        }}
       >
         <div className="max-w-[860px] mx-auto section-px">
           {/* Ngày cập nhật */}
           <div className="flex items-center gap-3 mb-10 md:mb-14 pb-6 border-b border-AXVN-gold/15">
             <div className="w-1.5 h-1.5 rounded-full bg-AXVN-gold/60" />
-            <p className="text-AXVN-charcoal/45 text-xs font-mono tracking-widest uppercase">Cập nhật lần cuối: 2025</p>
+            <p className="text-AXVN-charcoal/45 text-xs font-mono tracking-widest uppercase">
+              Cập nhật lần cuối: 2025
+            </p>
           </div>
 
           <ProseDoc
@@ -36,12 +43,14 @@ export default function TermsOfUsePage() {
                 content: (
                   <>
                     <p>
-                      Website này cung cấp thông tin tổng quan về AXVN Tech Holding, các hoạt động đầu tư,
-                      lĩnh vực quan tâm và đối tác chiến lược.
+                      Website này cung cấp thông tin tổng quan về AXVN Tech
+                      Holding, các hoạt động đầu tư, lĩnh vực quan tâm và đối
+                      tác chiến lược.
                     </p>
                     <ProseNote>
-                      Nội dung trên website không cấu thành lời đề nghị, khuyến nghị hay chào mời mua bán, đầu tư
-                      vào bất kỳ sản phẩm tài chính hoặc tài sản nào.
+                      Nội dung trên website không cấu thành lời đề nghị, khuyến
+                      nghị hay chào mời mua bán, đầu tư vào bất kỳ sản phẩm tài
+                      chính hoặc tài sản nào.
                     </ProseNote>
                   </>
                 ),
@@ -51,8 +60,9 @@ export default function TermsOfUsePage() {
                 title: "Tính Chính Xác Của Thông Tin",
                 content: (
                   <p>
-                    Chúng tôi nỗ lực cung cấp thông tin chính xác nhưng không bảo đảm tính hoàn toàn đầy đủ hay không có sai sót.
-                    Nội dung có thể được cập nhật mà không cần thông báo trước.
+                    Chúng tôi nỗ lực cung cấp thông tin chính xác nhưng không
+                    bảo đảm tính hoàn toàn đầy đủ hay không có sai sót. Nội dung
+                    có thể được cập nhật mà không cần thông báo trước.
                   </p>
                 ),
               },
@@ -62,12 +72,14 @@ export default function TermsOfUsePage() {
                 content: (
                   <>
                     <p>
-                      Thông tin được cung cấp chỉ mang tính chất tham khảo chung và không được coi là tư vấn
-                      tài chính, đầu tư, pháp lý hay thuế.
+                      Thông tin được cung cấp chỉ mang tính chất tham khảo chung
+                      và không được coi là tư vấn tài chính, đầu tư, pháp lý hay
+                      thuế.
                     </p>
                     <p className="mt-3">
-                      Vui lòng tham khảo ý kiến cố vấn độc lập có chuyên môn trước khi đưa ra bất kỳ quyết định
-                      đầu tư hay tài chính nào.
+                      Vui lòng tham khảo ý kiến cố vấn độc lập có chuyên môn
+                      trước khi đưa ra bất kỳ quyết định đầu tư hay tài chính
+                      nào.
                     </p>
                   </>
                 ),
@@ -78,12 +90,13 @@ export default function TermsOfUsePage() {
                 content: (
                   <>
                     <p>
-                      Việc gửi đề xuất qua website này không bảo đảm rằng đề xuất sẽ được xem xét hay chấp nhận,
-                      và không tạo ra bất kỳ cam kết đầu tư, quan hệ đối tác hay nghĩa vụ hợp đồng nào.
+                      Việc gửi đề xuất qua website này không bảo đảm rằng đề
+                      xuất sẽ được xem xét hay chấp nhận, và không tạo ra bất kỳ
+                      cam kết đầu tư, quan hệ đối tác hay nghĩa vụ hợp đồng nào.
                     </p>
                     <ProseNote>
-                      AXVN Tech Holding có toàn quyền chấp nhận, từ chối hoặc không phản hồi bất kỳ đề xuất nào
-                      mà không cần nêu lý do.
+                      AXVN Tech Holding có toàn quyền chấp nhận, từ chối hoặc
+                      không phản hồi bất kỳ đề xuất nào mà không cần nêu lý do.
                     </ProseNote>
                   </>
                 ),
@@ -93,10 +106,12 @@ export default function TermsOfUsePage() {
                 title: "Sở Hữu Trí Tuệ",
                 content: (
                   <p>
-                    Trừ khi có quy định khác, toàn bộ nội dung website bao gồm thương hiệu, logo, thiết kế, văn bản,
-                    đồ họa và tài liệu đều thuộc sở hữu hoặc được cấp phép cho AXVN Tech Holding.
-                    Nội dung không được sao chép, chỉnh sửa, tái bản, phân phối hay sử dụng cho mục đích thương mại
-                    khi chưa có sự cho phép bằng văn bản.
+                    Trừ khi có quy định khác, toàn bộ nội dung website bao gồm
+                    thương hiệu, logo, thiết kế, văn bản, đồ họa và tài liệu đều
+                    thuộc sở hữu hoặc được cấp phép cho AXVN Tech Holding. Nội
+                    dung không được sao chép, chỉnh sửa, tái bản, phân phối hay
+                    sử dụng cho mục đích thương mại khi chưa có sự cho phép bằng
+                    văn bản.
                   </p>
                 ),
               },
@@ -105,9 +120,11 @@ export default function TermsOfUsePage() {
                 title: "Liên Kết Bên Thứ Ba",
                 content: (
                   <p>
-                    Website có thể chứa liên kết đến các website bên thứ ba. AXVN Tech Holding không chịu trách nhiệm
-                    về nội dung, chính sách bảo mật, tính khả dụng hay độ chính xác của các trang đó.
-                    Việc truy cập các website bên thứ ba hoàn toàn theo quyết định của bạn.
+                    Website có thể chứa liên kết đến các website bên thứ ba.
+                    AXVN Tech Holding không chịu trách nhiệm về nội dung, chính
+                    sách bảo mật, tính khả dụng hay độ chính xác của các trang
+                    đó. Việc truy cập các website bên thứ ba hoàn toàn theo
+                    quyết định của bạn.
                   </p>
                 ),
               },
@@ -116,10 +133,12 @@ export default function TermsOfUsePage() {
                 title: "Giới Hạn Trách Nhiệm",
                 content: (
                   <p>
-                    Trong phạm vi tối đa được pháp luật cho phép, AXVN Tech Holding không chịu trách nhiệm
-                    về các tổn thất, thiệt hại, chi phí hoặc nghĩa vụ phát sinh từ việc sử dụng website, phụ thuộc vào nội dung,
-                    gián đoạn kỹ thuật, sự cố bảo mật ngoài tầm kiểm soát, liên kết bên thứ ba, hoặc các quyết định đầu tư,
-                    kinh doanh của người dùng.
+                    Trong phạm vi tối đa được pháp luật cho phép, AXVN Tech
+                    Holding không chịu trách nhiệm về các tổn thất, thiệt hại,
+                    chi phí hoặc nghĩa vụ phát sinh từ việc sử dụng website, phụ
+                    thuộc vào nội dung, gián đoạn kỹ thuật, sự cố bảo mật ngoài
+                    tầm kiểm soát, liên kết bên thứ ba, hoặc các quyết định đầu
+                    tư, kinh doanh của người dùng.
                   </p>
                 ),
               },
@@ -128,8 +147,10 @@ export default function TermsOfUsePage() {
                 title: "Luật Điều Chỉnh",
                 content: (
                   <p>
-                    Các điều khoản sử dụng này được điều chỉnh bởi pháp luật hiện hành của Các Tiểu Vương Quốc Ả Rập Thống Nhất
-                    và các quy định của tiểu vương quốc nơi AXVN Tech Holding đăng ký hoạt động.
+                    Các điều khoản sử dụng này được điều chỉnh bởi pháp luật
+                    hiện hành của Các Tiểu Vương Quốc Ả Rập Thống Nhất và các
+                    quy định của tiểu vương quốc nơi AXVN Tech Holding đăng ký
+                    hoạt động.
                   </p>
                 ),
               },
@@ -140,9 +161,21 @@ export default function TermsOfUsePage() {
                   <>
                     <p>Mọi thắc mắc về các điều khoản này, vui lòng liên hệ:</p>
                     <div className="mt-4 p-5 bg-AXVN-navy/3 border border-AXVN-gold/12 rounded-sm space-y-1.5">
-                      <p className="font-semibold text-AXVN-navy">AXVN Tech Holding</p>
-                      <p>Email: <a href="mailto:legal@axvn.vn" className="text-AXVN-gold hover:underline font-medium">legal@axvn.vn</a></p>
-                      <p>Địa chỉ: Dubai, Các Tiểu Vương Quốc Ả Rập Thống Nhất</p>
+                      <p className="font-semibold text-AXVN-navy">
+                        AXVN Tech Holding
+                      </p>
+                      <p>
+                        Email:{" "}
+                        <a
+                          href="mailto:legal@axvn.vn"
+                          className="text-AXVN-gold hover:underline font-medium"
+                        >
+                          legal@axvn.vn
+                        </a>
+                      </p>
+                      <p>
+                        Địa chỉ: Dubai, Các Tiểu Vương Quốc Ả Rập Thống Nhất
+                      </p>
                     </div>
                   </>
                 ),

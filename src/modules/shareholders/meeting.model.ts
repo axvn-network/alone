@@ -1,77 +1,89 @@
+/**
+ * src/modules/shareholders/meeting.model.ts
+ * Canonical ShareholderMeeting model.
+ */
 import mongoose, { Schema, Document, Types } from "mongoose";
 
-export type MeetingStatus = "scheduled" | "in_progress" | "completed" | "cancelled";
-export type MeetingType = "general" | "emergency" | "technical" | "legal" | "progress";
-
-export interface IVoteOption {
-  label: string;
-  votes: Types.ObjectId[];   // Shareholder IDs who chose this
-}
-
-export interface IAgendaItem {
-  order: number;
-  title: string;
-  description: string;
-  voteOptions: IVoteOption[];
-  resolved: boolean;
-  resolution: string;   // outcome text
-}
+export type MeetingStatus =
+  "scheduled" | "in_progress" | "completed" | "cancelled";
+export type MeetingType =
+  "annual_general" | "extraordinary" | "board" | "committee" | "informal";
 
 export interface IShareholderMeeting extends Document {
   title: string;
   type: MeetingType;
   status: MeetingStatus;
   scheduledAt: Date;
-  completedAt: Date | null;
-  location: string;           // "online" or address
-  meetingLink: string;        // Zoom/Google Meet URL
-  agenda: IAgendaItem[];
-  minutes: string;            // Biên bản họp (rich text)
+  location: string;
+  meetingLink: string;
+  invitedRoles: string[];
   attendees: Types.ObjectId[];
-  invitedRoles: string[];     // which roles are invited
+  agenda: {
+    order: number;
+    title: string;
+    description: string;
+    voteOptions: { label: string }[];
+    resolved: boolean;
+    resolution: string;
+  }[];
+  minutes: string;
   attachmentUrl: string;
   attachmentName: string;
   createdAt: Date;
   updatedAt: Date;
 }
 
-const VoteOptionSchema = new Schema<IVoteOption>({ label: String, votes: [Schema.Types.ObjectId] }, { _id: false });
-const AgendaItemSchema = new Schema<IAgendaItem>(
+const AgendaItemSchema = new Schema(
   {
-    order:       { type: Number, required: true },
-    title:       { type: String, required: true },
+    order: { type: Number, default: 0 },
+    title: { type: String, required: true },
     description: { type: String, default: "" },
-    voteOptions: { type: [VoteOptionSchema], default: [] },
-    resolved:    { type: Boolean, default: false },
-    resolution:  { type: String, default: "" },
+    voteOptions: [{ label: { type: String } }],
+    resolved: { type: Boolean, default: false },
+    resolution: { type: String, default: "" },
   },
-  { _id: false }
+  { _id: false },
 );
 
 const ShareholderMeetingSchema = new Schema<IShareholderMeeting>(
   {
-    title:          { type: String, required: true },
-    type:           { type: String, enum: ["general", "emergency", "technical", "legal", "progress"], default: "general" },
-    status:         { type: String, enum: ["scheduled", "in_progress", "completed", "cancelled"], default: "scheduled" },
-    scheduledAt:    { type: Date, required: true },
-    completedAt:    { type: Date, default: null },
-    location:       { type: String, default: "online" },
-    meetingLink:    { type: String, default: "" },
-    agenda:         { type: [AgendaItemSchema], default: [] },
-    minutes:        { type: String, default: "" },
-    attendees:      [{ type: Schema.Types.ObjectId, ref: "Shareholder" }],
-    invitedRoles:   { type: [String], default: [] },
-    attachmentUrl:  { type: String, default: "" },
+    title: { type: String, required: true, trim: true },
+    type: {
+      type: String,
+      enum: [
+        "annual_general",
+        "extraordinary",
+        "board",
+        "committee",
+        "informal",
+      ],
+      default: "board",
+    },
+    status: {
+      type: String,
+      enum: ["scheduled", "in_progress", "completed", "cancelled"],
+      default: "scheduled",
+    },
+    scheduledAt: { type: Date, required: true },
+    location: { type: String, default: "" },
+    meetingLink: { type: String, default: "" },
+    invitedRoles: [{ type: String }],
+    attendees: [{ type: Schema.Types.ObjectId, ref: "Shareholder" }],
+    agenda: [AgendaItemSchema],
+    minutes: { type: String, default: "" },
+    attachmentUrl: { type: String, default: "" },
     attachmentName: { type: String, default: "" },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-ShareholderMeetingSchema.index({ scheduledAt: -1 });
-ShareholderMeetingSchema.index({ status: 1 });
+ShareholderMeetingSchema.index({ scheduledAt: -1, status: 1 });
 
 const ShareholderMeeting =
   mongoose.models.ShareholderMeeting ||
-  mongoose.model<IShareholderMeeting>("ShareholderMeeting", ShareholderMeetingSchema);
+  mongoose.model<IShareholderMeeting>(
+    "ShareholderMeeting",
+    ShareholderMeetingSchema,
+  );
 
 export default ShareholderMeeting;

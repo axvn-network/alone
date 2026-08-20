@@ -1,5 +1,5 @@
 import { getCurrentUser } from "@/core/security/auth-utils";
-import * as dashboardService from "@/modules/dashboard";
+import { getDashboardStats } from "@/modules/dashboard/service";
 import {
   successResponse,
   serverErrorResponse,
@@ -9,9 +9,9 @@ import { handleError } from "@/utils/errors";
 
 // GET — admin only: dashboard stats + recent activity
 export async function GET() {
-  if (!await getCurrentUser()) return unauthorizedResponse();
+  if (!(await getCurrentUser())) return unauthorizedResponse();
   try {
-    return successResponse(await dashboardService.getDashboardStats());
+    return successResponse(await getDashboardStats());
   } catch (error) {
     return serverErrorResponse(handleError(error).message);
   }

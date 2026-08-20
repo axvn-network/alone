@@ -3,8 +3,8 @@
  * Barrel export — import from "@/modules/dashboard"
  *
  * No dedicated model — aggregates across models.
- * Service lives at: @/shared/services/dashboard.service.ts
+ * Service lives at: @/modules/dashboard/service.ts
  */
 
-export { getDashboardStats } from "@/shared/services/dashboard.service";
-export type { DashboardStatsResult } from "@/shared/services/dashboard.service";
+export { getDashboardStats } from "./service";
+export type { DashboardStatsResult } from "./service";

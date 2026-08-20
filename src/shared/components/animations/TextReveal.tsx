@@ -9,7 +9,12 @@ interface TextRevealProps {
   as?: "h1" | "h2" | "h3" | "h4" | "p" | "span";
 }
 
-export default function TextReveal({ children, className, delay = 0, as: Tag = "p" }: TextRevealProps) {
+export default function TextReveal({
+  children,
+  className,
+  delay = 0,
+  as: Tag = "p",
+}: TextRevealProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 30, filter: "blur(4px)" }}

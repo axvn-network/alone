@@ -5,7 +5,11 @@
 
 // ── Model ─────────────────────────────────────────────────────────────────────
 export { default as PartnerApplication } from "./model";
-export type { IPartnerApplication, PartnerApplicationStatus, AssessmentDimensions } from "./model";
+export type {
+  IPartnerApplication,
+  PartnerApplicationStatus,
+  AssessmentDimensions,
+} from "./model";
 
 // ── Service ───────────────────────────────────────────────────────────────────
 export {
@@ -21,8 +25,19 @@ export {
 export type { ListApplicationsQuery } from "./service";
 
 // ── Schema ────────────────────────────────────────────────────────────────────
-export { assessmentResultSchema, partnerApplicationSchema, partnerApplicationUpdateSchema } from "./schema";
-export type { AssessmentResultInput, PartnerApplicationInput, PartnerApplicationUpdateInput } from "./schema";
+export {
+  assessmentResultSchema,
+  partnerApplicationSchema,
+  partnerApplicationUpdateSchema,
+} from "./schema";
+export type {
+  AssessmentResultInput,
+  PartnerApplicationInput,
+  PartnerApplicationUpdateInput,
+} from "./schema";
 
 // ── Actions ───────────────────────────────────────────────────────────────────
-export { submitPartnerApplicationAction, updateApplicationStatusAction } from "./actions";
+export {
+  submitPartnerApplicationAction,
+  updateApplicationStatusAction,
+} from "./actions";

@@ -8,7 +8,13 @@ export { default as Page } from "./model";
 export type { IPage, IPageSection, IPageSEO } from "./model";
 
 // ── Service ───────────────────────────────────────────────────────────────────
-export { getPage, getPublicPage, getAllPages, updatePage, upsertMany } from "./service";
+export {
+  getPage,
+  getPublicPage,
+  getAllPages,
+  updatePage,
+  upsertMany,
+} from "./service";
 
 // ── Schema ────────────────────────────────────────────────────────────────────
 export { pageContentSchema, seoSchema } from "./schema";

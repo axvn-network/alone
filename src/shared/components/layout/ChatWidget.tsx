@@ -5,33 +5,44 @@ import { useState, useRef, useEffect } from "react";
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const [messages, setMessages] = useState<{ role: 'user' | 'bot', text: string }[]>([
-    { role: 'bot', text: 'Xin chào! Tôi có thể giúp gì về tài liệu AXVN Tech?' }
+  const [messages, setMessages] = useState<
+    { role: "user" | "bot"; text: string }[]
+  >([
+    {
+      role: "bot",
+      text: "Xin chào! Tôi có thể giúp gì về tài liệu AXVN Tech?",
+    },
   ]);
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!query.trim()) return;
 
-    setMessages(prev => [...prev, { role: 'user', text: query }]);
+    setMessages((prev) => [...prev, { role: "user", text: query }]);
     setLoading(true);
 
     try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query }),
       });
       const data = await response.json();
-      setMessages(prev => [...prev, { role: 'bot', text: data.answer || "Có lỗi xảy ra." }]);
+      setMessages((prev) => [
+        ...prev,
+        { role: "bot", text: data.answer || "Có lỗi xảy ra." },
+      ]);
     } catch {
-      setMessages(prev => [...prev, { role: 'bot', text: "Không thể kết nối tới server." }]);
+      setMessages((prev) => [
+        ...prev,
+        { role: "bot", text: "Không thể kết nối tới server." },
+      ]);
     } finally {
       setLoading(false);
       setQuery("");
@@ -50,16 +61,28 @@ export default function ChatWidget() {
       ) : (
         <div className="w-80 h-96 card-dark flex flex-col overflow-hidden">
           <div className="p-4 bg-AXVN-navy flex justify-between items-center border-b border-AXVN-gold/20">
-            <span className="text-AXVN-gold font-bold text-sm">AXVN Assistant</span>
-            <button onClick={() => setIsOpen(false)} className="text-AXVN-silver">✕</button>
+            <span className="text-AXVN-gold font-bold text-sm">
+              AXVN Assistant
+            </span>
+            <button
+              onClick={() => setIsOpen(false)}
+              className="text-AXVN-silver"
+            >
+              ✕
+            </button>
           </div>
           <div className="flex-1 p-4 overflow-y-auto space-y-3">
             {messages.map((m, i) => (
-              <div key={i} className={`text-xs ${m.role === 'user' ? 'text-right text-AXVN-gold' : 'text-left text-AXVN-silver'}`}>
+              <div
+                key={i}
+                className={`text-xs ${m.role === "user" ? "text-right text-AXVN-gold" : "text-left text-AXVN-silver"}`}
+              >
                 {m.text}
               </div>
             ))}
-            {loading && <div className="text-xs text-AXVN-muted">Đang tìm kiếm...</div>}
+            {loading && (
+              <div className="text-xs text-AXVN-muted">Đang tìm kiếm...</div>
+            )}
             <div ref={messagesEndRef} />
           </div>
           <form onSubmit={handleSubmit} className="p-2 bg-AXVN-navy">

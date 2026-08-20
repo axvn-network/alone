@@ -1,5 +1,5 @@
 import { getCurrentUser } from "@/core/security/auth-utils";
-import * as partnerApplicationService from "@/modules/partner-applications";
+import { listByRole } from "@/modules/partner-applications";
 import {
   successResponse,
   serverErrorResponse,
@@ -13,9 +13,8 @@ export const dynamic = "force-dynamic";
 export async function GET() {
   const user = await getCurrentUser();
   if (!user) return unauthorizedResponse();
-
   try {
-    const groups = await partnerApplicationService.listByRole();
+    const groups = await listByRole();
     return successResponse(groups);
   } catch (error) {
     return serverErrorResponse(handleError(error).message);

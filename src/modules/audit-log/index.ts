@@ -14,8 +14,4 @@ export {
   getLogsByActor,
   deleteExpiredLogs,
 } from "./service";
-export type {
-  AuditQuery,
-  LogAuditOptions,
-  AuditActor,
-} from "./service";
+export type { AuditQuery, LogAuditOptions, AuditActor } from "./service";

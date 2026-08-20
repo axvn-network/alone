@@ -1,5 +1,5 @@
 /**
- * src/lib/email.ts
+ * src/shared/utils/email.ts
  *
  * Nodemailer email helpers.
  *
@@ -9,14 +9,15 @@
  */
 
 import nodemailer from "nodemailer";
+import { env } from "@/core/env";
 
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST ?? "",
-  port: parseInt(process.env.SMTP_PORT ?? "587", 10),
+  host: env.SMTP_HOST ?? "",
+  port: env.SMTP_PORT,
   secure: process.env.SMTP_SECURE === "true",
   auth: {
-    user: process.env.SMTP_USER ?? "",
-    pass: process.env.SMTP_PASS ?? "",
+    user: env.SMTP_USER ?? "",
+    pass: env.SMTP_PASS ?? "",
   },
 });
 
@@ -26,10 +27,14 @@ export async function sendEmail(options: {
   html: string;
   from?: string;
 }): Promise<void> {
-  if (!process.env.SMTP_HOST) return; // Email not configured — skip silently
+  if (!env.SMTP_HOST) return; // Email not configured — skip silently
+
+  const fromName = env.SMTP_FROM_NAME;
+  const fromEmail = env.SMTP_FROM_EMAIL ?? "noreply@axvn.vn";
+  const defaultFrom = fromName ? `"${fromName}" <${fromEmail}>` : fromEmail;
 
   await transporter.sendMail({
-    from: options.from ?? process.env.SMTP_FROM ?? "noreply@axvn.vn",
+    from: options.from ?? defaultFrom,
     to: options.to,
     subject: options.subject,
     html: options.html,
@@ -47,7 +52,7 @@ export async function sendEnquiryNotification(data: {
   consentGiven?: boolean;
   consentTimestamp?: string;
 }): Promise<void> {
-  const adminEmail = process.env.ADMIN_EMAIL ?? "admin@axvn.vn";
+  const adminEmail = env.ADMIN_EMAIL;
 
   const consentRow = data.consentGiven
     ? `<tr>

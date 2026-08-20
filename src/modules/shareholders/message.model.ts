@@ -1,45 +1,58 @@
+/**
+ * src/modules/shareholders/message.model.ts
+ * Canonical ShareholderMessage model.
+ */
 import mongoose, { Schema, Document, Types } from "mongoose";
 
-export type MessageChannel = "general" | "tech" | "legal" | "capital" | "meeting" | "announcement";
+export type MessageChannel =
+  "general" | "finance" | "legal" | "tech" | "governance" | "admin";
 
 export interface IShareholderMessage extends Document {
   channel: MessageChannel;
-  sender: Types.ObjectId;         // Shareholder._id
-  senderName: string;             // denormalized for speed
+  sender: Types.ObjectId;
+  senderName: string;
   senderRole: string;
-  isAdminSender: boolean;         // true if sent by admin/tech team
+  isAdminSender: boolean;
   content: string;
+  replyTo: Types.ObjectId | null;
   attachmentUrl: string;
   attachmentName: string;
-  replyTo: Types.ObjectId | null;
   readBy: Types.ObjectId[];
-  pinned: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
 
 const ShareholderMessageSchema = new Schema<IShareholderMessage>(
   {
-    channel:        { type: String, enum: ["general", "tech", "legal", "capital", "meeting", "announcement"], default: "general" },
-    sender:         { type: Schema.Types.ObjectId, ref: "Shareholder", required: true },
-    senderName:     { type: String, required: true },
-    senderRole:     { type: String, default: "" },
-    isAdminSender:  { type: Boolean, default: false },
-    content:        { type: String, required: true },
-    attachmentUrl:  { type: String, default: "" },
+    channel: {
+      type: String,
+      enum: ["general", "finance", "legal", "tech", "governance", "admin"],
+      required: true,
+    },
+    sender: { type: Schema.Types.ObjectId, ref: "Shareholder", required: true },
+    senderName: { type: String, default: "" },
+    senderRole: { type: String, default: "" },
+    isAdminSender: { type: Boolean, default: false },
+    content: { type: String, required: true },
+    replyTo: {
+      type: Schema.Types.ObjectId,
+      ref: "ShareholderMessage",
+      default: null,
+    },
+    attachmentUrl: { type: String, default: "" },
     attachmentName: { type: String, default: "" },
-    replyTo:        { type: Schema.Types.ObjectId, ref: "ShareholderMessage", default: null },
-    readBy:         [{ type: Schema.Types.ObjectId, ref: "Shareholder" }],
-    pinned:         { type: Boolean, default: false },
+    readBy: [{ type: Schema.Types.ObjectId, ref: "Shareholder" }],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 ShareholderMessageSchema.index({ channel: 1, createdAt: -1 });
-ShareholderMessageSchema.index({ sender: 1 });
 
 const ShareholderMessage =
   mongoose.models.ShareholderMessage ||
-  mongoose.model<IShareholderMessage>("ShareholderMessage", ShareholderMessageSchema);
+  mongoose.model<IShareholderMessage>(
+    "ShareholderMessage",
+    ShareholderMessageSchema,
+  );
 
 export default ShareholderMessage;

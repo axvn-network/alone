@@ -17,10 +17,14 @@ interface RiskMatrixProps {
 export function RiskMatrix({ risks }: RiskMatrixProps) {
   const getSeverityColor = (severity: string) => {
     switch (severity) {
-      case "CRITICAL": return "bg-red-500/20 text-red-400 border-red-500/50";
-      case "HIGH": return "bg-orange-500/20 text-orange-400 border-orange-500/50";
-      case "MEDIUM": return "bg-yellow-500/20 text-yellow-400 border-yellow-500/50";
-      default: return "bg-blue-500/20 text-blue-400 border-blue-500/50";
+      case "CRITICAL":
+        return "bg-red-500/20 text-red-400 border-red-500/50";
+      case "HIGH":
+        return "bg-orange-500/20 text-orange-400 border-orange-500/50";
+      case "MEDIUM":
+        return "bg-yellow-500/20 text-yellow-400 border-yellow-500/50";
+      default:
+        return "bg-blue-500/20 text-blue-400 border-blue-500/50";
     }
   };
 
@@ -34,7 +38,9 @@ export function RiskMatrix({ risks }: RiskMatrixProps) {
         >
           <div className="flex justify-between items-start mb-2">
             <span className="font-mono text-xs font-bold">{risk.id}</span>
-            <span className="text-[10px] font-bold uppercase">{risk.severity}</span>
+            <span className="text-[10px] font-bold uppercase">
+              {risk.severity}
+            </span>
           </div>
           <h3 className="font-semibold text-AXVN-ivory">{risk.title}</h3>
           <div className="mt-2 text-xs flex gap-4 text-AXVN-silver/70">

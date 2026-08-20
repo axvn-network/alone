@@ -4,7 +4,11 @@ export class AppError extends Error {
   public statusCode: number;
   public errors?: Record<string, string[]>;
 
-  constructor(message: string, statusCode = 400, errors?: Record<string, string[]>) {
+  constructor(
+    message: string,
+    statusCode = 400,
+    errors?: Record<string, string[]>,
+  ) {
     super(message);
     this.name = "AppError";
     this.statusCode = statusCode;
@@ -70,7 +74,9 @@ export function handleError(error: unknown): {
     error.name === "ValidationError" &&
     "errors" in error
   ) {
-    const mongoErrors = (error as { errors: Record<string, { message: string }> }).errors;
+    const mongoErrors = (
+      error as { errors: Record<string, { message: string }> }
+    ).errors;
     const fields: Record<string, string[]> = {};
     for (const [field, err] of Object.entries(mongoErrors)) {
       fields[field] = [err.message];
@@ -84,7 +90,10 @@ export function handleError(error: unknown): {
     "code" in error &&
     (error as NodeJS.ErrnoException).code === "11000"
   ) {
-    return { message: "Duplicate entry — record already exists", statusCode: 409 };
+    return {
+      message: "Duplicate entry — record already exists",
+      statusCode: 409,
+    };
   }
 
   // Unknown — log internally, return generic message (no stack trace to client)

@@ -1,16 +1,13 @@
+/**
+ * src/modules/shareholders/task.model.ts
+ * Canonical ShareholderTask model.
+ */
 import mongoose, { Schema, Document, Types } from "mongoose";
 
-export type TaskStatus = "pending" | "in_progress" | "done" | "blocked";
+export type TaskStatus = "todo" | "in_progress" | "done" | "blocked";
 export type TaskPriority = "low" | "medium" | "high" | "critical";
 export type TaskCategory =
-  | "legal"        // Pháp lý
-  | "capital"      // Vốn góp
-  | "tech"         // Công nghệ
-  | "hr"           // Nhân sự
-  | "docs"         // Hồ sơ giấy tờ
-  | "compliance"   // Tuân thủ / AML
-  | "meeting"      // Họp cổ đông
-  | "other";
+  "legal" | "finance" | "tech" | "governance" | "ops" | "other";
 
 export interface IShareholderTask extends Document {
   title: string;
@@ -18,13 +15,13 @@ export interface IShareholderTask extends Document {
   category: TaskCategory;
   priority: TaskPriority;
   status: TaskStatus;
-  assignedTo: Types.ObjectId[];     // Shareholders responsible
-  assignedRoles: string[];          // Roles targeted (all in that role)
+  assignedTo: Types.ObjectId[];
+  assignedRoles: string[];
   dueDate: Date | null;
   completedAt: Date | null;
   completedBy: Types.ObjectId | null;
-  milestoneTag: string;             // e.g. "Q2-2026", "Pre-filing"
-  legalRef: string;                 // e.g. "Điều 8 NQ5/2025 — Khoản 4"
+  milestoneTag: string;
+  legalRef: string;
   order: number;
   createdAt: Date;
   updatedAt: Date;
@@ -32,26 +29,40 @@ export interface IShareholderTask extends Document {
 
 const ShareholderTaskSchema = new Schema<IShareholderTask>(
   {
-    title:           { type: String, required: true, trim: true },
-    description:     { type: String, default: "" },
-    category:        { type: String, enum: ["legal", "capital", "tech", "hr", "docs", "compliance", "meeting", "other"], default: "other" },
-    priority:        { type: String, enum: ["low", "medium", "high", "critical"], default: "medium" },
-    status:          { type: String, enum: ["pending", "in_progress", "done", "blocked"], default: "pending" },
-    assignedTo:      [{ type: Schema.Types.ObjectId, ref: "Shareholder" }],
-    assignedRoles:   { type: [String], default: [] },
-    dueDate:         { type: Date, default: null },
-    completedAt:     { type: Date, default: null },
-    completedBy:     { type: Schema.Types.ObjectId, ref: "Shareholder", default: null },
-    milestoneTag:    { type: String, default: "" },
-    legalRef:        { type: String, default: "" },
-    order:           { type: Number, default: 0 },
+    title: { type: String, required: true, trim: true },
+    description: { type: String, default: "" },
+    category: {
+      type: String,
+      enum: ["legal", "finance", "tech", "governance", "ops", "other"],
+      default: "other",
+    },
+    priority: {
+      type: String,
+      enum: ["low", "medium", "high", "critical"],
+      default: "medium",
+    },
+    status: {
+      type: String,
+      enum: ["todo", "in_progress", "done", "blocked"],
+      default: "todo",
+    },
+    assignedTo: [{ type: Schema.Types.ObjectId, ref: "Shareholder" }],
+    assignedRoles: [{ type: String }],
+    dueDate: { type: Date, default: null },
+    completedAt: { type: Date, default: null },
+    completedBy: {
+      type: Schema.Types.ObjectId,
+      ref: "Shareholder",
+      default: null,
+    },
+    milestoneTag: { type: String, default: "" },
+    legalRef: { type: String, default: "" },
+    order: { type: Number, default: 0 },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-ShareholderTaskSchema.index({ status: 1, category: 1 });
-ShareholderTaskSchema.index({ assignedTo: 1 });
-ShareholderTaskSchema.index({ assignedRoles: 1 });
+ShareholderTaskSchema.index({ status: 1, priority: 1 });
 
 const ShareholderTask =
   mongoose.models.ShareholderTask ||

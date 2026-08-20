@@ -8,8 +8,8 @@
 import { revalidatePath } from "next/cache";
 import { requireAuth } from "@/core/security/auth-utils";
 import { handleError } from "@/utils/errors";
-import { documentSchema, formatZodErrors } from "@/validators";
-import type { DocumentInput } from "@/validators";
+import { documentSchema, type DocumentInput } from "@/modules/documents/schema";
+import { formatZodErrors } from "@/shared/utils/zod";
 import { documentService } from "./service";
 
 export async function createDocumentAction(data: DocumentInput) {

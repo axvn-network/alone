@@ -17,14 +17,22 @@ interface VisualTimelineProps {
   onSelect: (id: string) => void;
 }
 
-export default function VisualTimeline({ items, selectedId, onSelect }: VisualTimelineProps) {
+export default function VisualTimeline({
+  items,
+  selectedId,
+  onSelect,
+}: VisualTimelineProps) {
   const selected = items.find((item) => item.id === selectedId) ?? items[0];
 
   if (!selected) return null;
 
   return (
     <section aria-label="Dòng thời gian định hướng">
-      <div className="flex gap-2 overflow-x-auto pb-3" role="tablist" aria-label="Chọn giai đoạn">
+      <div
+        className="flex gap-2 overflow-x-auto pb-3"
+        role="tablist"
+        aria-label="Chọn giai đoạn"
+      >
         {items.map((item, index) => {
           const active = item.id === selected.id;
           return (
@@ -35,13 +43,18 @@ export default function VisualTimeline({ items, selectedId, onSelect }: VisualTi
               aria-selected={active}
               aria-controls={`visual-timeline-${item.id}`}
               onClick={() => onSelect(item.id)}
-              className={`min-w-28 border px-3 py-3 text-left transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-AXVN-gold ${active
+              className={`min-w-28 border px-3 py-3 text-left transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-AXVN-gold ${
+                active
                   ? "border-AXVN-gold bg-AXVN-gold text-AXVN-navy"
                   : "border-white/15 bg-white/5 text-AXVN-silver hover:border-AXVN-gold/50"
-                }`}
+              }`}
             >
-              <span className="block text-[10px] font-semibold uppercase tracking-wider opacity-75">Mốc {index + 1}</span>
-              <span className="mt-1 block text-sm font-semibold">{item.label}</span>
+              <span className="block text-[10px] font-semibold uppercase tracking-wider opacity-75">
+                Mốc {index + 1}
+              </span>
+              <span className="mt-1 block text-sm font-semibold">
+                {item.label}
+              </span>
             </button>
           );
         })}
@@ -58,16 +71,31 @@ export default function VisualTimeline({ items, selectedId, onSelect }: VisualTi
       >
         <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-AXVN-gold">{selected.label}</p>
-            <h3 className="mt-2 text-xl font-semibold text-AXVN-ivory">{selected.title}</h3>
-            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-AXVN-silver/75">{selected.description}</p>
+            <p className="text-xs font-semibold uppercase tracking-wider text-AXVN-gold">
+              {selected.label}
+            </p>
+            <h3 className="mt-2 text-xl font-semibold text-AXVN-ivory">
+              {selected.title}
+            </h3>
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-AXVN-silver/75">
+              {selected.description}
+            </p>
           </div>
-          <ArrowRight className="h-5 w-5 shrink-0 text-AXVN-gold" aria-hidden="true" />
+          <ArrowRight
+            className="h-5 w-5 shrink-0 text-AXVN-gold"
+            aria-hidden="true"
+          />
         </div>
         <ul className="mt-6 grid gap-3 sm:grid-cols-3">
           {selected.highlights.map((highlight) => (
-            <li key={highlight} className="flex items-start gap-2 border-t border-white/10 pt-3 text-xs leading-relaxed text-AXVN-silver/75">
-              <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-AXVN-gold" aria-hidden="true" />
+            <li
+              key={highlight}
+              className="flex items-start gap-2 border-t border-white/10 pt-3 text-xs leading-relaxed text-AXVN-silver/75"
+            >
+              <CheckCircle2
+                className="mt-0.5 h-3.5 w-3.5 shrink-0 text-AXVN-gold"
+                aria-hidden="true"
+              />
               {highlight}
             </li>
           ))}

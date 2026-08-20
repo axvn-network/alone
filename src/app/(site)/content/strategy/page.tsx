@@ -6,9 +6,12 @@
  */
 
 import type { Metadata } from "next";
-import PageHero from "@/modules/content/components/PageHero";
+import PageHero from "@/shared/components/blocks/PageHero";
 import StrategyClient from "./StrategyClient";
-import { ROADMAP_META } from "@/data/roadmap";
+import { ROADMAP_META } from "@/shared/constants/roadmap";
+
+// Static page — no DB queries. Cached at build time.
+export const revalidate = 86400;
 
 export const metadata: Metadata = {
   title: "Chiến Lược Tổng Thể 2026–2031",

@@ -40,9 +40,9 @@ export interface NormalisedInput {
 // Backward-compat aliases for existing callers
 export type TruongNhayCanm = SensitiveField;
 export type KetQuaChuanHoa = NormalisedInput & {
-  /** @deprecated Use nationalId */  cccd?: SensitiveField;
-  /** @deprecated Use taxId */       maSoThue?: SensitiveField;
-  /** @deprecated Use phone */       soDienThoai?: SensitiveField;
+  /** @deprecated Use nationalId */ cccd?: SensitiveField;
+  /** @deprecated Use taxId */ maSoThue?: SensitiveField;
+  /** @deprecated Use phone */ soDienThoai?: SensitiveField;
 };
 
 // ─── Main normalisation function ──────────────────────────────────────────────
@@ -64,7 +64,9 @@ export type KetQuaChuanHoa = NormalisedInput & {
  * });
  * ```
  */
-export function normalizeInputVN(body: Record<string, unknown>): KetQuaChuanHoa {
+export function normalizeInputVN(
+  body: Record<string, unknown>,
+): KetQuaChuanHoa {
   const result: KetQuaChuanHoa = { rest: {} };
 
   for (const [key, value] of Object.entries(body)) {
@@ -78,40 +80,41 @@ export function normalizeInputVN(body: Record<string, unknown>): KetQuaChuanHoa 
     if (isNationalIdField(key)) {
       const kq = validateCCCD(s);
       const field: SensitiveField = {
-        rawValue:        s,
+        rawValue: s,
         normalizedValue: kq.normalized ?? s,
-        isValid:         kq.isValid,
-        error:           kq.error,
+        isValid: kq.isValid,
+        error: kq.error,
       };
       result.nationalId = field;
-      result.cccd       = field; // backward-compat
+      result.cccd = field; // backward-compat
       continue;
     }
 
     if (isTaxIdField(key)) {
-      const loai = body.loaiMST as "doanh-nghiep" | "don-vi-phu-thuoc" | "ca-nhan" | undefined;
+      const loai = body.loaiMST as
+        "doanh-nghiep" | "don-vi-phu-thuoc" | "ca-nhan" | undefined;
       const kq = validateMaSoThue(s, loai ?? "doanh-nghiep");
       const field: SensitiveField = {
-        rawValue:        s,
+        rawValue: s,
         normalizedValue: kq.normalized ?? s.toUpperCase(),
-        isValid:         kq.isValid,
-        error:           kq.error,
+        isValid: kq.isValid,
+        error: kq.error,
       };
-      result.taxId      = field;
-      result.maSoThue   = field; // backward-compat
+      result.taxId = field;
+      result.maSoThue = field; // backward-compat
       continue;
     }
 
     if (isPhoneField(key)) {
       const kq = validateSDT(s);
       const field: SensitiveField = {
-        rawValue:        s,
+        rawValue: s,
         normalizedValue: kq.e164 ?? kq.normalized ?? s,
-        isValid:         kq.isValid,
-        error:           kq.error,
+        isValid: kq.isValid,
+        error: kq.error,
       };
-      result.phone        = field;
-      result.soDienThoai  = field; // backward-compat
+      result.phone = field;
+      result.soDienThoai = field; // backward-compat
       continue;
     }
 
@@ -125,7 +128,14 @@ export function normalizeInputVN(body: Record<string, unknown>): KetQuaChuanHoa 
 // ─── Field-type detection helpers ─────────────────────────────────────────────
 
 function isNationalIdField(key: string): boolean {
-  const patterns = ["cccd", "soCCCD", "sodinhdanh", "nationalId", "identityNumber", "cmt"];
+  const patterns = [
+    "cccd",
+    "soCCCD",
+    "sodinhdanh",
+    "nationalId",
+    "identityNumber",
+    "cmt",
+  ];
   return patterns.some((p) => key.toLowerCase().includes(p.toLowerCase()));
 }
 
@@ -135,7 +145,14 @@ function isTaxIdField(key: string): boolean {
 }
 
 function isPhoneField(key: string): boolean {
-  const patterns = ["phone", "soDienThoai", "sdt", "mobile", "dienthoai", "tel"];
+  const patterns = [
+    "phone",
+    "soDienThoai",
+    "sdt",
+    "mobile",
+    "dienthoai",
+    "tel",
+  ];
   return patterns.some((p) => key.toLowerCase().includes(p.toLowerCase()));
 }
 
