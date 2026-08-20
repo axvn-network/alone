@@ -137,6 +137,10 @@ function getSessionSecret(): string {
 }
 
 function getCsrfSecret(): string {
+  // Mirror the logic in src/core/security/csrf.ts:
+  // prefer dedicated CSRF_SECRET; fallback to SESSION_SECRET + ":csrf"
+  const dedicated = process.env.CSRF_SECRET;
+  if (dedicated && dedicated.length >= 32) return dedicated;
   return (process.env.SESSION_SECRET || "dev-csrf-fallback-secret") + ":csrf";
 }
 

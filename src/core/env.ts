@@ -9,8 +9,20 @@ export const env = createEnv({
     MONGODB_URI: z.string().url(),
 
     // ── Auth / Session ──────────────────────────────────────────────────────
-    /** Minimum 32 chars — used for HMAC session tokens and AES-256 key derivation */
+    /** Minimum 64 hex chars — used for HMAC admin/public session tokens */
     SESSION_SECRET: z.string().min(32),
+    /**
+     * Optional dedicated CSRF signing key.
+     * If not set, falls back to SESSION_SECRET + ":csrf" (backward-compatible).
+     * Tạo: openssl rand -hex 32
+     */
+    CSRF_SECRET: z.string().min(32).optional(),
+    /**
+     * Optional dedicated AES-256 encryption key for PII fields (NĐ 13/2023).
+     * If not set, falls back to SHA-256(SESSION_SECRET) (backward-compatible).
+     * Tạo: openssl rand -hex 32
+     */
+    ENCRYPTION_KEY: z.string().min(32).optional(),
 
     // ── Default superadmin seed ─────────────────────────────────────────────
     ADMIN_EMAIL: z.string().email(),
@@ -35,7 +47,7 @@ export const env = createEnv({
     ANTHROPIC_API_KEY: z.string().optional(),
 
     // ── WhatsApp Business Cloud API (optional) ───────────────────────────────
-    WHATSAPP_VERIFY_TOKEN: z.string().optional().default("AXVN_webhook_2025"),
+    WHATSAPP_VERIFY_TOKEN: z.string().optional(),
     WHATSAPP_ACCESS_TOKEN: z.string().optional(),
     WHATSAPP_PHONE_NUMBER_ID: z.string().optional(),
     WHATSAPP_API_VERSION: z.string().optional().default("v20.0"),
@@ -51,6 +63,8 @@ export const env = createEnv({
     NODE_ENV: process.env.NODE_ENV,
     MONGODB_URI: process.env.MONGODB_URI,
     SESSION_SECRET: process.env.SESSION_SECRET,
+    CSRF_SECRET: process.env.CSRF_SECRET,
+    ENCRYPTION_KEY: process.env.ENCRYPTION_KEY,
     ADMIN_EMAIL: process.env.ADMIN_EMAIL,
     ADMIN_PASSWORD: process.env.ADMIN_PASSWORD,
     ADMIN_NAME: process.env.ADMIN_NAME,

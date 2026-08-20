@@ -11,6 +11,7 @@ import { formatZodErrors } from "@/utils/zod";
 import { rateLimit } from "@/utils/rate-limit";
 import { sendEnquiryNotification } from "@/shared/utils/email";
 import { logger } from "@/shared/utils/logger";
+import { sanitizeText, sanitizeEmail, sanitizeMessage } from "@/utils/sanitize";
 import {
   successResponse,
   validationErrorResponse,
@@ -36,7 +37,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// POST — public: submit an enquiry (rate-limited)
+// POST — public: submit an enquiry (rate-limited + sanitized)
 export async function POST(request: NextRequest) {
   try {
     const ip =
@@ -47,7 +48,17 @@ export async function POST(request: NextRequest) {
       return errorResponse("Too many requests. Please try again later.", 429);
     }
     const raw = await request.json();
-    const parsed = contactEnquirySchema.safeParse(raw);
+    // Sanitize before Zod validation — defence-in-depth against XSS
+    const sanitized = {
+      ...raw,
+      name:    sanitizeText(raw.name),
+      email:   sanitizeEmail(raw.email),
+      phone:   sanitizeText(raw.phone),
+      company: sanitizeText(raw.company),
+      subject: sanitizeText(raw.subject),
+      message: sanitizeMessage(raw.message),
+    };
+    const parsed = contactEnquirySchema.safeParse(sanitized);
     if (!parsed.success)
       return validationErrorResponse(formatZodErrors(parsed.error));
     const enquiry = await createEnquiry(parsed.data, {

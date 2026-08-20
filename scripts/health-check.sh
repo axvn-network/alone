@@ -1,15 +1,13 @@
-#!/bin/bash
-# Health check script for project stability
-echo "--- Starting health check ---"
-
-cd "$(dirname "$0")/.."
-
-echo "Running type check..."
-npx tsc --noEmit
-if [ $? -ne 0 ]; then echo "Type check failed!"; exit 1; fi
-
-echo "Checking for circular dependencies..."
-npx madge --circular src/
-if [ $? -ne 0 ]; then echo "Circular dependencies found!"; exit 1; fi
-
-echo "--- Project is healthy ---"
+#!/usr/bin/env bash
+# =============================================================================
+# scripts/health-check.sh — Local project health check
+#
+# Delegates to axvn-manage.sh health so all endpoint logic stays in one place.
+# Called by:  npm run health
+#
+# For full verify pipeline (audit+lint+tsc+build) use:
+#   npm run verify  |  bash scripts/axvn-manage.sh verify
+# =============================================================================
+set -euo pipefail
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+exec bash "$SCRIPT_DIR/axvn-manage.sh" health "$@"

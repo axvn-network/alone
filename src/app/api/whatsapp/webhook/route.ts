@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { createHmac, timingSafeEqual } from "crypto";
 import { logger } from "@/shared/utils/logger";
 import { env } from "@/core/env";
 
@@ -7,21 +8,39 @@ import { env } from "@/core/env";
  *
  * Tích hợp từ nurmandev/whatsapp-bot (Diploy pattern):
  *  - Webhook verification (GET)
+ *  - X-Hub-Signature-256 HMAC verification on POST (Meta security requirement)
  *  - Auto-reply với interactive list/button menus
  *  - State tracking per sender (in-memory, stateless across restarts)
  *  - Hỗ trợ text + button_reply + list_reply
  *
  * Setup:
  *  1. WHATSAPP_VERIFY_TOKEN, WHATSAPP_ACCESS_TOKEN, WHATSAPP_PHONE_NUMBER_ID trong .env.local
- *  2. Đăng ký webhook: https://<domain>/api/whatsapp/webhook
- *  3. Subscribe events: messages
+ *  2. WHATSAPP_APP_SECRET — bắt buộc để verify X-Hub-Signature-256
+ *  3. Đăng ký webhook: https://<domain>/api/whatsapp/webhook
+ *  4. Subscribe events: messages
  */
 
 const VERIFY_TOKEN = env.WHATSAPP_VERIFY_TOKEN ?? "AXVN_webhook_2025";
 const ACCESS_TOKEN = env.WHATSAPP_ACCESS_TOKEN ?? "";
 const PHONE_NUMBER_ID = env.WHATSAPP_PHONE_NUMBER_ID ?? "";
 const WA_API_VERSION = env.WHATSAPP_API_VERSION ?? "v20.0";
+const APP_SECRET = env.WHATSAPP_APP_SECRET ?? "";
 const SITE_URL = env.NEXT_PUBLIC_SITE_URL;
+
+/**
+ * Verify the X-Hub-Signature-256 header sent by Meta.
+ * Required to prevent spoofed webhook calls.
+ * https://developers.facebook.com/docs/graph-api/webhooks/getting-started#verification-requests
+ */
+function verifyWhatsAppSignature(rawBody: string, signature: string): boolean {
+  if (!APP_SECRET) return false; // No secret configured — reject
+  const expected = "sha256=" + createHmac("sha256", APP_SECRET).update(rawBody).digest("hex");
+  try {
+    return timingSafeEqual(Buffer.from(signature), Buffer.from(expected));
+  } catch {
+    return false;
+  }
+}
 
 // ── In-memory conversation state (resets on server restart — acceptable for webhook bot) ──
 type ConvState = {
@@ -60,8 +79,16 @@ export async function GET(req: NextRequest) {
 
 // ── POST: Incoming messages ────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
+  // ── X-Hub-Signature-256 verification (Meta security requirement) ─────────
+  const rawBody = await req.text();
+  const signature = req.headers.get("x-hub-signature-256") ?? "";
+  if (!verifyWhatsAppSignature(rawBody, signature)) {
+    logger.warn("[WA Webhook] Invalid signature — rejected");
+    return new NextResponse("Forbidden", { status: 403 });
+  }
+
   try {
-    const body = await req.json();
+    const body = JSON.parse(rawBody);
     const entry = body?.entry?.[0];
     const change = entry?.changes?.[0];
     const value = change?.value;

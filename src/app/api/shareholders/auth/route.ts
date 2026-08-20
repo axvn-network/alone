@@ -1,13 +1,38 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/core/database";
 import { ShareholderModel as Shareholder } from "@/modules/shareholders";
 import { successResponse, serverErrorResponse, notFoundResponse, unauthorizedResponse } from "@/utils/api-response";
 import { handleError } from "@/utils/errors";
 import { cookies } from "next/headers";
 import { makeShareholderToken, parseShareholderToken, SH_COOKIE } from "@/modules/auth/sh-session";
+import { rateLimit, clearRateLimit } from "@/utils/rate-limit";
+import { logger } from "@/shared/utils/logger";
 
 // POST /api/shareholders/auth — login
 export async function POST(req: NextRequest) {
+  // ── Rate limiting per IP: 5 attempts / 60s, progressive lockout ─────────
+  const ip =
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    req.headers.get("x-real-ip") ||
+    "unknown";
+
+  const rateLimitKey = `sh-login:${ip}`;
+  const limit = rateLimit(rateLimitKey, 5, 60_000);
+
+  if (!limit.allowed) {
+    const retryAfter = Math.ceil((limit.resetAt - Date.now()) / 1000);
+    return NextResponse.json(
+      { success: false, message: "Too many login attempts. Try again later." },
+      {
+        status: 429,
+        headers: {
+          "Retry-After": String(retryAfter),
+          "X-RateLimit-Reset": String(limit.resetAt),
+        },
+      },
+    );
+  }
+
   try {
     await connectDB();
     const { email, password } = await req.json() as { email: string; password: string };
@@ -29,6 +54,10 @@ export async function POST(req: NextRequest) {
       path: "/", maxAge: 8 * 60 * 60,
     });
 
+    // Clear rate-limit on successful login
+    clearRateLimit(rateLimitKey);
+    logger.info("[sh/login] Login success", { email: sh.email, ip });
+
     return successResponse({
       id: sh._id.toString(), name: sh.name, email: sh.email,
       role: sh.role, equityPercent: sh.equityPercent,
@@ -36,6 +65,7 @@ export async function POST(req: NextRequest) {
       kycStatus: sh.kycStatus ?? "not_started",
     });
   } catch (e) {
+    logger.error("[sh/login] Unexpected error", e);
     return serverErrorResponse(handleError(e).message);
   }
 }

@@ -8,6 +8,7 @@ import { NextRequest } from "next/server";
 import { connectDB } from "@/core/database";
 import { ShareholderModel as Shareholder } from "@/modules/shareholders";
 import { getActiveShareholder } from "@/modules/auth/sh-auth";
+import { sanitizeText } from "@/utils/sanitize";
 import {
   successResponse,
   serverErrorResponse,
@@ -88,19 +89,18 @@ export async function POST(req: NextRequest) {
 
     await Shareholder.findByIdAndUpdate(sh._id, {
       $set: {
-        nationalId: String(body.nationalId).trim(),
-        nationalIdIssuedDate: body.nationalIdIssuedDate
+        nationalId:            sanitizeText(String(body.nationalId)),
+        nationalIdIssuedDate:  body.nationalIdIssuedDate
           ? new Date(String(body.nationalIdIssuedDate))
           : null,
-        nationalIdIssuedPlace:
-          typeof body.nationalIdIssuedPlace === "string"
-            ? body.nationalIdIssuedPlace.trim()
-            : "",
-        permanentAddress: String(body.permanentAddress).trim(),
-        sourceOfFunds: String(body.sourceOfFunds).trim(),
-        isPEP: body.isPEP === true,
+        nationalIdIssuedPlace: sanitizeText(
+          typeof body.nationalIdIssuedPlace === "string" ? body.nationalIdIssuedPlace : "",
+        ),
+        permanentAddress:      sanitizeText(String(body.permanentAddress)),
+        sourceOfFunds:         sanitizeText(String(body.sourceOfFunds)),
+        isPEP:        body.isPEP === true,
         isSanctioned: body.isSanctioned === true,
-        kycStatus: "pending",
+        kycStatus:    "pending",
         kycSubmittedAt: new Date(),
       },
     });

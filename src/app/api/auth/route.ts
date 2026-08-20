@@ -32,11 +32,11 @@
  * ─────────────────────────────────────────────────────────────────────────────
  * Bảo mật:
  *   - Không trả về password trong response
- *   - Rate limit: xử lý qua middleware hoặc middleware rate-limit riêng
+ *   - Rate limit: 5 lần đăng ký / 5 lần đăng nhập per IP per phút (progressive lockout)
  *   - Mật khẩu được hash bcrypt với cost factor 12
  */
 
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { connectDB } from "@/core/database";
 import { PublicUser } from "@/modules/public-users";
@@ -53,6 +53,8 @@ import {
   serverErrorResponse,
 } from "@/utils/api-response";
 import { handleError } from "@/utils/errors";
+import { rateLimit, clearRateLimit } from "@/utils/rate-limit";
+import { logger } from "@/shared/utils/logger";
 
 // ─── Kiểu dữ liệu request ─────────────────────────────────────────────────────
 
@@ -133,9 +135,35 @@ async function clearSessionCookie(): Promise<void> {
 // ─── POST /api/auth ───────────────────────────────────────────────────────────
 
 export async function POST(req: NextRequest) {
+  // ── Rate limiting per IP ───────────────────────────────────────────────────
+  const ip =
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    req.headers.get("x-real-ip") ||
+    "unknown";
+
   try {
     const body = (await req.json()) as AuthBody;
     const { action } = body;
+
+    // Apply rate-limit for mutating actions only (register + login)
+    if (action === "register" || action === "login") {
+      const rateLimitKey = `pub-auth-${action}:${ip}`;
+      const limit = rateLimit(rateLimitKey, 5, 60_000);
+      if (!limit.allowed) {
+        const retryAfter = Math.ceil((limit.resetAt - Date.now()) / 1000);
+        logger.warn(`[auth/${action}] Rate-limit hit`, { ip });
+        return NextResponse.json(
+          { success: false, message: "Quá nhiều yêu cầu. Vui lòng thử lại sau." },
+          {
+            status: 429,
+            headers: {
+              "Retry-After": String(retryAfter),
+              "X-RateLimit-Reset": String(limit.resetAt),
+            },
+          },
+        );
+      }
+    }
 
     await connectDB();
 
@@ -214,6 +242,9 @@ export async function POST(req: NextRequest) {
 
       // Ghi cookie session
       await writeSessionCookie(user._id.toString(), user.email);
+
+      // Xóa rate-limit sau đăng nhập thành công
+      clearRateLimit(`pub-auth-login:${ip}`);
 
       return successResponse(
         safeUser(user.toObject()),

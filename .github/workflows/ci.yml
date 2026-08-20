@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   ci:
-    name: Lint · Type-check · Build · Audit
+    name: Lint · Type-check · Test · Build · Audit
     runs-on: ubuntu-latest
 
     strategy:
@@ -44,6 +44,10 @@ jobs:
       # ── Type-check ────────────────────────────────────────────────────────────
       - name: TypeScript
         run: npm run typecheck
+
+      # ── Unit tests ────────────────────────────────────────────────────────────
+      - name: Unit tests
+        run: npm test
 
       # ── Build ─────────────────────────────────────────────────────────────────
       - name: Next.js build

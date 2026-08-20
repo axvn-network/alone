@@ -49,8 +49,8 @@ jobs:
               SKIP_FLAG="--skip-build"
             fi
 
-            # Run the existing zero-downtime deploy script
-            bash scripts/deploy.sh $SKIP_FLAG
+            # Run the unified management CLI (zero-downtime deploy)
+            bash scripts/axvn-manage.sh deploy $SKIP_FLAG
 
       - name: Notify success
         if: success()

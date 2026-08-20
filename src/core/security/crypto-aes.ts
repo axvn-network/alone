@@ -1,5 +1,5 @@
 /**
- * src/lib/crypto-aes.ts
+ * src/core/security/crypto-aes.ts
  *
  * AES-256-GCM encryption / decryption for PII fields (national ID, tax ID, etc.)
  * Required by Decree 13/2023/NĐ-CP — personal data must be encrypted at rest.
@@ -7,8 +7,18 @@
  * Each encryption call generates a fresh random 12-byte IV — never reused.
  * Wire format (base64): iv(12 B) || authTag(16 B) || ciphertext
  *
- * Key derivation: SESSION_SECRET → SHA-256 → 32-byte AES-256 key.
- * No separate key is needed; the existing secret has sufficient entropy.
+ * ── Key priority ─────────────────────────────────────────────────────────────
+ * 1. ENCRYPTION_KEY env var (recommended — dedicated 32+ char key)
+ * 2. SHA-256(SESSION_SECRET) — backward-compatible fallback
+ *
+ * ── Compliance status ────────────────────────────────────────────────────────
+ * ⚠️  Implementation is complete and tested. PII field encryption (nationalId,
+ *     taxId in shareholder KYC) is planned for Q1/2026 migration sprint.
+ *     Until then, those fields are stored unencrypted. This file is NOT dead
+ *     code — it will be wired during the KYC encryption migration.
+ *
+ * To enable: call encryptAES(value) before saving + decryptAES(stored) when
+ * reading in src/modules/shareholders/model.ts pre/post hooks.
  */
 
 import {
@@ -23,11 +33,16 @@ const IV_LEN = 12;
 const TAG_LEN = 16;
 
 function getDerivedKey(): Buffer {
+  // Prefer dedicated ENCRYPTION_KEY; fall back to deriving from SESSION_SECRET.
+  const encKey = process.env.ENCRYPTION_KEY;
+  if (encKey && encKey.length >= 32) {
+    return createHash("sha256").update(encKey).digest();
+  }
   const secret = process.env.SESSION_SECRET;
   if (!secret || secret.length < 32) {
     if (process.env.NODE_ENV === "production") {
       throw new Error(
-        "SESSION_SECRET must be at least 32 characters for AES-256 encryption.",
+        "SESSION_SECRET (or ENCRYPTION_KEY) must be at least 32 characters for AES-256 encryption.",
       );
     }
     // Development-only fallback — never used in production

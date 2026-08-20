@@ -22,9 +22,12 @@ const HEADER_NAME = "x-csrf-token";
 const TOKEN_TTL_SECONDS = 60 * 60 * 4; // 4 hours
 
 function getSecret(): string {
-  const s = process.env.SESSION_SECRET;
-  // Append a fixed suffix so the CSRF key is different from the session key
-  return (s || "dev-csrf-fallback-secret") + ":csrf";
+  // Prefer dedicated CSRF_SECRET if configured (recommended for production).
+  // Falls back to SESSION_SECRET + ":csrf" suffix for backward compatibility.
+  const dedicated = process.env.CSRF_SECRET;
+  if (dedicated && dedicated.length >= 32) return dedicated;
+  const session = process.env.SESSION_SECRET;
+  return (session || "dev-csrf-fallback-secret") + ":csrf";
 }
 
 function signToken(raw: string): string {

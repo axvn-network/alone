@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "eslint src next.config.ts --max-warnings=0",
     "typecheck": "tsc --noEmit",
+    "test": "npx tsx --test src/**/__tests__/**/*.test.ts",
     "verify": "bash scripts/verify.sh",
     "seed:plans": "tsx src/cli/seed-investment-plans.ts",
     "seed:rbac": "tsx src/cli/seed-rbac.ts",
