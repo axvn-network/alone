@@ -1,0 +1,2386 @@
+openapi: 3.1.0
+info:
+  title: AXVN Tech Holding — API
+  version: 1.0.0
+  description: |
+    REST API for the AXVN Tech Holding platform.
+    All endpoints return `{ success: boolean, data: any, message?: string }`.
+    Admin endpoints require an `HttpOnly` session cookie set by `POST /api/admin/login`.
+    Shareholder endpoints require an `HttpOnly` session cookie set by `POST /api/shareholders/auth`.
+    Write endpoints additionally require the `x-csrf-token` header (obtain via `GET /api/csrf`).
+  contact:
+    name: AXVN Tech
+    url: https://axvn.vn
+  license:
+    name: Proprietary
+    url: https://axvn.vn
+
+servers:
+  - url: https://axvn.vn
+    description: Production
+
+tags:
+  - name: system
+    description: Health, CSRF
+  - name: public-auth
+    description: Public user registration & login
+  - name: admin-auth
+    description: Admin authentication & MFA
+  - name: admin-shareholders
+    description: Admin — shareholder management
+  - name: admin-capital
+    description: Admin — investment plans
+  - name: admin-documents
+    description: Admin — document management
+  - name: admin-content
+    description: Admin — pages, blog, settings, SEO, AI
+  - name: admin-ops
+    description: Admin — enquiries, partner-applications, public-users, audit-log, stats, upload
+  - name: shareholder-portal
+    description: Shareholder self-service portal
+  - name: public
+    description: Public-facing read/write endpoints
+
+# ─────────────────────────── SECURITY ────────────────────────────
+components:
+  securitySchemes:
+    adminSession:
+      type: apiKey
+      in: cookie
+      name: axvn_admin_session
+      description: HttpOnly cookie set by POST /api/admin/login
+    shareholderSession:
+      type: apiKey
+      in: cookie
+      name: axvn_sh_session
+      description: HttpOnly cookie set by POST /api/shareholders/auth
+    csrfToken:
+      type: apiKey
+      in: header
+      name: x-csrf-token
+      description: Token obtained from GET /api/csrf
+
+  # ─────────────── SHARED SCHEMAS ───────────────
+  schemas:
+    ApiSuccess:
+      type: object
+      required: [success, data]
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          description: Payload — type varies per endpoint
+        message:
+          type: string
+
+    ApiError:
+      type: object
+      required: [success, message]
+      properties:
+        success:
+          type: boolean
+          example: false
+        message:
+          type: string
+
+    ValidationError:
+      type: object
+      required: [success, data]
+      properties:
+        success:
+          type: boolean
+          example: false
+        data:
+          type: object
+          additionalProperties:
+            type: string
+          description: Field-keyed validation error messages
+
+    Pagination:
+      type: object
+      properties:
+        total:
+          type: integer
+        page:
+          type: integer
+        pages:
+          type: integer
+
+    Shareholder:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        equityPercent:
+          type: number
+        capitalCommitted:
+          type: number
+        capitalPaid:
+          type: number
+        kycStatus:
+          type: string
+          enum: [not_started, pending, approved, rejected]
+        isPEP:
+          type: boolean
+        isSanctioned:
+          type: boolean
+        kycSubmittedAt:
+          type: [string, "null"]
+          format: date-time
+        kycReviewedAt:
+          type: [string, "null"]
+          format: date-time
+
+    InvestmentPlan:
+      type: object
+      properties:
+        _id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        minCapital:
+          type: number
+        maxCapital:
+          type: number
+        expectedReturn:
+          type: string
+        status:
+          type: string
+          enum: [active, inactive, draft]
+
+    Document:
+      type: object
+      properties:
+        _id:
+          type: string
+        title:
+          type: string
+        category:
+          type: string
+        year:
+          type: integer
+        content:
+          type: string
+        status:
+          type: string
+          enum: [published, draft, archived]
+
+    Enquiry:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        company:
+          type: string
+        subject:
+          type: string
+        message:
+          type: string
+        status:
+          type: string
+          enum: [new, read, archived]
+        createdAt:
+          type: string
+          format: date-time
+
+    BlogPost:
+      type: object
+      properties:
+        _id:
+          type: string
+        title:
+          type: string
+        slug:
+          type: string
+        content:
+          type: string
+        excerpt:
+          type: string
+        category:
+          type: string
+        status:
+          type: string
+          enum: [published, draft, archived]
+
+    AuditLog:
+      type: object
+      properties:
+        _id:
+          type: string
+        action:
+          type: string
+        actorId:
+          type: string
+        actorEmail:
+          type: string
+        targetId:
+          type: string
+        targetType:
+          type: string
+        metadata:
+          type: object
+        createdAt:
+          type: string
+          format: date-time
+
+  responses:
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+    Validation:
+      description: Validation error (Zod)
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ValidationError"
+    TooManyRequests:
+      description: Rate limit exceeded
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+
+# ─────────────────────────── PATHS ───────────────────────────────
+paths:
+
+  # ════════════════ SYSTEM ════════════════
+  /api/health:
+    get:
+      tags: [system]
+      summary: Health check
+      description: Returns database connectivity, uptime, and version. Used by UptimeRobot / load balancers.
+      security: []
+      responses:
+        "200":
+          description: Service healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [ok, degraded]
+                  db:
+                    type: string
+                    enum: [connected, disconnected]
+                  dbLatency:
+                    type: [string, "null"]
+                    example: "3ms"
+                  uptime:
+                    type: string
+                  timestamp:
+                    type: string
+                    format: date-time
+                  version:
+                    type: string
+        "503":
+          description: Service degraded (DB unreachable)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /api/csrf:
+    get:
+      tags: [system]
+      summary: Issue CSRF token
+      description: Sets an `axvn_csrf` cookie and returns the token in the body. Must be called before any state-mutating request.
+      security: []
+      responses:
+        "200":
+          description: CSRF token issued
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+
+  # ════════════════ PUBLIC AUTH ════════════════
+  /api/auth:
+    get:
+      tags: [public-auth]
+      summary: Get current public user session
+      security:
+        - shareholderSession: []
+      responses:
+        "200":
+          description: Current session
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+    post:
+      tags: [public-auth]
+      summary: Register, login, or logout public user
+      security:
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - type: object
+                  title: Register
+                  required: [action, name, email, password]
+                  properties:
+                    action:
+                      type: string
+                      enum: [register]
+                    name:
+                      type: string
+                    email:
+                      type: string
+                      format: email
+                    password:
+                      type: string
+                    phone:
+                      type: string
+                    newsletterSubscribed:
+                      type: boolean
+                - type: object
+                  title: Login
+                  required: [action, email, password]
+                  properties:
+                    action:
+                      type: string
+                      enum: [login]
+                    email:
+                      type: string
+                      format: email
+                    password:
+                      type: string
+                - type: object
+                  title: Logout
+                  required: [action]
+                  properties:
+                    action:
+                      type: string
+                      enum: [logout]
+      responses:
+        "200":
+          description: Login or logout success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+        "201":
+          description: Registration success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  # ════════════════ ADMIN AUTH ════════════════
+  /api/admin/login:
+    post:
+      tags: [admin-auth]
+      summary: Admin login (rate-limited 10/min)
+      security:
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [username, password]
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "200":
+          description: Login success (sets HttpOnly session cookie)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+
+  /api/admin/logout:
+    post:
+      tags: [admin-auth]
+      summary: Admin logout
+      security:
+        - adminSession: []
+        - csrfToken: []
+      responses:
+        "200":
+          description: Logged out
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  /api/admin/session:
+    get:
+      tags: [admin-auth]
+      summary: Get current admin session
+      security:
+        - adminSession: []
+      responses:
+        "200":
+          description: Session info
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /api/admin/mfa/setup:
+    get:
+      tags: [admin-auth]
+      summary: Generate TOTP secret & QR code
+      security:
+        - adminSession: []
+      responses:
+        "200":
+          description: QR code and secret for TOTP app
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  /api/admin/mfa/verify:
+    post:
+      tags: [admin-auth]
+      summary: Verify TOTP and activate MFA
+      security:
+        - adminSession: []
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [token]
+              properties:
+                token:
+                  type: string
+                  description: 6-digit TOTP code
+      responses:
+        "200":
+          description: MFA enabled
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  /api/admin/mfa/login-verify:
+    post:
+      tags: [admin-auth]
+      summary: Second MFA login step (rate-limited)
+      security:
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, token]
+              properties:
+                email:
+                  type: string
+                  format: email
+                token:
+                  type: string
+      responses:
+        "200":
+          description: MFA login verified (sets session cookie)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+
+  # ════════════════ ADMIN — ADMINS ════════════════
+  /api/admin/admins:
+    get:
+      tags: [admin-ops]
+      summary: List admins
+      security:
+        - adminSession: []
+      responses:
+        "200":
+          description: Admin list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+    post:
+      tags: [admin-ops]
+      summary: Create admin
+      security:
+        - adminSession: []
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, email, password]
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                role:
+                  type: string
+                  enum: [superadmin, admin]
+      responses:
+        "201":
+          description: Admin created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+    put:
+      tags: [admin-ops]
+      summary: Update admin
+      security:
+        - adminSession: []
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [_id]
+              properties:
+                _id:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "200":
+          description: Admin updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+    delete:
+      tags: [admin-ops]
+      summary: Delete admin
+      security:
+        - adminSession: []
+        - csrfToken: []
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Admin deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+  # ════════════════ ADMIN — SHAREHOLDERS ════════════════
+  /api/admin/shareholders:
+    get:
+      tags: [admin-shareholders]
+      summary: List shareholders (paginated)
+      security:
+        - adminSession: []
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 50
+        - in: query
+          name: search
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Paginated shareholder list
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiSuccess"
+                  - type: object
+                    properties:
+                      data:
+                        allOf:
+                          - $ref: "#/components/schemas/Pagination"
+                          - type: object
+                            properties:
+                              shareholders:
+                                type: array
+                                items:
+                                  $ref: "#/components/schemas/Shareholder"
+
+    post:
+      tags: [admin-shareholders]
+      summary: Create shareholder
+      security:
+        - adminSession: []
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Shareholder"
+      responses:
+        "201":
+          description: Shareholder created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+    put:
+      tags: [admin-shareholders]
+      summary: Update shareholder
+      security:
+        - adminSession: []
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [_id]
+              properties:
+                _id:
+                  type: string
+      responses:
+        "200":
+          description: Shareholder updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  /api/admin/shareholders/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      tags: [admin-shareholders]
+      summary: Get shareholder by id
+      security:
+        - adminSession: []
+      responses:
+        "200":
+          description: Shareholder detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    put:
+      tags: [admin-shareholders]
+      summary: Update shareholder by id
+      security:
+        - adminSession: []
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+    delete:
+      tags: [admin-shareholders]
+      summary: Delete shareholder (superadmin only)
+      security:
+        - adminSession: []
+        - csrfToken: []
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+  /api/admin/shareholders/{id}/kyc:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    patch:
+      tags: [admin-shareholders]
+      summary: Approve or reject KYC
+      security:
+        - adminSession: []
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [action]
+              properties:
+                action:
+                  type: string
+                  enum: [approve, reject]
+      responses:
+        "200":
+          description: KYC status updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  /api/admin/shareholder-ops:
+    get:
+      tags: [admin-shareholders]
+      summary: List tasks/meetings/messages for a shareholder
+      security:
+        - adminSession: []
+      parameters:
+        - in: query
+          name: shareholderId
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: type
+          required: true
+          schema:
+            type: string
+            enum: [task, meeting, message]
+      responses:
+        "200":
+          description: Items list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+    post:
+      tags: [admin-shareholders]
+      summary: Create task/meeting/message
+      security:
+        - adminSession: []
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [type]
+              properties:
+                type:
+                  type: string
+                  enum: [task, meeting, message]
+      responses:
+        "201":
+          description: Item created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+    put:
+      tags: [admin-shareholders]
+      summary: Update task or meeting
+      security:
+        - adminSession: []
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [type, _id]
+              properties:
+                type:
+                  type: string
+                  enum: [task, meeting]
+                _id:
+                  type: string
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+    delete:
+      tags: [admin-shareholders]
+      summary: Delete task or meeting
+      security:
+        - adminSession: []
+        - csrfToken: []
+      parameters:
+        - in: query
+          name: type
+          required: true
+          schema:
+            type: string
+            enum: [task, meeting]
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  # ════════════════ ADMIN — INVESTMENT PLANS ════════════════
+  /api/admin/investment-plans:
+    get:
+      tags: [admin-capital]
+      summary: List all investment plans
+      security:
+        - adminSession: []
+      responses:
+        "200":
+          description: Plans list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+    post:
+      tags: [admin-capital]
+      summary: Create investment plan
+      security:
+        - adminSession: []
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InvestmentPlan"
+      responses:
+        "201":
+          description: Plan created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+        "422":
+          $ref: "#/components/responses/Validation"
+
+  /api/admin/investment-plans/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    put:
+      tags: [admin-capital]
+      summary: Update investment plan
+      security:
+        - adminSession: []
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InvestmentPlan"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    delete:
+      tags: [admin-capital]
+      summary: Delete investment plan
+      security:
+        - adminSession: []
+        - csrfToken: []
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  # ════════════════ ADMIN — DOCUMENTS ════════════════
+  /api/admin/documents:
+    get:
+      tags: [admin-documents]
+      summary: List all documents (all statuses)
+      security:
+        - adminSession: []
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: limit
+          schema:
+            type: integer
+        - in: query
+          name: category
+          schema:
+            type: string
+        - in: query
+          name: year
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Paginated documents
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+    post:
+      tags: [admin-documents]
+      summary: Create document
+      security:
+        - adminSession: []
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Document"
+      responses:
+        "201":
+          description: Document created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+        "422":
+          $ref: "#/components/responses/Validation"
+
+  /api/admin/documents/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    put:
+      tags: [admin-documents]
+      summary: Update document
+      security:
+        - adminSession: []
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Document"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+    delete:
+      tags: [admin-documents]
+      summary: Delete document
+      security:
+        - adminSession: []
+        - csrfToken: []
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  /api/admin/documents/upload:
+    post:
+      tags: [admin-documents]
+      summary: Upload document file to Cloudinary (max 50 MB)
+      security:
+        - adminSession: []
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file]
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: PDF, DOC, DOCX, XLS, XLSX, JPG, PNG, WebP
+      responses:
+        "201":
+          description: File uploaded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  # ════════════════ ADMIN — ENQUIRIES ════════════════
+  /api/admin/enquiries:
+    get:
+      tags: [admin-ops]
+      summary: List enquiries
+      security:
+        - adminSession: []
+      responses:
+        "200":
+          description: Enquiries list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  /api/admin/enquiries/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    patch:
+      tags: [admin-ops]
+      summary: Update enquiry status
+      security:
+        - adminSession: []
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [status]
+              properties:
+                status:
+                  type: string
+                  enum: [new, read, archived]
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+    delete:
+      tags: [admin-ops]
+      summary: Delete enquiry
+      security:
+        - adminSession: []
+        - csrfToken: []
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  # ════════════════ ADMIN — ARTICLES / BLOG ════════════════
+  /api/admin/articles:
+    get:
+      tags: [admin-content]
+      summary: List articles
+      security:
+        - adminSession: []
+      responses:
+        "200":
+          description: Articles list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+    post:
+      tags: [admin-content]
+      summary: Create article
+      security:
+        - adminSession: []
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BlogPost"
+      responses:
+        "201":
+          description: Article created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+        "422":
+          $ref: "#/components/responses/Validation"
+
+  /api/admin/articles/{slug}:
+    parameters:
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: string
+    get:
+      tags: [admin-content]
+      summary: Get article by slug
+      security:
+        - adminSession: []
+      responses:
+        "200":
+          description: Article detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    put:
+      tags: [admin-content]
+      summary: Update article by slug
+      security:
+        - adminSession: []
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BlogPost"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+    delete:
+      tags: [admin-content]
+      summary: Delete article by slug
+      security:
+        - adminSession: []
+        - csrfToken: []
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  # ════════════════ ADMIN — CONTENT / SETTINGS / STATS ════════════════
+  /api/admin/content:
+    get:
+      tags: [admin-content]
+      summary: List page content records
+      security:
+        - adminSession: []
+      responses:
+        "200":
+          description: Page list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+    put:
+      tags: [admin-content]
+      summary: Update page by slug
+      security:
+        - adminSession: []
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [slug]
+              properties:
+                slug:
+                  type: string
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  /api/admin/settings:
+    get:
+      tags: [admin-content]
+      summary: Get site settings
+      security:
+        - adminSession: []
+      responses:
+        "200":
+          description: Settings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+    put:
+      tags: [admin-content]
+      summary: Update site settings
+      security:
+        - adminSession: []
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+        "422":
+          $ref: "#/components/responses/Validation"
+
+  /api/admin/stats:
+    get:
+      tags: [admin-ops]
+      summary: Get dashboard stats
+      security:
+        - adminSession: []
+      responses:
+        "200":
+          description: Dashboard stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  /api/admin/audit-log:
+    get:
+      tags: [admin-ops]
+      summary: Query audit log (paginated)
+      security:
+        - adminSession: []
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: limit
+          schema:
+            type: integer
+        - in: query
+          name: actorId
+          schema:
+            type: string
+        - in: query
+          name: action
+          schema:
+            type: string
+        - in: query
+          name: from
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: to
+          schema:
+            type: string
+            format: date
+      responses:
+        "200":
+          description: Audit log entries
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  /api/admin/public-users:
+    get:
+      tags: [admin-ops]
+      summary: List public users (paginated)
+      security:
+        - adminSession: []
+      responses:
+        "200":
+          description: User list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+    patch:
+      tags: [admin-ops]
+      summary: Toggle user active status
+      security:
+        - adminSession: []
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [id, isActive]
+              properties:
+                id:
+                  type: string
+                isActive:
+                  type: boolean
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+    delete:
+      tags: [admin-ops]
+      summary: Delete public user
+      security:
+        - adminSession: []
+        - csrfToken: []
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  /api/admin/partner-applications:
+    get:
+      tags: [admin-ops]
+      summary: List partner applications
+      security:
+        - adminSession: []
+      responses:
+        "200":
+          description: Applications list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+    delete:
+      tags: [admin-ops]
+      summary: Delete partner application
+      security:
+        - adminSession: []
+        - csrfToken: []
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  /api/admin/partner-applications/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      tags: [admin-ops]
+      summary: Get partner application by id
+      security:
+        - adminSession: []
+      responses:
+        "200":
+          description: Application detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+    patch:
+      tags: [admin-ops]
+      summary: Update partner application status / notes
+      security:
+        - adminSession: []
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                adminNotes:
+                  type: string
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+        "422":
+          $ref: "#/components/responses/Validation"
+    delete:
+      tags: [admin-ops]
+      summary: Delete partner application
+      security:
+        - adminSession: []
+        - csrfToken: []
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  /api/admin/upload:
+    post:
+      tags: [admin-ops]
+      summary: Upload generic file to Cloudinary
+      security:
+        - adminSession: []
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file]
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        "201":
+          description: Uploaded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  /api/admin/ai:
+    post:
+      tags: [admin-content]
+      summary: Claude AI content generation
+      security:
+        - adminSession: []
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [action]
+              properties:
+                action:
+                  type: string
+                  enum: [blog_title, blog_content, doc_title_vi]
+                context:
+                  type: object
+      responses:
+        "200":
+          description: Generated text
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+        "503":
+          description: API key not configured
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /api/admin/events/sse:
+    get:
+      tags: [admin-ops]
+      summary: Server-Sent Events stream for real-time admin notifications
+      security:
+        - adminSession: []
+      responses:
+        "200":
+          description: SSE stream
+          content:
+            text/event-stream:
+              schema:
+                type: string
+
+  # ════════════════ SHAREHOLDER PORTAL ════════════════
+  /api/shareholders/auth:
+    get:
+      tags: [shareholder-portal]
+      summary: Get shareholder session
+      security:
+        - shareholderSession: []
+      responses:
+        "200":
+          description: Session data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+    post:
+      tags: [shareholder-portal]
+      summary: Shareholder login (rate-limited)
+      security:
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+      responses:
+        "200":
+          description: Login success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+    delete:
+      tags: [shareholder-portal]
+      summary: Shareholder logout
+      security:
+        - shareholderSession: []
+        - csrfToken: []
+      responses:
+        "200":
+          description: Logged out
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  /api/shareholders/kyc:
+    get:
+      tags: [shareholder-portal]
+      summary: Get KYC status
+      security:
+        - shareholderSession: []
+      responses:
+        "200":
+          description: KYC status info
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+    post:
+      tags: [shareholder-portal]
+      summary: Submit KYC application
+      security:
+        - shareholderSession: []
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [nationalId, permanentAddress, sourceOfFunds]
+              properties:
+                nationalId:
+                  type: string
+                permanentAddress:
+                  type: string
+                sourceOfFunds:
+                  type: string
+                nationalIdIssuedDate:
+                  type: string
+                nationalIdIssuedPlace:
+                  type: string
+                isPEP:
+                  type: boolean
+                isSanctioned:
+                  type: boolean
+      responses:
+        "200":
+          description: KYC submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  /api/shareholders/documents:
+    get:
+      tags: [shareholder-portal]
+      summary: List published documents for shareholders
+      security:
+        - shareholderSession: []
+      responses:
+        "200":
+          description: Documents list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  /api/shareholders/meetings:
+    get:
+      tags: [shareholder-portal]
+      summary: List meetings for shareholder
+      security:
+        - shareholderSession: []
+      responses:
+        "200":
+          description: Meetings list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  /api/shareholders/messages:
+    get:
+      tags: [shareholder-portal]
+      summary: List messages in a channel
+      security:
+        - shareholderSession: []
+      parameters:
+        - in: query
+          name: channel
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Messages list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+    post:
+      tags: [shareholder-portal]
+      summary: Post a new message
+      security:
+        - shareholderSession: []
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [channel, content]
+              properties:
+                channel:
+                  type: string
+                content:
+                  type: string
+                replyTo:
+                  type: string
+      responses:
+        "200":
+          description: Message posted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  /api/shareholders/messages/{id}/read:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    post:
+      tags: [shareholder-portal]
+      summary: Mark message as read
+      security:
+        - shareholderSession: []
+        - csrfToken: []
+      responses:
+        "200":
+          description: Marked read
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  /api/shareholders/messages/sse:
+    get:
+      tags: [shareholder-portal]
+      summary: SSE stream for real-time messages
+      security:
+        - shareholderSession: []
+      responses:
+        "200":
+          description: SSE stream
+          content:
+            text/event-stream:
+              schema:
+                type: string
+
+  /api/shareholders/tasks:
+    get:
+      tags: [shareholder-portal]
+      summary: List tasks for shareholder
+      security:
+        - shareholderSession: []
+      responses:
+        "200":
+          description: Tasks list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+    patch:
+      tags: [shareholder-portal]
+      summary: Update task status
+      security:
+        - shareholderSession: []
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [taskId, status]
+              properties:
+                taskId:
+                  type: string
+                status:
+                  type: string
+                  enum: [in_progress, done]
+      responses:
+        "200":
+          description: Task updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  # ════════════════ PUBLIC ════════════════
+  /api/enquiries:
+    get:
+      tags: [public]
+      summary: List enquiries (admin only)
+      security:
+        - adminSession: []
+      responses:
+        "200":
+          description: Enquiries list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+    post:
+      tags: [public]
+      summary: Submit enquiry (public, rate-limited)
+      security:
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Enquiry"
+      responses:
+        "201":
+          description: Enquiry submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+        "422":
+          $ref: "#/components/responses/Validation"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+
+  /api/enquiries/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      tags: [public]
+      summary: Get enquiry by id (admin)
+      security:
+        - adminSession: []
+      responses:
+        "200":
+          description: Enquiry detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+    patch:
+      tags: [public]
+      summary: Update enquiry status (admin)
+      security:
+        - adminSession: []
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [status]
+              properties:
+                status:
+                  type: string
+                  enum: [new, read, archived]
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+    delete:
+      tags: [public]
+      summary: Delete enquiry (admin)
+      security:
+        - adminSession: []
+        - csrfToken: []
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  /api/blog:
+    get:
+      tags: [public]
+      summary: List/search blog posts (public)
+      security: []
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: limit
+          schema:
+            type: integer
+        - in: query
+          name: search
+          schema:
+            type: string
+        - in: query
+          name: category
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Blog posts list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  /api/contact:
+    post:
+      tags: [public]
+      summary: Submit contact form (rate-limited)
+      security:
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Enquiry"
+      responses:
+        "201":
+          description: Submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+        "422":
+          $ref: "#/components/responses/Validation"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+
+  /api/content:
+    get:
+      tags: [public]
+      summary: List/get page content (public)
+      security: []
+      parameters:
+        - in: query
+          name: slug
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Page content
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  /api/content/{slug}:
+    parameters:
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: string
+    get:
+      tags: [public]
+      summary: Get page by slug (public)
+      security: []
+      responses:
+        "200":
+          description: Page content
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /api/documents:
+    get:
+      tags: [public]
+      summary: List published documents (public)
+      security: []
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: limit
+          schema:
+            type: integer
+        - in: query
+          name: category
+          schema:
+            type: string
+        - in: query
+          name: year
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Documents list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  /api/investment-plans:
+    get:
+      tags: [public]
+      summary: List active investment plans (public)
+      security: []
+      responses:
+        "200":
+          description: Plans list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  /api/opportunities:
+    post:
+      tags: [public]
+      summary: Submit investment opportunity (rate-limited)
+      security:
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Enquiry"
+      responses:
+        "201":
+          description: Submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+        "422":
+          $ref: "#/components/responses/Validation"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+
+  /api/partner-application:
+    post:
+      tags: [public]
+      summary: Submit partner application with quiz (rate-limited)
+      security:
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [fullName, email, phone, company, consentGiven, consentTimestamp]
+              properties:
+                fullName:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                phone:
+                  type: string
+                company:
+                  type: string
+                position:
+                  type: string
+                linkedinUrl:
+                  type: string
+                quizAnswers:
+                  type: object
+                assessmentScore:
+                  type: number
+                suggestedRole:
+                  type: string
+                desiredRole:
+                  type: string
+                capitalRange:
+                  type: string
+                motivation:
+                  type: string
+                capabilities:
+                  type: string
+                investmentPlan:
+                  type: string
+                consentGiven:
+                  type: boolean
+                consentTimestamp:
+                  type: string
+                  format: date-time
+      responses:
+        "201":
+          description: Application submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+        "422":
+          $ref: "#/components/responses/Validation"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+
+  /api/seo:
+    get:
+      tags: [public]
+      summary: Get SEO metadata for a page (public)
+      security: []
+      parameters:
+        - in: query
+          name: pageSlug
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: SEO metadata
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+    put:
+      tags: [admin-content]
+      summary: Update SEO metadata (admin)
+      security:
+        - adminSession: []
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [pageSlug, title, description]
+              properties:
+                pageSlug:
+                  type: string
+                title:
+                  type: string
+                description:
+                  type: string
+                keywords:
+                  type: string
+                ogImage:
+                  type: string
+                canonicalUrl:
+                  type: string
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  /api/settings:
+    get:
+      tags: [public]
+      summary: Get public site settings (SMTP scrubbed)
+      security: []
+      responses:
+        "200":
+          description: Site settings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  /api/media:
+    get:
+      tags: [admin-ops]
+      summary: List media uploads (admin)
+      security:
+        - adminSession: []
+      responses:
+        "200":
+          description: Uploads list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+    post:
+      tags: [admin-ops]
+      summary: Upload media file (admin)
+      security:
+        - adminSession: []
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file]
+              properties:
+                file:
+                  type: string
+                  format: binary
+                folder:
+                  type: string
+      responses:
+        "201":
+          description: Uploaded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+    delete:
+      tags: [admin-ops]
+      summary: Delete media by publicId (admin)
+      security:
+        - adminSession: []
+        - csrfToken: []
+      parameters:
+        - in: query
+          name: publicId
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  /api/chat:
+    post:
+      tags: [public]
+      summary: Chat widget query
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [query]
+              properties:
+                query:
+                  type: string
+      responses:
+        "200":
+          description: Answer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSuccess"
+
+  /api/whatsapp/webhook:
+    get:
+      tags: [public]
+      summary: WhatsApp webhook verification
+      security: []
+      parameters:
+        - in: query
+          name: hub.mode
+          schema:
+            type: string
+        - in: query
+          name: hub.verify_token
+          schema:
+            type: string
+        - in: query
+          name: hub.challenge
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Verification challenge echoed
+        "400":
+          $ref: "#/components/responses/BadRequest"
+    post:
+      tags: [public]
+      summary: WhatsApp message events (HMAC-verified)
+      security: []
+      responses:
+        "200":
+          description: Acknowledged
+        "403":
+          description: Invalid HMAC signature
+

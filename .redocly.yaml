@@ -1,0 +1,10 @@
+apis:
+  main:
+    root: openapi.yaml
+
+rules:
+  operation-4xx-response: warn
+  security-defined: warn
+  no-unused-components: warn
+  operation-operationId: warn
+  tag-description: warn
