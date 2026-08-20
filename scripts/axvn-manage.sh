@@ -85,10 +85,15 @@ cmd_deploy() {
   ok "Standalone output exists"
 
   step "[deploy] Copy static assets"
-  mkdir -p .next/standalone/.next
+  mkdir -p .next/standalone/.next/server
   cp -r .next/static  .next/standalone/.next/static
   cp -r public        .next/standalone/public
-  ok "Static assets copied"
+  # Copy error pages (500.html, 404.html) needed by standalone server
+  if [[ -d ".next/server/pages" ]]; then
+    mkdir -p .next/standalone/.next/server/pages
+    cp -f .next/server/pages/*.html .next/standalone/.next/server/pages/ 2>/dev/null || true
+  fi
+  ok "Static assets + error pages copied"
 
   step "[deploy] Nginx config"
   if ! diff -q "$NGINX_CONF_SRC" "$NGINX_CONF_DST" &>/dev/null; then
@@ -198,10 +203,14 @@ cmd_rollback() {
 
   step "[rollback] Copy static assets"
   [[ -f ".next/standalone/server.js" ]] || err ".next/standalone/server.js missing"
-  mkdir -p .next/standalone/.next
+  mkdir -p .next/standalone/.next/server
   cp -r .next/static  .next/standalone/.next/static
   cp -r public        .next/standalone/public
-  ok "Static assets copied"
+  if [[ -d ".next/server/pages" ]]; then
+    mkdir -p .next/standalone/.next/server/pages
+    cp -f .next/server/pages/*.html .next/standalone/.next/server/pages/ 2>/dev/null || true
+  fi
+  ok "Static assets + error pages copied"
 
   step "[rollback] PM2 reload"
   if pm2 list | grep -q "$PM2_APP"; then
