@@ -52,9 +52,9 @@ module.exports = {
       exec_mode: "fork",
 
       // ── Run as non-root system user ────────────────────────────────────────
-      // user: "axvn",  // uncomment khi PM2 được setup đúng với user axvn
-      // NOTE: hiện chạy root vì PM2 startup được config bởi root.
-      // Để migrate: pm2 delete AXVN-langding && sudo -u axvn pm2 start ...
+      // NOTE: Process runs as "axvn" user via systemd pm2-axvn.service
+      // PM2_HOME=/var/lkvip/.pm2-axvn  —  managed by su -s /bin/bash axvn
+      // Root PM2 daemon manages n8n only; AXVN-langding uses separate axvn daemon
 
       // ── Stability ─────────────────────────────────────────────────────────
       watch: false,                // không watch files trong production
